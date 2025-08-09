@@ -1,26 +1,17 @@
 {
-    "id": "warhammer2e",
-    "title": "Warhammer v2",
-    "version": "0.1.0",
-    "description": "Système de jeu pour Warhammer Fantasy Roleplay 2e édition",
-    "authors": [
-      {
-        "name": "Ton Nom"
-      }
-    ],
-    "compatibility": {
-      "minimum": "13",
-      "verified": "13"
-    },
-    "esmodules": ["module/warhammer2e.js"],
-    "styles": ["styles/warhammer2e.css"],
-    "languages": [
-      {
-        "lang": "fr",
-        "name": "Français",
-        "path": "lang/fr.json"
-      }
-    ],
-    "template": "template.json"
-  }
-  
+  "id": "warhammer2e",
+  "title": "Warhammer 2e",
+  "type": "system",
+  "version": "0.1.0",
+  "compatibility": { "minimum": "13", "verified": "13" },
+  "authors": [{ "name": "Courbette" }],
+  "esmodules": ["module/warhammer2e.js"],
+  "styles": ["styles/warhammer2e.css"],
+  "languages": [
+    { "lang": "fr", "name": "Français", "path": "lang/fr.json" },
+    { "lang": "en", "name": "English", "path": "lang/en.json" }
+  ],
+  "packs": [],
+  "primaryTokenAttribute": "system.secondary.w",
+  "initiative": "1d10"
+}

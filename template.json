@@ -1,49 +1,15 @@
 {
-    "Actor": {
-      "personnage": {
-        "type": "personnage",
-        "name": "Nouveau Personnage",
-        "system": {
-          "caracteristiques": {}
-        }
-      },
-      "monstre": {
-        "type": "monstre",
-        "name": "Nouvelle Créature",
-        "system": {
-          "caracteristiques": {}
-        }
-      },
-      "pnj": {
-        "type": "pnj",
-        "name": "Nouveau PNJ",
-        "system": {
-          "caracteristiques": {}
-        }
-      }
-    },
-    "Item": {
-      "arme": {
-        "type": "arme",
-        "name": "Nouvelle Arme",
-        "system": {
-          "description": "",
-          "portee": "",
-          "degats": "",
-          "type": "",
-          "qualites": [],
-          "defauts": []
-        }
-      },
-      "objet": {
-        "type": "objet",
-        "name": "Nouvel Objet",
-        "system": {
-          "description": "",
-          "valeur": "",
-          "poids": ""
-        }
-      }
+  "Actor": {
+    "types": ["character"],
+    "character": {
+      "nom": "",
+      "carriere": "",
+      "anciennesCarrieres": "",
+      "race": "",
+      "religion": "",
+      "lieuNaissance": "",
+      "progression": 0,
+      "pxGagnes": 0
     }
   }
-  
+}

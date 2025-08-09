@@ -1,0 +1,155 @@
+<header class="wfrp2e actor-header" data-group="primary">
+  <div class="wfrp2e header-wrap">
+    <div class="wfrp2e logo">
+      <img src="systems/warhammer2e/assets/logo.png" alt="Warhammer Fantasy Roleplay" />
+    </div>
+
+    <div class="wfrp2e id-panel">
+      <div class="wfrp2e id-grid">
+        <div class="wfrp2e id-field">
+          <label>Nom du personnage</label>
+          <input class="wfrp2e name" type="text" name="name" value="{{name}}" />
+        </div>
+
+        <div class="wfrp2e right-counters">
+          <div class="wfrp2e counter">
+            <div class="value">{{system.progression.total}}</div>
+            <div class="label">Progression</div>
+          </div>
+          <div class="wfrp2e counter">
+            <div class="value">{{system.xp.gained}}</div>
+            <div class="label">PX Gagnés</div>
+          </div>
+        </div>
+
+        <div class="wfrp2e id-field">
+          <label>Carrière</label>
+          <input type="text" name="system.career.current" value="{{system.career.current}}" />
+        </div>
+        <div class="wfrp2e id-field">
+          <label>Anciennes carrières</label>
+          <input type="text" name="system.career.past" value="{{system.career.past}}" />
+        </div>
+
+        <div class="wfrp2e id-field">
+          <label>Race</label>
+          <input type="text" name="system.details.race" value="{{system.details.race}}" />
+        </div>
+        <div class="wfrp2e id-field">
+          <label>Religion</label>
+          <input type="text" name="system.details.faith" value="{{system.details.faith}}" />
+        </div>
+        <div class="wfrp2e id-field span-2">
+          <label>Lieu de naissance</label>
+          <input type="text" name="system.details.birthplace" value="{{system.details.birthplace}}" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="wfrp2e tabs sheet-tabs" data-group="primary">
+    <a class="item" data-tab="main">Principal</a>
+    <a class="item" data-tab="bio">Biographie</a>
+    <a class="item" data-tab="career">Carrière</a>
+    <a class="item" data-tab="weapons">Armes</a>
+    <a class="item" data-tab="armor">Armure</a>
+    <a class="item" data-tab="grimoire">Grimoire</a>
+    <a class="item" data-tab="inventory">Inventaire</a>
+
+    <button type="button" class="wfrp2e btn subtle" data-action="toggle-public-rolls">
+      Rendre tous les jets publiques
+    </button>
+  </nav>
+</header>
+
+<section class="wfrp2e left-pane" style="width:50%; float:left; box-sizing:border-box;">
+  <h2 class="wfrp2e block-title with-icon">
+    <span>Profil principal</span>
+    <i class="fas fa-book"></i>
+  </h2>
+
+  <!-- Profil principal -->
+  <div class="wfrp2e stat-table primary">
+    <div class="grid head">
+      <div class="rowlabel section-label">Principal</div>
+      {{#each (array "CC" "CT" "F" "E" "Ag" "Int" "FM" "Soc") as |abbr|}}
+        <div class="colhead">{{abbr}}</div>
+      {{/each}}
+    </div>
+
+    {{#each (array "Base" "Talents" "Carrière" "Avancé" "Modificateur" "Actuel") as |label idx|}}
+      <div class="grid body">
+        <div class="rowlabel">{{label}}</div>
+        {{#each (array "cc" "ct" "f" "e" "ag" "int" "fm" "soc") as |key|}}
+          <input type="number" class="cell" name="system.characteristics.{{key}}.{{lookup (array "base" "talents" "career" "advance" "modifier" "current") idx}}" value="{{lookup (lookup ../../system.characteristics key) (lookup (array "base" "talents" "career" "advance" "modifier" "current") idx)}}" />
+        {{/each}}
+      </div>
+    {{/each}}
+
+    <!-- Roll buttons under columns -->
+    <div class="grid rolls">
+      <div class="rowlabel"></div>
+      {{#each (array "cc" "ct" "f" "e" "ag" "int" "fm" "soc") as |key|}}
+        <button type="button" class="roll gold" data-action="roll" data-stat="{{key}}" title="Jet de {{key}}">
+          <i class="fas fa-dice-d20"></i>
+        </button>
+      {{/each}}
+    </div>
+  </div>
+
+  <!-- Profil secondaire -->
+  <div class="wfrp2e stat-table secondary">
+    <div class="grid head">
+      <div class="rowlabel section-label">Secondaire</div>
+      {{#each (array "A" "B" "BF" "BE" "Mag" "Mun" "PF" "PD") as |abbr|}}
+        <div class="colhead">{{abbr}}</div>
+      {{/each}}
+    </div>
+
+    {{#each (array "Base" "Talents" "Carrière" "Avancé" "Modificateur" "Actuel") as |label idx|}}
+      <div class="grid body">
+        <div class="rowlabel">{{label}}</div>
+        {{#each (array "a" "b" "bf" "be" "mag" "mun" "pf" "pd") as |key|}}
+          <input type="text" class="cell" name="system.secondary.{{key}}.{{lookup (array "base" "talents" "career" "advance" "modifier" "current") idx}}" value="{{lookup (lookup ../../system.secondary key) (lookup (array "base" "talents" "career" "advance" "modifier" "current") idx)}}" />
+        {{/each}}
+      </div>
+    {{/each}}
+  </div>
+
+  <!-- Combat -->
+  <h3 class="wfrp2e block-title inverse">
+    <span>Combat</span>
+    <i class="fas fa-sync-alt"></i>
+  </h3>
+  <div class="wfrp2e combat-grid">
+    <div class="c-label">Initiative</div>
+    <div>
+      <button type="button" class="roll gold sm" data-action="roll" data-stat="ini">Ini.</button>
+    </div>
+
+    <div class="c-label">Blessure</div>
+    <input type="number" name="system.combat.hp" value="{{system.combat.hp}}" />
+
+    <div class="c-label">Chance</div>
+    <input type="number" name="system.combat.luck" value="{{system.combat.luck}}" />
+
+    <div class="c-label">Mouvement</div>
+    <input type="number" name="system.combat.move" value="{{system.combat.move}}" />
+
+    <div class="c-label">Charger</div>
+    <input type="number" name="system.combat.charge" value="{{system.combat.charge}}" />
+
+    <div class="c-label">Course</div>
+    <input type="number" name="system.combat.run" value="{{system.combat.run}}" />
+
+    <div class="c-label">Saut</div>
+    <input type="number" name="system.combat.jump" value="{{system.combat.jump}}" />
+
+    <div class="c-span-2 checkbox">
+      <label>
+        <input type="checkbox" name="system.combat.hasLuckTalent" {{checked system.combat.hasLuckTalent}} />
+        Cocher si vous avez le talent Chance
+      </label>
+    </div>
+  </div>
+</section>

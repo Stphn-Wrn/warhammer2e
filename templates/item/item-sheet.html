@@ -1,0 +1,33 @@
+<form class="warhammer2e item-sheet" autocomplete="off">
+    <header class="sheet-header flexrow">
+      <img class="profile" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+      <h1><input name="name" type="text" value="{{item.name}}"/></h1>
+    </header>
+  
+    <section class="sheet-body">
+      {{#if (eq item.type "skill")}}
+        <div class="grid grid-2col">
+          <div>
+            <label>Caractéristique</label>
+            <input name="system.characteristic" value="{{system.characteristic}}"/>
+          </div>
+          <div>
+            <label>Avancées</label>
+            <input type="number" name="system.advances" value="{{system.advances}}"/>
+          </div>
+        </div>
+        <label>Description</label>
+        <textarea name="system.description">{{system.description}}</textarea>
+      {{/if}}
+  
+      {{#if (eq item.type "weapon")}}
+        <div class="grid grid-2col">
+          <div><label>Groupe</label><input name="system.group" value="{{system.group}}"/></div>
+          <div><label>Dégâts</label><input name="system.damage" value="{{system.damage}}"/></div>
+          <div><label>Portée</label><input name="system.range" value="{{system.range}}"/></div>
+          <div><label>Qualités</label><input name="system.qualities" value="{{system.qualities}}"/></div>
+        </div>
+      {{/if}}
+    </section>
+  </form>
+  
