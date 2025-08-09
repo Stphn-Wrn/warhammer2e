@@ -1,0 +1,26 @@
+{
+    "id": "warhammer2e",
+    "title": "Warhammer v2",
+    "version": "0.1.0",
+    "description": "Système de jeu pour Warhammer Fantasy Roleplay 2e édition",
+    "authors": [
+      {
+        "name": "Ton Nom"
+      }
+    ],
+    "compatibility": {
+      "minimum": "13",
+      "verified": "13"
+    },
+    "esmodules": ["module/warhammer2e.js"],
+    "styles": ["styles/warhammer2e.css"],
+    "languages": [
+      {
+        "lang": "fr",
+        "name": "Français",
+        "path": "lang/fr.json"
+      }
+    ],
+    "template": "template.json"
+  }
+  
