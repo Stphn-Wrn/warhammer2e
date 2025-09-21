@@ -12,6 +12,7 @@
     { "lang": "en", "name": "English", "path": "lang/en.json" }
   ],
   "packs": [],
+  "template": "template.json",
   "primaryTokenAttribute": "system.secondary.w",
   "initiative": "1d10"
 }

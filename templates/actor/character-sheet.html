@@ -1,155 +1,107 @@
-<header class="wfrp2e actor-header" data-group="primary">
-  <div class="wfrp2e header-wrap">
-    <div class="wfrp2e logo">
-      <img src="systems/warhammer2e/assets/logo.png" alt="Warhammer Fantasy Roleplay" />
-    </div>
-
-    <div class="wfrp2e id-panel">
-      <div class="wfrp2e id-grid">
-        <div class="wfrp2e id-field">
-          <label>Nom du personnage</label>
-          <input class="wfrp2e name" type="text" name="name" value="{{name}}" />
+<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+<div class="wfrp2e">
+  <header class="header">
+    <div class="header-grid">
+      <div class="logo-col">
+        <div class="logo-wrap">
+          <img src="https://imgsrv.roll20.net/?src=https%3A//i.imgur.com/yXgvZ1G.png" alt="Warhammer Fantasy Roleplay (2nd edition)">
         </div>
+        <div class="name-wrap">
+          <input class="char-name" type="text" name="name" value="{{actor.name}}">
+          <div class="field-label">Nom du personnage</div>
+        </div>
+      </div>
 
-        <div class="wfrp2e right-counters">
-          <div class="wfrp2e counter">
-            <div class="value">{{system.progression.total}}</div>
-            <div class="label">Progression</div>
+      <div class="id-col">
+        <div class="id-panel">
+          <!-- Ligne 1 -->
+          <div class="id-row grey cols-3">
+            <div class="id-field">
+              <input type="text" name="system.career.current" value="{{system.career.current}}">
+              <div class="field-label">Carrière</div>
+            </div>
+            <div class="id-field">
+              <input type="text" name="system.career.previous" value="{{system.career.previous}}">
+              <div class="field-label">Anciennes Carrières</div>
+            </div>
+            <div class="counter-field">
+              <input type="number" class="is-readonly" name="system.progression" value="{{system.progression}}" readonly>
+              <div class="field-label center">Progression</div>
+            </div>
           </div>
-          <div class="wfrp2e counter">
-            <div class="value">{{system.xp.gained}}</div>
-            <div class="label">PX Gagnés</div>
+          <!-- Ligne 2 -->
+          <div class="id-row cols-4">
+            <div class="id-field">
+              <input type="text" name="system.bio.race" value="{{system.bio.race}}">
+              <div class="field-label">Race</div>
+            </div>
+            <div class="id-field">
+              <input type="text" name="system.bio.religion" value="{{system.bio.religion}}">
+              <div class="field-label">Religion</div>
+            </div>
+            <div class="id-field">
+              <input type="text" name="system.bio.birthplace" value="{{system.bio.birthplace}}">
+              <div class="field-label">Lieu de naissance</div>
+            </div>
+          <div class="counter-field">
+            <input type="number" class="is-readonly" name="system.xp.total" value="{{system.xp.total}}" readonly>
+            <div class="field-label center">PX gagnés</div>
+          </div>
           </div>
         </div>
-
-        <div class="wfrp2e id-field">
-          <label>Carrière</label>
-          <input type="text" name="system.career.current" value="{{system.career.current}}" />
-        </div>
-        <div class="wfrp2e id-field">
-          <label>Anciennes carrières</label>
-          <input type="text" name="system.career.past" value="{{system.career.past}}" />
-        </div>
-
-        <div class="wfrp2e id-field">
-          <label>Race</label>
-          <input type="text" name="system.details.race" value="{{system.details.race}}" />
-        </div>
-        <div class="wfrp2e id-field">
-          <label>Religion</label>
-          <input type="text" name="system.details.faith" value="{{system.details.faith}}" />
-        </div>
-        <div class="wfrp2e id-field span-2">
-          <label>Lieu de naissance</label>
-          <input type="text" name="system.details.birthplace" value="{{system.details.birthplace}}" />
-        </div>
       </div>
     </div>
-  </div>
 
-  <nav class="wfrp2e tabs sheet-tabs" data-group="primary">
-    <a class="item" data-tab="main">Principal</a>
-    <a class="item" data-tab="bio">Biographie</a>
-    <a class="item" data-tab="career">Carrière</a>
-    <a class="item" data-tab="weapons">Armes</a>
-    <a class="item" data-tab="armor">Armure</a>
-    <a class="item" data-tab="grimoire">Grimoire</a>
-    <a class="item" data-tab="inventory">Inventaire</a>
+    <!-- Onglets reliés -->
+    <nav class="tabs" data-group="primary">
+      <a class="item gold" data-tab="main">Principal</a>
+      <a class="item gold" data-tab="bio">Biographie</a>
+      <a class="item gold" data-tab="career">Carrière</a>
+      <a class="item gold" data-tab="weapons">Armes</a>
+      <a class="item gold" data-tab="armor">Armure</a>
+      <a class="item gold" data-tab="spells">Grimoire</a>
+      <a class="item gold" data-tab="inventory">Inventaire</a>
+    </nav>
+  </header>
 
-    <button type="button" class="wfrp2e btn subtle" data-action="toggle-public-rolls">
-      Rendre tous les jets publiques
-    </button>
-  </nav>
-</header>
-
-<section class="wfrp2e left-pane" style="width:50%; float:left; box-sizing:border-box;">
-  <h2 class="wfrp2e block-title with-icon">
-    <span>Profil principal</span>
-    <i class="fas fa-book"></i>
-  </h2>
-
-  <!-- Profil principal -->
-  <div class="wfrp2e stat-table primary">
-    <div class="grid head">
-      <div class="rowlabel section-label">Principal</div>
-      {{#each (array "CC" "CT" "F" "E" "Ag" "Int" "FM" "Soc") as |abbr|}}
-        <div class="colhead">{{abbr}}</div>
-      {{/each}}
+  <section class="sheet-body">
+    <!-- Onglet Principal -->
+    <div class="tab" data-group="primary" data-tab="main">
+      {{> "systems/warhammer2e/templates/actor/tabs/tab-main.html"}}
     </div>
 
-    {{#each (array "Base" "Talents" "Carrière" "Avancé" "Modificateur" "Actuel") as |label idx|}}
-      <div class="grid body">
-        <div class="rowlabel">{{label}}</div>
-        {{#each (array "cc" "ct" "f" "e" "ag" "int" "fm" "soc") as |key|}}
-          <input type="number" class="cell" name="system.characteristics.{{key}}.{{lookup (array "base" "talents" "career" "advance" "modifier" "current") idx}}" value="{{lookup (lookup ../../system.characteristics key) (lookup (array "base" "talents" "career" "advance" "modifier" "current") idx)}}" />
-        {{/each}}
-      </div>
-    {{/each}}
-
-    <!-- Roll buttons under columns -->
-    <div class="grid rolls">
-      <div class="rowlabel"></div>
-      {{#each (array "cc" "ct" "f" "e" "ag" "int" "fm" "soc") as |key|}}
-        <button type="button" class="roll gold" data-action="roll" data-stat="{{key}}" title="Jet de {{key}}">
-          <i class="fas fa-dice-d20"></i>
-        </button>
-      {{/each}}
-    </div>
-  </div>
-
-  <!-- Profil secondaire -->
-  <div class="wfrp2e stat-table secondary">
-    <div class="grid head">
-      <div class="rowlabel section-label">Secondaire</div>
-      {{#each (array "A" "B" "BF" "BE" "Mag" "Mun" "PF" "PD") as |abbr|}}
-        <div class="colhead">{{abbr}}</div>
-      {{/each}}
+    <!-- Onglet Biographie -->
+    <div class="tab" data-group="primary" data-tab="bio">
+      {{> "systems/warhammer2e/templates/actor/tabs/tab-bio.html"}}
     </div>
 
-    {{#each (array "Base" "Talents" "Carrière" "Avancé" "Modificateur" "Actuel") as |label idx|}}
-      <div class="grid body">
-        <div class="rowlabel">{{label}}</div>
-        {{#each (array "a" "b" "bf" "be" "mag" "mun" "pf" "pd") as |key|}}
-          <input type="text" class="cell" name="system.secondary.{{key}}.{{lookup (array "base" "talents" "career" "advance" "modifier" "current") idx}}" value="{{lookup (lookup ../../system.secondary key) (lookup (array "base" "talents" "career" "advance" "modifier" "current") idx)}}" />
-        {{/each}}
-      </div>
-    {{/each}}
-  </div>
+    <!-- Onglet Carrière -->
+    <div class="tab" data-group="primary" data-tab="career">
+      <!-- {{> "systems/warhammer2e/templates/actor/tabs/tab-career.html"}} -->
+         <p>Onglet Carrière (en cours de développement)</p>
 
-  <!-- Combat -->
-  <h3 class="wfrp2e block-title inverse">
-    <span>Combat</span>
-    <i class="fas fa-sync-alt"></i>
-  </h3>
-  <div class="wfrp2e combat-grid">
-    <div class="c-label">Initiative</div>
-    <div>
-      <button type="button" class="roll gold sm" data-action="roll" data-stat="ini">Ini.</button>
     </div>
 
-    <div class="c-label">Blessure</div>
-    <input type="number" name="system.combat.hp" value="{{system.combat.hp}}" />
-
-    <div class="c-label">Chance</div>
-    <input type="number" name="system.combat.luck" value="{{system.combat.luck}}" />
-
-    <div class="c-label">Mouvement</div>
-    <input type="number" name="system.combat.move" value="{{system.combat.move}}" />
-
-    <div class="c-label">Charger</div>
-    <input type="number" name="system.combat.charge" value="{{system.combat.charge}}" />
-
-    <div class="c-label">Course</div>
-    <input type="number" name="system.combat.run" value="{{system.combat.run}}" />
-
-    <div class="c-label">Saut</div>
-    <input type="number" name="system.combat.jump" value="{{system.combat.jump}}" />
-
-    <div class="c-span-2 checkbox">
-      <label>
-        <input type="checkbox" name="system.combat.hasLuckTalent" {{checked system.combat.hasLuckTalent}} />
-        Cocher si vous avez le talent Chance
-      </label>
+    <!-- Onglet Armes -->
+    <div class="tab" data-group="primary" data-tab="weapons">
+      {{> "systems/warhammer2e/templates/actor/tabs/tab-weapons.html"}}
     </div>
-  </div>
-</section>
+
+    <!-- Onglet Armure -->
+    <div class="tab" data-group="primary" data-tab="armor">
+      {{> "systems/warhammer2e/templates/actor/tabs/tab-armor.html"}}
+    </div>
+
+    <!-- Onglet Sorts -->
+    <div class="tab" data-group="primary" data-tab="spells">
+      {{> "systems/warhammer2e/templates/actor/tabs/tab-spells.html"}}
+    </div>
+
+    <!-- Onglet Équipement -->
+    <div class="tab" data-group="primary" data-tab="inventory">
+      <!-- {{> "systems/warhammer2e/templates/actor/tabs/tab-inventory.html"}} -->
+                <p>Onglet Inventaire (en cours de développement)</p>
+
+    </div>
+  </section>
+</form>

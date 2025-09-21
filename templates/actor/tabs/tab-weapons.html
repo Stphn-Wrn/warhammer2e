@@ -1,0 +1,204 @@
+ <div class="weapons-section">
+  <!-- Armes de Mêlée -->
+  <div class="section-title">Armes de Mêlée ✠</div>
+  <table class="weapons-table melee">
+    <thead>
+      <tr>
+        <th>Maîtr?</th>
+        <th>Arme</th>
+        <th>Qualité</th>
+        <th>Enc.</th>
+        <th>Bonus CC</th>
+        <th>Dés Min</th>
+        <th>Dégâts</th>
+        <th>Perc</th>
+        <th>BF</th>
+        <th>Déf</th>
+        <th>Attributs</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each system.weapons as |weapon i|}}
+      <tr>
+        <td><input type="checkbox" name="system.weapons.{{i}}.mastery" {{checked weapon.mastery}}></td>
+        <td><input type="text" name="system.weapons.{{i}}.name" value="{{weapon.name}}"></td>
+        <td>
+          <select name="system.weapons.{{i}}.quality">
+            <option {{#if (eq weapon.quality "Ordinaire")}}selected{{/if}}>Ordinaire</option>
+            <option {{#if (eq weapon.quality "Bonne")}}selected{{/if}}>Bonne</option>
+            <option {{#if (eq weapon.quality "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+          </select>
+        </td>
+        <td><input type="number" name="system.weapons.{{i}}.enc" value="{{weapon.enc}}"></td>
+        <td><input type="number" name="system.weapons.{{i}}.bonusCC" value="{{weapon.bonusCC}}"></td>
+        <td><input type="number" name="system.weapons.{{i}}.diceMin" value="{{weapon.diceMin}}"></td>
+        <td><input type="number" name="system.weapons.{{i}}.damage" value="{{weapon.damage}}"></td>
+        <td><input type="checkbox" name="system.weapons.{{i}}.perc" {{checked weapon.perc}}></td>
+        <td><input type="number" name="system.weapons.{{i}}.bf" value="{{weapon.bf}}"></td>
+        <td><input type="number" name="system.weapons.{{i}}.def" value="{{weapon.def}}"></td>
+        <td><input type="text" name="system.weapons.{{i}}.attributes" value="{{weapon.attributes}}"></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+    <!-- Armes à Distance -->
+    <div class="section-title">Armes à Distance ⚡</div>
+    <table class="weapons-table ranged">
+      <thead>
+        <tr>
+          <th>Maîtr?</th>
+          <th>Arme</th>
+          <th>Qualité</th>
+          <th>Enc.</th>
+          <th>Bonus CT</th>
+          <th>Dés Min</th>
+          <th>Dégâts</th>
+          <th>Perc</th>
+          <th>Attributs</th>
+          <th>Type</th>
+          <th>Rech</th>
+          <th>Portée</th>
+          <th>Munitions</th>
+          <th>Mun Enc</th>
+          <th>Atq</th>
+          <th>Dég</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td><input type="text"></td>
+          <td>
+            <select>
+              <option>Ordinaire</option>
+              <option>Bonne</option>
+              <option>Mauvaise</option>
+            </select>
+          </td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="checkbox"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><button type="button" class="gold-roll">🎯</button></td>
+          <td><button type="button" class="gold-roll">🎯</button></td>
+        </tr>
+        <!-- idem, copie/colle des lignes supplémentaires -->
+      </tbody>
+      <tbody>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td><input type="text"></td>
+          <td>
+            <select>
+              <option>Ordinaire</option>
+              <option>Bonne</option>
+              <option>Mauvaise</option>
+            </select>
+          </td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="checkbox"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><button type="button" class="gold-roll">🎯</button></td>
+          <td><button type="button" class="gold-roll">🎯</button></td>
+        </tr>
+        <!-- idem, copie/colle des lignes supplémentaires -->
+      </tbody>
+      <tbody>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td><input type="text"></td>
+          <td>
+            <select>
+              <option>Ordinaire</option>
+              <option>Bonne</option>
+              <option>Mauvaise</option>
+            </select>
+          </td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="checkbox"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><button type="button" class="gold-roll">🎯</button></td>
+          <td><button type="button" class="gold-roll">🎯</button></td>
+        </tr>
+        <!-- idem, copie/colle des lignes supplémentaires -->
+      </tbody>
+      <tbody>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td><input type="text"></td>
+          <td>
+            <select>
+              <option>Ordinaire</option>
+              <option>Bonne</option>
+              <option>Mauvaise</option>
+            </select>
+          </td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="checkbox"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><button type="button" class="gold-roll">🎯</button></td>
+          <td><button type="button" class="gold-roll">🎯</button></td>
+        </tr>
+        <!-- idem, copie/colle des lignes supplémentaires -->
+      </tbody>
+      <tbody>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td><input type="text"></td>
+          <td>
+            <select>
+              <option>Ordinaire</option>
+              <option>Bonne</option>
+              <option>Mauvaise</option>
+            </select>
+          </td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><input type="checkbox"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="text"></td>
+          <td><input type="number"></td>
+          <td><input type="number"></td>
+          <td><button type="button" class="gold-roll">🎯</button></td>
+          <td><button type="button" class="gold-roll">🎯</button></td>
+        </tr>
+        <!-- idem, copie/colle des lignes supplémentaires -->
+      </tbody>
+    </table>
+  </div>
