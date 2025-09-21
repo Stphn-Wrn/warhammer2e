@@ -28,10 +28,11 @@
               </select>
             </td>
             <td><input type="number"></td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" value="1" readonly></td>
+            <td><input type="number" name="system.armor.headBonus" value="{{system.armor.headBonus}}"></td>
+            <td><input type="number" value="{{sum 1 system.armor.headBonus}}" readonly></td>
           </tr>
+          
           <!-- répéter pour Moyen, Lourd -->
         </tbody>
         <tbody>
@@ -47,9 +48,9 @@
               </select>
             </td>
             <td><input type="number"></td>
+            <td><input type="number" value="2" readonly></td>
             <td><input type="number"></td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" value="{{sum pa bonus}}" readonly></td>
           </tr>
           <!-- répéter pour Moyen, Lourd -->
         </tbody>
@@ -66,13 +67,12 @@
               </select>
             </td>
             <td><input type="number"></td>
+            <td><input type="number" value="2" readonly></td>
             <td><input type="number"></td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" value="{{sum pa bonus}}" readonly></td>
           </tr>
         </tbody>
       </table>
-
       <!-- Corps -->
       <div class="section-title">Corps</div>
       <table class="armor-table">
@@ -95,9 +95,9 @@
               </select>
             </td>
             <td><input type="number"></td>
+            <td><input type="number" value="1" readonly></td>
             <td><input type="number"></td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" value="{{sum pa bonus}}" readonly></td>
           </tr>
         </tbody>
         <tbody>
@@ -113,9 +113,9 @@
               </select>
             </td>
             <td><input type="number"></td>
+            <td><input type="number" value="2" readonly></td>
             <td><input type="number"></td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" value="{{sum pa bonus}}" readonly></td>
           </tr>
         </tbody>
         <tbody>
@@ -131,9 +131,9 @@
               </select>
             </td>
             <td><input type="number"></td>
+            <td><input type="number" value="2" readonly></td>
             <td><input type="number"></td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" value="{{sum pa bonus}}" readonly></td>
           </tr>
         </tbody>
       </table>
@@ -160,9 +160,9 @@
               </select>
             </td>
             <td><input type="number"></td>
+            <td><input type="number" value="1" readonly></td>
             <td><input type="number"></td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" value="{{sum pa bonus}}" readonly></td>
           </tr>
         </tbody>
         <tbody>
@@ -178,9 +178,9 @@
               </select>
             </td>
             <td><input type="number"></td>
+            <td><input type="number" value="2" readonly></td>
             <td><input type="number"></td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" value="{{sum pa bonus}}" readonly></td>
           </tr>
         </tbody>
         <tbody>
@@ -196,9 +196,9 @@
               </select>
             </td>
             <td><input type="number"></td>
+            <td><input type="number" value="2" readonly></td>
             <td><input type="number"></td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" value="{{sum pa bonus}}" readonly></td>
           </tr>
         </tbody>
       </table>
@@ -225,9 +225,9 @@
               </select>
             </td>
             <td><input type="number"></td>
+            <td><input type="number" value="1" readonly></td>
             <td><input type="number"></td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" value="{{sum pa bonus}}" readonly></td>
           </tr>
         </tbody>
         <tbody>
@@ -243,9 +243,9 @@
               </select>
             </td>
             <td><input type="number"></td>
+            <td><input type="number" value="2" readonly></td>
             <td><input type="number"></td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" value="{{sum pa bonus}}" readonly></td>
           </tr>
         </tbody>
         <tbody>
@@ -261,15 +261,15 @@
               </select>
             </td>
             <td><input type="number"></td>
+            <td><input type="number" value="2" readonly></td>
             <td><input type="number"></td>
-            <td><input type="number"></td>
-            <td><input type="number"></td>
+            <td><input type="number" value="{{sum pa bonus}}" readonly></td>
           </tr>
         </tbody>
       </table>
     </div>
     
-    <div class="armor-figure">
+  <div class="armor-figure">
       <h4>Points d'Armure</h4>
       <div class="armor-points-grid">
         <!-- Tête -->

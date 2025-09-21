@@ -201,6 +201,7 @@ class WarhammerActorSheet extends ActorSheet {
       regles.splice(index, 1);
       this.actor.update({ "system.regles": regles });
     });
+
   }
 }
 
@@ -250,6 +251,10 @@ Hooks.once("init", function () {
   Handlebars.registerHelper("capitalize", function (str) {
     if (typeof str !== "string") return "";
     return str.charAt(0).toUpperCase() + str.slice(1);
+  });
+
+  Handlebars.registerHelper("sum", function (a, b) {
+    return (Number(a) || 0) + (Number(b) || 0);
   });
 
   preloadHandlebarsTemplates();
