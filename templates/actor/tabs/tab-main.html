@@ -245,12 +245,14 @@
           <th>Divers</th>
           <th>Total</th>
           <th>Jet</th>
-          <th>Avancé</th>
+          <th>Acquis</th>
         </tr>
       </thead>
       <tbody>
         <tr><td>Soins des animaux</td><td>Int</td>
-          <td><input type="number" name="system.skills.base.soinsAnimaux.niveau" value="{{system.skills.base.soinsAnimaux.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.soinsAnimaux.niveau" value="{{system.skills.base.soinsAnimaux.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.soinsAnimaux.talents" value="{{system.skills.base.soinsAnimaux.talents}}"></td>
           <td><input type="number" name="system.skills.base.soinsAnimaux.divers" value="{{system.skills.base.soinsAnimaux.divers}}"></td>
           <td><input type="number" name="system.skills.base.soinsAnimaux.total" value="{{system.skills.base.soinsAnimaux.total}}" readonly></td>
@@ -258,7 +260,9 @@
           <td><input type="checkbox" name="system.skills.base.soinsAnimaux.avance" {{checked system.skills.base.soinsAnimaux.avance}}></td>
         </tr>
         <tr><td>Charisme</td><td>Soc</td>
-          <td><input type="number" name="system.skills.base.charisme.niveau" value="{{system.skills.base.charisme.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.charisme.niveau" value="{{system.skills.base.charisme.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.charisme.talents" value="{{system.skills.base.charisme.talents}}"></td>
           <td><input type="number" name="system.skills.base.charisme.divers" value="{{system.skills.base.charisme.divers}}"></td>
           <td><input type="number" name="system.skills.base.charisme.total" value="{{system.skills.base.charisme.total}}" readonly></td>
@@ -266,23 +270,19 @@
           <td><input type="checkbox" name="system.skills.base.charisme.avance" {{checked system.skills.base.charisme.avance}}></td>
         </tr>
         <tr><td>Commandement</td><td>Soc</td>
-          <td><input type="number" name="system.skills.base.commandement.niveau" value="{{system.skills.base.commandement.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.commandement.niveau" value="{{system.skills.base.commandement.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.commandement.talents" value="{{system.skills.base.commandement.talents}}"></td>
           <td><input type="number" name="system.skills.base.commandement.divers" value="{{system.skills.base.commandement.divers}}"></td>
           <td><input type="number" name="system.skills.base.commandement.total" value="{{system.skills.base.commandement.total}}" readonly></td>
           <td><button type="button" class="skill-roll" data-skill="commandement">🎲</button></td>
           <td><input type="checkbox" name="system.skills.base.commandement.avance" {{checked system.skills.base.commandement.avance}}></td>
         </tr>
-        <tr><td>Dissimulation</td><td>Ag</td>
-          <td><input type="number" name="system.skills.base.dissimulation.niveau" value="{{system.skills.base.dissimulation.niveau}}"></td>
-          <td><input type="number" name="system.skills.base.dissimulation.talents" value="{{system.skills.base.dissimulation.talents}}"></td>
-          <td><input type="number" name="system.skills.base.dissimulation.divers" value="{{system.skills.base.dissimulation.divers}}"></td>
-          <td><input type="number" name="system.skills.base.dissimulation.total" value="{{system.skills.base.dissimulation.total}}" readonly></td>
-          <td><button type="button" class="skill-roll" data-skill="dissimulation">🎲</button></td>
-          <td><input type="checkbox" name="system.skills.base.dissimulation.avance" {{checked system.skills.base.dissimulation.avance}}></td>
-        </tr>
-        <tr><td>Résistance à l’alcool</td><td>E</td>
-          <td><input type="number" name="system.skills.base.resistanceAlcool.niveau" value="{{system.skills.base.resistanceAlcool.niveau}}"></td>
+        <tr><td>Résistance à l'alcool</td><td>E</td>
+          <td>
+            <input type="number" name="system.skills.base.resistanceAlcool.niveau" value="{{system.skills.base.resistanceAlcool.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.resistanceAlcool.talents" value="{{system.skills.base.resistanceAlcool.talents}}"></td>
           <td><input type="number" name="system.skills.base.resistanceAlcool.divers" value="{{system.skills.base.resistanceAlcool.divers}}"></td>
           <td><input type="number" name="system.skills.base.resistanceAlcool.total" value="{{system.skills.base.resistanceAlcool.total}}" readonly></td>
@@ -290,23 +290,39 @@
           <td><input type="checkbox" name="system.skills.base.resistanceAlcool.avance" {{checked system.skills.base.resistanceAlcool.avance}}></td>
         </tr>
         <tr><td>Déguisement</td><td>Soc</td>
-          <td><input type="number" name="system.skills.base.deguisement.niveau" value="{{system.skills.base.deguisement.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.deguisement.niveau" value="{{system.skills.base.deguisement.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.deguisement.talents" value="{{system.skills.base.deguisement.talents}}"></td>
           <td><input type="number" name="system.skills.base.deguisement.divers" value="{{system.skills.base.deguisement.divers}}"></td>
           <td><input type="number" name="system.skills.base.deguisement.total" value="{{system.skills.base.deguisement.total}}" readonly></td>
           <td><button type="button" class="skill-roll" data-skill="deguisement">🎲</button></td>
           <td><input type="checkbox" name="system.skills.base.deguisement.avance" {{checked system.skills.base.deguisement.avance}}></td>
         </tr>
-        <tr><td>Conduite d’attelages</td><td>Ag</td>
-          <td><input type="number" name="system.skills.base.conduiteAttelage.niveau" value="{{system.skills.base.conduiteAttelage.niveau}}"></td>
+        <tr><td>Conduite d'attelages</td><td>Ag</td>
+          <td>
+            <input type="number" name="system.skills.base.conduiteAttelage.niveau" value="{{system.skills.base.conduiteAttelage.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.conduiteAttelage.talents" value="{{system.skills.base.conduiteAttelage.talents}}"></td>
           <td><input type="number" name="system.skills.base.conduiteAttelage.divers" value="{{system.skills.base.conduiteAttelage.divers}}"></td>
           <td><input type="number" name="system.skills.base.conduiteAttelage.total" value="{{system.skills.base.conduiteAttelage.total}}" readonly></td>
           <td><button type="button" class="skill-roll" data-skill="conduiteAttelage">🎲</button></td>
           <td><input type="checkbox" name="system.skills.base.conduiteAttelage.avance" {{checked system.skills.base.conduiteAttelage.avance}}></td>
         </tr>
+        <tr><td>Dissimulation</td><td>Ag</td>
+          <td>
+            <input type="number" name="system.skills.base.dissimulation.niveau" value="{{system.skills.base.dissimulation.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.dissimulation.talents" value="{{system.skills.base.dissimulation.talents}}"></td>
+          <td><input type="number" name="system.skills.base.dissimulation.divers" value="{{system.skills.base.dissimulation.divers}}"></td>
+          <td><input type="number" name="system.skills.base.dissimulation.total" value="{{system.skills.base.dissimulation.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="dissimulation">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.dissimulation.avance" {{checked system.skills.base.dissimulation.avance}}></td>
+        </tr>
         <tr><td>Évaluation</td><td>Int</td>
-          <td><input type="number" name="system.skills.base.evaluation.niveau" value="{{system.skills.base.evaluation.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.evaluation.niveau" value="{{system.skills.base.evaluation.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.evaluation.talents" value="{{system.skills.base.evaluation.talents}}"></td>
           <td><input type="number" name="system.skills.base.evaluation.divers" value="{{system.skills.base.evaluation.divers}}"></td>
           <td><input type="number" name="system.skills.base.evaluation.total" value="{{system.skills.base.evaluation.total}}" readonly></td>
@@ -314,7 +330,9 @@
           <td><input type="checkbox" name="system.skills.base.evaluation.avance" {{checked system.skills.base.evaluation.avance}}></td>
         </tr>
         <tr><td>Jeu</td><td>Int</td>
-          <td><input type="number" name="system.skills.base.jeu.niveau" value="{{system.skills.base.jeu.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.jeu.niveau" value="{{system.skills.base.jeu.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.jeu.talents" value="{{system.skills.base.jeu.talents}}"></td>
           <td><input type="number" name="system.skills.base.jeu.divers" value="{{system.skills.base.jeu.divers}}"></td>
           <td><input type="number" name="system.skills.base.jeu.total" value="{{system.skills.base.jeu.total}}" readonly></td>
@@ -322,7 +340,9 @@
           <td><input type="checkbox" name="system.skills.base.jeu.avance" {{checked system.skills.base.jeu.avance}}></td>
         </tr>
         <tr><td>Commérage</td><td>Soc</td>
-          <td><input type="number" name="system.skills.base.commerage.niveau" value="{{system.skills.base.commerage.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.commerage.niveau" value="{{system.skills.base.commerage.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.commerage.talents" value="{{system.skills.base.commerage.talents}}"></td>
           <td><input type="number" name="system.skills.base.commerage.divers" value="{{system.skills.base.commerage.divers}}"></td>
           <td><input type="number" name="system.skills.base.commerage.total" value="{{system.skills.base.commerage.total}}" readonly></td>
@@ -330,7 +350,9 @@
           <td><input type="checkbox" name="system.skills.base.commerage.avance" {{checked system.skills.base.commerage.avance}}></td>
         </tr>
         <tr><td>Marchandage</td><td>Soc</td>
-          <td><input type="number" name="system.skills.base.marchandage.niveau" value="{{system.skills.base.marchandage.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.marchandage.niveau" value="{{system.skills.base.marchandage.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.marchandage.talents" value="{{system.skills.base.marchandage.talents}}"></td>
           <td><input type="number" name="system.skills.base.marchandage.divers" value="{{system.skills.base.marchandage.divers}}"></td>
           <td><input type="number" name="system.skills.base.marchandage.total" value="{{system.skills.base.marchandage.total}}" readonly></td>
@@ -344,7 +366,9 @@
             <option value="Soc" {{#if (eq system.skills.base.intimidation.cara "Soc")}}selected{{/if}}>Soc</option>
             </select>
         </td>
-        <td><input type="number" name="system.skills.base.intimidation.niveau" value="{{system.skills.base.intimidation.niveau}}"></td>
+        <td>
+          <input type="number" name="system.skills.base.intimidation.niveau" value="{{system.skills.base.intimidation.niveau}}" min="0" max="20" step="10">
+        </td>
         <td><input type="number" name="system.skills.base.intimidation.talents" value="{{system.skills.base.intimidation.talents}}"></td>
         <td><input type="number" name="system.skills.base.intimidation.divers" value="{{system.skills.base.intimidation.divers}}"></td>
         <td><input type="number" name="system.skills.base.intimidation.total" value="{{system.skills.base.intimidation.total}}" readonly></td>
@@ -353,7 +377,9 @@
         </tr>
 
         <tr><td>Survie</td><td>Int</td>
-          <td><input type="number" name="system.skills.base.survie.niveau" value="{{system.skills.base.survie.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.survie.niveau" value="{{system.skills.base.survie.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.survie.talents" value="{{system.skills.base.survie.talents}}"></td>
           <td><input type="number" name="system.skills.base.survie.divers" value="{{system.skills.base.survie.divers}}"></td>
           <td><input type="number" name="system.skills.base.survie.total" value="{{system.skills.base.survie.total}}" readonly></td>
@@ -361,7 +387,9 @@
           <td><input type="checkbox" name="system.skills.base.survie.avance" {{checked system.skills.base.survie.avance}}></td>
         </tr>
         <tr><td>Perception</td><td>Int</td>
-          <td><input type="number" name="system.skills.base.perception.niveau" value="{{system.skills.base.perception.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.perception.niveau" value="{{system.skills.base.perception.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.perception.talents" value="{{system.skills.base.perception.talents}}"></td>
           <td><input type="number" name="system.skills.base.perception.divers" value="{{system.skills.base.perception.divers}}"></td>
           <td><input type="number" name="system.skills.base.perception.total" value="{{system.skills.base.perception.total}}" readonly></td>
@@ -369,7 +397,9 @@
           <td><input type="checkbox" name="system.skills.base.perception.avance" {{checked system.skills.base.perception.avance}}></td>
         </tr>
         <tr><td>Équitation</td><td>Ag</td>
-          <td><input type="number" name="system.skills.base.equitation.niveau" value="{{system.skills.base.equitation.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.equitation.niveau" value="{{system.skills.base.equitation.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.equitation.talents" value="{{system.skills.base.equitation.talents}}"></td>
           <td><input type="number" name="system.skills.base.equitation.divers" value="{{system.skills.base.equitation.divers}}"></td>
           <td><input type="number" name="system.skills.base.equitation.total" value="{{system.skills.base.equitation.total}}" readonly></td>
@@ -377,7 +407,9 @@
           <td><input type="checkbox" name="system.skills.base.equitation.avance" {{checked system.skills.base.equitation.avance}}></td>
         </tr>
         <tr><td>Canotage</td><td>F</td>
-          <td><input type="number" name="system.skills.base.canotage.niveau" value="{{system.skills.base.canotage.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.canotage.niveau" value="{{system.skills.base.canotage.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.canotage.talents" value="{{system.skills.base.canotage.talents}}"></td>
           <td><input type="number" name="system.skills.base.canotage.divers" value="{{system.skills.base.canotage.divers}}"></td>
           <td><input type="number" name="system.skills.base.canotage.total" value="{{system.skills.base.canotage.total}}" readonly></td>
@@ -385,7 +417,9 @@
           <td><input type="checkbox" name="system.skills.base.canotage.avance" {{checked system.skills.base.canotage.avance}}></td>
         </tr>
         <tr><td>Escalade</td><td>F</td>
-          <td><input type="number" name="system.skills.base.escalade.niveau" value="{{system.skills.base.escalade.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.escalade.niveau" value="{{system.skills.base.escalade.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.escalade.talents" value="{{system.skills.base.escalade.talents}}"></td>
           <td><input type="number" name="system.skills.base.escalade.divers" value="{{system.skills.base.escalade.divers}}"></td>
           <td><input type="number" name="system.skills.base.escalade.total" value="{{system.skills.base.escalade.total}}" readonly></td>
@@ -393,15 +427,19 @@
           <td><input type="checkbox" name="system.skills.base.escalade.avance" {{checked system.skills.base.escalade.avance}}></td>
         </tr>
         <tr><td>Fouille</td><td>Int</td>
-          <td><input type="number" name="system.skills.base.fouille.niveau" value="{{system.skills.base.fouille.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.fouille.niveau" value="{{system.skills.base.fouille.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.fouille.talents" value="{{system.skills.base.fouille.talents}}"></td>
           <td><input type="number" name="system.skills.base.fouille.divers" value="{{system.skills.base.fouille.divers}}"></td>
-          <td><input type="number" name="system.skills.base.fouille.total" value="{{system.skills.base.fouille.total}}"></td>
-            <td><button type="button" class="skill-roll" data-skill="fouille">🎲</button></td>
-            <td><input type="checkbox" name="system.skills.base.fouille.avance" {{checked system.skills.base.fouille.avance}}></td>
+          <td><input type="number" name="system.skills.base.fouille.total" value="{{system.skills.base.fouille.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="fouille">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.fouille.avance" {{checked system.skills.base.fouille.avance}}></td>
         </tr>
         <tr><td>Déplacement Silencieux</td><td>Ag</td>
-          <td><input type="number" name="system.skills.base.deplacementSilencieux.niveau" value="{{system.skills.base.deplacementSilencieux.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.deplacementSilencieux.niveau" value="{{system.skills.base.deplacementSilencieux.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.deplacementSilencieux.talents" value="{{system.skills.base.deplacementSilencieux.talents}}"></td>
           <td><input type="number" name="system.skills.base.deplacementSilencieux.divers" value="{{system.skills.base.deplacementSilencieux.divers}}"></td>
           <td><input type="number" name="system.skills.base.deplacementSilencieux.total" value="{{system.skills.base.deplacementSilencieux.total}}" readonly></td>
@@ -409,7 +447,9 @@
           <td><input type="checkbox" name="system.skills.base.deplacementSilencieux.avance" {{checked system.skills.base.deplacementSilencieux.avance}}></td>
         </tr>
         <tr><td>Natation</td><td>F</td>
-          <td><input type="number" name="system.skills.base.natation.niveau" value="{{system.skills.base.natation.niveau}}"></td>
+          <td>
+            <input type="number" name="system.skills.base.natation.niveau" value="{{system.skills.base.natation.niveau}}" min="0" max="20" step="10">
+          </td>
           <td><input type="number" name="system.skills.base.natation.talents" value="{{system.skills.base.natation.talents}}"></td>
           <td><input type="number" name="system.skills.base.natation.divers" value="{{system.skills.base.natation.divers}}"></td>
           <td><input type="number" name="system.skills.base.natation.total" value="{{system.skills.base.natation.total}}" readonly></td>
@@ -452,12 +492,12 @@
               <option value="">-</option>
               <option value="CC" {{#if (eq skill.cara "CC")}}selected{{/if}}>CC</option>
               <option value="CT" {{#if (eq skill.cara "CT")}}selected{{/if}}>CT</option>
-              <option value="F" {{#if (eq skill.cara "F")}}selected{{/if}}>FOR</option>
-              <option value="E" {{#if (eq skill.cara "E")}}selected{{/if}}>END</option>
-              <option value="AGI" {{#if (eq skill.cara "Ag")}}selected{{/if}}>AGI</option>
-              <option value="INT" {{#if (eq skill.cara "Int")}}selected{{/if}}>INT</option>
+              <option value="F" {{#if (eq skill.cara "F")}}selected{{/if}}>F</option>
+              <option value="E" {{#if (eq skill.cara "E")}}selected{{/if}}>E</option>
+              <option value="Ag" {{#if (eq skill.cara "Ag")}}selected{{/if}}>Ag</option>
+              <option value="Int" {{#if (eq skill.cara "Int")}}selected{{/if}}>Int</option>
               <option value="FM" {{#if (eq skill.cara "FM")}}selected{{/if}}>FM</option>
-              <option value="Soc" {{#if (eq skill.cara "Soc")}}selected{{/if}}>SOC</option>
+              <option value="Soc" {{#if (eq skill.cara "Soc")}}selected{{/if}}>Soc</option>
             </select>
           </td>
 

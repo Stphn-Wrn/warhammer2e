@@ -131,96 +131,6 @@ class WarhammerActorSheet extends ActorSheet {
     };
 
     // ----- Données renvoyées au template -----
-    
-    // ----- Compétences -----
-    sys.skills ??= {};
-    sys.skills.base ??= {};
-
-    // Définir les caractéristiques par défaut pour chaque compétence de base
-    const defaultSkillCaracteristics = {
-      soinsAnimaux: 'Int',
-      charisme: 'Soc', 
-      commandement: 'Soc',
-      resistanceAlcool: 'E',
-      deguisement: 'Soc',
-      conduiteAttelage: 'Ag',
-      dissimulation: 'Ag',
-      evaluation: 'Int',
-      jeu: 'Int',
-      commerage: 'Soc',
-      marchandage: 'Soc',
-      intimidation: 'F', // Par défaut F, mais peut être changé
-      survie: 'Int',
-      perception: 'Int',
-      equitation: 'Ag',
-      canotage: 'F',
-      escalade: 'F',
-      fouille: 'Int',
-      deplacementSilencieux: 'Ag',
-      natation: 'F'
-    };
-
-    // Initialiser les compétences de base avec leurs caractéristiques
-    for (const [skillKey, defaultCara] of Object.entries(defaultSkillCaracteristics)) {
-      sys.skills.base[skillKey] ??= {};
-      sys.skills.base[skillKey].cara ??= defaultCara;
-      // Initialiser toutes les valeurs par défaut
-      sys.skills.base[skillKey].niveau ??= 0;
-      sys.skills.base[skillKey].talents ??= 0;
-      sys.skills.base[skillKey].divers ??= 0;
-      sys.skills.base[skillKey].avance ??= false;
-    }
-
-    // Mapping des caractéristiques pour les compétences
-    const caraMapping = {
-      INT: sys.principal.actuel.intelligence || 0,
-      SOC: sys.principal.actuel.sociabilite || 0,
-      AGI: sys.principal.actuel.agilite || 0,
-      END: sys.principal.actuel.endurance || 0,
-      FOR: sys.principal.actuel.force || 0,
-      CC: sys.principal.actuel.cc || 0,
-      CT: sys.principal.actuel.ct || 0,
-      FM: sys.principal.actuel.forceMentale || 0
-    };
-
-    // Calculer les totaux des compétences
-    for (const [skillKey, skill] of Object.entries(sys.skills.base)) {
-      if (skill && typeof skill === 'object') {
-        // Initialiser les valeurs par défaut
-        skill.niveau ??= 0;
-        skill.talents ??= 0;
-        skill.divers ??= 0;
-        skill.avance ??= false;
-        
-        // Pour intimidation, gérer le choix de caractéristique
-        let caraValue = 0;
-        if (skillKey === 'intimidation') {
-          // Si cara est définie, l'utiliser, sinon utiliser F par défaut
-          const caraChoice = skill.cara || 'F';
-          if (caraChoice === 'Soc') {
-            caraValue = caraMapping['Soc'] || 0;
-          } else {
-            caraValue = caraMapping['F'] || 0;
-          }
-        } else {
-          // Récupérer la valeur de la caractéristique normale
-          caraValue = caraMapping[skill.cara] || 0;
-        }
-        
-        // Calculer la base de la caractéristique (half si pas avance, full si avance)
-        const caraBase = skill.avance ? caraValue : Math.floor(caraValue / 2);
-        
-        // Calculer le total : niveau + talents + divers + caractéristique (conditionnelle)
-        const newTotal = (Number(skill.niveau) || 0) + 
-                        (Number(skill.talents) || 0) + 
-                        (Number(skill.divers) || 0) + 
-                        caraBase;
-        
-        // Toujours mettre à jour le total calculé
-        skill.total = newTotal;
-      }
-    }
-
     data.system = sys;
     data.type = this.actor.type;
     return data;
@@ -291,39 +201,6 @@ class WarhammerActorSheet extends ActorSheet {
       this.actor.update({ [`system.armorEquipped.${zone}`]: equipped });
     });
 
-    // Event listeners pour les compétences
-    html.find("input[name*='skills.base'][name*='niveau']").on("change", ev => {
-      const input = ev.currentTarget;
-      const name = input.name;
-      const newValue = parseInt(input.value) || 0;
-      const updateData = { [name]: newValue };
-      this.actor.update(updateData);
-    });
-
-    html.find("input[name*='skills.base'][name*='talents'], input[name*='skills.base'][name*='divers']").on("change", ev => {
-      const input = ev.currentTarget;
-      const name = input.name;
-      const newValue = parseInt(input.value) || 0;
-      const updateData = { [name]: newValue };
-      this.actor.update(updateData);
-    });
-
-    html.find("input[name*='skills.base'][name*='avance']").on("change", ev => {
-      const checkbox = ev.currentTarget;
-      const name = checkbox.name;
-      const newValue = checkbox.checked;
-      const updateData = { [name]: newValue };
-      this.actor.update(updateData);
-    });
-
-    html.find("select[name*='skills.base'][name*='cara']").on("change", ev => {
-      const select = ev.currentTarget;
-      const name = select.name;
-      const newValue = select.value;
-      const updateData = { [name]: newValue };
-      this.actor.update(updateData);
-    });
-
   }
 }
 
@@ -376,21 +253,6 @@ Hooks.once("init", function () {
 
   // Comparaison stricte
   Handlebars.registerHelper("eq", (a, b) => a === b);
-
-  // Helper pour calculer le total d'une compétence
-  Handlebars.registerHelper("skillTotal", function(skill, caracValue, options) {
-    if (!skill || typeof skill !== 'object') return 0;
-    
-    const niveau = Number(skill.niveau) || 0;
-    const talents = Number(skill.talents) || 0;
-    const divers = Number(skill.divers) || 0;
-    const avance = skill.avance || false;
-    const caraVal = Number(caracValue) || 0;
-    
-    const caraBase = avance ? caraVal : Math.floor(caraVal / 2);
-    
-    return niveau + talents + divers + caraBase;
-  });
 
   // Somme robuste (évite NaN / [object Object])
   Handlebars.registerHelper("sum", function (a, b) {

@@ -52,26 +52,26 @@
     },
     "skills": {
     "base": {
-      "soinsAnimaux": { "label": "Soins des animaux", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "charisme": { "label": "Charisme", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "commandement": { "label": "Commandement", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "dissimulation": { "label": "Dissimulation", "cara": "AGI", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "resistanceAlcool": { "label": "Résistance à l’alcool", "cara": "END", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "deguisement": { "label": "Déguisement", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "conduiteAttelage": { "label": "Conduite d’attelages", "cara": "AGI", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "evaluation": { "label": "Évaluation", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "jeu": { "label": "Jeu", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "commerage": { "label": "Commérage", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "marchandage": { "label": "Marchandage", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "intimidation": { "label": "Intimidation", "cara": "FOR", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "survie": { "label": "Survie", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "perception": { "label": "Perception", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "equitation": { "label": "Équitation", "cara": "AGI", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "canotage": { "label": "Canotage", "cara": "FOR", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "escalade": { "label": "Escalade", "cara": "FOR", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "fouille": { "label": "Fouille", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "deplacementSilencieux": { "label": "Déplacement Silencieux", "cara": "AGI", "niveau": 0, "talents": 0, "divers": 0, "total": 0 },
-      "natation": { "label": "Natation", "cara": "FOR", "niveau": 0, "talents": 0, "divers": 0, "total": 0 }
+      "soinsAnimaux": { "label": "Soins des animaux", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "charisme": { "label": "Charisme", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "commandement": { "label": "Commandement", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "dissimulation": { "label": "Dissimulation", "cara": "AGI", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "resistanceAlcool": { "label": "Résistance à l'alcool", "cara": "END", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "deguisement": { "label": "Déguisement", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "conduiteAttelage": { "label": "Conduite d'attelages", "cara": "AGI", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "evaluation": { "label": "Évaluation", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "jeu": { "label": "Jeu", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "commerage": { "label": "Commérage", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "marchandage": { "label": "Marchandage", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "intimidation": { "label": "Intimidation", "cara": "FOR", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "survie": { "label": "Survie", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "perception": { "label": "Perception", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "equitation": { "label": "Équitation", "cara": "AGI", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "canotage": { "label": "Canotage", "cara": "FOR", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "escalade": { "label": "Escalade", "cara": "FOR", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "fouille": { "label": "Fouille", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "deplacementSilencieux": { "label": "Déplacement Silencieux", "cara": "AGI", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "natation": { "label": "Natation", "cara": "FOR", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false }
     },
     "advanced": []
     },
@@ -90,7 +90,47 @@
       },
       "talents": [],
       "weapons": [],
-      "rangedWeapons": []
+      "rangedWeapons": [],
+      "armor": {
+        "head": {
+          "light": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "medium": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "heavy": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 }
+        },
+        "body": {
+          "light": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "medium": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "heavy": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 }
+        },
+        "armLeft": {
+          "light": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "medium": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "heavy": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 }
+        },
+        "armRight": {
+          "light": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "medium": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "heavy": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 }
+        },
+        "legLeft": {
+          "light": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "medium": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "heavy": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 }
+        },
+        "legRight": {
+          "light": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "medium": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "heavy": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 }
+        }
+      },
+      "armorTotals": {
+        "head": 0,
+        "body": 0,
+        "armLeft": 0,
+        "armRight": 0,
+        "legLeft": 0,
+        "legRight": 0
+      }
     }
   }
 }
