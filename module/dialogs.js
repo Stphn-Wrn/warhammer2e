@@ -57,7 +57,7 @@ async function resolveEchoTableResult(tableName) {
   const data = await resp.json();
   const table = (data.tables || []).find(t => t.name === tableName);
   if (!table) throw new Error('Table non trouvée: ' + tableName);
-  const roll = await new Roll('1d100').evaluate({async: true});
+  const roll = await new Roll('1d100').evaluate();
   const val = roll.total;
   const result = (table.results || []).find(r => r.range && r.range.length === 2 && val >= r.range[0] && val <= r.range[1]);
   if (!result) return `Jet: ${val} — Aucun résultat trouvé.`;
@@ -107,7 +107,7 @@ async function resolveColereResult() {
   const resp = await fetch(url);
   if (!resp.ok) throw new Error(`Impossible de charger ${url}`);
   const data = await resp.json();
-  const roll = await new Roll('1d100').evaluate({async: true});
+  const roll = await new Roll('1d100').evaluate();
   const val = roll.total;
   const result = (data.results || []).find(r => r.range && r.range.length === 2 && val >= r.range[0] && val <= r.range[1]);
   if (!result) return `Jet: ${val} — Aucun résultat trouvé.`;
@@ -164,7 +164,7 @@ export async function openSpellCastDialog(actor, spell) {
           }
 
           try {
-            const roll = await new Roll(`${magDice}d10`).evaluate({async: true});
+            const roll = await new Roll(`${magDice}d10`).evaluate();
             const dice = (roll.dice && roll.dice[0] && roll.dice[0].results) ? roll.dice[0].results.map(r => r.result) : [];
 
             const counts = {};
@@ -217,7 +217,7 @@ export async function openSpellCastDialog(actor, spell) {
 
               if (attackCount > 0) {
                 const dmgSpec = parseDamageSpec(spell?.degats ?? spell?.degat ?? '1d10+0');
-                const attacksRoll = await new Roll(`${attackCount}d100`).evaluate({async: true});
+                const attacksRoll = await new Roll(`${attackCount}d100`).evaluate();
                 const attackResults = (attacksRoll.dice && attacksRoll.dice[0] && attacksRoll.dice[0].results) ? attacksRoll.dice[0].results.map(r => r.result) : [];
                 summary.push(`<hr><div><strong>Attaques (${attackCount}):</strong></div>`);
                 for (let i=0;i<attackResults.length;i++) {

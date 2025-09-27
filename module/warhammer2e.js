@@ -247,6 +247,93 @@ Hooks.once("init", function () {
   preloadHandlebarsTemplates();
 });
 
+// Ensure combat initiative uses 1d10 + 1d10 per ten Agilité when no formula is provided
+Hooks.once('ready', () => {
+  try {
+    if (typeof Combatant !== 'undefined' && Combatant.prototype && Combatant.prototype.rollInitiative) {
+      const _origRollInitiative = Combatant.prototype.rollInitiative;
+      Combatant.prototype.rollInitiative = async function(options = {}) {
+        // Always use the system-specific initiative formula (1d10 + 1d10 per 10 Agilité)
+
+        // Attempt to compute agility tens from the associated actor
+        const actor = this.actor || (this.token ? this.token.actor : null) || (this.actorId ? game.actors.get(this.actorId) : null);
+        const agilite = actor?.system?.principal?.actuel?.agilite ? Number(actor.system.principal.actuel.agilite) : 0;
+        const tens = Math.floor((agilite || 0) / 10);
+
+  // Build roll expression: Nd10 where N = 1 + tens
+  const count = 1 + (tens || 0);
+  const expr = `${count}d10`;
+
+  const roll = await new Roll(expr).evaluate();
+  const total = roll.total;
+
+        // If update is requested (default true), persist to combatant
+        if (options.update !== false) {
+          try { await this.update({ initiative: total }); } catch (e) { console.error('Failed to set initiative on combatant', e); }
+        }
+
+  // Create a chat message for the initiative roll (default behavior)
+        try {
+          const speaker = ChatMessage.getSpeaker({ actor });
+          const faces = (roll.dice || []).flatMap(d => (d.results || []).map(r => r.result));
+          const facesStr = faces.length ? faces.join(' + ') : '';
+          const content = `<div class="initiative-roll"><strong>${actor?.name || 'Combatant'}</strong> — Initiative : <strong>${total}</strong>${facesStr ? ` (result ${facesStr})` : ''}</div>`;
+          ChatMessage.create({ user: game.user.id, speaker, content });
+        } catch (e) { console.warn('Failed to create initiative chat message', e); }
+
+        // Return the Roll to match Foundry expectations
+        return roll;
+      };
+      console.log('Warhammer2e | Patched Combatant.rollInitiative to use 1d10 + 1d10 per 10 Agilité');
+    }
+    // Also override Combat.rollAll to ensure the Combat Tracker uses our initiative formula
+    try {
+      if (typeof Combat !== 'undefined' && Combat.prototype && Combat.prototype.rollAll) {
+        const _origRollAll = Combat.prototype.rollAll;
+        Combat.prototype.rollAll = async function(options = {}) {
+          // First call the original implementation so any existing hooks / workflows run
+          try {
+            await _origRollAll.call(this, options);
+          } catch (err) {
+            // ignore original errors but continue to enforce our formula
+          }
+
+          const results = [];
+          for (const c of this.combatants) {
+            try {
+              const actor = c.actor || (c.token ? c.token.actor : null) || (c.actorId ? game.actors.get(c.actorId) : null) || null;
+              const agilite = actor?.system?.principal?.actuel?.agilite ? Number(actor.system.principal.actuel.agilite) : 0;
+              const tens = Math.floor((agilite || 0) / 10);
+              const count = 1 + (tens || 0);
+              const expr = `${count}d10`;
+              const roll = await new Roll(expr).evaluate();
+              const total = roll.total;
+              if (options.update !== false) {
+                try { await c.update({ initiative: total }); } catch (e) { console.warn('Warhammer2e | Failed to update combatant initiative', e); }
+              }
+              // Post chat for each roll (best-effort)
+              try {
+                const speaker = ChatMessage.getSpeaker({ actor });
+                const faces = (roll.dice || []).flatMap(d => (d.results || []).map(r => r.result));
+                const facesStr = faces.length ? faces.join(' + ') : '';
+                const content = `<div class="initiative-roll"><strong>${actor?.name || 'Combatant'}</strong> — Initiative : <strong>${total}</strong>${facesStr ? ` (result ${facesStr})` : ''}</div>`;
+                ChatMessage.create({ user: game.user.id, speaker, content });
+              } catch (e) { /* ignore chat failures */ }
+              results.push({ combatant: c, roll, total });
+            } catch (err) {
+              console.warn('Warhammer2e | rollAll failed for combatant', err);
+            }
+          }
+          return results;
+        };
+        console.log('Warhammer2e | Patched Combat.rollAll to use system initiative formula');
+      }
+    } catch (err) { console.warn('Warhammer2e | Unable to patch Combat.rollAll', err); }
+  } catch (err) {
+    console.warn('Warhammer2e | Unable to patch Combatant.rollInitiative', err);
+  }
+});
+
 // Charge echos.json et renvoie le texte correspondant au choix et au 1d100
 async function _resolveEchoTableResult(tableName) {
   const url = `systems/warhammer2e/echos.json`;
@@ -255,7 +342,7 @@ async function _resolveEchoTableResult(tableName) {
   const data = await resp.json();
   const table = (data.tables || []).find(t => t.name === tableName);
   if (!table) throw new Error('Table non trouvée: ' + tableName);
-  const roll = await new Roll('1d100').evaluate({async: true});
+  const roll = await new Roll('1d100').evaluate();
   const val = roll.total;
   const result = (table.results || []).find(r => r.range && r.range.length === 2 && val >= r.range[0] && val <= r.range[1]);
   if (!result) return `Jet: ${val} — Aucun résultat trouvé.`;
@@ -308,7 +395,7 @@ async function _resolveColereResult() {
   const resp = await fetch(url);
   if (!resp.ok) throw new Error(`Impossible de charger ${url}`);
   const data = await resp.json();
-  const roll = await new Roll('1d100').evaluate({async: true});
+  const roll = await new Roll('1d100').evaluate();
   const val = roll.total;
   const result = (data.results || []).find(r => r.range && r.range.length === 2 && val >= r.range[0] && val <= r.range[1]);
   if (!result) return `Jet: ${val} — Aucun résultat trouvé.`;

@@ -317,4 +317,76 @@ export function wireSheetHandlers(sheet, html) {
       default: 'roll'
     }).render(true);
   });
+
+  // Combat initiative roll: 1d10 + 1d10 per 10 points of Agilité
+  html.find('.combat-roll[data-attr="initiative"]').on('click', async ev => {
+    ev.preventDefault();
+    const actor = sheet.actor;
+    const agilite = Number(actor.system.principal?.actuel?.agilite) || 0;
+    const tens = Math.floor(agilite / 10);
+
+    try {
+      // Base d10
+      const baseRoll = await new Roll('1d10').evaluate();
+      let total = baseRoll.total;
+      let detailsHtml = `<div>Base: ${total}</div>`;
+
+      // Add one d10 per ten agility
+      let extraRolls = [];
+      if (tens > 0) {
+        extraRolls = [];
+        for (let i = 0; i < tens; i++) {
+          const r = await new Roll('1d10').evaluate();
+          extraRolls.push(r);
+          total += r.total;
+        }
+        detailsHtml += `<div>Agilité (${agilite}) => ${tens} d10 additionnels</div>`;
+        detailsHtml += `<div>Extras: ${extraRolls.map(r => r.total).join(', ')}</div>`;
+      }
+
+      // If there's an active combat and it's in setup/preparation (round 0 or not started), set the combatant's initiative
+      const combat = game.combat;
+      if (combat && combat.combatants && (combat.round === 0 || !combat.started)) {
+        // Find the combatant corresponding to this actor
+        const combatant = combat.combatants.find(c => c.actor?.id === actor.id || c.token?.actorId === actor.id);
+        if (combatant) {
+          try {
+            await combatant.update({ initiative: total });
+            // Post chat message after setting initiative
+              const content = `
+              <div class="initiative-roll">
+                Initiative : <strong>${total}</strong>
+              </div>
+            `;
+            ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content });
+          } catch (e) {
+            console.error('Unable to set combatant initiative', e);
+            ui.notifications.warn('Impossible de définir l\'initiative sur le combatant');
+          }
+        } else {
+          // No combatant found: just post chat
+          const content = `
+            <div class="initiative-roll">
+              Initiative : <strong>${total}</strong>
+              <div>${detailsHtml}</div>
+            </div>
+          `;
+          ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content });
+        }
+      } else {
+        // No active combat or combat already running: post chat message
+        const content = `
+          <div class="initiative-roll">
+            <strong>${actor.name}</strong> — Initiative : <strong>${total}</strong>
+            <div class="roll-details">${await baseRoll.render()}${tens > 0 ? extraRolls.map(r => `<div class="roll-details">${r.total}</div>`).join('') : ''}</div>
+            <div>${detailsHtml}</div>
+          </div>
+        `;
+        ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content });
+      }
+    } catch (err) {
+      console.error('Initiative roll failed', err);
+      ui.notifications.error('Erreur lors du jet d\'initiative');
+    }
+  });
 }
