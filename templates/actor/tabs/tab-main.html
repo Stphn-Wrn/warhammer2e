@@ -159,7 +159,6 @@
 <div class="section">
   <div class="section-title">
     Talents
-    <button type="button" class="talent-add">+ Ajouter</button>
   </div>
 
   <table class="skills-table">
@@ -184,7 +183,7 @@
         </td>
         <!-- Bouton Supprimer -->
         <td>
-          <button type="button" class="talent-delete" data-talent="{{i}}">🗑</button>
+          <button type="button" class="talent-delete" data-talent-id="{{talent.id}}">🗑</button>
         </td>
       </tr>
       {{/each}}
@@ -221,7 +220,7 @@
 
         <!-- Bouton Supprimer -->
         <td>
-          <button type="button" class="regle-delete" data-regle="{{i}}">🗑</button>
+          <button type="button" class="regle-delete" data-regle-id="{{regle.id}}">🗑</button>
         </td>
       </tr>
       {{/each}}
@@ -255,7 +254,7 @@
           </td>
           <td><input type="number" name="system.skills.base.soinsAnimaux.talents" value="{{system.skills.base.soinsAnimaux.talents}}"></td>
           <td><input type="number" name="system.skills.base.soinsAnimaux.divers" value="{{system.skills.base.soinsAnimaux.divers}}"></td>
-          <td><input type="number" name="system.skills.base.soinsAnimaux.total" value="{{system.skills.base.soinsAnimaux.total}}" readonly></td>
+          <td><input type="number" name="system.skills.base.soinsAnimaux.total" value="{{skillTotal system.skills.base.soinsAnimaux system.principal.actuel.intelligence}}" readonly></td>
           <td><button type="button" class="skill-roll" data-skill="soinsAnimaux">🎲</button></td>
           <td><input type="checkbox" name="system.skills.base.soinsAnimaux.avance" {{checked system.skills.base.soinsAnimaux.avance}}></td>
         </tr>
@@ -265,7 +264,7 @@
           </td>
           <td><input type="number" name="system.skills.base.charisme.talents" value="{{system.skills.base.charisme.talents}}"></td>
           <td><input type="number" name="system.skills.base.charisme.divers" value="{{system.skills.base.charisme.divers}}"></td>
-          <td><input type="number" name="system.skills.base.charisme.total" value="{{system.skills.base.charisme.total}}" readonly></td>
+          <td><input type="number" name="system.skills.base.charisme.total" value="{{skillTotal system.skills.base.charisme system.principal.actuel.sociabilite}}" readonly></td>
           <td><button type="button" class="skill-roll" data-skill="charisme">🎲</button></td>
           <td><input type="checkbox" name="system.skills.base.charisme.avance" {{checked system.skills.base.charisme.avance}}></td>
         </tr>
@@ -477,6 +476,7 @@
           <th>Divers</th>
           <th>Total</th>
           <th>Jet</th>
+          <th>Acquis</th>
           <th>Supp.</th>
         </tr>
       </thead>
@@ -505,11 +505,12 @@
           <td><input type="number" name="system.skills.advanced.{{i}}.niveau" value="{{skill.niveau}}"></td>
           <td><input type="number" name="system.skills.advanced.{{i}}.talents" value="{{skill.talents}}"></td>
           <td><input type="number" name="system.skills.advanced.{{i}}.divers" value="{{skill.divers}}"></td>
-          <td><input type="number" name="system.skills.advanced.{{i}}.total" value="{{skill.total}}" readonly></td>
+          <td><input type="number" name="system.skills.advanced.{{i}}.total" value="{{advancedSkillTotal skill ../system}}" readonly></td>
 
           <!-- Boutons -->
           <td><button type="button" class="skill-roll" data-skill="{{i}}">🎲</button></td>
-          <td><button type="button" class="skill-delete" data-skill="{{i}}">🗑</button></td>
+          <td><input type="checkbox" name="system.skills.advanced.{{i}}.avance" {{checked skill.avance}}></td>
+          <td><button type="button" class="skill-delete" data-skill-id="{{skill.id}}">🗑</button></td>
         </tr>
         {{/each}}
       </tbody>

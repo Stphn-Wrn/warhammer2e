@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "compatibility": { "minimum": "13", "verified": "13" },
   "authors": [{ "name": "Courbette" }],
-  "esmodules": ["module/warhammer2e.js"],
+  "esmodules": ["module/warhammer2e.js", "module/warhammerItemSheet.js"],
   "styles": ["styles/warhammer2e.css"],
   "languages": [
     { "lang": "fr", "name": "Français", "path": "lang/fr.json" },

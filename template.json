@@ -132,5 +132,13 @@
         "legRight": 0
       }
     }
+  },
+  "Item": {
+    "types": ["talent"],
+    "talent": {
+      "characteristic": "",
+      "bonus": 0,
+      "description": ""
+    }
   }
 }

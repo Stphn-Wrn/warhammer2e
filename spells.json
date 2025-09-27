@@ -1,0 +1,42 @@
+{
+  "ecole": {
+    "lumiere": [
+      {
+        "id": "",
+        "name": "Luminescence totale",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "Une bougie ayant été trempée dans l’eau bénite (+2)",
+        "description": "Vous illuminez toutes les pièces d’un bâtiment pendant PM heures. Si un démon ou un être ayant au moins une mutation est présent, vous en êtes averti."
+      }
+    ]
+  },
+  "divin": {
+    "sigmar": [
+        {
+        "id": "test",
+        "name": "test un",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "michel +234",
+        "description": "j'etre beau"
+      }
+    ],
+    "manann": [
+                {
+        "id": "test",
+        "name": "test un",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "michel +234",
+        "description": "j'etre beau"
+      }
+    ]
+  }
+}
