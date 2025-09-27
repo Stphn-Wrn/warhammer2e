@@ -32,6 +32,19 @@
       </tr>
       {{/each}}
     </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td><button type="button" class="stat-roll button" data-attr="cc">🎲</button></td>
+        <td><button type="button" class="stat-roll button" data-attr="ct">🎲</button></td>
+        <td><button type="button" class="stat-roll button" data-attr="force">🎲</button></td>
+        <td><button type="button" class="stat-roll button" data-attr="endurance">🎲</button></td>
+        <td><button type="button" class="stat-roll button" data-attr="agilite">🎲</button></td>
+        <td><button type="button" class="stat-roll button" data-attr="intelligence">🎲</button></td>
+        <td><button type="button" class="stat-roll button" data-attr="forceMentale">🎲</button></td>
+        <td><button type="button" class="stat-roll button" data-attr="sociabilite">🎲</button></td>
+      </tr>
+    </tfoot>
   </table>
 </div>
 
@@ -484,7 +497,11 @@
         {{#each system.skills.advanced as |skill i|}}
         <tr>
           <!-- Nom -->
-          <td><input type="text" name="system.skills.advanced.{{i}}.label" value="{{skill.label}}" placeholder="Nom"></td>
+          <td>
+            <input type="hidden" name="system.skills.advanced.{{i}}.id" value="{{skill.id}}" readonly>
+            <input type="hidden" name="system.skills.advanced.{{i}}.key" value="{{skill.key}}" readonly>
+            <input type="text" name="system.skills.advanced.{{i}}.label" value="{{skill.label}}" readonly>
+          </td>
 
           <!-- Caractéristique -->
           <td>
@@ -502,8 +519,8 @@
           </td>
 
           <!-- Valeurs -->
-          <td><input type="number" name="system.skills.advanced.{{i}}.niveau" value="{{skill.niveau}}"></td>
-          <td><input type="number" name="system.skills.advanced.{{i}}.talents" value="{{skill.talents}}"></td>
+          <td><input type="number" name="system.skills.advanced.{{i}}.niveau" value="{{skill.niveau}}" ></td>
+          <td><input type="number" name="system.skills.advanced.{{i}}.talents" value="{{skill.talents}}" ></td>
           <td><input type="number" name="system.skills.advanced.{{i}}.divers" value="{{skill.divers}}"></td>
           <td><input type="number" name="system.skills.advanced.{{i}}.total" value="{{advancedSkillTotal skill ../system}}" readonly></td>
 

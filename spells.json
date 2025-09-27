@@ -5,9 +5,12 @@
         "id": "testLumiere",
         "name": "test Lumiere",
         "portee": "30m",
-        "degats": "1d10+5",
+        "degats": "5",
+        "fureurConfirm": false,
+        "attaques": "Magie",
         "difficulte": 22,
         "temps": "2 actions complètes",
+        "bonusIngredient": "2",
         "ingredient": "Une bougie ayant été trempée dans l’eau bénite (+2)",
         "description": "Vous illuminez toutes les pièces d’un bâtiment pendant PM heures. Si un démon ou un être ayant au moins une mutation est présent, vous en êtes averti."
       }
