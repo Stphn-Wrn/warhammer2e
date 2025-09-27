@@ -1,9 +1,9 @@
 {
   "ecole": {
     "lumiere": [
-      {
-        "id": "",
-        "name": "Luminescence totale",
+        {
+        "id": "testLumiere",
+        "name": "test Lumiere",
         "portee": "30m",
         "degats": "1d10+5",
         "difficulte": 22,
@@ -11,13 +11,20 @@
         "ingredient": "Une bougie ayant été trempée dans l’eau bénite (+2)",
         "description": "Vous illuminez toutes les pièces d’un bâtiment pendant PM heures. Si un démon ou un être ayant au moins une mutation est présent, vous en êtes averti."
       }
-    ]
+    ],
+    "bete": [],
+    "mort": [],
+    "ombres": [],
+    "feu": [],
+    "vie": [],
+    "metal": [],
+    "cieux": []
   },
   "divin": {
     "sigmar": [
         {
-        "id": "test",
-        "name": "test un",
+        "id": "testSigmar",
+        "name": "test Sigmar",
         "portee": "30m",
         "degats": "1d10+5",
         "difficulte": 22,
@@ -26,10 +33,89 @@
         "description": "j'etre beau"
       }
     ],
-    "manann": [
-                {
-        "id": "test",
-        "name": "test un",
+    "shallya": [
+        {
+        "id": "testShallya",
+        "name": "test Shallya",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "michel +234",
+        "description": "j'etre beau"
+      }
+    ],
+    "morr": [{
+        "id": "testMorr",
+        "name": "test Morr",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "michel +234",
+        "description": "j'etre beau"
+      }
+    ],
+    "manann": [{
+        "id": "testManann",
+        "name": "test Manann",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "michel +234",
+        "description": "j'etre beau"
+      }
+    ],
+    "myrmidia": [{
+        "id": "testMyrmidia",
+        "name": "test Myrmidia",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "michel +234",
+        "description": "j'etre beau"
+      }
+    ],
+    "ranald": [{
+        "id": "testRanald",
+        "name": "test Ranald",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "michel +234",
+        "description": "j'etre beau"
+      }
+    ],
+    "taal": [{
+        "id": "testTaal",
+        "name": "test Taal",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "michel +234",
+        "description": "j'etre beau"
+      }
+    ],
+    "ulric": [
+        {
+        "id": "testUlric",
+        "name": "test Ulric",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "michel +234",
+        "description": "j'etre beau"
+      }
+    ],
+    "verena": [
+        {
+        "id": "testVerena",
+        "name": "test Verena",
         "portee": "30m",
         "degats": "1d10+5",
         "difficulte": 22,
@@ -38,5 +124,53 @@
         "description": "j'etre beau"
       }
     ]
-  }
+  },
+    "commune": [
+        {
+        "id": "testCommun",
+        "name": "test Commune",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "michel +234",
+        "description": "j'etre beau"
+      }
+    ],
+    "mineure": [
+        {
+        "id": "testMineure",
+        "name": "test Mineure",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "michel +234",
+        "description": "j'etre beau"
+      }
+    ],
+    "runes": [
+        {
+        "id": "testRunes",
+        "name": "test Runes",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "michel +234",
+        "description": "j'etre beau"
+      }
+    ],
+    "rituels": [
+        {
+        "id": "testRituels",
+        "name": "test Rituels",
+        "portee": "30m",
+        "degats": "1d10+5",
+        "difficulte": 22,
+        "temps": "2 actions complètes",
+        "ingredient": "michel +234",
+        "description": "j'etre beau"
+      }
+    ]
 }
