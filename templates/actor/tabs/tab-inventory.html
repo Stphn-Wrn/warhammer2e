@@ -1,0 +1,59 @@
+  <div class="coins-encart">
+      <div class="section-title">
+    Monnaie
+  </div>
+    <div class="coins-top-row" style="display:flex;gap:16px;align-items:center;margin-bottom:8px;">
+      <div class="coin-item" style="flex:1;display:flex;justify-content:space-between;align-items:center;padding:8px;border:1px solid #e0e0e0;background:#fbf9f7;">
+        <div>Sous de cuivre</div>
+        <div style="width:40%;"><input type="number" name="system.coins.copper" value="{{system.coins.copper}}" min="0" style="width:100%"></div>
+      </div>
+      <div class="coin-item" style="flex:1;display:flex;justify-content:space-between;align-items:center;padding:8px;border:1px solid #e0e0e0;background:#fbf9f7;">
+        <div>Pièce d'argent</div>
+        <div style="width:40%;"><input type="number" name="system.coins.silver" value="{{system.coins.silver}}" min="0" style="width:100%"></div>
+      </div>
+      <div class="coin-item" style="flex:1;display:flex;justify-content:space-between;align-items:center;padding:8px;border:1px solid #e0e0e0;background:#fbf9f7;">
+        <div>Couronne d'or</div>
+        <div style="width:40%;"><input type="number" name="system.coins.gold" value="{{system.coins.gold}}" min="0" style="width:100%"></div>
+      </div>
+    </div>
+
+    <div class="coins-exchange-row" style="padding:12px;border:1px solid #e0e0e0;background:#faf8f6;">
+      <div class="exchange-text" style="text-align:center;font-weight:700;margin-bottom:8px;">240 sous de cuivre = 20 pistols d'argent = 1 couronne d'or</div>
+      <div class="co-indicator" style="text-align:center;font-weight:700;">Total en CO: <span class="co-value">0</span></div>
+    </div>
+    
+    
+    </table>
+  </div>
+
+  <div class="section-title">
+    Inventaire
+    <button type="button" class="inventory-add">+ Ajouter</button>
+  </div>
+
+  <table class="inventory-table">
+    <thead>
+      <tr>
+        <th>Transporté?</th>
+        <th>Qté</th>
+        <th>Nom</th>
+        <th>Poids</th>
+        <th>Description</th>
+        <th>Supp.</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each system.inventory as |it i|}}
+      <tr>
+        <td><input type="checkbox" name="system.inventory.{{i}}.transported" {{#if it.transported}}checked{{/if}}></td>
+        <td><input type="number" name="system.inventory.{{i}}.quantity" value="{{it.quantity}}" min="1"></td>
+        <td><input type="text" name="system.inventory.{{i}}.name" value="{{it.name}}"></td>
+        <td><input type="number" step="0.1" name="system.inventory.{{i}}.weight" value="{{it.weight}}"></td>
+        <td><input type="text" name="system.inventory.{{i}}.description" value="{{it.description}}"></td>
+        <td><button type="button" class="inventory-delete" data-inv-id="{{it.id}}">🗑</button></td>
+        <input type="hidden" name="system.inventory.{{i}}.id" value="{{it.id}}">
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,28 @@
+<form class="warhammer2e item-sheet" novalidate>
+  <header>
+    <h1>{{name}}</h1>
+  </header>
+  <div class="sheet-body">
+    {{#if isTalent}}
+      <section>
+        <h2>Talent Details</h2>
+        <p>Define specific fields for talents here.</p>
+      </section>
+    {{else if isWeapon}}
+      <section>
+        <h2>Weapon Details</h2>
+        <p>Define specific fields for weapons here.</p>
+      </section>
+    {{else if isSkill}}
+      <section>
+        <h2>Skill Details</h2>
+        <p>Define specific fields for skills here.</p>
+      </section>
+    {{else}}
+      <section>
+        <h2>Other Item Details</h2>
+        <p>Define fields for other item types here.</p>
+      </section>
+    {{/if}}
+  </div>
+</form>

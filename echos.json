@@ -1,0 +1,60 @@
+{
+  "tables": [
+    {
+      "name": "Échos mineurs du Chaos",
+      "formula": "1d100",
+      "replacement": true,
+      "displayRoll": true,
+      "results": [
+        { "type": 0, "weight": 1, "range": [1, 10], "text": "Le lait et le vin tournent à/se gâtent dans un rayon de 10 mètres." },
+        { "type": 0, "weight": 1, "range": [11, 20], "text": "Rupture. Votre nez se met à saigner et ne s'arrête pas tant que vous n'avez pas réussi un test d'Endurance (un test par round)." },
+        { "type": 0, "weight": 1, "range": [21, 30], "text": "Souffle du Chaos. Un vent froid souffle dans le secteur." },
+        { "type": 0, "weight": 1, "range": [31, 40], "text": "Horripilation. Vos cheveux et poils se dressent pendant 1d10 rounds." },
+        { "type": 0, "weight": 1, "range": [41, 50], "text": "Lueur occulte. Vous luisez d'une lueur inquiétante pendant 1d10 rounds." },
+        { "type": 0, "weight": 1, "range": [51, 60], "text": "Aura surnaturelle. Tous les animaux dans un rayon de 10 mètres sont apeurés et fuient, sauf si vous réussissez un test de Dressage." },
+        { "type": 0, "weight": 1, "range": [61, 70], "text": "Hantise. Des voix spectrales murmurent dans l'air pendant toute la durée du sort." },
+        { "type": 0, "weight": 1, "range": [71, 80], "text": "Choc aethyrique. L'énergie magique vous fait perdre 1 point de Blessures, quels que soient votre BE et votre armure." },
+        { "type": 0, "weight": 1, "range": [81, 90], "text": "Blocage mental. Votre valeur de Magie est réduite de 1 pendant 1d10 minutes." },
+        { "type": 0, "weight": 1, "range": [91, 95], "text": "Fantaisie. Le MJ peut choisir un résultat de la liste ou inventer un phénomène similaire." },
+        { "type": 0, "weight": 1, "range": [96, 100], "text": "Malchance ! Retirez sur la table : Échos majeurs du Chaos." }
+      ]
+    },
+    {
+      "name": "Échos majeurs du Chaos",
+      "formula": "1d100",
+      "replacement": true,
+      "displayRoll": true,
+      "results": [
+        { "type": 0, "weight": 1, "range": [1, 10], "text": "Toutes les personnes dans un rayon de 40 mètres, y compris vous, perdent 1 point de Blessures (ignore armure et BE)." },
+        { "type": 0, "weight": 1, "range": [11, 20], "text": "Feu foudroyant. Votre valeur d'Endurance est réduite de 20% pendant 1d10 heures." },
+        { "type": 0, "weight": 1, "range": [21, 30], "text": "Flagellation de Tzeentch. Vous êtes assommé pendant 1d10 minutes." },
+        { "type": 0, "weight": 1, "range": [31, 40], "text": "Assaut aethyrique. Vous subissez un coup critique localisé aléatoire (jetez 1d100 pour la localisation et la valeur critique)." },
+        { "type": 0, "weight": 1, "range": [41, 50], "text": "Vision hérétique. Un prince démon vous montre une vision du Chaos. Vous gagnez 1d10 PE. Vous pouvez ensuite dépenser 100 XP pour acquérir le talent Sombre savoir (Chaos)." },
+        { "type": 0, "weight": 1, "range": [51, 60], "text": "Anéantissement. Votre valeur de Magie tombe à 0 et remonte ensuite de 1 point toutes les 24 heures jusqu'à son maximum." },
+        { "type": 0, "weight": 1, "range": [61, 70], "text": "Compagnie indésirable. Vous êtes attaqué par un nombre de démons mineurs égal à votre valeur de Magie." },
+        { "type": 0, "weight": 1, "range": [71, 80], "text": "Contrat démoniaque. Vous perdez 1d10 Blessures et une rune de Chaos brûlante s'inscrit sur votre corps. Si vous en obtenez 13, votre âme est offerte à un Dieu Sombre." },
+        { "type": 0, "weight": 1, "range": [81, 90], "text": "Appelé par le vide. Vous êtes aspiré dans les Royaumes du Chaos et perdu à jamais (sauf si vous dépensez 1 Point de Destin)." },
+        { "type": 0, "weight": 1, "range": [91, 100], "text": "Inspiration sinistre. Le MJ choisit un résultat de la liste ou invente un phénomène catastrophique." }
+      ]
+    },
+    {
+      "name": "Échos destructeurs du Chaos",
+      "formula": "1d100",
+      "replacement": true,
+      "displayRoll": true,
+      "results": [
+        { "type": 0, "weight": 1, "range": [1, 9], "text": "Yeux de sorcière. Vos pupilles deviennent rouges jusqu'à l'aube suivante." },
+        { "type": 0, "weight": 1, "range": [10, 18], "text": "Muet. Vous perdez la voix pendant 1d10 rounds." },
+        { "type": 0, "weight": 1, "range": [19, 27], "text": "Surcharge. Vous êtes assommé 1 round." },
+        { "type": 0, "weight": 1, "range": [28, 36], "text": "Familier. Un diablotin surgit et vous attaque au round suivant." },
+        { "type": 0, "weight": 1, "range": [37, 45], "text": "Aperçu du Chaos. Vous gagnez 1 PF. Vous pouvez ensuite dépenser 200 XP pour acquérir le talent Sombre savoir (Chaos)." },
+        { "type": 0, "weight": 1, "range": [46, 54], "text": "Attaque aethyrique. Vous perdez 1d10 Blessures, ignore armure et BE." },
+        { "type": 0, "weight": 1, "range": [55, 63], "text": "Affaiblissement. Votre Endurance est réduite de 10% pendant 1d10 minutes." },
+        { "type": 0, "weight": 1, "range": [64, 72], "text": "Apathie. Votre valeur de Magie est réduite de 1 pendant 24 heures." },
+        { "type": 0, "weight": 1, "range": [73, 81], "text": "Possession démoniaque. Vous êtes possédé 1 minute (le MJ contrôle vos actions)." },
+        { "type": 0, "weight": 1, "range": [82, 90], "text": "Vicieux délice. Le MJ peut choisir un résultat ou inventer un phénomène équivalent." },
+        { "type": 0, "weight": 1, "range": [91, 100], "text": "Coup du sort. Retirez sur un : Échos destructeurs du Chaos." }
+      ]
+    }
+  ]
+}

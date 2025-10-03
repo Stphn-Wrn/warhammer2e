@@ -1,0 +1,54 @@
+<section class="spells-section">
+  <!-- Manifestation du Chaos -->
+  <div class="section-title">Manifestation du Chaos</div>
+  <div class="chaos-row">
+      <label>Science de la Magie</label>
+      <select name="system.spells.school">
+        <option value="">—</option>
+        <option value="bete" {{#if (eq system.spells.school "bete")}}selected{{/if}}>Domaine de la Bête</option>
+        <option value="mort" {{#if (eq system.spells.school "mort")}}selected{{/if}}>Domaine de la Mort</option>
+        <option value="feu" {{#if (eq system.spells.school "feu")}}selected{{/if}}>Domaine du Feu</option>
+        <option value="cieux" {{#if (eq system.spells.school "cieux")}}selected{{/if}}>Domaine des Cieux</option>
+        <option value="vie" {{#if (eq system.spells.school "vie")}}selected{{/if}}>Domaine de la Vie</option>
+        <option value="lumiere" {{#if (eq system.spells.school "lumiere")}}selected{{/if}}>Domaine de la Lumière</option>
+        <option value="metal" {{#if (eq system.spells.school "metal")}}selected{{/if}}>Domaine du Métal</option>
+        <option value="ombres" {{#if (eq system.spells.school "ombres")}}selected{{/if}}>Domaine des Ombres</option>
+        <option value="glace" {{#if (eq system.spells.school "glace")}}selected{{/if}}>Domaine de Glace</option>
+        <option value="autre" {{#if (eq system.spells.school "autre")}}selected{{/if}}>Autre</option>
+      </select>
+  <button type="button" class="gold-roll btn-mal-col" data-action="malediction-tzeentch">Malédiction de Tzeentch</button>
+  <button type="button" class="gold-roll btn-mal-col" data-action="colere-dieux">Colère des Dieux</button>
+
+  <label>Domaine Divin</label>
+  <select name="system.spells.divine">
+    <option value="">—</option>
+    <option value="manann" {{#if (eq system.spells.divine "manann")}}selected{{/if}}>Domaine de Manann</option>
+    <option value="morr" {{#if (eq system.spells.divine "morr")}}selected{{/if}}>Domaine de Morr</option>
+    <option value="myrmidia" {{#if (eq system.spells.divine "myrmidia")}}selected{{/if}}>Domaine de Myrmidia</option>
+    <option value="ranald" {{#if (eq system.spells.divine "ranald")}}selected{{/if}}>Domaine de Ranald</option>
+    <option value="shallya" {{#if (eq system.spells.divine "shallya")}}selected{{/if}}>Domaine de Shallya</option>
+    <option value="sigmar" {{#if (eq system.spells.divine "sigmar")}}selected{{/if}}>Domaine de Sigmar</option>
+    <option value="taal" {{#if (eq system.spells.divine "taal")}}selected{{/if}}>Domaine de Taal & Rhya</option>
+    <option value="ulric" {{#if (eq system.spells.divine "ulric")}}selected{{/if}}>Domaine d'Ulric</option>
+    <option value="verena" {{#if (eq system.spells.divine "verena")}}selected{{/if}}>Domaine de Verena</option>
+    <option value="autre" {{#if (eq system.spells.divine "autre")}}selected{{/if}}>Autre</option>
+  </select>
+
+  </div>
+
+  <!-- Grimoire -->
+  <div class="section-title">Grimoire</div>
+  <div class="grimoire-buttons">
+    <button type="button" class="gold-tab" data-cat="commune">Commune</button>
+    <button type="button" class="gold-tab" data-cat="mineure">Mineure</button>
+    <button type="button" class="gold-tab" data-cat="occulte">Occulte</button>
+    <button type="button" class="gold-tab" data-cat="divin">Divin</button>
+    <button type="button" class="gold-tab" data-cat="runes">Runes</button>
+    <button type="button" class="gold-tab" data-cat="rituels">Rituels</button>
+    <button type="button" class="btn-emp-marq-foca">Empreintes Occultes</button>
+    <button type="button" class="btn-emp-marq-foca">Marques des dieux</button>
+  <button type="button" class="btn-emp-marq-foca" data-action="focalisation-roll">Focalisation</button>
+  </div>
+
+  <div class="spells-list" style="margin-top: 12px;"></div>
+</section>

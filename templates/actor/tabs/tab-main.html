@@ -1,0 +1,594 @@
+<div class="main-left">
+
+<!-- Profil Principal -->
+<div class="section">
+  <div class="section-title">Profil Principal</div>
+  <table class="profile-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>CC</th>
+        <th>CT</th>
+        <th>FOR</th>
+        <th>END</th>
+        <th>AGI</th>
+        <th>INT</th>
+        <th>FM</th>
+        <th>SOC</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each system.principal as |row key|}}
+      <tr>
+        <td>{{capitalize key}}</td>
+        <td><input type="number" name="system.principal.{{key}}.cc" value="{{row.cc}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
+        <td><input type="number" name="system.principal.{{key}}.ct" value="{{row.ct}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
+        <td><input type="number" name="system.principal.{{key}}.force" value="{{row.force}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
+        <td><input type="number" name="system.principal.{{key}}.endurance" value="{{row.endurance}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
+        <td><input type="number" name="system.principal.{{key}}.agilite" value="{{row.agilite}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
+        <td><input type="number" name="system.principal.{{key}}.intelligence" value="{{row.intelligence}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
+        <td><input type="number" name="system.principal.{{key}}.forceMentale" value="{{row.forceMentale}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
+        <td><input type="number" name="system.principal.{{key}}.sociabilite" value="{{row.sociabilite}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
+      </tr>
+      {{/each}}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td><button type="button" class="stat-roll button principal-profile-button" data-attr="cc">🎲</button></td>
+        <td><button type="button" class="stat-roll button principal-profile-button" data-attr="ct">🎲</button></td>
+        <td><button type="button" class="stat-roll button principal-profile-button" data-attr="force">🎲</button></td>
+        <td><button type="button" class="stat-roll button principal-profile-button" data-attr="endurance">🎲</button></td>
+        <td><button type="button" class="stat-roll button principal-profile-button" data-attr="agilite">🎲</button></td>
+        <td><button type="button" class="stat-roll button principal-profile-button" data-attr="intelligence">🎲</button></td>
+        <td><button type="button" class="stat-roll button principal-profile-button" data-attr="forceMentale">🎲</button></td>
+        <td><button type="button" class="stat-roll button principal-profile-button" data-attr="sociabilite">🎲</button></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<!-- Profil Secondaire -->
+<div class="section">
+  <div class="section-title">Profil Secondaire</div>
+  <table class="profile-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>A</th>
+        <th>B</th>
+        <th>BF</th>
+        <th>BE</th>
+        <th>Mag</th>
+        <th>MVT</th>
+        <th>PF</th>
+        <th>PD</th>
+      </tr>
+    </thead>
+    <tbody class="principal-profile">
+      {{#each system.secondaire as |row key|}}
+      <tr>
+        <td>{{capitalize key}}</td>
+
+        <!-- A -->
+        <td><input type="number" name="system.secondaire.{{key}}.a" value="{{row.a}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
+
+        <!-- B -->
+        <td><input type="number" name="system.secondaire.{{key}}.b" value="{{row.b}}" {{#if (or (eq key "actuel") (eq key "carriere") )}}readonly{{/if}}></td>
+
+        <!-- BF -->
+        <td>
+          {{#if (or (eq key "base") (eq key "mod") (or (eq key "actuel") (eq key "carriere")))}}
+            <input type="number" name="system.secondaire.{{key}}.bf" value="{{row.bf}}" {{#if (or (eq key "actuel") (eq key "carriere") (eq key "base"))}}readonly{{/if}}>
+          {{else}}
+            <input type="text" value="-" readonly class="readonly-field">
+          {{/if}}
+        </td>
+
+        <!-- BE -->
+        <td>
+          {{#if (or (eq key "base") (eq key "mod") (or (eq key "actuel") (eq key "carriere")))}}
+            <input type="number" name="system.secondaire.{{key}}.be" value="{{row.be}}" {{#if (or (eq key "actuel") (eq key "carriere") (eq key "base"))}}readonly{{/if}}>
+          {{else}}
+            <input type="text" value="-" readonly class="readonly-field">
+          {{/if}}
+        </td>
+
+        <!-- Mag -->
+        <td><input type="number" name="system.secondaire.{{key}}.mag" value="{{row.mag}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
+
+        <!-- MUN -->
+        <td><input type="number" name="system.secondaire.{{key}}.mvt" value="{{row.mvt}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
+
+        <!-- PF -->
+        <td>
+          {{#if (or (eq key "base") (eq key "mod") (or (eq key "actuel") (eq key "carriere")))}}
+            <input type="number" name="system.secondaire.{{key}}.pf" value="{{row.pf}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}>
+          {{else}}
+            <input type="text" value="-" readonly class="readonly-field">
+          {{/if}}
+        </td>
+
+        <!-- PD -->
+        <td>
+          {{#if (or (eq key "talents") (eq key "carriere"))}}
+            <input type="text" value="-" readonly class="readonly-field">
+          {{else}}
+            <input type="number" name="system.secondaire.{{key}}.pd" value="{{row.pd}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}>
+          {{/if}}
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+
+<!-- Combat -->
+<div class="section">
+  <div class="section-title">Combat</div>
+  <table class="combat-table">
+    <tr>
+      <!-- Initiative : uniquement le bouton -->
+      <td class="combat-cell">
+        <label>Init.</label>
+        <button type="button" class="combat-roll button roll-init" data-attr="initiative">Roll</button>
+      </td>
+
+      <!-- Blessures -->
+      <td class="combat-cell">
+        <label>Blessures</label>
+        <input type="number" name="system.combat.hp" value="{{system.combat.hp}}">
+      </td>
+
+      <!-- Mouvement -->
+      <td class="combat-cell">
+        <label>Mouvement</label>
+        <input type="number" name="system.combat.move" value="{{system.combat.move}}">
+      </td>
+
+      <!-- Charge -->
+      <td class="combat-cell">
+        <label>Charge</label>
+        <input type="number" name="system.combat.charge" value="{{system.combat.charge}}">
+      </td>
+
+      <!-- Course -->
+      <td class="combat-cell">
+        <label>Course</label>
+        <input type="number" name="system.combat.course" value="{{system.combat.course}}">
+      </td>
+
+      <!-- Saut -->
+      <td class="combat-cell">
+        <label>Saut</label>
+        <input type="number" name="system.combat.jump" value="{{system.combat.jump}}">
+      </td>
+
+      <!-- Chance -->
+      <td class="combat-cell">
+        <label for="chance-actuel">Chance</label>
+        <input id="chance-actuel" type="number" name="system.points.chance" value="{{system.points.chance}}" min="0" max="{{system.secondaire.actuel.pd}}">
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- Talents -->
+<div class="section">
+  <div class="section-title">
+    Talents
+        <button type="button" class="talent-add">+ Ajouter</button>
+
+  </div>
+
+  <table class="skills-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Description</th>
+        <th>Supp.</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each system.talents as |talent i|}}
+      <tr>
+        <!-- Nom -->
+        <td>
+          <input type="text" name="system.talents.{{i}}.name" value="{{talent.name}}" placeholder="Nom du talent">
+        </td>
+
+        <!-- Description -->
+        <td>
+          <input type="text" name="system.talents.{{i}}.description" value="{{talent.description}}" placeholder="Description">
+        </td>
+        <!-- Bouton Supprimer -->
+        <td>
+          <button type="button" class="talent-delete" data-talent-id="{{talent.id}}">🗑</button>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-title">
+    Connaissances & Autres
+    <button type="button" class="connaissance-add">+ Ajouter</button>
+  </div>
+
+  <table class="skills-table knowledge-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Type</th>
+        <th>Cara</th>
+        <th>Valeur</th>
+        <th>Jet</th>
+        <th>Supp.</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each system.connaissances as |connaissance i|}}
+      <tr>
+        <td>
+          <input type="hidden" name="system.connaissances.{{i}}.id" value="{{connaissance.id}}">
+          <input type="text" name="system.connaissances.{{i}}.name" value="{{connaissance.name}}" placeholder="Nom de la connaissance">
+        </td>
+        <td>
+          <select name="system.connaissances.{{i}}.type" class="connaissance-type">
+            <option value="generale" {{#if (eq connaissance.type "generale")}}selected{{/if}}>Générale</option>
+            <option value="academique" {{#if (eq connaissance.type "academique")}}selected{{/if}}>Académique</option>
+            <option value="artistique" {{#if (eq connaissance.type "artistique")}}selected{{/if}}>Expr. Artistique</option>
+            <option value="metier" {{#if (eq connaissance.type "metier")}}selected{{/if}}>Métier</option>
+          </select>
+        </td>
+        <td>
+          <select name="system.connaissances.{{i}}.cara" class="connaissance-cara">
+            <option value="cc" {{#if (eq connaissance.cara "cc")}}selected{{/if}}>CC</option>
+            <option value="ct" {{#if (eq connaissance.cara "ct")}}selected{{/if}}>CT</option>
+            <option value="force" {{#if (eq connaissance.cara "force")}}selected{{/if}}>FOR</option>
+            <option value="endurance" {{#if (eq connaissance.cara "endurance")}}selected{{/if}}>END</option>
+            <option value="agilite" {{#if (eq connaissance.cara "agilite")}}selected{{/if}}>AGI</option>
+            <option value="intelligence" {{#if (eq connaissance.cara "intelligence")}}selected{{/if}}>INT</option>
+            <option value="forceMentale" {{#if (eq connaissance.cara "forceMentale")}}selected{{/if}}>FM</option>
+            <option value="sociabilite" {{#if (eq connaissance.cara "sociabilite")}}selected{{/if}}>SOC</option>
+          </select>
+        </td>
+        <td>
+          <input type="number" class="connaissance-target" value="{{connaissance.targetValue}}" readonly>
+        </td>
+        <td>
+          <button type="button" class="connaissance-roll button" data-index="{{i}}">🎲</button>
+        </td>
+        <td>
+          <button type="button" class="connaissance-delete" data-connaissance-id="{{connaissance.id}}">🗑</button>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-title">
+    Règles Spéciales
+    <button type="button" class="regles-spe-add">+ Ajouter</button>
+  </div>
+
+  <table class="regle-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Description</th>
+        <th>Supp.</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each system.regles as |regle i|}}
+      <tr>
+        <!-- Nom -->
+        <td>
+          <input type="text" name="system.regles.{{i}}.name" value="{{regle.name}}" placeholder="Nom de la règle spéciale">
+        </td>
+
+        <!-- Description -->
+        <td>
+          <input type="text" name="system.regles.{{i}}.description" value="{{regle.description}}" placeholder="Description">
+        </td>
+
+        <!-- Bouton Supprimer -->
+        <td>
+          <button type="button" class="regle-delete" data-regle-id="{{regle.id}}">🗑</button>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+</div>
+<div class="main-right">
+
+  <!-- Compétences de Base -->
+  <div class="section">
+    <div class="section-title">Compétences de Base</div>
+    <table class="skills-table">
+      <thead>
+        <tr>
+          <th>Compétence</th>
+          <th>Cara</th>
+          <th>Niveau</th>
+          <th>Talents</th>
+          <th>Divers</th>
+          <th>Total</th>
+          <th>Jet</th>
+          <th>Acquis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Soins des animaux</td><td>Int</td>
+          <td>
+            <input type="number" name="system.skills.base.soinsAnimaux.niveau" value="{{system.skills.base.soinsAnimaux.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.soinsAnimaux.talents" value="{{system.skills.base.soinsAnimaux.talents}}"></td>
+          <td><input type="number" name="system.skills.base.soinsAnimaux.divers" value="{{system.skills.base.soinsAnimaux.divers}}"></td>
+          <td><input type="number" name="system.skills.base.soinsAnimaux.total" value="{{skillTotal system.skills.base.soinsAnimaux system.principal.actuel.intelligence}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="soinsAnimaux">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.soinsAnimaux.avance" {{checked system.skills.base.soinsAnimaux.avance}}></td>
+        </tr>
+        <tr><td>Charisme</td><td>Soc</td>
+          <td>
+            <input type="number" name="system.skills.base.charisme.niveau" value="{{system.skills.base.charisme.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.charisme.talents" value="{{system.skills.base.charisme.talents}}"></td>
+          <td><input type="number" name="system.skills.base.charisme.divers" value="{{system.skills.base.charisme.divers}}"></td>
+          <td><input type="number" name="system.skills.base.charisme.total" value="{{skillTotal system.skills.base.charisme system.principal.actuel.sociabilite}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="charisme">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.charisme.avance" {{checked system.skills.base.charisme.avance}}></td>
+        </tr>
+        <tr><td>Commandement</td><td>Soc</td>
+          <td>
+            <input type="number" name="system.skills.base.commandement.niveau" value="{{system.skills.base.commandement.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.commandement.talents" value="{{system.skills.base.commandement.talents}}"></td>
+          <td><input type="number" name="system.skills.base.commandement.divers" value="{{system.skills.base.commandement.divers}}"></td>
+          <td><input type="number" name="system.skills.base.commandement.total" value="{{system.skills.base.commandement.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="commandement">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.commandement.avance" {{checked system.skills.base.commandement.avance}}></td>
+        </tr>
+        <tr><td>Résistance à l'alcool</td><td>E</td>
+          <td>
+            <input type="number" name="system.skills.base.resistanceAlcool.niveau" value="{{system.skills.base.resistanceAlcool.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.resistanceAlcool.talents" value="{{system.skills.base.resistanceAlcool.talents}}"></td>
+          <td><input type="number" name="system.skills.base.resistanceAlcool.divers" value="{{system.skills.base.resistanceAlcool.divers}}"></td>
+          <td><input type="number" name="system.skills.base.resistanceAlcool.total" value="{{system.skills.base.resistanceAlcool.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="resistanceAlcool">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.resistanceAlcool.avance" {{checked system.skills.base.resistanceAlcool.avance}}></td>
+        </tr>
+        <tr><td>Déguisement</td><td>Soc</td>
+          <td>
+            <input type="number" name="system.skills.base.deguisement.niveau" value="{{system.skills.base.deguisement.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.deguisement.talents" value="{{system.skills.base.deguisement.talents}}"></td>
+          <td><input type="number" name="system.skills.base.deguisement.divers" value="{{system.skills.base.deguisement.divers}}"></td>
+          <td><input type="number" name="system.skills.base.deguisement.total" value="{{system.skills.base.deguisement.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="deguisement">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.deguisement.avance" {{checked system.skills.base.deguisement.avance}}></td>
+        </tr>
+        <tr><td>Conduite d'attelages</td><td>Ag</td>
+          <td>
+            <input type="number" name="system.skills.base.conduiteAttelage.niveau" value="{{system.skills.base.conduiteAttelage.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.conduiteAttelage.talents" value="{{system.skills.base.conduiteAttelage.talents}}"></td>
+          <td><input type="number" name="system.skills.base.conduiteAttelage.divers" value="{{system.skills.base.conduiteAttelage.divers}}"></td>
+          <td><input type="number" name="system.skills.base.conduiteAttelage.total" value="{{system.skills.base.conduiteAttelage.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="conduiteAttelage">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.conduiteAttelage.avance" {{checked system.skills.base.conduiteAttelage.avance}}></td>
+        </tr>
+        <tr><td>Dissimulation</td><td>Ag</td>
+          <td>
+            <input type="number" name="system.skills.base.dissimulation.niveau" value="{{system.skills.base.dissimulation.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.dissimulation.talents" value="{{system.skills.base.dissimulation.talents}}"></td>
+          <td><input type="number" name="system.skills.base.dissimulation.divers" value="{{system.skills.base.dissimulation.divers}}"></td>
+          <td><input type="number" name="system.skills.base.dissimulation.total" value="{{system.skills.base.dissimulation.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="dissimulation">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.dissimulation.avance" {{checked system.skills.base.dissimulation.avance}}></td>
+        </tr>
+        <tr><td>Évaluation</td><td>Int</td>
+          <td>
+            <input type="number" name="system.skills.base.evaluation.niveau" value="{{system.skills.base.evaluation.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.evaluation.talents" value="{{system.skills.base.evaluation.talents}}"></td>
+          <td><input type="number" name="system.skills.base.evaluation.divers" value="{{system.skills.base.evaluation.divers}}"></td>
+          <td><input type="number" name="system.skills.base.evaluation.total" value="{{system.skills.base.evaluation.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="evaluation">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.evaluation.avance" {{checked system.skills.base.evaluation.avance}}></td>
+        </tr>
+        <tr><td>Jeu</td><td>Int</td>
+          <td>
+            <input type="number" name="system.skills.base.jeu.niveau" value="{{system.skills.base.jeu.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.jeu.talents" value="{{system.skills.base.jeu.talents}}"></td>
+          <td><input type="number" name="system.skills.base.jeu.divers" value="{{system.skills.base.jeu.divers}}"></td>
+          <td><input type="number" name="system.skills.base.jeu.total" value="{{system.skills.base.jeu.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="jeu">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.jeu.avance" {{checked system.skills.base.jeu.avance}}></td>
+        </tr>
+        <tr><td>Commérage</td><td>Soc</td>
+          <td>
+            <input type="number" name="system.skills.base.commerage.niveau" value="{{system.skills.base.commerage.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.commerage.talents" value="{{system.skills.base.commerage.talents}}"></td>
+          <td><input type="number" name="system.skills.base.commerage.divers" value="{{system.skills.base.commerage.divers}}"></td>
+          <td><input type="number" name="system.skills.base.commerage.total" value="{{system.skills.base.commerage.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="commerage">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.commerage.avance" {{checked system.skills.base.commerage.avance}}></td>
+        </tr>
+        <tr><td>Marchandage</td><td>Soc</td>
+          <td>
+            <input type="number" name="system.skills.base.marchandage.niveau" value="{{system.skills.base.marchandage.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.marchandage.talents" value="{{system.skills.base.marchandage.talents}}"></td>
+          <td><input type="number" name="system.skills.base.marchandage.divers" value="{{system.skills.base.marchandage.divers}}"></td>
+          <td><input type="number" name="system.skills.base.marchandage.total" value="{{system.skills.base.marchandage.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="marchandage">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.marchandage.avance" {{checked system.skills.base.marchandage.avance}}></td>
+        </tr>
+        <tr><td>Intimidation</td>
+        <td>
+            <select name="system.skills.base.intimidation.cara">
+            <option value="F" {{#if (eq system.skills.base.intimidation.cara "F")}}selected{{/if}}>F</option>
+            <option value="Soc" {{#if (eq system.skills.base.intimidation.cara "Soc")}}selected{{/if}}>Soc</option>
+            </select>
+        </td>
+        <td>
+          <input type="number" name="system.skills.base.intimidation.niveau" value="{{system.skills.base.intimidation.niveau}}" min="0" max="20" step="10">
+        </td>
+        <td><input type="number" name="system.skills.base.intimidation.talents" value="{{system.skills.base.intimidation.talents}}"></td>
+        <td><input type="number" name="system.skills.base.intimidation.divers" value="{{system.skills.base.intimidation.divers}}"></td>
+        <td><input type="number" name="system.skills.base.intimidation.total" value="{{system.skills.base.intimidation.total}}" readonly></td>
+        <td><button type="button" class="skill-roll" data-skill="intimidation">🎲</button></td>
+        <td><input type="checkbox" name="system.skills.base.intimidation.avance" {{checked system.skills.base.intimidation.avance}}></td>
+        </tr>
+
+        <tr><td>Survie</td><td>Int</td>
+          <td>
+            <input type="number" name="system.skills.base.survie.niveau" value="{{system.skills.base.survie.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.survie.talents" value="{{system.skills.base.survie.talents}}"></td>
+          <td><input type="number" name="system.skills.base.survie.divers" value="{{system.skills.base.survie.divers}}"></td>
+          <td><input type="number" name="system.skills.base.survie.total" value="{{system.skills.base.survie.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="survie">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.survie.avance" {{checked system.skills.base.survie.avance}}></td>
+        </tr>
+        <tr><td>Perception</td><td>Int</td>
+          <td>
+            <input type="number" name="system.skills.base.perception.niveau" value="{{system.skills.base.perception.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.perception.talents" value="{{system.skills.base.perception.talents}}"></td>
+          <td><input type="number" name="system.skills.base.perception.divers" value="{{system.skills.base.perception.divers}}"></td>
+          <td><input type="number" name="system.skills.base.perception.total" value="{{system.skills.base.perception.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="perception">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.perception.avance" {{checked system.skills.base.perception.avance}}></td>
+        </tr>
+        <tr><td>Équitation</td><td>Ag</td>
+          <td>
+            <input type="number" name="system.skills.base.equitation.niveau" value="{{system.skills.base.equitation.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.equitation.talents" value="{{system.skills.base.equitation.talents}}"></td>
+          <td><input type="number" name="system.skills.base.equitation.divers" value="{{system.skills.base.equitation.divers}}"></td>
+          <td><input type="number" name="system.skills.base.equitation.total" value="{{system.skills.base.equitation.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="equitation">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.equitation.avance" {{checked system.skills.base.equitation.avance}}></td>
+        </tr>
+        <tr><td>Canotage</td><td>F</td>
+          <td>
+            <input type="number" name="system.skills.base.canotage.niveau" value="{{system.skills.base.canotage.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.canotage.talents" value="{{system.skills.base.canotage.talents}}"></td>
+          <td><input type="number" name="system.skills.base.canotage.divers" value="{{system.skills.base.canotage.divers}}"></td>
+          <td><input type="number" name="system.skills.base.canotage.total" value="{{system.skills.base.canotage.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="canotage">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.canotage.avance" {{checked system.skills.base.canotage.avance}}></td>
+        </tr>
+        <tr><td>Escalade</td><td>F</td>
+          <td>
+            <input type="number" name="system.skills.base.escalade.niveau" value="{{system.skills.base.escalade.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.escalade.talents" value="{{system.skills.base.escalade.talents}}"></td>
+          <td><input type="number" name="system.skills.base.escalade.divers" value="{{system.skills.base.escalade.divers}}"></td>
+          <td><input type="number" name="system.skills.base.escalade.total" value="{{system.skills.base.escalade.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="escalade">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.escalade.avance" {{checked system.skills.base.escalade.avance}}></td>
+        </tr>
+        <tr><td>Fouille</td><td>Int</td>
+          <td>
+            <input type="number" name="system.skills.base.fouille.niveau" value="{{system.skills.base.fouille.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.fouille.talents" value="{{system.skills.base.fouille.talents}}"></td>
+          <td><input type="number" name="system.skills.base.fouille.divers" value="{{system.skills.base.fouille.divers}}"></td>
+          <td><input type="number" name="system.skills.base.fouille.total" value="{{system.skills.base.fouille.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="fouille">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.fouille.avance" {{checked system.skills.base.fouille.avance}}></td>
+        </tr>
+        <tr><td>Déplacement Silencieux</td><td>Ag</td>
+          <td>
+            <input type="number" name="system.skills.base.deplacementSilencieux.niveau" value="{{system.skills.base.deplacementSilencieux.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.deplacementSilencieux.talents" value="{{system.skills.base.deplacementSilencieux.talents}}"></td>
+          <td><input type="number" name="system.skills.base.deplacementSilencieux.divers" value="{{system.skills.base.deplacementSilencieux.divers}}"></td>
+          <td><input type="number" name="system.skills.base.deplacementSilencieux.total" value="{{system.skills.base.deplacementSilencieux.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="deplacementSilencieux">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.deplacementSilencieux.avance" {{checked system.skills.base.deplacementSilencieux.avance}}></td>
+        </tr>
+        <tr><td>Natation</td><td>F</td>
+          <td>
+            <input type="number" name="system.skills.base.natation.niveau" value="{{system.skills.base.natation.niveau}}" min="0" max="20" step="10">
+          </td>
+          <td><input type="number" name="system.skills.base.natation.talents" value="{{system.skills.base.natation.talents}}"></td>
+          <td><input type="number" name="system.skills.base.natation.divers" value="{{system.skills.base.natation.divers}}"></td>
+          <td><input type="number" name="system.skills.base.natation.total" value="{{system.skills.base.natation.total}}" readonly></td>
+          <td><button type="button" class="skill-roll" data-skill="natation">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.base.natation.avance" {{checked system.skills.base.natation.avance}}></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Compétences Avancées -->
+  <div class="section">
+    <div class="section-title">
+  Compétences Avancées
+    </div>
+
+    <table class="skills-table">
+      <thead>
+        <tr>
+          <th>Compétence</th>
+          <th>Cara</th>
+          <th>Niveau</th>
+          <th>Talents</th>
+          <th>Divers</th>
+          <th>Total</th>
+          <th>Jet</th>
+          <th>Acquis</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each displayAdvanced as |skill i|}}
+        <tr>
+          <!-- Nom -->
+          <td>
+            <input type="hidden" name="system.skills.advanced.{{i}}.id" value="{{skill.id}}" readonly>
+            <input type="hidden" name="system.skills.advanced.{{i}}.key" value="{{skill.key}}" readonly>
+            <input type="text" name="system.skills.advanced.{{i}}.label" value="{{skill.label}}" readonly>
+          </td>
+
+          <!-- Caractéristique -->
+          <td>
+            <input type="text" name="system.skills.advanced.{{i}}.cara" value="{{skill.cara}}" readonly>
+          </td>
+
+          <!-- Valeurs -->
+          <td><input type="number" name="system.skills.advanced.{{i}}.niveau" value="{{skill.niveau}}" ></td>
+          <td><input type="number" name="system.skills.advanced.{{i}}.talents" value="{{skill.talents}}" ></td>
+          <td><input type="number" name="system.skills.advanced.{{i}}.divers" value="{{skill.divers}}"></td>
+          <td><input type="number" name="system.skills.advanced.{{i}}.total" value="{{advancedSkillTotal skill ../system}}" readonly></td>
+
+          <!-- Boutons -->
+          <td><button type="button" class="skill-roll" data-skill="{{i}}">🎲</button></td>
+          <td><input type="checkbox" name="system.skills.advanced.{{i}}.avance" {{checked skill.avance}}></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

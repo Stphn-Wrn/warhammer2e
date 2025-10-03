@@ -1,0 +1,16 @@
+{
+  "name": "Colère des Dieux",
+  "formula": "1d100",
+  "replacement": true,
+  "displayRoll": true,
+  "results": [
+    { "type": 0, "weight": 1, "range": [1, 15], "text": "Vision surréelle. Votre dieu choisit ce moment opportun pour vous faire partager une vision aussi symbolique que troublante. Vous êtes assommé pour un round." },
+    { "type": 0, "weight": 1, "range": [16, 30], "text": "Prouvez votre dévotion. Quelques prières de plus sont nécessaires pour achever l'incantation, ajoutant une demi-action au temps d'incantation du sort (même si le sort échoue)." },
+    { "type": 0, "weight": 1, "range": [31, 45], "text": "Vous abusez de ma patience. Vous ne pouvez lancer d'autre sort pendant 1d10 rounds. Le sort actuel fonctionne néanmoins si vous avez réussi votre jet d'incantation." },
+    { "type": 0, "weight": 1, "range": [46, 60], "text": "Vos motivations sont indignes. Votre sort échoue, quel que soit le résultat de votre jet d'incantation." },
+    { "type": 0, "weight": 1, "range": [61, 75], "text": "Réprimande cinglante. Votre sort échoue, vous subissez un malus de -10% en Force Mentale pendant 1 minute." },
+    { "type": 0, "weight": 1, "range": [76, 90], "text": "Cette faveur vaut bien un sacrifice. Vous perdez 1d10 points de Blessures, quels que soient votre BE et votre armure." },
+    { "type": 0, "weight": 1, "range": [91, 99], "text": "Vous avez péché. Vous avez provoqué l'ire de votre dieu et devez vous agenouiller et vous repentir pendant 1d10 rounds, vous plaçant sans défense." },
+    { "type": 0, "weight": 1, "range": [100, 100], "text": "Interférence démoniaque. Votre prière est entendue, mais pas par votre dieu. Retirez sur : Échos majeurs du Chaos." }
+  ]
+}

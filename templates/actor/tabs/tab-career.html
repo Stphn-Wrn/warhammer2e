@@ -1,0 +1,184 @@
+
+<div class="career-tabs">
+	<!-- Primary career card -->
+	<div class="career-card career-card--primary">
+		<div class="career-card__header">Carrière de départ</div>
+		<div class="career-card__body">
+			<div class="career-header">
+				<div class="career-name">
+					<label class="field-label" for="primary-career-name">Nom de la carrière</label>
+					<input id="primary-career-name" type="text" name="system.career.primaryName" value="{{system.career.primaryName}}">
+				</div>
+			</div>
+			<!-- Primary profile full-width -->
+			<div class="career-primary-full">
+				<div class="career-section-title">Profil Principal de la Carrière</div>
+				<table class="career-table">
+					<thead>
+						<tr>
+							<th>Capacité de Combat</th>
+							<th>Capacité de Tir</th>
+							<th>Force</th>
+							<th>Endurance</th>
+							<th>Agilité</th>
+							<th>Intelligence</th>
+							<th>Force Mentale</th>
+							<th>Social</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="number" step="1" name="system.career.primary.cc" value="{{system.career.primary.cc}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.primary.ct" value="{{system.career.primary.ct}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.primary.force" value="{{system.career.primary.force}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.primary.endurance" value="{{system.career.primary.endurance}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.primary.agilite" value="{{system.career.primary.agilite}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.primary.intelligence" value="{{system.career.primary.intelligence}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.primary.forceMentale" value="{{system.career.primary.forceMentale}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.primary.sociabilite" value="{{system.career.primary.sociabilite}}" min="0"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="career-row">
+				<div class="career-column career-column--stats">
+					<div class="career-section-title">Profil Secondaire de la Carrière</div>
+					<table class="career-table small">
+						<thead>
+							<tr>
+								<th>Attaques</th><th>B</th><th>BF</th><th>BE</th>
+								<th>Mvt</th><th>Mag</th><th>PF</th><th>PD</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="number" name="system.career.primary.attacks" value="{{system.career.primary.attacks}}" min="0"></td>
+								<td><input type="number" name="system.career.primary.wounds" value="{{system.career.primary.wounds}}" min="0"></td>
+								<td><input type="text" name="system.career.primary.strengthBonus" value="{{system.career.primary.strengthBonus}}"></td>
+								<td><input type="text" name="system.career.primary.enduranceBonus" value="{{system.career.primary.enduranceBonus}}"></td>
+								<td><input type="number" name="system.career.primary.movement" value="{{system.career.primary.movement}}" min="0"></td>
+								<td><input type="number" name="system.career.primary.magic" value="{{system.career.primary.magic}}" min="0"></td>
+								<td><input type="text" name="system.career.primary.frenzyPoints" value="{{system.career.primary.frenzyPoints}}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- Lists below the profiles: skills & talents side-by-side, outcomes full width -->
+			<div class="career-lists">
+				<div class="career-column career-column--lists">
+					<div class="career-box">
+						<div class="career-box__title">Compétences de Carrière</div>
+						<textarea name="system.career.primary.skills" rows="6">{{system.career.primary.skills}}</textarea>
+					</div>
+
+					<div class="career-box">
+						<div class="career-box__title">Talents de Carrière</div>
+						<textarea name="system.career.primary.talents" rows="6">{{system.career.primary.talents}}</textarea>
+					</div>
+
+					<div class="career-box">
+						<div class="career-box__title">Débouchés</div>
+						<textarea name="system.career.primary.outcomes" rows="2">{{system.career.primary.outcomes}}</textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Secondary career card -->
+	<div class="career-card career-card--secondary">
+		<div class="career-card__header">Seconde Carrière
+			<div class="career-card__meta">
+				<label class="career-started"><input type="checkbox" name="system.career.secondary.started" {{#if system.career.secondary.started}}checked{{/if}}> Carrière débutée</label>
+			</div>
+		</div>
+		<div class="career-card__body">
+			<div class="career-header">
+				<div class="career-name">
+					<label class="field-label" for="secondary-career-name">Nom de la carrière</label>
+					<input id="secondary-career-name" type="text" name="system.career.secondaryName" value="{{system.career.secondaryName}}">
+				</div>
+			</div>
+			<!-- Secondary primary profile full-width -->
+			<div class="career-primary-full">
+				<div class="career-section-title">Profil Principal de la Carrière</div>
+				<table class="career-table">
+					<thead>
+						<tr>
+							<th>Capacité de Combat</th>
+							<th>Capacité de Tir</th>
+							<th>Force</th>
+							<th>Endurance</th>
+							<th>Agilité</th>
+							<th>Intelligence</th>
+							<th>Force Mentale</th>
+							<th>Social</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="number" step="1" name="system.career.secondary.combat" value="{{system.career.secondary.combat}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.secondary.shoot" value="{{system.career.secondary.shoot}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.secondary.strength" value="{{system.career.secondary.strength}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.secondary.endurance" value="{{system.career.secondary.endurance}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.secondary.agility" value="{{system.career.secondary.agility}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.secondary.intelligence" value="{{system.career.secondary.intelligence}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.secondary.mentalStrength" value="{{system.career.secondary.mentalStrength}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.secondary.social" value="{{system.career.secondary.social}}" min="0"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="career-row">
+				<div class="career-column career-column--stats">
+					<div class="career-section-title">Profil Secondaire de la Carrière</div>
+					<table class="career-table small">
+						<thead>
+							<tr>
+								<th>Attaques</th><th>Blessure</th><th>Bonus de Force</th><th>Bonus d'Endurance</th>
+								<th>Mouvement</th><th>Magie</th><th>Points de Folies</th><th>Points de Destin</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="number" name="system.career.secondary.attacks" value="{{system.career.secondary.attacks}}" min="0"></td>
+								<td><input type="number" name="system.career.secondary.wounds" value="{{system.career.secondary.wounds}}" min="0"></td>
+								<td><input type="text" name="system.career.secondary.strengthBonus" value="{{system.career.secondary.strengthBonus}}"></td>
+								<td><input type="text" name="system.career.secondary.enduranceBonus" value="{{system.career.secondary.enduranceBonus}}"></td>
+								<td><input type="number" name="system.career.secondary.movement" value="{{system.career.secondary.movement}}" min="0"></td>
+								<td><input type="number" name="system.career.secondary.magic" value="{{system.career.secondary.magic}}" min="0"></td>
+								<td><input type="text" name="system.career.secondary.frenzyPoints" value="{{system.career.secondary.frenzyPoints}}"></td>
+								<td><input type="text" name="system.career.secondary.destinyPoints" value="{{system.career.secondary.destinyPoints}}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- Lists below the profiles: skills & talents side-by-side, outcomes full width -->
+			<div class="career-lists">
+				<div class="career-column career-column--lists">
+					<div class="career-box">
+						<div class="career-box__title">Compétences de Carrière</div>
+						<textarea name="system.career.secondary.skills" rows="6">{{system.career.secondary.skills}}</textarea>
+					</div>
+
+					<div class="career-box">
+						<div class="career-box__title">Talents de Carrière</div>
+						<textarea name="system.career.secondary.talents" rows="6">{{system.career.secondary.talents}}</textarea>
+					</div>
+
+					<div class="career-box">
+						<div class="career-box__title">Débouchés</div>
+						<textarea name="system.career.secondary.outcomes" rows="2">{{system.career.secondary.outcomes}}</textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

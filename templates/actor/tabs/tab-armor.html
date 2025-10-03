@@ -1,0 +1,462 @@
+<div class="armor-section">
+  <div class="armor-header">
+    <h3>Armure</h3>
+  </div>
+
+  <div class="armor-grid">
+    <!-- Colonne gauche : tableaux -->
+    <div class="armor-tables">
+
+      <!-- ====================== Tête ====================== -->
+      <div class="section-title">Tête</div>
+      <table class="armor-table">
+        <thead>
+          <tr>
+            <th>Eq.</th><th>Type</th><th>Nom</th><th>Qualité</th>
+            <th>Enc.</th><th>PA</th><th>Bonus</th><th>Total PA</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{!-- Léger --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="head" data-pa="1" name="system.armor.head.light.eq" {{#if (eq system.armor.head.light.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Léger</td>
+            <td><input type="text" name="system.armor.head.light.name" value="{{system.armor.head.light.name}}"></td>
+            <td>
+              <select name="system.armor.head.light.qualite">
+                <option {{#if (eq system.armor.head.light.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.head.light.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.head.light.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.head.light.enc" value="{{system.armor.head.light.enc}}"></td>
+            <td><input type="number" value="1" readonly></td>
+            <td><input type="number" name="system.armor.head.light.bonus" value="{{system.armor.head.light.bonus}}"></td>
+            <td><input type="number" value="{{sum 1 system.armor.head.light.bonus}}" readonly></td>
+          </tr>
+          {{!-- Moyenne --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="head" data-pa="2" name="system.armor.head.medium.eq" {{#if (eq system.armor.head.medium.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Moyenne</td>
+            <td><input type="text" name="system.armor.head.medium.name" value="{{system.armor.head.medium.name}}"></td>
+            <td>
+              <select name="system.armor.head.medium.qualite">
+                <option {{#if (eq system.armor.head.medium.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.head.medium.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.head.medium.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.head.medium.enc" value="{{system.armor.head.medium.enc}}"></td>
+            <td><input type="number" value="2" readonly></td>
+            <td><input type="number" name="system.armor.head.medium.bonus" value="{{system.armor.head.medium.bonus}}"></td>
+            <td><input type="number" value="{{sum 2 system.armor.head.medium.bonus}}" readonly></td>
+          </tr>
+          {{!-- Lourde --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="head" data-pa="2" name="system.armor.head.heavy.eq" {{#if (eq system.armor.head.heavy.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Lourde</td>
+            <td><input type="text" name="system.armor.head.heavy.name" value="{{system.armor.head.heavy.name}}"></td>
+            <td>
+              <select name="system.armor.head.heavy.qualite">
+                <option {{#if (eq system.armor.head.heavy.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.head.heavy.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.head.heavy.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.head.heavy.enc" value="{{system.armor.head.heavy.enc}}"></td>
+            <td><input type="number" value="2" readonly></td>
+            <td><input type="number" name="system.armor.head.heavy.bonus" value="{{system.armor.head.heavy.bonus}}"></td>
+            <td><input type="number" value="{{sum 2 system.armor.head.heavy.bonus}}" readonly></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ====================== Corps ====================== -->
+      <div class="section-title">Corps</div>
+      <table class="armor-table">
+        <thead>
+          <tr>
+            <th>Eq.</th><th>Type</th><th>Nom</th><th>Qualité</th>
+            <th>Enc.</th><th>PA</th><th>Bonus</th><th>Total PA</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{!-- Léger --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="body" data-pa="1" name="system.armor.body.light.eq" {{#if (eq system.armor.body.light.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Léger</td>
+            <td><input type="text" name="system.armor.body.light.name" value="{{system.armor.body.light.name}}"></td>
+            <td>
+              <select name="system.armor.body.light.qualite">
+                <option {{#if (eq system.armor.body.light.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.body.light.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.body.light.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.body.light.enc" value="{{system.armor.body.light.enc}}"></td>
+            <td><input type="number" value="1" readonly></td>
+            <td><input type="number" name="system.armor.body.light.bonus" value="{{system.armor.body.light.bonus}}"></td>
+            <td><input type="number" value="{{sum 1 system.armor.body.light.bonus}}" readonly></td>
+          </tr>
+          {{!-- Moyenne --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="body" data-pa="2" name="system.armor.body.medium.eq" {{#if (eq system.armor.body.medium.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Moyenne</td>
+            <td><input type="text" name="system.armor.body.medium.name" value="{{system.armor.body.medium.name}}"></td>
+            <td>
+              <select name="system.armor.body.medium.qualite">
+                <option {{#if (eq system.armor.body.medium.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.body.medium.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.body.medium.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.body.medium.enc" value="{{system.armor.body.medium.enc}}"></td>
+            <td><input type="number" value="2" readonly></td>
+            <td><input type="number" name="system.armor.body.medium.bonus" value="{{system.armor.body.medium.bonus}}"></td>
+            <td><input type="number" value="{{sum 2 system.armor.body.medium.bonus}}" readonly></td>
+          </tr>
+          {{!-- Lourde --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="body" data-pa="2" name="system.armor.body.heavy.eq" {{#if (eq system.armor.body.heavy.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Lourde</td>
+            <td><input type="text" name="system.armor.body.heavy.name" value="{{system.armor.body.heavy.name}}"></td>
+            <td>
+              <select name="system.armor.body.heavy.qualite">
+                <option {{#if (eq system.armor.body.heavy.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.body.heavy.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.body.heavy.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.body.heavy.enc" value="{{system.armor.body.heavy.enc}}"></td>
+            <td><input type="number" value="2" readonly></td>
+            <td><input type="number" name="system.armor.body.heavy.bonus" value="{{system.armor.body.heavy.bonus}}"></td>
+            <td><input type="number" value="{{sum 2 system.armor.body.heavy.bonus}}" readonly></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ====================== Bras Gauche ====================== -->
+      <div class="section-title">Bras Gauche</div>
+      <table class="armor-table">
+        <thead>
+          <tr>
+            <th>Eq.</th><th>Type</th><th>Nom</th><th>Qualité</th>
+            <th>Enc.</th><th>PA</th><th>Bonus</th><th>Total PA</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{!-- Léger --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="armLeft" data-pa="1" name="system.armor.armLeft.light.eq" {{#if (eq system.armor.armLeft.light.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Léger</td>
+            <td><input type="text" name="system.armor.armLeft.light.name" value="{{system.armor.armLeft.light.name}}"></td>
+            <td>
+              <select name="system.armor.armLeft.light.qualite">
+                <option {{#if (eq system.armor.armLeft.light.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.armLeft.light.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.armLeft.light.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.armLeft.light.enc" value="{{system.armor.armLeft.light.enc}}"></td>
+            <td><input type="number" value="1" readonly></td>
+            <td><input type="number" name="system.armor.armLeft.light.bonus" value="{{system.armor.armLeft.light.bonus}}"></td>
+            <td><input type="number" value="{{sum 1 system.armor.armLeft.light.bonus}}" readonly></td>
+          </tr>
+          {{!-- Moyenne --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="armLeft" data-pa="2" name="system.armor.armLeft.medium.eq" {{#if (eq system.armor.armLeft.medium.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Moyenne</td>
+            <td><input type="text" name="system.armor.armLeft.medium.name" value="{{system.armor.armLeft.medium.name}}"></td>
+            <td>
+              <select name="system.armor.armLeft.medium.qualite">
+                <option {{#if (eq system.armor.armLeft.medium.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.armLeft.medium.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.armLeft.medium.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.armLeft.medium.enc" value="{{system.armor.armLeft.medium.enc}}"></td>
+            <td><input type="number" value="2" readonly></td>
+            <td><input type="number" name="system.armor.armLeft.medium.bonus" value="{{system.armor.armLeft.medium.bonus}}"></td>
+            <td><input type="number" value="{{sum 2 system.armor.armLeft.medium.bonus}}" readonly></td>
+          </tr>
+          {{!-- Lourde --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="armLeft" data-pa="2" name="system.armor.armLeft.heavy.eq" {{#if (eq system.armor.armLeft.heavy.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Lourde</td>
+            <td><input type="text" name="system.armor.armLeft.heavy.name" value="{{system.armor.armLeft.heavy.name}}"></td>
+            <td>
+              <select name="system.armor.armLeft.heavy.qualite">
+                <option {{#if (eq system.armor.armLeft.heavy.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.armLeft.heavy.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.armLeft.heavy.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.armLeft.heavy.enc" value="{{system.armor.armLeft.heavy.enc}}"></td>
+            <td><input type="number" value="2" readonly></td>
+            <td><input type="number" name="system.armor.armLeft.heavy.bonus" value="{{system.armor.armLeft.heavy.bonus}}"></td>
+            <td><input type="number" value="{{sum 2 system.armor.armLeft.heavy.bonus}}" readonly></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ====================== Bras Droit ====================== -->
+      <div class="section-title">Bras Droit</div>
+      <table class="armor-table">
+        <thead>
+          <tr>
+            <th>Eq.</th><th>Type</th><th>Nom</th><th>Qualité</th>
+            <th>Enc.</th><th>PA</th><th>Bonus</th><th>Total PA</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{!-- Léger --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="armRight" data-pa="1" name="system.armor.armRight.light.eq" {{#if (eq system.armor.armRight.light.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Léger</td>
+            <td><input type="text" name="system.armor.armRight.light.name" value="{{system.armor.armRight.light.name}}"></td>
+            <td>
+              <select name="system.armor.armRight.light.qualite">
+                <option {{#if (eq system.armor.armRight.light.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.armRight.light.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.armRight.light.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.armRight.light.enc" value="{{system.armor.armRight.light.enc}}"></td>
+            <td><input type="number" value="1" readonly></td>
+            <td><input type="number" name="system.armor.armRight.light.bonus" value="{{system.armor.armRight.light.bonus}}"></td>
+            <td><input type="number" value="{{sum 1 system.armor.armRight.light.bonus}}" readonly></td>
+          </tr>
+          {{!-- Moyenne --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="armRight" data-pa="2" name="system.armor.armRight.medium.eq" {{#if (eq system.armor.armRight.medium.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Moyenne</td>
+            <td><input type="text" name="system.armor.armRight.medium.name" value="{{system.armor.armRight.medium.name}}"></td>
+            <td>
+              <select name="system.armor.armRight.medium.qualite">
+                <option {{#if (eq system.armor.armRight.medium.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.armRight.medium.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.armRight.medium.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.armRight.medium.enc" value="{{system.armor.armRight.medium.enc}}"></td>
+            <td><input type="number" value="2" readonly></td>
+            <td><input type="number" name="system.armor.armRight.medium.bonus" value="{{system.armor.armRight.medium.bonus}}"></td>
+            <td><input type="number" value="{{sum 2 system.armor.armRight.medium.bonus}}" readonly></td>
+          </tr>
+          {{!-- Lourde --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="armRight" data-pa="2" name="system.armor.armRight.heavy.eq" {{#if (eq system.armor.armRight.heavy.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Lourde</td>
+            <td><input type="text" name="system.armor.armRight.heavy.name" value="{{system.armor.armRight.heavy.name}}"></td>
+            <td>
+              <select name="system.armor.armRight.heavy.qualite">
+                <option {{#if (eq system.armor.armRight.heavy.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.armRight.heavy.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.armRight.heavy.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.armRight.heavy.enc" value="{{system.armor.armRight.heavy.enc}}"></td>
+            <td><input type="number" value="2" readonly></td>
+            <td><input type="number" name="system.armor.armRight.heavy.bonus" value="{{system.armor.armRight.heavy.bonus}}"></td>
+            <td><input type="number" value="{{sum 2 system.armor.armRight.heavy.bonus}}" readonly></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ====================== Jambes Gauche ====================== -->
+      <div class="section-title">Jambes Gauche</div>
+      <table class="armor-table">
+        <thead>
+          <tr>
+            <th>Eq.</th><th>Type</th><th>Nom</th><th>Qualité</th>
+            <th>Enc.</th><th>PA</th><th>Bonus</th><th>Total PA</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{!-- Léger --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="legLeft" data-pa="1" name="system.armor.legLeft.light.eq" {{#if (eq system.armor.legLeft.light.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Léger</td>
+            <td><input type="text" name="system.armor.legLeft.light.name" value="{{system.armor.legLeft.light.name}}"></td>
+            <td>
+              <select name="system.armor.legLeft.light.qualite">
+                <option {{#if (eq system.armor.legLeft.light.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.legLeft.light.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.legLeft.light.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.legLeft.light.enc" value="{{system.armor.legLeft.light.enc}}"></td>
+            <td><input type="number" value="1" readonly></td>
+            <td><input type="number" name="system.armor.legLeft.light.bonus" value="{{system.armor.legLeft.light.bonus}}"></td>
+            <td><input type="number" value="{{sum 1 system.armor.legLeft.light.bonus}}" readonly></td>
+          </tr>
+          {{!-- Moyenne --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="legLeft" data-pa="2" name="system.armor.legLeft.medium.eq" {{#if (eq system.armor.legLeft.medium.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Moyenne</td>
+            <td><input type="text" name="system.armor.legLeft.medium.name" value="{{system.armor.legLeft.medium.name}}"></td>
+            <td>
+              <select name="system.armor.legLeft.medium.qualite">
+                <option {{#if (eq system.armor.legLeft.medium.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.legLeft.medium.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.legLeft.medium.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.legLeft.medium.enc" value="{{system.armor.legLeft.medium.enc}}"></td>
+            <td><input type="number" value="2" readonly></td>
+            <td><input type="number" name="system.armor.legLeft.medium.bonus" value="{{system.armor.legLeft.medium.bonus}}"></td>
+            <td><input type="number" value="{{sum 2 system.armor.legLeft.medium.bonus}}" readonly></td>
+          </tr>
+          {{!-- Lourde --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="legLeft" data-pa="2" name="system.armor.legLeft.heavy.eq" {{#if (eq system.armor.legLeft.heavy.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Lourde</td>
+            <td><input type="text" name="system.armor.legLeft.heavy.name" value="{{system.armor.legLeft.heavy.name}}"></td>
+            <td>
+              <select name="system.armor.legLeft.heavy.qualite">
+                <option {{#if (eq system.armor.legLeft.heavy.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.legLeft.heavy.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.legLeft.heavy.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.legLeft.heavy.enc" value="{{system.armor.legLeft.heavy.enc}}"></td>
+            <td><input type="number" value="2" readonly></td>
+            <td><input type="number" name="system.armor.legLeft.heavy.bonus" value="{{system.armor.legLeft.heavy.bonus}}"></td>
+            <td><input type="number" value="{{sum 2 system.armor.legLeft.heavy.bonus}}" readonly></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ====================== Jambes Droite ====================== -->
+      <div class="section-title">Jambes Droite</div>
+      <table class="armor-table">
+        <thead>
+          <tr>
+            <th>Eq.</th><th>Type</th><th>Nom</th><th>Qualité</th>
+            <th>Enc.</th><th>PA</th><th>Bonus</th><th>Total PA</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{!-- Léger --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="legRight" data-pa="1" name="system.armor.legRight.light.eq" {{#if (eq system.armor.legRight.light.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Léger</td>
+            <td><input type="text" name="system.armor.legRight.light.name" value="{{system.armor.legRight.light.name}}"></td>
+            <td>
+              <select name="system.armor.legRight.light.qualite">
+                <option {{#if (eq system.armor.legRight.light.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.legRight.light.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.legRight.light.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.legRight.light.enc" value="{{system.armor.legRight.light.enc}}"></td>
+            <td><input type="number" value="1" readonly></td>
+            <td><input type="number" name="system.armor.legRight.light.bonus" value="{{system.armor.legRight.light.bonus}}"></td>
+            <td><input type="number" value="{{sum 1 system.armor.legRight.light.bonus}}" readonly></td>
+          </tr>
+          {{!-- Moyenne --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="legRight" data-pa="2" name="system.armor.legRight.medium.eq" {{#if (eq system.armor.legRight.medium.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Moyenne</td>
+            <td><input type="text" name="system.armor.legRight.medium.name" value="{{system.armor.legRight.medium.name}}"></td>
+            <td>
+              <select name="system.armor.legRight.medium.qualite">
+                <option {{#if (eq system.armor.legRight.medium.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.legRight.medium.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.legRight.medium.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.legRight.medium.enc" value="{{system.armor.legRight.medium.enc}}"></td>
+            <td><input type="number" value="2" readonly></td>
+            <td><input type="number" name="system.armor.legRight.medium.bonus" value="{{system.armor.legRight.medium.bonus}}"></td>
+            <td><input type="number" value="{{sum 2 system.armor.legRight.medium.bonus}}" readonly></td>
+          </tr>
+          {{!-- Lourde --}}
+          <tr>
+            <td>
+              <input type="checkbox" class="armor-equip" data-zone="legRight" data-pa="2" name="system.armor.legRight.heavy.eq" {{#if (eq system.armor.legRight.heavy.eq "YES")}}checked{{/if}} />
+            </td>
+            <td>Lourde</td>
+            <td><input type="text" name="system.armor.legRight.heavy.name" value="{{system.armor.legRight.heavy.name}}"></td>
+            <td>
+              <select name="system.armor.legRight.heavy.qualite">
+                <option {{#if (eq system.armor.legRight.heavy.qualite "Exceptionnelle")}}selected{{/if}}>Ordinaire</option>
+                <option {{#if (eq system.armor.legRight.heavy.qualite "Bonne")}}selected{{/if}}>Bonne</option>
+                <option {{#if (eq system.armor.legRight.heavy.qualite "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+              </select>
+            </td>
+            <td><input type="number" name="system.armor.legRight.heavy.enc" value="{{system.armor.legRight.heavy.enc}}"></td>
+            <td><input type="number" value="2" readonly></td>
+            <td><input type="number" name="system.armor.legRight.heavy.bonus" value="{{system.armor.legRight.heavy.bonus}}"></td>
+            <td><input type="number" value="{{sum 2 system.armor.legRight.heavy.bonus}}" readonly></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ====================== Figure Totaux ====================== -->
+    <div class="armor-figure">
+      <h4>Points d'Armure</h4>
+      <div class="armor-points-grid">
+        <div class="armor-zone full">
+          <label for="armor-head">Tête (01-15)</label>
+          <input type="number" id="armor-head" name="system.armorTotals.head" value="{{system.armorTotals.head}}" readonly>
+        </div>
+        <div class="armor-zone half">
+          <label for="armor-arm-left">Bras Gauche (36-55)</label>
+          <input type="number" id="armor-arm-left" name="system.armorTotals.armLeft" value="{{system.armorTotals.armLeft}}" readonly>
+        </div>
+        <div class="armor-zone half">
+          <label for="armor-arm-right">Bras Droit (16-35)</label>
+          <input type="number" id="armor-arm-right" name="system.armorTotals.armRight" value="{{system.armorTotals.armRight}}" readonly>
+        </div>
+        <div class="armor-zone full">
+          <label for="armor-body">Corps (56-80)</label>
+          <input type="number" id="armor-body" name="system.armorTotals.body" value="{{system.armorTotals.body}}" readonly>
+        </div>
+        <div class="armor-zone half">
+          <label for="armor-leg-left">Jambe Gauche (91-00)</label>
+          <input type="number" id="armor-leg-left" name="system.armorTotals.legLeft" value="{{system.armorTotals.legLeft}}" readonly>
+        </div>
+        <div class="armor-zone half">
+          <label for="armor-leg-right">Jambe Droite (81-90)</label>
+          <input type="number" id="armor-leg-right" name="system.armorTotals.legRight" value="{{system.armorTotals.legRight}}" readonly>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

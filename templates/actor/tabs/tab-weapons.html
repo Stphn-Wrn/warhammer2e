@@ -1,0 +1,94 @@
+ <div class="weapons-section">
+  <!-- Armes de Mêlée -->
+  <div class="section-title">Armes de Mêlée ✠</div>
+  <table class="weapons-table melee">
+    <thead>
+      <tr>
+        <th>Maîtr?</th>
+        <th>Arme</th>
+        <th>Qualité</th>
+        <th>Bonus CC</th>
+        <th>Dés Min</th>
+        <th>Dégâts</th>
+        <th>Perc</th>
+        <th>BF</th>
+        <th>Déf</th>
+        <th>Attributs</th>
+        <th>Atq</th>
+        <th>Par.</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each system.weapons as |weapon i|}}
+      <tr>
+        <td><input type="checkbox" name="system.weapons.{{i}}.mastery" {{checked weapon.mastery}}></td>
+        <td><input type="text" name="system.weapons.{{i}}.name" value="{{weapon.name}}"></td>
+        <td>
+          <select name="system.weapons.{{i}}.quality">
+            <option {{#if (eq weapon.quality "Ordinaire")}}selected{{/if}}>Ordinaire</option>
+            <option {{#if (eq weapon.quality "Exceptionnelle")}}selected{{/if}}>Exceptionnelle</option>
+            <option {{#if (eq weapon.quality "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+          </select>
+        </td>
+        <td><input type="number" name="system.weapons.{{i}}.bonusCC" value="{{weapon.bonusCC}}"></td>
+        <td><input type="number" name="system.weapons.{{i}}.diceMin" value="{{weapon.diceMin}}" readonly></td>
+        <td><input type="number" name="system.weapons.{{i}}.damage" value="{{weapon.damage}}"></td>
+        <td><input type="checkbox" name="system.weapons.{{i}}.perc" {{checked weapon.perc}}></td>
+        <td><input type="number" name="system.weapons.{{i}}.bf" value="{{weapon.bf}}" readonly></td>
+        <td><input type="number" name="system.weapons.{{i}}.def" value="{{weapon.def}}"></td>
+        <td><input type="text" name="system.weapons.{{i}}.attributes" value="{{weapon.attributes}}"></td>
+        <td><button type="button" class="gold-roll melee-attack" data-index="{{i}}">🎯</button></td>
+        <td><button type="button" class="gold-roll melee-parade" value="{{weapon.par}}">🛡️</td>
+
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+    <!-- Armes à Distance -->
+    <div class="section-title">Armes à Distance ⚡</div>
+    <table class="weapons-table ranged">
+      <thead>
+        <tr>
+          <th>Maîtr?</th>
+          <th>Arme</th>
+          <th>Qualité</th>
+          <th>Bonus CT</th>
+          <th>Dés Min</th>
+          <th>Dégâts</th>
+          <th>Perc</th>
+          <th>Attributs</th>
+          <th>Type</th>
+          <th>Rech</th>
+          <th>Portée</th>
+          <th>Munitions</th>
+          <th>Atq</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each system.rangedWeapons as |weapon i|}}
+        <tr>
+          <td><input type="checkbox" name="system.rangedWeapons.{{i}}.mastery" {{checked weapon.mastery}}></td>
+          <td><input type="text" name="system.rangedWeapons.{{i}}.name" value="{{weapon.name}}"></td>
+          <td>
+            <select name="system.rangedWeapons.{{i}}.quality">
+              <option {{#if (eq weapon.quality "Ordinaire")}}selected{{/if}}>Ordinaire</option>
+              <option {{#if (eq weapon.quality "Exceptionnelle")}}selected{{/if}}>Exceptionnelle</option>
+              <option {{#if (eq weapon.quality "Mauvaise")}}selected{{/if}}>Mauvaise</option>
+            </select>
+          </td>
+          <td><input type="number" name="system.rangedWeapons.{{i}}.bonusCT" value="{{weapon.bonusCT}}"></td>
+          <td><input type="number" name="system.rangedWeapons.{{i}}.diceMin" value="{{weapon.diceMin}}" readonly></td>
+          <td><input type="number" name="system.rangedWeapons.{{i}}.damage" value="{{weapon.damage}}"></td>
+          <td><input type="checkbox" name="system.rangedWeapons.{{i}}.perc" {{checked weapon.perc}}></td>
+          <td><input type="text" name="system.rangedWeapons.{{i}}.attributes" value="{{weapon.attributes}}"></td>
+          <td><input type="text" name="system.rangedWeapons.{{i}}.type" value="{{weapon.type}}"></td>
+          <td><input type="text" name="system.rangedWeapons.{{i}}.rech" value="{{weapon.rech}}"></td>
+          <td><input type="text" name="system.rangedWeapons.{{i}}.portee" value="{{weapon.portee}}"></td>
+          <td><input type="text" name="system.rangedWeapons.{{i}}.munitions" value="{{weapon.munitions}}"></td>
+          <td><button type="button" class="gold-roll" data-index="{{i}}">🎯</button></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>

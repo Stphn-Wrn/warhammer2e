@@ -1,0 +1,108 @@
+<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+<div class="wfrp2e">
+  <header class="header">
+    <div class="header-grid">
+      <div class="logo-col">
+        <div class="logo-wrap">
+          <img src="https://imgsrv.roll20.net/?src=https%3A//i.imgur.com/yXgvZ1G.png" alt="Warhammer Fantasy Roleplay (2nd edition)">
+        </div>
+        <div class="name-wrap">
+          <input class="char-name" type="text" name="name" value="{{actor.name}}">
+          <div class="field-label">Nom du personnage</div>
+        </div>
+      </div>
+
+      <div class="id-col">
+        <div class="id-panel">
+          <!-- Ligne 1 -->
+          <div class="id-row grey cols-3">
+            <div class="id-field">
+              <input type="text" name="system.career.current" value="{{system.career.current}}">
+              <div class="field-label">Carrière</div>
+            </div>
+            <div class="id-field">
+              <input type="text" name="system.career.previous" value="{{system.career.previous}}">
+              <div class="field-label">Anciennes Carrières</div>
+            </div>
+            <div class="counter-field">
+              <input type="number" name="system.progression" value="{{system.progression}}">
+              <div class="field-label center">Progression</div>
+            </div>
+          </div>
+          <!-- Ligne 2 -->
+          <div class="id-row cols-4">
+            <div class="id-field">
+              <input type="text" name="system.bio.race" value="{{system.bio.race}}">
+              <div class="field-label">Race</div>
+            </div>
+            <div class="id-field">
+              <input type="text" name="system.bio.religion" value="{{system.bio.religion}}">
+              <div class="field-label">Religion</div>
+            </div>
+            <div class="id-field">
+              <input type="text" name="system.bio.birthplace" value="{{system.bio.birthplace}}">
+              <div class="field-label">Lieu de naissance</div>
+            </div>
+          <div class="counter-field">
+            <input type="number" class="is-readonly" name="system.xp.total" value="{{system.xp.total}}" readonly>
+            <div class="field-label center">PX gagnés</div>
+          </div>
+          <div class="counter-field">
+            <button type="button" class="xp-grant button">Donner PX</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Onglets reliés -->
+    <nav class="tabs" data-group="primary">
+      <a class="item gold" data-tab="main">Principal</a>
+      <a class="item gold" data-tab="bio">Biographie</a>
+      <a class="item gold" data-tab="career">Carrière</a>
+      <a class="item gold" data-tab="weapons">Armes</a>
+      <a class="item gold" data-tab="armor">Armure</a>
+      <a class="item gold" data-tab="spells">Grimoire</a>
+      <a class="item gold" data-tab="inventory">Inventaire</a>
+    </nav>
+  </header>
+
+  <section class="sheet-body">
+    <!-- Onglet Principal -->
+    <div class="tab" data-group="primary" data-tab="main">
+      {{> "systems/warhammer2e/templates/actor/tabs/tab-main.html"}}
+    </div>
+
+    <!-- Onglet Biographie -->
+    <div class="tab" data-group="primary" data-tab="bio">
+      {{> "systems/warhammer2e/templates/actor/tabs/tab-bio.html"}}
+    </div>
+
+    <!-- Onglet Carrière -->
+    <div class="tab" data-group="primary" data-tab="career">
+      {{> "systems/warhammer2e/templates/actor/tabs/tab-career.html"}}
+
+    </div>
+
+    <!-- Onglet Armes -->
+    <div class="tab" data-group="primary" data-tab="weapons">
+      {{> "systems/warhammer2e/templates/actor/tabs/tab-weapons.html"}}
+    </div>
+
+    <!-- Onglet Armure -->
+    <div class="tab" data-group="primary" data-tab="armor">
+      {{> "systems/warhammer2e/templates/actor/tabs/tab-armor.html"}}
+    </div>
+
+    <!-- Onglet Sorts -->
+    <div class="tab" data-group="primary" data-tab="spells">
+      {{> "systems/warhammer2e/templates/actor/tabs/tab-spells.html"}}
+    </div>
+
+    <!-- Onglet Équipement -->
+    <div class="tab" data-group="primary" data-tab="inventory">
+      {{> "systems/warhammer2e/templates/actor/tabs/tab-inventory.html"}}
+
+    </div>
+  </section>
+</form>
