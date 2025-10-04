@@ -1,4 +1,3 @@
-// Helpers for managing talents, règles spéciales et connaissances sur une fiche d'acteur
 export function findTalentIndexById(sheet, id) {
   const talents = Array.isArray(sheet.actor.system.talents) ? sheet.actor.system.talents : [];
   return talents.findIndex(t => String(t.id) === String(id));
@@ -33,7 +32,6 @@ export function findConnaissanceIndexById(sheet, id) {
   return connaissances.findIndex(c => String(c.id) === String(id));
 }
 
-// Templates available when adding a new rule. You can extend this list.
 export const regleTemplates = [
   { key: 'blank', name: 'Vide', description: '' },
   { key: 'combat-enchainement', name: 'Enchaînement (combat)', description: 'Permet de réaliser un enchaînement offensif particulier, modifiant l\'ordre d\'attaque.' },

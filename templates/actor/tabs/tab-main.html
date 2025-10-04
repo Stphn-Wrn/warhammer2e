@@ -1,6 +1,6 @@
 <div class="main-left">
 
-<!-- Profil Principal -->
+
 <div class="section">
   <div class="section-title">Profil Principal</div>
   <table class="profile-table">
@@ -48,7 +48,7 @@
   </table>
 </div>
 
-<!-- Profil Secondaire -->
+
 <div class="section">
   <div class="section-title">Profil Secondaire</div>
   <table class="profile-table">
@@ -70,13 +70,13 @@
       <tr>
         <td>{{capitalize key}}</td>
 
-        <!-- A -->
+
         <td><input type="number" name="system.secondaire.{{key}}.a" value="{{row.a}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
 
-        <!-- B -->
+
         <td><input type="number" name="system.secondaire.{{key}}.b" value="{{row.b}}" {{#if (or (eq key "actuel") (eq key "carriere") )}}readonly{{/if}}></td>
 
-        <!-- BF -->
+
         <td>
           {{#if (or (eq key "base") (eq key "mod") (or (eq key "actuel") (eq key "carriere")))}}
             <input type="number" name="system.secondaire.{{key}}.bf" value="{{row.bf}}" {{#if (or (eq key "actuel") (eq key "carriere") (eq key "base"))}}readonly{{/if}}>
@@ -85,7 +85,7 @@
           {{/if}}
         </td>
 
-        <!-- BE -->
+
         <td>
           {{#if (or (eq key "base") (eq key "mod") (or (eq key "actuel") (eq key "carriere")))}}
             <input type="number" name="system.secondaire.{{key}}.be" value="{{row.be}}" {{#if (or (eq key "actuel") (eq key "carriere") (eq key "base"))}}readonly{{/if}}>
@@ -94,13 +94,13 @@
           {{/if}}
         </td>
 
-        <!-- Mag -->
+
         <td><input type="number" name="system.secondaire.{{key}}.mag" value="{{row.mag}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
 
-        <!-- MUN -->
+
         <td><input type="number" name="system.secondaire.{{key}}.mvt" value="{{row.mvt}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}></td>
 
-        <!-- PF -->
+
         <td>
           {{#if (or (eq key "base") (eq key "mod") (or (eq key "actuel") (eq key "carriere")))}}
             <input type="number" name="system.secondaire.{{key}}.pf" value="{{row.pf}}" {{#if (or (eq key "actuel") (eq key "carriere"))}}readonly{{/if}}>
@@ -109,7 +109,7 @@
           {{/if}}
         </td>
 
-        <!-- PD -->
+
         <td>
           {{#if (or (eq key "talents") (eq key "carriere"))}}
             <input type="text" value="-" readonly class="readonly-field">
@@ -124,48 +124,48 @@
 </div>
 
 
-<!-- Combat -->
+
 <div class="section">
   <div class="section-title">Combat</div>
   <table class="combat-table">
     <tr>
-      <!-- Initiative : uniquement le bouton -->
+
       <td class="combat-cell">
         <label>Init.</label>
         <button type="button" class="combat-roll button roll-init" data-attr="initiative">Roll</button>
       </td>
 
-      <!-- Blessures -->
+
       <td class="combat-cell">
         <label>Blessures</label>
         <input type="number" name="system.combat.hp" value="{{system.combat.hp}}">
       </td>
 
-      <!-- Mouvement -->
+
       <td class="combat-cell">
         <label>Mouvement</label>
         <input type="number" name="system.combat.move" value="{{system.combat.move}}">
       </td>
 
-      <!-- Charge -->
+
       <td class="combat-cell">
         <label>Charge</label>
         <input type="number" name="system.combat.charge" value="{{system.combat.charge}}">
       </td>
 
-      <!-- Course -->
+
       <td class="combat-cell">
         <label>Course</label>
         <input type="number" name="system.combat.course" value="{{system.combat.course}}">
       </td>
 
-      <!-- Saut -->
+
       <td class="combat-cell">
         <label>Saut</label>
         <input type="number" name="system.combat.jump" value="{{system.combat.jump}}">
       </td>
 
-      <!-- Chance -->
+
       <td class="combat-cell">
         <label for="chance-actuel">Chance</label>
         <input id="chance-actuel" type="number" name="system.points.chance" value="{{system.points.chance}}" min="0" max="{{system.secondaire.actuel.pd}}">
@@ -174,7 +174,7 @@
   </table>
 </div>
 
-<!-- Talents -->
+
 <div class="section">
   <div class="section-title">
     Talents
@@ -193,16 +193,16 @@
     <tbody>
       {{#each system.talents as |talent i|}}
       <tr>
-        <!-- Nom -->
+
         <td>
           <input type="text" name="system.talents.{{i}}.name" value="{{talent.name}}" placeholder="Nom du talent">
         </td>
 
-        <!-- Description -->
+
         <td>
           <input type="text" name="system.talents.{{i}}.description" value="{{talent.description}}" placeholder="Description">
         </td>
-        <!-- Bouton Supprimer -->
+
         <td>
           <button type="button" class="talent-delete" data-talent-id="{{talent.id}}">🗑</button>
         </td>
@@ -288,17 +288,17 @@
     <tbody>
       {{#each system.regles as |regle i|}}
       <tr>
-        <!-- Nom -->
+
         <td>
           <input type="text" name="system.regles.{{i}}.name" value="{{regle.name}}" placeholder="Nom de la règle spéciale">
         </td>
 
-        <!-- Description -->
+
         <td>
           <input type="text" name="system.regles.{{i}}.description" value="{{regle.description}}" placeholder="Description">
         </td>
 
-        <!-- Bouton Supprimer -->
+
         <td>
           <button type="button" class="regle-delete" data-regle-id="{{regle.id}}">🗑</button>
         </td>
@@ -315,7 +315,7 @@
 </div>
 <div class="main-right">
 
-  <!-- Compétences de Base -->
+
   <div class="section">
     <div class="section-title">Compétences de Base</div>
     <table class="skills-table">
@@ -543,7 +543,7 @@
     </table>
   </div>
 
-  <!-- Compétences Avancées -->
+
   <div class="section">
     <div class="section-title">
   Compétences Avancées
@@ -565,25 +565,25 @@
       <tbody>
         {{#each displayAdvanced as |skill i|}}
         <tr>
-          <!-- Nom -->
+
           <td>
             <input type="hidden" name="system.skills.advanced.{{i}}.id" value="{{skill.id}}" readonly>
             <input type="hidden" name="system.skills.advanced.{{i}}.key" value="{{skill.key}}" readonly>
             <input type="text" name="system.skills.advanced.{{i}}.label" value="{{skill.label}}" readonly>
           </td>
 
-          <!-- Caractéristique -->
+
           <td>
             <input type="text" name="system.skills.advanced.{{i}}.cara" value="{{skill.cara}}" readonly>
           </td>
 
-          <!-- Valeurs -->
+
           <td><input type="number" name="system.skills.advanced.{{i}}.niveau" value="{{skill.niveau}}" ></td>
           <td><input type="number" name="system.skills.advanced.{{i}}.talents" value="{{skill.talents}}" ></td>
           <td><input type="number" name="system.skills.advanced.{{i}}.divers" value="{{skill.divers}}"></td>
           <td><input type="number" name="system.skills.advanced.{{i}}.total" value="{{advancedSkillTotal skill ../system}}" readonly></td>
 
-          <!-- Boutons -->
+
           <td><button type="button" class="skill-roll" data-skill="{{i}}">🎲</button></td>
           <td><input type="checkbox" name="system.skills.advanced.{{i}}.avance" {{checked skill.avance}}></td>
         </tr>

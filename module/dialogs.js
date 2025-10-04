@@ -114,7 +114,6 @@ async function resolveColereResult() {
   return `Jet: ${val} — ${result.text}`;
 }
 
-// Spell casting dialog
 export async function openSpellCastDialog(actor, spell) {
   const defaultMag = Number(actor?.system?.secondaire?.actuel?.mag) || 0;
   const defaultDiff = Number(spell?.difficulte) || 0;
@@ -235,7 +234,7 @@ export async function openSpellCastDialog(actor, spell) {
                 summary.push(`<hr><div><strong>Attaques (${attackCount}):</strong></div>`);
                 for (let i=0;i<attackResults.length;i++) {
                   const atkVal = attackResults[i];
-                  // Reverse the last two digits to map to hit zone (00 treated as 100)
+
                   const twoDigits = String(atkVal % 100).padStart(2, '0');
                   const reversed = twoDigits.split('').reverse().join('');
                   let zoneVal = Number(reversed);
@@ -247,7 +246,7 @@ export async function openSpellCastDialog(actor, spell) {
                   const dmgRoll = await rollDiceFaces(dmgExpression);
                   let dmgDice = dmgRoll.results.slice();
                   let furyLogs = [];
-                  // If fureurConfirmInput is true, auto-apply fureur without confirmation
+
                   if (fureurConfirmInput) {
                     const original = dmgDice.slice();
                     const final = dmgDice.slice();
@@ -269,7 +268,7 @@ export async function openSpellCastDialog(actor, spell) {
                     dmgDice = furyResult.finalDiceArray;
                     furyLogs = furyResult.furyLogs;
                   }
-                  // Sum dice + flat base + degats bonus from dialog
+
                   const dmgSum = dmgDice.reduce((a,b)=>a+b,0) + (Number(flat) || 0) + (Number(degatsBonusInput) || 0);
                   summary.push(`<div style="margin-left:12px">Dégâts (${dmgExpression}): ${dmgDice.join(', ')} ${flat? `+ ${flat}` : ''}${degatsBonusInput ? ` + ${degatsBonusInput}` : ''} → <strong>${dmgSum}</strong></div>`);
                   if (furyLogs.length) {

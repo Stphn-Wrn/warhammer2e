@@ -1,6 +1,3 @@
-/* ===========================
-   WFRP2e – Styles globaux
-   =========================== */
    .wfrp2e {
     --wfrp-gold: #a8862a;
     --wfrp-gold-dark: #8b6f1f;
@@ -14,9 +11,7 @@
     color: var(--ink);
   }
   
-  /* ===========================
-     HEADER
-     =========================== */
+  
   .wfrp2e .header {
     background: var(--paper);
     border-bottom: 1px solid var(--line);
@@ -47,7 +42,7 @@
   }
   .wfrp2e .field-label.center { text-align:center; }
   
-  /* Panneau d’identification */
+  
   .wfrp2e .id-panel{
     background: var(--panel);
     border: 2px solid #141414;
@@ -58,9 +53,9 @@
   .wfrp2e .id-row{ display:grid; gap:8px; margin-bottom:6px; }
   .wfrp2e .id-row.grey{ background:#ededed; border:1px solid var(--line); border-radius:8px; padding:6px; }
   
-  /* Lignes fixes pour correspondre à la maquette */
-  .wfrp2e .id-row.cols-3{ grid-template-columns: 1fr 1fr 180px; }  /* Carrière | Anciennes | Progression */
-  .wfrp2e .id-row.cols-4{ grid-template-columns: 1fr 1fr 1fr 180px; } /* Race | Religion | Lieu | PX */
+  
+  .wfrp2e .id-row.cols-3{ grid-template-columns: 1fr 1fr 180px; }  
+  .wfrp2e .id-row.cols-4{ grid-template-columns: 1fr 1fr 1fr 180px; } 
   
   .wfrp2e .id-field{ display:flex; flex-direction:column; }
   .wfrp2e .id-field input{
@@ -73,9 +68,7 @@
     padding:6px 8px; font-weight:700; text-align:center; min-height:32px;
   }
   
-  /* ===========================
-     TABS – une seule ligne
-     =========================== */
+  
   .wfrp2e .tabs{
     display:flex; align-items:center; gap:8px; margin-top:10px;
     flex-wrap:nowrap; overflow-x:auto; scrollbar-width:thin;
@@ -97,9 +90,7 @@
     font-size:10px;
   }
   
-  /* ===========================
-     LAYOUT du contenu (2 colonnes)
-     =========================== */
+  
   .wfrp2e .content{ padding: 10px 12px; }
   .wfrp2e .two-col{ display:flex; gap:16px; align-items:flex-start; }
   .wfrp2e .left-col{  flex:0 1 50%; box-sizing:border-box; margin:8px 8px 18px 8px; }
@@ -110,10 +101,7 @@
     .wfrp2e .left-col, .wfrp2e .right-col{ flex-basis:100%; margin:10px 0 18px; }
   }
 
-/* Main-left / Main-right columns used in templates/tab-main.html
-   Ensure the left column is on the left and the right column on the right
-   with each occupying 50% of the available width on desktop and stacking
-   on smaller screens. */
+
 .wfrp2e .main-left{
   box-sizing: border-box;
   float: left;
@@ -127,7 +115,7 @@
   padding-left: 12px;
 }
 
-/* Clearfix for parents that need to contain floated columns */
+
 .wfrp2e .clearfix::after{
   content: "";
   display: table;
@@ -143,9 +131,7 @@
   }
 }
   
-  /* ===========================
-     Titres / Pills
-     =========================== */
+  
   .wfrp2e .black-title{
     background: var(--black); color:#fff; font-weight:800;
     padding:6px 10px; border-radius:3px; display:flex; align-items:center; gap:8px;
@@ -156,13 +142,11 @@
     display:inline-block; font-weight:700; color:#333;
   }
   
-  /* ===========================
-     Tables de stats (colonne gauche)
-     =========================== */
-  /* ↓↓ réduction de la colonne “Principal/Secondaire” + espace à droite ↓↓ */
+  
+  
   .wfrp2e .stat-table{
     border:1px solid var(--line); border-radius:6px; background:#fff; overflow:hidden;
-    padding-right:6px; /* léger padding interne côté droit */
+    padding-right:6px; 
   }
   .wfrp2e .table-head{
     display:grid; grid-template-columns: 120px repeat(8, 1fr);
@@ -180,12 +164,12 @@
   }
   .wfrp2e .cell:focus{ outline:none; box-shadow: inset 0 0 0 2px #00000012; }
   
-  /* Espace supplémentaire sur la dernière colonne (head + lignes + boutons) */
+  
   .wfrp2e .table-head .colhead:last-child{ padding-right:10px; }
   .wfrp2e .table-row .cell:last-child{ margin-right:10px; }
   .wfrp2e .roll-row > .gold-roll:last-child{ margin-right:10px; }
   
-  /* Non éditables (gris) */
+  
   .wfrp2e .is-readonly,
   .wfrp2e .cell[readonly],
   .wfrp2e input[readonly],
@@ -193,7 +177,7 @@
     background:#efefef !important; color:#333; cursor:not-allowed; pointer-events:none;
   }
   
-  /* Ligne de boutons (compact) */
+  
   .wfrp2e .roll-row{
     display:grid; grid-template-columns: 120px repeat(8, 1fr);
     padding:8px 6px; gap:6px;
@@ -206,9 +190,7 @@
   }
   .wfrp2e .gold-roll.sm{ width:auto; padding:4px 8px; height:28px; gap:6px; }
   
-  /* ===========================
-     Combat
-     =========================== */
+  
   .wfrp2e .combat-grid{
     margin-top:10px; border:1px solid var(--line); border-radius:6px; background:#fff; display:grid;
     grid-template-columns: 160px 1fr; gap:6px 8px; padding:8px;
@@ -217,9 +199,7 @@
   .wfrp2e .c-cell{ text-align:center; background:#fafafa; border:1px solid var(--line); border-radius:4px; padding:4px 6px; }
   .wfrp2e .talent-luck{ grid-column:1 / -1; display:flex; align-items:center; gap:8px; padding-top:4px; }
   
-  /* ===========================
-     Listes (Talents/Compétences/Règles simples à gauche)
-     =========================== */
+  
   .wfrp2e .table-bar{
     display:grid; grid-template-columns: 1fr 1fr 120px;
     background:#dcdcdc; border:1px solid var(--line); border-radius:4px; padding:6px 8px;
@@ -238,9 +218,7 @@
   .wfrp2e .btn{ border:1px solid var(--line); background:#efefef; border-radius:6px; padding:6px 10px; font-weight:600; }
   .wfrp2e .right{ margin-left:auto; }
   
-  /* ===========================
-     Compétences (colonne droite)
-     =========================== */
+  
   .wfrp2e .skills-section { margin-top: 10px; }
   
   .wfrp2e .skills-pill {
@@ -253,19 +231,19 @@
     display: inline-block;
   }
   
-  /* Grille des compétences */
+  
   .wfrp2e .skills-grid,
   .wfrp2e .skills-grid-head {
     display: grid;
     grid-template-columns:
-      2fr   /* Compétence */
-      54px  /* Cara */
-      90px  /* Niveau (select) */
-      60px  /* Talents */
-      60px  /* Divers */
-      60px  /* Total (ro) */
-      44px  /* Jet (bouton) */
-      90px; /* Avancé (3 checkbox) */
+      2fr   
+      54px  
+      90px  
+      60px  
+      60px  
+      60px  
+      44px  
+      90px; 
     align-items: center;
   }
   
@@ -287,7 +265,7 @@
     border-top: 1px solid var(--line);
     display: flex; align-items: center; justify-content: center; gap: 6px;
   }
-  .wfrp2e .skills-cell:nth-child(8n+1){ justify-content:flex-start; font-weight:600; } /* 1re col à gauche */
+  .wfrp2e .skills-cell:nth-child(8n+1){ justify-content:flex-start; font-weight:600; } 
   
   .wfrp2e .skills-input,
   .wfrp2e .skills-select{
@@ -316,18 +294,18 @@
   }
   .wfrp2e .skills-ranks input[type="checkbox"]{ width:16px; height:16px; }
   
-  /* Cara readonly (look label grisé) */
+  
   .wfrp2e .skills-cara-ro{
     width:100%; height:26px; background:#eeeeee; border:1px solid var(--line);
     border-radius:4px; display:flex; align-items:center; justify-content:center; font-weight:600;
   }
   
-  /* Mobile : scroll horizontal si nécessaire */
+  
   @media (max-width: 1024px) {
     .wfrp2e .skills-grid, .wfrp2e .skills-grid-head { overflow-x: auto; }
   }
   
-  /* Titres noirs */
+  
 .wfrp2e .section-title {
   background: #000;
   color: #fff;
@@ -340,7 +318,7 @@
   gap: 6px;
 }
 
-/* Coins grid and exchange card */
+
 .wfrp2e table.coins-grid{
   width:100%; border-collapse:collapse; margin-bottom:10px; box-shadow: inset 0 1px 0 #00000008;
 }
@@ -374,11 +352,11 @@
 @media (max-width:720px){
   .wfrp2e table.coins-grid th, .wfrp2e table.coins-grid td{ padding:8px; }
   .wfrp2e .exchange-image-wrap img{ max-width:140px; }
-  /* stack: make the exchange card appear below on small screens */
+  
   .wfrp2e table.coins-grid td.exchange-card{ display:block; width:100%; }
 }
 
-/* Ligne de champs */
+
 .wfrp2e .section-row {
   display: grid;
   gap: 6px;
@@ -409,7 +387,7 @@
   font-weight: bold;
 }
 
-/* Textareas */
+
 .wfrp2e textarea {
   width: 100%;
   min-height: 80px;
@@ -421,11 +399,9 @@
   resize: vertical;
 }
 
-/* ===========================
-   NAVIGATION (onglets Foundry)
-   =========================== */
 
-/* Container des onglets */
+
+
 .wfrp2e nav.tabs {
   display: flex;
   align-items: center;
@@ -436,7 +412,7 @@
   scrollbar-width: thin;
 }
 
-/* Chaque onglet = .item (classe Foundry) */
+
 .wfrp2e nav.tabs .item.gold {
   flex: 0 0 auto;
   padding: 10px 16px;
@@ -454,16 +430,14 @@
   text-transform: uppercase;
 }
 
-/* Onglet actif */
+
 .wfrp2e nav.tabs .item.gold.active {
   background: #d4b469;
   color: #000;
 }
 
-/* ===========================
-   CARRIÈRES
-   =========================== */
-/* Career section colors aligned with theme variables */
+
+
 .wfrp2e .career-block {
   border: 2px solid var(--line);
   border-radius: 8px;
@@ -509,7 +483,7 @@
   color: var(--ink);
 }
 
-/* Grille des profils */
+
 .wfrp2e .career-profiles {
   display: flex;
   gap: 16px;
@@ -537,7 +511,7 @@
 .profile-table th, .profile-table td input, .skills-table th, .skills-table td {
   text-align: center;
 }
-/* Grille interne des caracs */
+
 .wfrp2e .career-profile .profile-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -563,7 +537,7 @@
   color: var(--ink);
 }
 
-/* Sous-sections (Compétences, Talents, Débouchés) */
+
 .wfrp2e .career-subsection {
   margin-top: 8px;
 }
@@ -590,24 +564,24 @@
   background: var(--panel);
   color: var(--ink);
 }
-/* Centrer le texte dans les th des carrières */
+
 .wfrp2e .career-profile th {
   text-align: center;
   vertical-align: middle;
-  padding: 6px 8px; /* un peu d’air autour du texte */
+  padding: 6px 8px; 
 }
 .weapons-table th,
 .weapons-table td {
   text-align: center;
   vertical-align: middle;
 }
-/* Section Armure */
+
 .armor-section {
   margin-top: 10px;
   font-size: 13px;
 }
 
-/* Grille 2 colonnes : tables à gauche / silhouette à droite */
+
 .armor-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -615,7 +589,7 @@
   align-items: start;
 }
 
-/* Titres de sections (Tête, Corps, etc.) */
+
 .armor-section .section-title {
   background: #ccc;
   color: #222;
@@ -628,7 +602,7 @@
   border-radius: 3px;
 }
 
-/* Tables d’armure */
+
 .armor-table {
   width: 100%;
   border-collapse: collapse;
@@ -667,7 +641,7 @@
 }
 
 .armor-zone.full {
-  grid-column: span 2; /* occupe toute la largeur */
+  grid-column: span 2; 
   text-align: center;
 }
 
@@ -691,7 +665,7 @@
   border-radius: 3px;
 }
 
-/* Bouton Perte de Sang */
+
 .blood-loss {
   text-align: center;
 }
@@ -706,7 +680,7 @@
   cursor: pointer;
 }
 
-/* Malus */
+
 .armor-maluses {
   margin-top: 15px;
   padding: 8px 10px;
@@ -721,17 +695,17 @@
 
 .armor-maluses label {
   display: flex;
-  align-items: center; /* ✅ centre verticalement texte et case */
-  gap: 8px;            /* espace entre case et texte */
+  align-items: center; 
+  gap: 8px;            
   cursor: pointer;
 }
 
 .armor-maluses input[type="checkbox"] {
-  transform: scale(1.2); /* optionnel : rendre la case un peu plus grande */
+  transform: scale(1.2); 
 }
 
-/* .chaos-row and .gold-tab are defined later in the file (consolidated definitions) */
-/* Section titles */
+
+
 .section-title {
   margin: 8px 0;
   padding: 2px 6px;
@@ -743,7 +717,7 @@
   font-size: 13px;
 }
 
-/* Ligne de configuration Chaos */
+
 .chaos-row {
   display: flex;
   align-items: center;
@@ -766,7 +740,7 @@
   min-width: 140px;
 }
 
-/* Boutons or */
+
 .gold-tab, .gold-roll {
   background: #8b6f1f;
   color: #fff;
@@ -782,7 +756,7 @@
   background: #a8862a;
 }
 
-/* Active state for grimoire category buttons */
+
 .gold-tab.active {
   background: #d4b469;
   color: #000;
@@ -790,7 +764,7 @@
   box-shadow: inset 0 -3px 0 rgba(0,0,0,0.08);
 }
 
-/* Grimoire : boutons alignés */
+
 .grimoire-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -798,7 +772,7 @@
   margin-top: 6px;
 }
 
-/* Ensure grimoire buttons sit on the same row and don't force full width */
+
 .grimoire-buttons .gold-tab,
 .grimoire-buttons .btn-emp-marq-foca {
     flex: 0 1 auto;
@@ -809,7 +783,7 @@
     border-radius: 6px;
 }
 
-/* Make sure buttons wrap nicely on small screens */
+
 @media (max-width:720px){
   .grimoire-buttons .gold-tab, .grimoire-buttons .btn-emp-marq-foca{ min-width: 100%; }
 }
@@ -818,9 +792,7 @@
 .spell-card { margin-bottom: 12px; border-radius: 8px; overflow: hidden; }
 .spell-card h3 { margin: 6px 0; }
 
-/* ===========================
-   Career cards (Primary / Secondary)
-   =========================== */
+
 .wfrp2e .career-tabs { display:flex; flex-direction:column; gap:18px; }
 .wfrp2e .career-card {
   background: var(--paper);
@@ -844,7 +816,7 @@
 .wfrp2e .career-column--stats { flex: 1 1 66%; }
 .wfrp2e .career-column--lists { 
   flex: 1 1 34%;
-  /* Arrange the three boxes as a 2-column grid: first two side-by-side, third spans full width */
+  
   display: grid; 
   grid-template-columns: 1fr 1fr;
   gap: 8px;
@@ -863,7 +835,7 @@
   .wfrp2e .career-column--stats, .wfrp2e .career-column--lists{ flex-basis:100%; }
 }
 
-/* small helpers to tighten table spacing inside cards */
+
 .wfrp2e .career-table{ width:100%; border-collapse:collapse; }
 .wfrp2e .career-table th{ text-align:center; background:var(--wfrp-gold); padding:6px; font-weight:700; font-size:12px; }
 .wfrp2e .career-table td{ padding:6px; }

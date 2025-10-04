@@ -1,4 +1,3 @@
-// Handlebars helpers and template preloader for Warhammer2e
 export function registerHandlebarsHelpers() {
   Handlebars.registerHelper("capitalize", function (str) {
     if (typeof str !== "string") return "";

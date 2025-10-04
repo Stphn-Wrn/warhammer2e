@@ -3,61 +3,61 @@ import { openGrantXpDialog } from './xp.js';
 import { _recalculateDiceMin, _recalculateDiceMinRanged, getZoneFromD100, handleUlricFury, rollDiceFaces } from './utils.js';
 
 export function wireSheetHandlers(sheet, html) {
-  // (currency persistence removed)
-  // (coin UI removed)
+  
+  
 
-  // Normalize numeric input values on render: Foundry/Handlebars sometimes
-  // injects strings that use a comma as decimal separator (e.g. "0,330").
-  // Writing such strings into <input type="number"> via .val(...) causes
-  // the browser to throw "The specified value '0,330' cannot be parsed".
-  // To avoid that, sanitize all number inputs early by replacing commas
-  // with dots and ensuring the value is a parseable number/string.
+  
+  
+  
+  
+  
+  
   try {
-    // Safer numeric input normalization on render:
-    // - remove ordinary and non-breaking spaces (thousands separators)
-    // - replace comma decimal separators with dot
-    // - attempt a Number(...) parse and only set the input if it's finite
-    // - if parsing fails but a leading integer exists, use that
+    
+    
+    
+    
+    
     html.find('input[type="number"]').each((_, el) => {
       try {
         const $el = $(el);
         const raw = ($el.val() || '').toString();
         if (!raw) return;
-        // remove NBSP and regular spaces used as thousands separators
+        
         let cleaned = raw.replace(/\u00A0/g, '').replace(/\s+/g, '');
-        // normalize comma decimal separator to dot
+        
         cleaned = cleaned.replace(/,/g, '.');
         const n = Number(cleaned);
         if (Number.isFinite(n)) {
-          // If the field's step is integer (step=1) round to integer
+          
     const step = $el.attr('step');
     const nameAttr = ($el.attr('name') || '');
-    // Don't apply the integer rounding heuristic to career fields: the
-    // career tab values should be persisted exactly as the user entered
-    // them (no implicit rounding/clamping).
+    
+    
+    
     const isCareerField = nameAttr.startsWith('system.principal.carriere') || nameAttr.startsWith('system.career.');
     if (step && String(step).indexOf('.') === -1 && Number(step) === 1 && !isCareerField) $el.val(Math.round(n));
     else $el.val(n);
           return;
         }
-        // Fallback: extract the first integer-looking substring (e.g. "9" from "9,xxx")
+        
         const m = raw.match(/-?\d+/);
         if (m) $el.val(parseInt(m[0], 10));
-      } catch (e) { /* non-fatal */ }
+      } catch (e) {  }
     });
-  } catch (e) { /* ignore normalization failures */ }
+  } catch (e) {  }
 
-  // Armor equip toggles
+  
   html.find('.armor-equip').on('change', async ev => {
-    // Prevent other change handlers (including Foundry's form binder) from
-    // running and possibly writing a boolean value that would interfere
-    // with our 'YES'/'NO' persistence.
+    
+    
+    
     try { ev.preventDefault(); ev.stopImmediatePropagation(); } catch(e){}
-    const input = ev.currentTarget; // checkbox element
+    const input = ev.currentTarget; 
     const $input = $(input);
     const zone = input.dataset.zone;
     const pa = Number(input.dataset.pa) || 0;
-    // Support both checkbox inputs and legacy/select inputs: determine checked state reliably
+    
     let checked = false;
     try {
       if ($input.is(':checkbox')) checked = !!$input.prop('checked');
@@ -67,22 +67,22 @@ export function wireSheetHandlers(sheet, html) {
       }
     } catch (e) { checked = !!$input.prop('checked'); }
 
-    // Persist only the clicked checkbox's state (allow multiple equipped layers per zone).
+    
     const updates = {};
     const clickedName = $input.attr('name');
     updates[clickedName] = checked ? 'YES' : 'NO';
-    // Ensure the clicked checkbox shows the immediate state for the user
+    
     try { if ($input.is(':checkbox')) $input.prop('checked', checked); } catch(e){}
 
-    // Enable or disable the corresponding bonus input for the clicked line
+    
     try {
       const clickedName = $input.attr('name') || '';
       const bonusField = clickedName.replace(/\.eq$/, '.bonus');
       const $bonusInput = html.find(`input[name='${bonusField}']`);
       if ($bonusInput.length) $bonusInput.prop('disabled', !checked);
-    } catch(e) { /* non-fatal */ }
+    } catch(e) {  }
 
-    // Recompute the total for the zone by summing all equipped lines for that zone
+    
     let zoneTotal = 0;
     html.find(`.armor-equip[data-zone='${zone}']`).each((_, el) => {
       try {
@@ -97,24 +97,24 @@ export function wireSheetHandlers(sheet, html) {
         const bonusVal = ($bonus.val() || '').toString().replace(/,/g, '.');
         const lineBonus = Number(bonusVal) || 0;
         zoneTotal += (linePa + lineBonus);
-      } catch (e) { /* ignore per-line errors */ }
+      } catch (e) {  }
     });
     updates[`system.armorTotals.${zone}`] = zoneTotal;
     updates[`system.armorEquipped.${zone}`] = zoneTotal;
 
-    // Persist the bonus value itself
+    
     try {
       const rawBonus = ($input.val() || '').toString().replace(/,/g, '.').trim();
       const parsedBonus = Number(rawBonus);
       updates[name] = Number.isFinite(parsedBonus) ? parsedBonus : 0;
-    } catch (e) { /* non-fatal */ }
+    } catch (e) {  }
 
-    // Compute the grand total across all zones (head, body, armLeft, armRight, legLeft, legRight)
-    // Prefer reading the values from the DOM inputs if present for immediate accuracy; fall back to actor data.
+    
+    
     const zones = ["head","body","armLeft","armRight","legLeft","legRight"];
     let grandTotal = 0;
     for (const z of zones) {
-      // If we're computing the same zone we just changed, use zoneTotal; otherwise try DOM then actor
+      
       if (z === zone) {
         grandTotal += Number(zoneTotal) || 0;
         continue;
@@ -124,19 +124,19 @@ export function wireSheetHandlers(sheet, html) {
         const v = ($inp.val() || '').toString().replace(/,/g, '.');
         grandTotal += Number(v) || 0;
       } else {
-        // safe read from actor's data
+        
         const actorVal = Number(sheet.actor.system.armorTotals?.[z]) || 0;
         grandTotal += actorVal;
       }
     }
 
-    // Persist the grand total into a dedicated field so other code can read it without recomputing.
+    
     updates['system.armor.totalPA'] = grandTotal;
 
     try {
       console.debug('Persisting armor updates (checkbox) with grand total:', updates);
   await sheet.actor.update(updates);
-  // Update DOM total input immediately for the changed zone and optionally a visible total if present
+  
   const $zoneInput = html.find(`input[name='system.armorTotals.${zone}']`);
   if ($zoneInput.length) $zoneInput.val(zoneTotal);
   const $grandInput = html.find(`input[name='system.armor.totalPA']`);
@@ -147,21 +147,21 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
-  // When a per-line bonus changes, recompute the affected zone totals and grand total
+  
   html.find("input[name$='.bonus']").on('change', async ev => {
-    // Prevent other change handlers from interfering with our persistence
+    
     try { ev.preventDefault(); ev.stopImmediatePropagation(); } catch(e){}
     const input = ev.currentTarget;
     const $input = $(input);
     const name = input.name || '';
-    // name format: system.armor.<zone>.<type>.bonus
+    
     const parts = name.split('.');
     const zone = parts[2] || '';
     if (!zone) return;
 
     const updates = {};
 
-    // Recompute zone total by summing equipped lines for that zone
+    
     let zoneTotal = 0;
     html.find(`.armor-equip[data-zone='${zone}']`).each((_, el) => {
       try {
@@ -176,13 +176,13 @@ export function wireSheetHandlers(sheet, html) {
         const bonusVal = ($bonus.val() || '').toString().replace(/,/g, '.');
         const lineBonus = Number(bonusVal) || 0;
         zoneTotal += (linePa + lineBonus);
-      } catch (e) { /* ignore per-line errors */ }
+      } catch (e) {  }
     });
 
     updates[`system.armorTotals.${zone}`] = zoneTotal;
     updates[`system.armorEquipped.${zone}`] = zoneTotal;
 
-    // Recompute grand total across zones
+    
     const zones = ["head","body","armLeft","armRight","legLeft","legRight"];
     let grandTotal = 0;
     for (const z of zones) {
@@ -200,7 +200,7 @@ export function wireSheetHandlers(sheet, html) {
 
     try {
       await sheet.actor.update(updates);
-      // Update DOM inputs immediately
+      
       const $zoneInput = html.find(`input[name='system.armorTotals.${zone}']`);
       if ($zoneInput.length) $zoneInput.val(zoneTotal);
       const $grandInput = html.find(`input[name='system.armor.totalPA']`);
@@ -210,7 +210,7 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
-  // Skill base listeners (niveau, talents, divers, avance, cara)
+  
   html.find("input[name*='skills.base'][name*='niveau']").on('change', ev => {
     const input = ev.currentTarget;
     const name = input.name;
@@ -236,12 +236,12 @@ export function wireSheetHandlers(sheet, html) {
     sheet.actor.update({ [name]: newValue });
   });
 
-  // Talents add/delete — mirror regles behaviour: dynamic add and persistent delete
+  
   html.find('.talent-add').on('click', ev => {
     ev.preventDefault();
     try {
       const $btn = $(ev.currentTarget);
-      // Find the talents table inside the same section as the clicked button
+      
       const tbody = $btn.closest('.section').find('table.skills-table tbody').first();
       const nextIndex = Math.max(0, tbody.find('tr').length);
       const rowHtml = `
@@ -260,7 +260,7 @@ export function wireSheetHandlers(sheet, html) {
       `;
   const $row = $(rowHtml);
   tbody.append($row);
-      // Attach a local delete handler for this unsaved row
+      
       $row.find('.talent-delete').on('click', ev2 => { ev2.preventDefault(); $row.remove(); });
       setTimeout(() => { try { $row[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch(e){} }, 50);
       ui.notifications.info('Nouveau talent ajouté');
@@ -281,7 +281,7 @@ export function wireSheetHandlers(sheet, html) {
       content: `<p>Êtes-vous sûr de vouloir supprimer <strong>${talentNameLocal}</strong> ?</p>`,
       yes: async () => {
         try {
-          // Rebuild talents array from the talents table in the same section (excluding deleted row)
+          
           const tbody = $btn.closest('.section').find('table.skills-table tbody').first();
           const rows = tbody.find('tr').toArray();
           const newTalents = [];
@@ -309,7 +309,7 @@ export function wireSheetHandlers(sheet, html) {
     });
   });
 
-  // Regles spe add/delete: insert a dynamic editable row in the DOM (persist on sheet save)
+  
   html.find('.regles-spe-add').on('click', ev => {
     ev.preventDefault();
     try {
@@ -331,9 +331,9 @@ export function wireSheetHandlers(sheet, html) {
       `;
       const $row = $(rowHtml);
       tbody.append($row);
-      // Attach a local delete handler for this unsaved row
+      
       $row.find('.regle-delete').on('click', ev2 => { ev2.preventDefault(); $row.remove(); });
-      // Scroll into view
+      
       setTimeout(() => { try { $row[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch(e){} }, 50);
       ui.notifications.info('Nouvelle ligne ajoutée');
     } catch (err) {
@@ -352,12 +352,12 @@ export function wireSheetHandlers(sheet, html) {
       content: `<p>Êtes-vous sûr de vouloir supprimer <strong>${regleNameLocal}</strong> ?</p>`,
       yes: async () => {
         try {
-          // Rebuild the regles array from the DOM excluding the clicked row
+          
           const tbody = sheet.element.find('.regle-table tbody');
           const rows = tbody.find('tr').toArray();
           const newRegles = [];
           for (let r of rows) {
-            if (r === $tr[0]) continue; // skip the row being deleted
+            if (r === $tr[0]) continue; 
             const $r = $(r);
             const idVal = $r.find("input[name$='.id']").val();
             const nameVal = $r.find("input[name$='.name']").val() || '';
@@ -562,12 +562,12 @@ export function wireSheetHandlers(sheet, html) {
     });
   });
 
-  // Coins / exchange inputs - dynamic and persisted on change
-  // Copper, Silver, Gold counts
+  
+  
   html.find('input[name="system.coins.copper"], input[name="system.coins.silver"], input[name="system.coins.gold"]').on('change', async ev => {
     ev.preventDefault();
     const input = ev.currentTarget;
-    const name = input.name; // e.g. system.coins.copper
+    const name = input.name; 
     const val = Math.max(0, Number(input.value) || 0);
     try {
       await sheet.actor.update({ [name]: val });
@@ -578,7 +578,7 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
-  // Chance input: bounded between 0 and current PD (secondaire.actuel.pd)
+  
   html.find('input[name="system.points.chance"]').on('change', async ev => {
     ev.preventDefault();
     const input = ev.currentTarget;
@@ -596,11 +596,11 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
-  // Exchange rates (values)
+  
   html.find('input[name="system.exchange.copper"], input[name="system.exchange.silver"], input[name="system.exchange.gold"]').on('change', async ev => {
     ev.preventDefault();
     const input = ev.currentTarget;
-    const name = input.name; // e.g. system.exchange.copper
+    const name = input.name; 
     const raw = (input.value || '').toString().replace(/,/g, '.');
     const val = Math.max(0, Number(raw) || 0);
     try {
@@ -612,7 +612,7 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
-  // Compute total CO (Couronne d'Or) from coins and exchange rates and render in the template
+  
   function computeTotalCO() {
     try {
       const $copper = html.find('input[name="system.coins.copper"]');
@@ -623,26 +623,26 @@ export function wireSheetHandlers(sheet, html) {
       const silver = Math.max(0, Number($silver.val()) || 0);
       const gold = Math.max(0, Number($gold.val()) || 0);
 
-  // Exchange rates: interpret inputs as value in CO per single coin unit.
-  // Defaults: 1 gold = 1 CO, 1 silver = 0.05 CO (as requested), 1 copper = 1/240 CO.
+  
+  
   const exchCopper = Number(html.find('input[name="system.exchange.copper"]').val());
   const exchSilver = Number(html.find('input[name="system.exchange.silver"]').val());
   const exchGold = Number(html.find('input[name="system.exchange.gold"]').val());
   const defaultCopper = 1 / 240;
-  const defaultSilver = 0.05; // 1 PA = 0.05 CO
+  const defaultSilver = 0.05; 
   const defaultGold = 1.0;
   const valCopper = (isNaN(exchCopper) || exchCopper <= 0) ? defaultCopper : exchCopper;
   const valSilver = (isNaN(exchSilver) || exchSilver <= 0) ? defaultSilver : exchSilver;
   const valGold = (isNaN(exchGold) || exchGold <= 0) ? defaultGold : exchGold;
 
-  // Total in CO is sum of each coin * its CO value
+  
   const totalCO = (copper * valCopper) + (silver * valSilver) + (gold * valGold);
 
-      // Format numbers: integer for coins, total with 3 decimals and French comma
+      
       const fmtInt = n => (Math.round(n)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       const fmtTotal = n => {
         const v = (Math.round(n * 1000) / 1000).toFixed(3);
-        // replace dot with comma and use thin spaces for thousands
+        
         return v.replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       };
 
@@ -656,34 +656,34 @@ export function wireSheetHandlers(sheet, html) {
     }
   }
 
-  // Recompute whenever coins or exchange values change
+  
   html.find('input[name^="system.coins."], input[name^="system.exchange."]').on('input change', () => computeTotalCO());
 
-  // --- Career inputs: persist live so the main profile 'carriere' row updates immediately ---
+  
   try {
-    // Primary career inputs already bind to system.principal.carriere.* in the template.
-  // Persist on change (blur/enter) rather than on every keystroke to avoid
-  // interfering with user input (partial values like "0,") which are not
-  // valid for <input type="number"> and cause parse errors when written.
+    
+  
+  
+  
     html.find('input[name^="system.principal.carriere."]').on('change', async ev => {
       try {
         const input = ev.currentTarget;
-        const name = input.name; // e.g. system.principal.carriere.cc
+        const name = input.name; 
         const raw = (input.value || '').toString().trim();
-  // Parse as integer (base 10). If the user cleared the field, persist 0
-  // (treat empty as zero for career integer fields) so the previous
-  // stored value doesn't reappear on re-render.
+  
+  
+  
   const cleaned = raw === '' ? '0' : raw.replace(/[^0-9-]/g, '');
   const parsed = parseInt(cleaned, 10);
     if (!Number.isFinite(parsed)) return;
-    // Debug: log what we're about to persist so we can trace unexpected transforms
+    
     try { console.debug('[DEBUG] Persisting career principal field', { name, raw, cleaned, parsed }); } catch(e){}
-    // Persist exactly the parsed integer (don't clamp or round further)
+    
     await sheet.actor.update({ [name]: parsed });
-      } catch (err) { /* non-fatal */ }
+      } catch (err) {  }
     });
 
-    // When secondary career is marked as started, mirror its primary stats into system.principal.carriere
+    
     const mapSecondaryToPrincipal = {
       'combat': 'system.principal.carriere.cc',
       'shoot': 'system.principal.carriere.ct',
@@ -695,9 +695,9 @@ export function wireSheetHandlers(sheet, html) {
       'social': 'system.principal.carriere.sociabilite'
     };
 
-    // Map fields from the career's secondary-profile UI into the actor's
-    // `system.secondaire.carriere` structure so the secondary career values
-    // are stored independently from the principal career row.
+    
+    
+    
     const mapSecondaryToSecondaire = {
       'attacks': 'system.secondaire.carriere.a',
       'wounds': 'system.secondaire.carriere.b',
@@ -709,82 +709,82 @@ export function wireSheetHandlers(sheet, html) {
       'destinyPoints': 'system.secondaire.carriere.pd'
     };
 
-  // Mirror secondary -> principal only when the user has finished editing (change event)
+  
     html.find('input[name^="system.career.secondary."]').on('change', async ev => {
       try {
           const input = ev.currentTarget;
           const parts = input.name.split('.');
-          const key = parts[parts.length - 1]; // e.g. 'combat' or 'strength' or 'attacks'
+          const key = parts[parts.length - 1]; 
           const raw = (input.value || '').toString().trim();
           const cleaned = raw === '' ? '0' : raw.replace(/[^0-9-]/g, '');
           const parsed = parseInt(cleaned, 10);
           if (!Number.isFinite(parsed)) return;
 
-          // Persist into the secondary profile carrier fields when applicable
+          
           const targetSecondaire = mapSecondaryToSecondaire[key];
           if (targetSecondaire) {
             try { console.debug('[DEBUG] Persisting career secondary->secondaire', { inputName: input.name, key, raw, cleaned, parsed, targetSecondaire }); } catch(e){}
             try {
-              const parentPath = targetSecondaire.replace(/\.[^.]+$/, ''); // system.secondaire.carriere
+              const parentPath = targetSecondaire.replace(/\.[^.]+$/, ''); 
               const field = targetSecondaire.split('.').pop();
               const currentParent = sheet.actor.system.secondaire?.carriere ? foundry.utils.deepClone(sheet.actor.system.secondaire.carriere) : {};
               currentParent[field] = parsed;
               await sheet.actor.update({ [parentPath]: currentParent });
-              // Also update local actor data so render reads the new value immediately
+              
               try { sheet.actor.system.secondaire = sheet.actor.system.secondaire || {}; sheet.actor.system.secondaire.carriere = sheet.actor.system.secondaire.carriere || {}; sheet.actor.system.secondaire.carriere[field] = parsed; } catch(e) {}
-            } catch (e) { /* non-fatal update */ }
-            try { sheet.render(false); } catch(e) { /* non-fatal render */ }
-            // Update DOM immediately so the main 'carriere' row reflects the change
+            } catch (e) {  }
+            try { sheet.render(false); } catch(e) {  }
+            
             try {
               const $t = html.find(`input[name='${targetSecondaire}']`);
               if ($t.length) {
                 if ($t.is(':checkbox')) $t.prop('checked', !!parsed);
                 else $t.val(parsed);
               }
-            } catch(e) { /* non-fatal DOM sync */ }
+            } catch(e) {  }
           }
 
-          // Additionally, when the secondary career is marked as started, mirror
-          // its primary-stat equivalents into the principal.carriere fields (legacy behavior)
+          
+          
           const started = !!html.find('input[name="system.career.secondary.started"]').prop('checked');
           const targetPrincipal = mapSecondaryToPrincipal[key];
           if (started && targetPrincipal) {
             try { console.debug('[DEBUG] Mirroring secondary->principal', { inputName: input.name, key, raw, cleaned, parsed, targetPrincipal }); } catch(e){}
             try {
-              // Instead of persisting into the actor (which replaces stored
-              // principal values), only update the in-memory sheet display so
-              // the checkbox acts as a UI switch. We keep a transient backup
-              // on the sheet so unchecking can restore original values.
+              
+              
+              
+              
               const fieldP = targetPrincipal.split('.').pop();
-              // Create a transient backup if not present
+              
               try {
                 if (!sheet._backupPrincipalCarriereFromSecondary) sheet._backupPrincipalCarriereFromSecondary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {});
               } catch(e) { sheet._backupPrincipalCarriereFromSecondary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {}); }
-              // Update only the in-memory principal.carriere for display
+              
               try { sheet.actor.system.principal = sheet.actor.system.principal || {}; sheet.actor.system.principal.carriere = sheet.actor.system.principal.carriere || {}; sheet.actor.system.principal.carriere[fieldP] = parsed; } catch(e) {}
-              // Do NOT call sheet.actor.update here to avoid persistent overwrite
-            } catch (e) { /* non-fatal update */ }
-            try { sheet.render(false); } catch(e) { /* non-fatal render */ }
-            // Update DOM primary principal carriere inputs if present
+              
+            } catch (e) {  }
+            try { sheet.render(false); } catch(e) {  }
+            
             try {
               const $p = html.find(`input[name='${targetPrincipal}']`);
               if ($p.length) {
-                // Read the actor's current persisted value (should reflect the sum we wrote)
+                
                 const actorVal = Number(sheet.actor.system.principal?.carriere?.[fieldP]);
                 if ($p.is(':checkbox')) $p.prop('checked', !!actorVal);
                 else $p.val(Number.isFinite(actorVal) ? actorVal : parsed);
               }
-            } catch(e) { /* non-fatal DOM sync */ }
+            } catch(e) {  }
           }
-      } catch (err) { /* non-fatal */ }
+      } catch (err) {  }
     });
 
-    // Mirror primary career inputs into system.principal.carriere to keep the main profile in sync.
+    
     html.find('input[name^="system.career.primary."]').on('change', async ev => {
       try {
         const input = ev.currentTarget;
         const parts = input.name.split('.');
-        const key = parts[parts.length - 1]; // e.g. 'cc' or 'force'
+        const key = parts[parts.length - 1]; 
         const target = `system.principal.carriere.${key}`;
         const raw = (input.value || '').toString().trim();
         const cleaned = raw === '' ? '0' : raw.replace(/[^0-9-]/g, '');
@@ -792,23 +792,23 @@ export function wireSheetHandlers(sheet, html) {
         if (!Number.isFinite(parsed)) return;
         try { console.debug('[DEBUG] Mirroring career primary->principal', { inputName: input.name, raw, cleaned, parsed, target }); } catch(e){}
         await sheet.actor.update({ [target]: parsed });
-      } catch (err) { /* non-fatal */ }
+      } catch (err) {  }
     });
 
-      // When the user toggles the 'Carrière débutée' checkbox we only switch
-      // the displayed principal values (in-memory) and do NOT persist them.
-      // This checkbox indicates which data to *use* for display, not to
-      // permanently overwrite the actor's base principal values.
+      
+      
+      
+      
       try {
         html.find('input[name="system.career.secondary.started"]').on('change', async ev => {
           try {
             const checked = !!ev.currentTarget.checked;
-            // Persist the checkbox so a subsequent render shows the updated state
-            try { await sheet.actor.update({ 'system.career.secondary.started': checked }); } catch(e) { /* non-fatal */ }
-            // mapping keys in mapSecondaryToPrincipal map to principal fields
+            
+            try { await sheet.actor.update({ 'system.career.secondary.started': checked }); } catch(e) {  }
+            
             const mapping = mapSecondaryToPrincipal;
-            // If checking, backup existing principal.carriere once and copy
-            // secondary values into the in-memory principal.carriere for display.
+            
+            
             if (checked) {
               try {
                 if (!sheet._backupPrincipalCarriereFromSecondary) sheet._backupPrincipalCarriereFromSecondary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {});
@@ -816,7 +816,7 @@ export function wireSheetHandlers(sheet, html) {
               for (const [secKey, princPath] of Object.entries(mapping)) {
                 try {
                   const fieldP = princPath.split('.').pop();
-                  // Read value from the secondary inputs (DOM) first then actor data
+                  
                   const $secInp = html.find(`input[name='system.career.secondary.${secKey}']`);
                   let secVal = 0;
                   if ($secInp.length) secVal = Number(($secInp.val() || '').toString().replace(/,/g, '.')) || 0;
@@ -824,28 +824,28 @@ export function wireSheetHandlers(sheet, html) {
                   sheet.actor.system.principal = sheet.actor.system.principal || {};
                   sheet.actor.system.principal.carriere = sheet.actor.system.principal.carriere || {};
                   sheet.actor.system.principal.carriere[fieldP] = secVal;
-                } catch (e) { /* per-field non-fatal */ }
+                } catch (e) {  }
               }
               try { sheet.render(false); } catch (e) {}
               return;
             }
 
-            // If unchecked, restore the backup if present and remove it.
+            
             if (sheet._backupPrincipalCarriereFromSecondary) {
               try {
                 sheet.actor.system.principal = sheet.actor.system.principal || {};
                 sheet.actor.system.principal.carriere = foundry.utils.deepClone(sheet._backupPrincipalCarriereFromSecondary);
-              } catch (e) { /* ignore restore errors */ }
+              } catch (e) {  }
               try { delete sheet._backupPrincipalCarriereFromSecondary; } catch(e){}
               try { sheet.render(false); } catch (e) {}
             }
-          } catch (err) { /* non-fatal */ }
+          } catch (err) {  }
         });
-      } catch (e) { /* ignore handler install failures */ }
+      } catch (e) {  }
 
-    // Additionally persist the primary career's secondary-profile fields into system.secondaire.carriere
-    // using the same mapping as the secondary career inputs so the main "carriere" row reflects
-    // the chosen career's secondary stats immediately.
+    
+    
+    
     const mapPrimarySecondaryToSecondaire = {
       'attacks': 'a',
       'wounds': 'b',
@@ -862,30 +862,30 @@ export function wireSheetHandlers(sheet, html) {
         const input = ev.currentTarget;
         const parts = input.name.split('.');
         const key = parts[parts.length - 1];
-        if (!mapPrimarySecondaryToSecondaire[key]) return; // only care about secondary-profile keys
+        if (!mapPrimarySecondaryToSecondaire[key]) return; 
         const raw = (input.value || '').toString().trim();
         const cleaned = raw === '' ? '0' : raw.replace(/[^0-9-]/g, '');
         const parsed = parseInt(cleaned, 10);
         if (!Number.isFinite(parsed)) return;
 
-        // Persist into system.secondaire.carriere as a parent object
+        
         const field = mapPrimarySecondaryToSecondaire[key];
         const parentPath = 'system.secondaire.carriere';
         const currentParent = sheet.actor.system.secondaire?.carriere ? foundry.utils.deepClone(sheet.actor.system.secondaire.carriere) : {};
         currentParent[field] = parsed;
         try { console.debug('[DEBUG] Persisting primary career secondary->secondaire', { key, raw, cleaned, parsed, parentPath, field }); } catch(e){}
         await sheet.actor.update({ [parentPath]: currentParent });
-        // Update local actor state and re-render for immediate visual sync
+        
         try { sheet.actor.system.secondaire = sheet.actor.system.secondaire || {}; sheet.actor.system.secondaire.carriere = sheet.actor.system.secondaire.carriere || {}; sheet.actor.system.secondaire.carriere[field] = parsed; } catch(e){}
         try { sheet.render(false); } catch(e){}
-      } catch (e) { /* non-fatal */ }
+      } catch (e) {  }
     });
-  } catch (e) { /* ignore career wiring failures */ }
+  } catch (e) {  }
 
-  // Initial compute on render
+  
   try { computeTotalCO(); } catch (e) {}
 
-  // Initialize per-line bonus inputs state based on equip state on render
+  
   try {
     html.find('.armor-equip').each((_, el) => {
       try {
@@ -897,14 +897,14 @@ export function wireSheetHandlers(sheet, html) {
         const val = ($el.val() || '').toString().toUpperCase().trim();
         const isEquipped = (val === 'YES') || ($el.is(':checkbox') && $el.prop('checked'));
         $bonusInput.prop('disabled', !isEquipped);
-      } catch (e) { /* non-fatal per-line */ }
+      } catch (e) {  }
     });
-  } catch (e) { /* ignore initialization failures */ }
+  } catch (e) {  }
 
-  // Persist armor text/number/select fields individually and prevent the
-  // default Foundry form binder from submitting the whole form which can
-  // overwrite our '.eq' fields (checkboxes) as booleans. This avoids the
-  // behaviour where editing an armor name unexpectedly unchecks equip boxes.
+  
+  
+  
+  
   try {
     html.find('.armor-tables, .armor-table').on('change', "input[name*='system.armor'][name$='.name'], input[name*='system.armor'][name$='.enc'], select[name*='system.armor'][name$='.qualite']", async ev => {
       try {
@@ -915,18 +915,18 @@ export function wireSheetHandlers(sheet, html) {
         const name = input.name;
         let value = input.value;
         if (!name) return;
-        // coerce numbers for enc fields
+        
         if (input.type === 'number' || name.endsWith('.enc')) {
           value = Number((value || '').toString().replace(/,/g, '.')) || 0;
         }
         await sheet.actor.update({ [name]: value });
-      } catch (err) { /* non-fatal */ }
+      } catch (err) {  }
     });
-  } catch (e) { /* ignore armor-field persistence failures */ }
+  } catch (e) {  }
 
-  // Advanced skill add removed - all advanced skills are shown directly in the sheet
+  
 
-  // Advanced skill delete
+  
   html.find("table.skills-table .skill-delete").on('click', ev => {
     ev.preventDefault();
     ev.stopPropagation();
@@ -946,7 +946,7 @@ export function wireSheetHandlers(sheet, html) {
     });
   });
 
-  // Skill roll buttons
+  
   html.find('.skill-roll').on('click', ev => {
     ev.preventDefault();
     const button = ev.currentTarget;
@@ -991,7 +991,7 @@ export function wireSheetHandlers(sheet, html) {
     sheet._showSkillRollDialog(skillName, skillTotal);
   });
 
-  // Spells tab interactions
+  
   const spellsSection = html.find('.spells-section');
   if (spellsSection.length) {
     spellsSection.find('.gold-tab[data-cat]').on('click', ev => {
@@ -999,12 +999,12 @@ export function wireSheetHandlers(sheet, html) {
       const btn = ev.currentTarget;
       const cat = btn.dataset.cat;
       const normalizedCat = cat === 'profane' ? 'occulte' : cat;
-      // Visual active toggle
+      
       spellsSection.find('.gold-tab').removeClass('active');
       $(btn).addClass('active');
       const list = spellsSection.find('.spells-list');
       list.show();
-      // Special handling for occult/divine which map to selected school/domain
+      
       if (normalizedCat === 'occulte') {
         const rawSchool = sheet.actor.system?.spells?.school || '';
         const school = rawSchool === 'nothing' ? '' : rawSchool;
@@ -1048,7 +1048,7 @@ export function wireSheetHandlers(sheet, html) {
     const currentSchool = currentSchoolRaw === 'nothing' ? '' : currentSchoolRaw;
     if (currentSchool) sheet._renderSpellsBySchool(currentSchool);
 
-    // Buttons
+    
     spellsSection.find('[data-action="malediction-tzeentch"]').on('click', ev => { ev.preventDefault(); openMaledictionDialog(sheet.actor); });
     spellsSection.find('[data-action="colere-dieux"]').on('click', ev => { ev.preventDefault(); openColereDialog(sheet.actor); });
     spellsSection.find('[data-action="focalisation-roll"]').on('click', ev => {
@@ -1124,8 +1124,8 @@ export function wireSheetHandlers(sheet, html) {
     });
   }
 
-  // XP grant button (GM only) — near the XP field on the header
-  // Hide button for non-GMs to avoid relying on template context
+  
+  
   if (!game.user.isGM) {
     html.find('.xp-grant').hide();
   }
@@ -1135,7 +1135,7 @@ export function wireSheetHandlers(sheet, html) {
     openGrantXpDialog(sheet);
   });
 
-  // Stat rolls from principal profile using a dialog (allows choosing source and adding a bonus)
+  
   html.find('.stat-roll').on('click', ev => {
     ev.preventDefault();
     const btn = ev.currentTarget;
@@ -1168,7 +1168,7 @@ export function wireSheetHandlers(sheet, html) {
               const success = total <= target;
               const labels = { cc: 'de CC', ct: 'de CT', force: 'de Force', endurance: 'd\'Endurance', agilite: 'd\'Agilité', intelligence: 'd\'Intelligence', forceMentale: 'de Force Mentale', sociabilite: 'de Sociabilité' };
               const label = labels[attr] || attr;
-              // Short label without leading 'de '
+              
               const bonusText = bonus !== 0 ? (bonus > 0 ? `+${bonus}` : `${bonus}`) : '0';
 
               const degrees = Math.floor(Math.abs(target - total) / 10);
@@ -1204,26 +1204,26 @@ export function wireSheetHandlers(sheet, html) {
     }).render(true);
   });
 
-    // When base CC changes on the sheet, update the displayed Dés Min for melee weapons and persist for non-mastered weapons
+    
   html.find("input[name='system.principal.base.cc']").on('change', async ev => {
     const input = ev.currentTarget;
     const newCc = Math.max(1, Number(input.value) || 0);
-    // Update visible inputs immediately for responsiveness
+    
     html.find("input[name$='.diceMin']").each((_, el) => {
       const $el = $(el);
-      // Only update inputs that belong to system.weapons.*.diceMin
+      
       if (($el.attr('name') || '').match(/^system\.weapons\.\d+\.diceMin$/)) {
         $el.val(newCc);
       }
     });
 
-    // Persist change to actor.system.weapons for weapons that are not mastered
+    
     try {
       const sysWeapons = Array.isArray(sheet.actor.system.weapons) ? sheet.actor.system.weapons.slice() : [];
       let changed = false;
       const updated = sysWeapons.map(w => {
         if (!w) return w;
-        if (w.mastery) return w; // keep mastered weapons' diceMin
+        if (w.mastery) return w; 
         const current = Number(w.diceMin) || 0;
         if (current !== newCc) { changed = true; return Object.assign({}, w, { diceMin: newCc }); }
         return w;
@@ -1234,26 +1234,26 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
-  // When base CT changes on the sheet, update the displayed Dés Min for ranged weapons and persist for non-mastered ranged weapons
+  
   html.find("input[name='system.principal.base.ct']").on('change', async ev => {
     const input = ev.currentTarget;
     const newCt = Math.max(1, Number(input.value) || 0);
-    // Update visible inputs immediately for responsiveness (only ranged diceMin inputs)
+    
     html.find("input[name$='.diceMin']").each((_, el) => {
       const $el = $(el);
-      // Only update inputs that belong to system.rangedWeapons.*.diceMin
+      
       if (($el.attr('name') || '').match(/^system\.rangedWeapons\.\d+\.diceMin$/)) {
         $el.val(newCt);
       }
     });
 
-    // Persist change to actor.system.rangedWeapons for weapons that are not mastered
+    
     try {
       const sysRanged = Array.isArray(sheet.actor.system.rangedWeapons) ? sheet.actor.system.rangedWeapons.slice() : [];
       let changed = false;
       const updated = sysRanged.map(w => {
         if (!w) return w;
-        if (w.mastery) return w; // keep mastered weapons' diceMin
+        if (w.mastery) return w; 
         const current = Number(w.diceMin) || 0;
         if (current !== newCt) { changed = true; return Object.assign({}, w, { diceMin: newCt }); }
         return w;
@@ -1264,9 +1264,9 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
-  // When base Force or secondaire.mod.bf changes, update weapon BF inputs to follow actor BF.actuel
+  
   const updateWeaponsBfFromActor = async (newBfActuel) => {
-    // Update visible inputs
+    
     html.find("input[name$='.bf']").each((_, el) => {
       const $el = $(el);
       if (($el.attr('name') || '').match(/^system\.weapons\.\d+\.bf$/)) {
@@ -1274,14 +1274,14 @@ export function wireSheetHandlers(sheet, html) {
       }
     });
 
-    // Persist change to actor.system.weapons for weapons that were following the actor BF (i.e. had the old value)
+    
     try {
       const sysWeapons = Array.isArray(sheet.actor.system.weapons) ? sheet.actor.system.weapons.slice() : [];
       const oldBf = Number(sheet.actor.system.secondaire?.actuel?.bf) || 0;
       let changed = false;
       const updated = sysWeapons.map(w => {
         if (!w) return w;
-        // If the weapon BF matched the old actor BF, update it to the new one
+        
         const current = Number(w.bf) || 0;
         if (current === oldBf) { changed = true; return Object.assign({}, w, { bf: newBfActuel }); }
         return w;
@@ -1301,18 +1301,18 @@ export function wireSheetHandlers(sheet, html) {
     await updateWeaponsBfFromActor(newBfActuel);
   });
 
-  // Also listen to changes on secondaire.mod.bf which affects actuel.bf
+  
   html.find("input[name='system.secondaire.mod.bf']").on('change', async ev => {
     const input = ev.currentTarget;
     const modBf = Number(input.value) || 0;
-    // Determine current base.force (from actor system)
+    
     const baseForce = Number(sheet.actor.system.principal?.actuel?.force) || 0;
     const baseBf = Math.round(baseForce / 10);
     const newBfActuel = (baseBf || 0) + (modBf || 0);
     await updateWeaponsBfFromActor(newBfActuel);
   });
 
-  // Combat initiative roll: 1d10 + 1d10 per 10 points of Agilité
+  
   html.find('.combat-roll[data-attr="initiative"]').on('click', async ev => {
     ev.preventDefault();
     const actor = sheet.actor;
@@ -1320,14 +1320,14 @@ export function wireSheetHandlers(sheet, html) {
     const tens = Math.floor(agilite / 10);
 
     try {
-  // Base d10
+  
       const baseRoll = await new Roll('1d10').evaluate();
       let total = baseRoll.total;
 
-  // detailsHtml placeholder to avoid ReferenceError when no turn order or extra details
+  
   let detailsHtml = '';
 
-      // Add one d10 per ten agility
+      
       let extraRolls = [];
       if (tens > 0) {
         extraRolls = [];
@@ -1338,25 +1338,25 @@ export function wireSheetHandlers(sheet, html) {
         }
       }
 
-      // Build a simple details HTML rendering for the dice rolls (used in chat output)
+      
       try {
         const baseRendered = await baseRoll.render();
         const extrasRendered = extraRolls.length ? extraRolls.map(r => r.total).join(' + ') : '';
         detailsHtml = `<div class="roll-details">${baseRendered}${extrasRendered ? `<div class="extra-rolls">${extrasRendered}</div>` : ''}</div>`;
       } catch (e) {
-        // Non-fatal: if rendering fails, leave detailsHtml empty
+        
         detailsHtml = '';
       }
 
-      // If there's an active combat and it's in setup/preparation (round 0 or not started), set the combatant's initiative
+      
       const combat = game.combat;
       if (combat && combat.combatants && (combat.round === 0 || !combat.started)) {
-        // Find the combatant corresponding to this actor
+        
         const combatant = combat.combatants.find(c => c.actor?.id === actor.id || c.token?.actorId === actor.id);
         if (combatant) {
           try {
             await combatant.update({ initiative: total });
-            // Post chat message after setting initiative
+            
               const content = `
               <div class="initiative-roll">
                 Initiative : <strong>${total}</strong>
@@ -1368,7 +1368,7 @@ export function wireSheetHandlers(sheet, html) {
             ui.notifications.warn('Impossible de définir l\'initiative sur le combatant');
           }
         } else {
-          // No combatant found: just post chat
+          
           const content = `
             <div class="initiative-roll">
               Initiative : <strong>${total}</strong>
@@ -1378,7 +1378,7 @@ export function wireSheetHandlers(sheet, html) {
           ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content });
         }
       } else {
-        // No active combat or combat already running: post chat message
+        
         const content = `
           <div class="initiative-roll">
             <strong>${actor.name}</strong> — Initiative : <strong>${total}</strong>
@@ -1394,31 +1394,31 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
-  // When bonus or quality changes, recalc only the affected row
+  
   html.find(".weapons-table.melee").on("change", "input[name*='bonusCC'], select[name*='quality']", ev => {
     const $row = $(ev.currentTarget).closest('tr');
     _recalculateDiceMin.call(sheet, html, $row.get(0));
   });
 
-  // When mastery checkbox toggles, recalc the affected row immediately
+  
   html.find(".weapons-table.melee").on("change", "input[type='checkbox'][name*='mastery']", ev => {
     const $row = $(ev.currentTarget).closest('tr');
     _recalculateDiceMin.call(sheet, html, $row.get(0));
   });
 
-  // When bonusCT or quality changes on ranged rows, recalc the affected ranged row
+  
   html.find(".weapons-table.ranged").on("change", "input[name*='bonusCT'], select[name*='quality']", ev => {
     const $row = $(ev.currentTarget).closest('tr');
     _recalculateDiceMinRanged.call(sheet, html, $row.get(0));
   });
 
-  // When mastery checkbox toggles on ranged rows, recalc the affected ranged row immediately
+  
   html.find(".weapons-table.ranged").on("change", "input[type='checkbox'][name*='mastery']", ev => {
     const $row = $(ev.currentTarget).closest('tr');
     _recalculateDiceMinRanged.call(sheet, html, $row.get(0));
   });
 
-  // Inventory dynamic add/delete
+  
   html.find('.inventory-add').on('click', ev => {
     ev.preventDefault();
     try {
@@ -1440,7 +1440,7 @@ export function wireSheetHandlers(sheet, html) {
       $row.find('.inventory-delete').on('click', ev2 => { ev2.preventDefault(); $row.remove(); });
       setTimeout(() => { try { $row[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch(e){} }, 50);
       ui.notifications.info('Nouvel objet ajouté — remplissez puis sauvegardez la fiche.');
-    // Update currency summary live (removed)
+    
     } catch (err) {
       console.error('Unable to insert dynamic inventory row', err);
       ui.notifications.error('Erreur lors de l\'ajout local de l\'objet.');
@@ -1485,23 +1485,23 @@ export function wireSheetHandlers(sheet, html) {
     });
   });
 
-  // Update currency summary when inventory inputs change (name or quantity)
+  
   html.find('.inventory-table').on('input change', "input[name*='.name'], input[name*='.quantity']", ev => {
-    // inventory table changed; nothing coin-specific to handle
+    
   });
 
-  // No currency UI/event listeners (removed)
+  
 
-  // No conversion button: totals are computed live in couronnes (co)
+  
 
-  // Melee attack roll: show a dialog for circumstance (tenaille, etc.) then roll 1d100 vs computed target (actuel.cc + qualité + bonusCC + circonstance) with mastery halving; on success roll zone
+  
   html.find('.weapons-table.melee').on('click', '.gold-roll.melee-attack', ev => {
     ev.preventDefault();
     const $btn = $(ev.currentTarget);
     const $row = $btn.closest('tr');
     const actor = sheet.actor;
 
-    // Build dialog form
+    
     const content = `
       <form>
         <div class="form-group">
@@ -1535,7 +1535,7 @@ export function wireSheetHandlers(sheet, html) {
               const circDegatsBonus = Number(dlgHtml.find('#circ-degats-bonus').val()) || 0;
               const circFuryConfirm = (dlgHtml.find('#circ-fury-confirm').val() === 'true');
 
-              // Read fields (prefer bound weapon data when present)
+              
               const idx = $btn.data('index');
               const weapon = (idx !== undefined && actor.system.weapons && Array.isArray(actor.system.weapons)) ? actor.system.weapons[idx] : null;
               const name = weapon?.name || $row.find("input[type='text']").first().val() || 'Arme';
@@ -1549,16 +1549,16 @@ export function wireSheetHandlers(sheet, html) {
               const mastered = weapon ? !!weapon.mastery : !!$row.find("input[type='checkbox'][name*='mastery']").prop('checked');
               const finalTarget = mastered ? computedTarget : Math.floor(computedTarget / 2);
 
-              // Attack roll
+              
               const attackRoll = await new Roll('1d100').evaluate();
               const raw = attackRoll.total;
               const success = raw <= finalTarget;
 
-              // If success, reverse the d100 digits (e.g. 36 -> 63) to map to hit zone
+              
               let zoneHtml = '';
               if (success) {
-                // Use the last two digits for the reversal (raw % 100) so that 100 -> '00'
-                // and then treat '00' as 100 to match Roll20's mapping (91-00 -> jambe gauche)
+                
+                
                 const twoDigits = String(raw % 100).padStart(2, '0');
                 const reversed = twoDigits.split('').reverse().join('');
                 let zoneVal = Number(reversed);
@@ -1569,7 +1569,7 @@ export function wireSheetHandlers(sheet, html) {
 
               const circText = circNote ? ` + circonstance (${circNote} ${circBonus >= 0 ? `+${circBonus}` : circBonus})` : (circBonus ? ` + circonstance ${circBonus >= 0 ? `+${circBonus}` : circBonus}` : '');
 
-              // Display only the numeric circonstance bonus (+N or -N); ignore the note
+              
               const circBonusNum = Number(circBonus) || 0;
               const circDisplay = circBonusNum !== 0 ? (circBonusNum > 0 ? `+${circBonusNum}` : `${circBonusNum}`) : '';
 
@@ -1582,17 +1582,17 @@ export function wireSheetHandlers(sheet, html) {
                   <div style="color:${success ? 'green' : 'red'}"><strong>${success ? 'RÉUSSITE' : 'ÉCHEC'}</strong></div>
                   ${zoneHtml}
                 </div>`;
-              // If failed, post attack result only. If success, build a combined attack+damage message similar to spell output.
+              
               if (!success) {
                 ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content: `${contentMsg}<div class="roll-details">${await attackRoll.render()}</div>` });
               } else {
-                // Successful attack: compute damage and build combined summary
+                
                 try {
                   const bf = weapon ? Number(weapon.bf) || 0 : Number($row.find("input[name*='.bf']").val()) || 0;
                   const weaponDamage = weapon ? Number(weapon.damage) || 0 : Number($row.find("input[name*='damage']").val()) || 0;
                   const isPerc = weapon ? !!weapon.perc : !!$row.find("input[name*='perc']").prop('checked');
 
-                  // Helper rolls a base d10 (for visuals) and returns the face and roll object.
+                  
                   const rollSingle = async () => {
                     const expr = `1d10`;
                     const r = await new Roll(expr).evaluate();
@@ -1601,28 +1601,28 @@ export function wireSheetHandlers(sheet, html) {
                     return { rollObj: r, face: Number(face || 0) };
                   };
 
-                  // Roll once (or twice for percutant) and compute final totals using rules:
-                  // - The weapon base uses only one d10 (the highest base face among the two if percutant)
-                  // - All Fury extras from any roll that produced a 10 are cumulative and added to the total
-                  // For ranged weapons BF is not applied here per rules: only weapon.damage contributes
-                  // For melee include BF in modifiers
+                  
+                  
+                  
+                  
+                  
                   const modifiers = Number(weaponDamage) + (Number(bf) || 0);
                   let d1 = await rollSingle();
                   let d2 = null;
                   if (isPerc) d2 = await rollSingle();
 
-                  // Collect initial 10s from original rolls. If there is at least one
-                  // initial 10 (even two for percutant), we only trigger a single
-                  // Fury confirmation sequence for the attack (per user rule).
+                  
+                  
+                  
                   const initialTens = [];
                   if (d1.face === 10 || (d2 && d2.face === 10)) initialTens.push(10);
 
-                  // Perform Fury confirmations/chaining once per attack
+                  
                   const allExtras = [];
                   const allFuryLogs = [];
                   if (initialTens.length > 0) {
                     if (circFuryConfirm) {
-                      // Auto-apply fureur: single chaining sequence per attack
+                      
                       let cont = true;
                       while (cont) {
                         const extra = await rollDiceFaces('1d10');
@@ -1633,7 +1633,7 @@ export function wireSheetHandlers(sheet, html) {
                       }
                     } else {
                       const diceMinVal = weapon ? Number(weapon.diceMin) || 0 : Number($row.find("input[name*='diceMin']").val()) || 0;
-                      // For melee, label the test source as CC
+                      
                       const furyRes = await handleUlricFury(actor, initialTens, Number(diceMinVal), 'CC');
                       const returned = (furyRes.finalDiceArray || []).slice(initialTens.length).map(x => Number(x) || 0);
                       if (returned && returned.length) allExtras.push(...returned);
@@ -1642,21 +1642,21 @@ export function wireSheetHandlers(sheet, html) {
                   }
                   const extrasSum = allExtras.reduce((s, v) => s + Number(v || 0), 0);
 
-                  // Determine which base die is kept (highest face). In a tie we keep d1 by default.
+                  
                   let baseKept = d1.face;
                   let best = d1;
                   if (d2 && (Number(d2.face || 0) > Number(d1.face || 0))) { baseKept = d2.face; best = d2; }
 
-                  // Final total: modifiers + kept base die + sum of all fury extras
-                  // Include circDegatsBonus in final total
+                  
+                  
                   const finalTotal = (Number(modifiers) || 0) + (Number(baseKept || 0)) + extrasSum + (Number(circDegatsBonus) || 0);
-                  // Normalize best object for template rendering (include total, extras and combined logs)
+                  
                   best.total = finalTotal;
                   best.extras = allExtras;
                   best.furyLogs = allFuryLogs;
                   best.highestDie = baseKept;
 
-                  // Build summary like spell output
+                  
                   const summary = [];
                   summary.push(`<div><strong>Jet pour :</strong> ${name}</div>`);
                   summary.push(`<div><strong>Objectif :</strong> ${finalTarget}</div>`);
@@ -1664,13 +1664,13 @@ export function wireSheetHandlers(sheet, html) {
                   if (circDisplay) summary.push(`<div><strong>Circonstance :</strong> ${circDisplay}</div>`);
                   summary.push(`<div style="margin-top:8px"><strong>${zoneHtml ? zoneHtml.replace(/<[^>]+>/g,'') : ''}</strong></div>`);
 
-                  // Attributs (single-line string, same field as in the sheet)
+                  
                   const attrText = weapon ? (weapon.attributes || '') : ($row.find("input[name*='.attributes']").val() || '');
                   if (attrText) summary.push(`<div><strong>Attribut :</strong> ${attrText}</div>`);
 
-                  // Damage section
+                  
                   summary.push(`<hr><div><strong>Dégâts ${best.total}</strong></div>`);
-                  // Lancer de dé (dice visuals)
+                  
                   summary.push(`<div style="margin-top:6px"><strong>Lancer de dé</strong></div>`);
                   summary.push(`<div class="roll-details">${await best.rollObj.render()}</div>`);
                   if (best.extras && best.extras.length) summary.push(`<div style="margin-top:6px"><strong>Dés observés (Fureur) :</strong> ${best.extras.join(', ')} — <em>le plus élevé (${best.highestDie}) est pris en compte</em></div>`);
@@ -1680,9 +1680,9 @@ export function wireSheetHandlers(sheet, html) {
                   }
                   if (best.furyLogs && best.furyLogs.length) {
                     summary.push(`<div style="margin-left:12px; margin-top:6px; color:darkred"><strong>Fureur d'Ulric:</strong><br>${best.furyLogs.map(l => `<div>${l}</div>`).join('')}</div>`);
-                    // Add a short damage-result line as requested
+                    
                   }
-                  // If auto/circ degats bonus present, show it under damage
+                  
                   if (Number(circDegatsBonus)) summary.push(`<div style="margin-left:12px; margin-top:6px;"><strong>Dégâts bonus :</strong> ${Number(circDegatsBonus)}</div>`);
 
                   ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content: `<div class="spell-cast-result">${summary.join('')}</div>` });
@@ -1702,7 +1702,7 @@ export function wireSheetHandlers(sheet, html) {
     }).render(true);
   });
 
-  // Ranged attack roll: similar to melee but uses CT, bonusCT and the separate rangedWeapons array
+  
   html.find('.weapons-table.ranged').on('click', '.gold-roll', ev => {
     ev.preventDefault();
     const $btn = $(ev.currentTarget);
@@ -1742,7 +1742,7 @@ export function wireSheetHandlers(sheet, html) {
               const circDegatsBonus = Number(dlgHtml.find('#circ-degats-bonus').val()) || 0;
               const circFuryConfirm = (dlgHtml.find('#circ-fury-confirm').val() === 'true');
 
-              // Read fields (prefer bound weapon data when present)
+              
               const idx = $btn.data('index');
               const weapon = (idx !== undefined && actor.system.rangedWeapons && Array.isArray(actor.system.rangedWeapons)) ? actor.system.rangedWeapons[idx] : null;
               const name = weapon?.name || $row.find("input[type='text']").first().val() || 'Arme à distance';
@@ -1756,12 +1756,12 @@ export function wireSheetHandlers(sheet, html) {
               const mastered = weapon ? !!weapon.mastery : !!$row.find("input[type='checkbox'][name*='mastery']").prop('checked');
               const finalTarget = mastered ? computedTarget : Math.floor(computedTarget / 2);
 
-              // Attack roll
+              
               const attackRoll = await new Roll('1d100').evaluate();
               const raw = attackRoll.total;
               const success = raw <= finalTarget;
 
-              // If success, reverse the d100 digits to map to hit zone
+              
               let zoneHtml = '';
               if (success) {
                 const twoDigits = String(raw % 100).padStart(2, '0');
@@ -1790,7 +1790,7 @@ export function wireSheetHandlers(sheet, html) {
                 ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content: `${contentMsg}<div class="roll-details">${await attackRoll.render()}</div>` });
               } else {
                 try {
-                  // Damage calculation: 1d10 + BF + weapon.damage, with perc/percutant and Ulric Fury like melee
+                  
                   const bf = Number(actor.system.secondaire?.actuel?.bf) || 0;
                   const weaponDamage = weapon ? Number(weapon.damage) || 0 : Number($row.find("input[name*='damage']").val()) || 0;
                   const isPerc = weapon ? !!weapon.perc : !!$row.find("input[name*='perc']").prop('checked');
@@ -1808,17 +1808,17 @@ export function wireSheetHandlers(sheet, html) {
                   let d2 = null;
                   if (isPerc) d2 = await rollSingle();
 
-                  // If at least one initial d10 is a 10, trigger a single Fury confirmation
-                  // sequence for the attack (per user rule: percutant retains best base
-                  // die but only one Fury confirmation is performed). Collect any extras
-                  // and logs returned by the Fury routine.
+                  
+                  
+                  
+                  
                   const initialTens = [];
                   if (d1.face === 10 || (d2 && d2.face === 10)) initialTens.push(10);
                   const allExtras = [];
                   const allFuryLogs = [];
                   if (initialTens.length > 0) {
                     if (circFuryConfirm) {
-                      // Auto-apply fureur for ranged as well
+                      
                       let cont = true;
                       while (cont) {
                         const extra = await rollDiceFaces('1d10');
@@ -1829,7 +1829,7 @@ export function wireSheetHandlers(sheet, html) {
                       }
                     } else {
                       const diceMinVal = weapon ? Number(weapon.diceMin) || 0 : Number($row.find("input[name*='diceMin']").val()) || 0;
-                      // For ranged, label the test source as CT
+                      
                       const furyRes = await handleUlricFury(actor, initialTens, Number(diceMinVal), 'CT');
                       const returned = (furyRes.finalDiceArray || []).slice(initialTens.length).map(x => Number(x) || 0);
                       if (returned && returned.length) allExtras.push(...returned);
@@ -1868,7 +1868,7 @@ export function wireSheetHandlers(sheet, html) {
                   }
                   if (best.furyLogs && best.furyLogs.length) {
                     summary.push(`<div style="margin-left:12px; margin-top:6px; color:darkred"><strong>Fureur d'Ulric:</strong><br>${best.furyLogs.map(l => `<div>${l}</div>`).join('')}</div>`);
-                    // Add a short damage-result line as requested
+                    
                   }
                   if (Number(circDegatsBonus)) summary.push(`<div style="margin-left:12px; margin-top:6px;"><strong>Dégâts bonus :</strong> ${Number(circDegatsBonus)}</div>`);
 
@@ -1889,7 +1889,7 @@ export function wireSheetHandlers(sheet, html) {
     }).render(true);
   });
 
-  // Parry (Parade) button: roll 1d100 vs Dés Min + Déf
+  
   html.find('.weapons-table.melee').on('click', '.gold-roll.melee-parade', async ev => {
     ev.preventDefault();
     const $btn = $(ev.currentTarget);
