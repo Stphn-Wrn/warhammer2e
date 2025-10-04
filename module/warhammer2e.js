@@ -2,7 +2,7 @@ import { parseDamageSpec, getZoneFromD100, rollDiceFaces, handleUlricFury } from
 import { openMaledictionDialog, openColereDialog, openSpellCastDialog } from './dialogs.js';
 import { wireSheetHandlers } from './handlers.js';
 import { handleAdvancedSkillRoll, showSkillRollDialog, getSkillDisplayName, rollSkillTest } from './skills.js';
-import { loadSpells, renderSpellsList, renderSpellsBySchool } from './spells.js';
+import { loadSpells, renderSpellsList, renderSpellsBySchool, renderOwnedSpells } from './spells.js';
 import { registerHandlebarsHelpers, preloadHandlebarsTemplates } from './helpers.js';
 import { findTalentIndexById, addTalent, deleteTalentById, findRegleIndexById, addRegle, deleteRegleById, findConnaissanceIndexById, addConnaissance, deleteConnaissanceById } from './talents.js';
 
@@ -438,6 +438,7 @@ class WarhammerActorSheet extends ActorSheet {
 WarhammerActorSheet.loadSpells = loadSpells;
 WarhammerActorSheet.prototype._renderSpellsList = async function(cat) { return renderSpellsList(this, cat); };
 WarhammerActorSheet.prototype._renderSpellsBySchool = async function(schoolKey) { return renderSpellsBySchool(this, schoolKey); };
+WarhammerActorSheet.prototype._renderOwnedSpells = async function() { return renderOwnedSpells(this); };
 
 // Note: item sheet custom implementation removed to avoid duplicate/erroneous registrations.
 // The system will use Foundry's core ItemSheet unless another module provides a sheet.

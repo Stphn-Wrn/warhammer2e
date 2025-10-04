@@ -998,39 +998,54 @@ export function wireSheetHandlers(sheet, html) {
       ev.preventDefault();
       const btn = ev.currentTarget;
       const cat = btn.dataset.cat;
+      const normalizedCat = cat === 'profane' ? 'occulte' : cat;
       // Visual active toggle
       spellsSection.find('.gold-tab').removeClass('active');
       $(btn).addClass('active');
-      // Special handling for occult/divine which map to selected school/domain
-      if (cat === 'occulte') {
-        const school = sheet.actor.system?.spells?.school || '';
-        if (school) return sheet._renderSpellsBySchool(school);
-      }
-      if (cat === 'divin') {
-        const divine = sheet.actor.system?.spells?.divine || '';
-        if (divine) return sheet._renderSpellsBySchool(divine);
-      }
-      // Ensure spells list is visible and render
       const list = spellsSection.find('.spells-list');
       list.show();
-      sheet._renderSpellsList(cat);
+      // Special handling for occult/divine which map to selected school/domain
+      if (normalizedCat === 'occulte') {
+        const rawSchool = sheet.actor.system?.spells?.school || '';
+        const school = rawSchool === 'nothing' ? '' : rawSchool;
+        if (school) return sheet._renderSpellsBySchool(school);
+        list.empty().html('<div>Sélectionnez une science de la Magie pour afficher ces sorts.</div>');
+        list.data('spellsView', 'message');
+        return;
+      }
+      if (normalizedCat === 'divin') {
+        const rawDivine = sheet.actor.system?.spells?.divine || '';
+        const divine = rawDivine === 'nothing' ? '' : rawDivine;
+        if (divine) return sheet._renderSpellsBySchool(divine);
+        list.empty().html('<div>Sélectionnez un domaine divin pour afficher ces sorts.</div>');
+        list.data('spellsView', 'message');
+        return;
+      }
+      if (normalizedCat === 'owned') {
+        sheet._renderOwnedSpells();
+        return;
+      }
+      sheet._renderSpellsList(normalizedCat);
     });
 
     spellsSection.find('select[name="system.spells.school"]').on('change', async ev => {
       ev.preventDefault();
-      const val = ev.currentTarget.value;
+      let val = ev.currentTarget.value;
+      if (val === 'nothing') val = '';
       try { await sheet.actor.update({ 'system.spells.school': val }); } catch (err) { console.error('Unable to persist selected school', err); }
       try { sheet._renderSpellsBySchool(val); } catch (err) { console.error('Unable to render spells by school', err); }
     });
 
     spellsSection.find('select[name="system.spells.divine"]').on('change', async ev => {
       ev.preventDefault();
-      const val = ev.currentTarget.value;
+      let val = ev.currentTarget.value;
+      if (val === 'nothing') val = '';
       try { await sheet.actor.update({ 'system.spells.divine': val }); } catch (err) { console.error('Unable to persist selected divine domain', err); }
       try { sheet._renderSpellsBySchool(val); } catch (err) { console.error('Unable to render spells by divine domain', err); }
     });
 
-    const currentSchool = spellsSection.find('select[name="system.spells.school"]').val();
+    const currentSchoolRaw = spellsSection.find('select[name="system.spells.school"]').val();
+    const currentSchool = currentSchoolRaw === 'nothing' ? '' : currentSchoolRaw;
     if (currentSchool) sheet._renderSpellsBySchool(currentSchool);
 
     // Buttons

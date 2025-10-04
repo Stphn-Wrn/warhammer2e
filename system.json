@@ -8,7 +8,7 @@
   "esmodules": ["module/utils.js", "module/spells.js", "module/dialogs.js", "module/handlers.js", "module/skills.js", "module/xp.js", "module/warhammer2e.js"],
   "styles": ["styles/warhammer2e.css"],
   "languages": [
-    { "lang": "fr", "name": "Français", "path": "lang/fr.json" },
+    { "lang": "fr", "name": "Français", "path": "lang/fr.json" }
   ],
   "packs": [],
   "template": "template.json",
