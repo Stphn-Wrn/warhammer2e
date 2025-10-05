@@ -180,5 +180,284 @@
 			</div>
 		</div>
 	</div>
+
+
+	<div class="career-card career-card--tertiary">
+		<div class="career-card__header">Troisième Carrière
+			<div class="career-card__meta">
+				<label class="career-started"><input type="checkbox" name="system.career.tertiary.started" {{#if system.career.tertiary.started}}checked{{/if}}> Carrière débutée</label>
+			</div>
+		</div>
+		<div class="career-card__body">
+			<div class="career-header">
+				<div class="career-name">
+					<label class="field-label" for="tertiary-career-name">Nom de la carrière</label>
+					<input id="tertiary-career-name" type="text" name="system.career.tertiaryName" value="{{system.career.tertiaryName}}">
+				</div>
+			</div>
+
+			<div class="career-primary-full">
+				<div class="career-section-title">Profil Principal de la Carrière</div>
+				<table class="career-table">
+					<thead>
+						<tr>
+							<th>Capacité de Combat</th>
+							<th>Capacité de Tir</th>
+							<th>Force</th>
+							<th>Endurance</th>
+							<th>Agilité</th>
+							<th>Intelligence</th>
+							<th>Force Mentale</th>
+							<th>Social</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="number" step="1" name="system.career.tertiary.combat" value="{{system.career.tertiary.combat}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.tertiary.shoot" value="{{system.career.tertiary.shoot}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.tertiary.strength" value="{{system.career.tertiary.strength}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.tertiary.endurance" value="{{system.career.tertiary.endurance}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.tertiary.agility" value="{{system.career.tertiary.agility}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.tertiary.intelligence" value="{{system.career.tertiary.intelligence}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.tertiary.mentalStrength" value="{{system.career.tertiary.mentalStrength}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.tertiary.social" value="{{system.career.tertiary.social}}" min="0"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="career-row">
+				<div class="career-column career-column--stats">
+					<div class="career-section-title">Profil Secondaire de la Carrière</div>
+					<table class="career-table small">
+						<thead>
+							<tr>
+								<th>Attaques</th><th>Blessure</th><th>Bonus de Force</th><th>Bonus d'Endurance</th>
+								<th>Mouvement</th><th>Magie</th><th>Points de Folies</th><th>Points de Destin</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="number" name="system.career.tertiary.attacks" value="{{system.career.tertiary.attacks}}" min="0"></td>
+								<td><input type="number" name="system.career.tertiary.wounds" value="{{system.career.tertiary.wounds}}" min="0"></td>
+								<td><input type="text" name="system.career.tertiary.strengthBonus" value="{{system.career.tertiary.strengthBonus}}"></td>
+								<td><input type="text" name="system.career.tertiary.enduranceBonus" value="{{system.career.tertiary.enduranceBonus}}"></td>
+								<td><input type="number" name="system.career.tertiary.movement" value="{{system.career.tertiary.movement}}" min="0"></td>
+								<td><input type="number" name="system.career.tertiary.magic" value="{{system.career.tertiary.magic}}" min="0"></td>
+								<td><input type="text" name="system.career.tertiary.frenzyPoints" value="{{system.career.tertiary.frenzyPoints}}"></td>
+								<td><input type="text" name="system.career.tertiary.destinyPoints" value="{{system.career.tertiary.destinyPoints}}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+
+			<div class="career-lists">
+				<div class="career-column career-column--lists">
+					<div class="career-box">
+						<div class="career-box__title">Compétences de Carrière</div>
+						<textarea name="system.career.tertiary.skills" rows="6">{{system.career.tertiary.skills}}</textarea>
+					</div>
+
+					<div class="career-box">
+						<div class="career-box__title">Talents de Carrière</div>
+						<textarea name="system.career.tertiary.talents" rows="6">{{system.career.tertiary.talents}}</textarea>
+					</div>
+
+					<div class="career-box">
+						<div class="career-box__title">Débouchés</div>
+						<textarea name="system.career.tertiary.outcomes" rows="2">{{system.career.tertiary.outcomes}}</textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="career-card career-card--quaternary">
+		<div class="career-card__header">Quatrième Carrière
+			<div class="career-card__meta">
+				<label class="career-started"><input type="checkbox" name="system.career.quaternary.started" {{#if system.career.quaternary.started}}checked{{/if}}> Carrière débutée</label>
+			</div>
+		</div>
+		<div class="career-card__body">
+			<div class="career-header">
+				<div class="career-name">
+					<label class="field-label" for="quaternary-career-name">Nom de la carrière</label>
+					<input id="quaternary-career-name" type="text" name="system.career.quaternaryName" value="{{system.career.quaternaryName}}">
+				</div>
+			</div>
+
+			<div class="career-primary-full">
+				<div class="career-section-title">Profil Principal de la Carrière</div>
+				<table class="career-table">
+					<thead>
+						<tr>
+							<th>Capacité de Combat</th>
+							<th>Capacité de Tir</th>
+							<th>Force</th>
+							<th>Endurance</th>
+							<th>Agilité</th>
+							<th>Intelligence</th>
+							<th>Force Mentale</th>
+							<th>Social</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="number" step="1" name="system.career.quaternary.combat" value="{{system.career.quaternary.combat}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quaternary.shoot" value="{{system.career.quaternary.shoot}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quaternary.strength" value="{{system.career.quaternary.strength}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quaternary.endurance" value="{{system.career.quaternary.endurance}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quaternary.agility" value="{{system.career.quaternary.agility}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quaternary.intelligence" value="{{system.career.quaternary.intelligence}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quaternary.mentalStrength" value="{{system.career.quaternary.mentalStrength}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quaternary.social" value="{{system.career.quaternary.social}}" min="0"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="career-row">
+				<div class="career-column career-column--stats">
+					<div class="career-section-title">Profil Secondaire de la Carrière</div>
+					<table class="career-table small">
+						<thead>
+							<tr>
+								<th>Attaques</th><th>Blessure</th><th>Bonus de Force</th><th>Bonus d'Endurance</th>
+								<th>Mouvement</th><th>Magie</th><th>Points de Folies</th><th>Points de Destin</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="number" name="system.career.quaternary.attacks" value="{{system.career.quaternary.attacks}}" min="0"></td>
+								<td><input type="number" name="system.career.quaternary.wounds" value="{{system.career.quaternary.wounds}}" min="0"></td>
+								<td><input type="text" name="system.career.quaternary.strengthBonus" value="{{system.career.quaternary.strengthBonus}}"></td>
+								<td><input type="text" name="system.career.quaternary.enduranceBonus" value="{{system.career.quaternary.enduranceBonus}}"></td>
+								<td><input type="number" name="system.career.quaternary.movement" value="{{system.career.quaternary.movement}}" min="0"></td>
+								<td><input type="number" name="system.career.quaternary.magic" value="{{system.career.quaternary.magic}}" min="0"></td>
+								<td><input type="text" name="system.career.quaternary.frenzyPoints" value="{{system.career.quaternary.frenzyPoints}}"></td>
+								<td><input type="text" name="system.career.quaternary.destinyPoints" value="{{system.career.quaternary.destinyPoints}}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+
+			<div class="career-lists">
+				<div class="career-column career-column--lists">
+					<div class="career-box">
+						<div class="career-box__title">Compétences de Carrière</div>
+						<textarea name="system.career.quaternary.skills" rows="6">{{system.career.quaternary.skills}}</textarea>
+					</div>
+
+					<div class="career-box">
+						<div class="career-box__title">Talents de Carrière</div>
+						<textarea name="system.career.quaternary.talents" rows="6">{{system.career.quaternary.talents}}</textarea>
+					</div>
+
+					<div class="career-box">
+						<div class="career-box__title">Débouchés</div>
+						<textarea name="system.career.quaternary.outcomes" rows="2">{{system.career.quaternary.outcomes}}</textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="career-card career-card--quinary">
+		<div class="career-card__header">Cinquième Carrière
+			<div class="career-card__meta">
+				<label class="career-started"><input type="checkbox" name="system.career.quinary.started" {{#if system.career.quinary.started}}checked{{/if}}> Carrière débutée</label>
+			</div>
+		</div>
+		<div class="career-card__body">
+			<div class="career-header">
+				<div class="career-name">
+					<label class="field-label" for="quinary-career-name">Nom de la carrière</label>
+					<input id="quinary-career-name" type="text" name="system.career.quinaryName" value="{{system.career.quinaryName}}">
+				</div>
+			</div>
+
+			<div class="career-primary-full">
+				<div class="career-section-title">Profil Principal de la Carrière</div>
+				<table class="career-table">
+					<thead>
+						<tr>
+							<th>Capacité de Combat</th>
+							<th>Capacité de Tir</th>
+							<th>Force</th>
+							<th>Endurance</th>
+							<th>Agilité</th>
+							<th>Intelligence</th>
+							<th>Force Mentale</th>
+							<th>Social</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="number" step="1" name="system.career.quinary.combat" value="{{system.career.quinary.combat}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quinary.shoot" value="{{system.career.quinary.shoot}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quinary.strength" value="{{system.career.quinary.strength}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quinary.endurance" value="{{system.career.quinary.endurance}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quinary.agility" value="{{system.career.quinary.agility}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quinary.intelligence" value="{{system.career.quinary.intelligence}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quinary.mentalStrength" value="{{system.career.quinary.mentalStrength}}" min="0"></td>
+							<td><input type="number" step="1" name="system.career.quinary.social" value="{{system.career.quinary.social}}" min="0"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="career-row">
+				<div class="career-column career-column--stats">
+					<div class="career-section-title">Profil Secondaire de la Carrière</div>
+					<table class="career-table small">
+						<thead>
+							<tr>
+								<th>Attaques</th><th>Blessure</th><th>Bonus de Force</th><th>Bonus d'Endurance</th>
+								<th>Mouvement</th><th>Magie</th><th>Points de Folies</th><th>Points de Destin</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="number" name="system.career.quinary.attacks" value="{{system.career.quinary.attacks}}" min="0"></td>
+								<td><input type="number" name="system.career.quinary.wounds" value="{{system.career.quinary.wounds}}" min="0"></td>
+								<td><input type="text" name="system.career.quinary.strengthBonus" value="{{system.career.quinary.strengthBonus}}"></td>
+								<td><input type="text" name="system.career.quinary.enduranceBonus" value="{{system.career.quinary.enduranceBonus}}"></td>
+								<td><input type="number" name="system.career.quinary.movement" value="{{system.career.quinary.movement}}" min="0"></td>
+								<td><input type="number" name="system.career.quinary.magic" value="{{system.career.quinary.magic}}" min="0"></td>
+								<td><input type="text" name="system.career.quinary.frenzyPoints" value="{{system.career.quinary.frenzyPoints}}"></td>
+								<td><input type="text" name="system.career.quinary.destinyPoints" value="{{system.career.quinary.destinyPoints}}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+
+			<div class="career-lists">
+				<div class="career-column career-column--lists">
+					<div class="career-box">
+						<div class="career-box__title">Compétences de Carrière</div>
+						<textarea name="system.career.quinary.skills" rows="6">{{system.career.quinary.skills}}</textarea>
+					</div>
+
+					<div class="career-box">
+						<div class="career-box__title">Talents de Carrière</div>
+						<textarea name="system.career.quinary.talents" rows="6">{{system.career.quinary.talents}}</textarea>
+					</div>
+
+					<div class="career-box">
+						<div class="career-box__title">Débouchés</div>
+						<textarea name="system.career.quinary.outcomes" rows="2">{{system.career.quinary.outcomes}}</textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 

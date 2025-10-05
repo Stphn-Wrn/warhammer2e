@@ -717,7 +717,16 @@ export function wireSheetHandlers(sheet, html) {
       'system.career.primary.outcomes',
       'system.career.secondary.skills',
       'system.career.secondary.talents',
-      'system.career.secondary.outcomes'
+      'system.career.secondary.outcomes',
+      'system.career.tertiary.skills',
+      'system.career.tertiary.talents',
+      'system.career.tertiary.outcomes',
+      'system.career.quaternary.skills',
+      'system.career.quaternary.talents',
+      'system.career.quaternary.outcomes',
+      'system.career.quinary.skills',
+      'system.career.quinary.talents',
+      'system.career.quinary.outcomes'
     ];
 
     careerTextareaPaths.forEach(path => {
@@ -811,6 +820,35 @@ export function wireSheetHandlers(sheet, html) {
     });
 
     
+
+    const registerAdditionalCareerHandlers = careerKey => {
+      const ns = `.career-${careerKey}`;
+      html.find(`input[name^="system.career.${careerKey}."]`).off(ns).on(`change${ns}`, async ev => {
+        ev.preventDefault();
+        const input = ev.currentTarget;
+        const name = input?.name;
+        if (!name) return;
+        let value;
+        try {
+          if (input.type === 'checkbox') {
+            value = !!input.checked;
+          } else if (input.type === 'number') {
+            const raw = (input.value ?? '').toString().trim().replace(/,/g, '.');
+            const parsed = raw === '' ? 0 : Number(raw);
+            value = Number.isFinite(parsed) ? parsed : 0;
+          } else {
+            value = (input.value ?? '').toString();
+          }
+          await sheet.actor.update({ [name]: value });
+          try { foundry.utils.setProperty(sheet.actor, name, value); } catch (err) { console.debug('Unable to sync career field locally', { careerKey, name, err }); }
+        } catch (err) {
+          console.error('Unable to persist additional career field', { careerKey, name, err });
+        }
+      });
+    };
+
+    ['tertiary', 'quaternary', 'quinary'].forEach(registerAdditionalCareerHandlers);
+
     html.find('input[name^="system.career.primary."]').on('change', async ev => {
       try {
         const input = ev.currentTarget;

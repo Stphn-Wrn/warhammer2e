@@ -858,3 +858,7 @@
   width: 100%;
   max-width: 48px;
 }
+
+.connaissance-add, .talent-add, .regles-spe-add, .inventory-add {
+  color: white; 
+}
