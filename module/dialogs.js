@@ -1,5 +1,23 @@
 import { parseDamageSpec, getZoneFromD100, rollDiceFaces, handleUlricFury } from './utils.js';
 
+function escapeHtml(value) {
+  return (value ?? '')
+    .toString()
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function formatSpellDescription(value) {
+  const str = (value ?? '')
+    .toString()
+    .trim();
+  if (!str) return '';
+  return escapeHtml(str).replace(/\n+/g, '<br>');
+}
+
 export async function openMaledictionDialog(actor) {
   const choices = [
     'Échos mineurs du Chaos',
@@ -169,6 +187,7 @@ export async function openSpellCastDialog(actor, spell) {
           const magBonus = focal ? (Number(defaultMag) || 0) : 0;
           let flatBonus = Number(html.find('#spell-flat-bonus').val()) || 0;
           if (ingr) flatBonus += Number(ingredientBonus) || 0;
+          const spellDescriptionHtml = formatSpellDescription(spell?.description ?? spell?.desc ?? '');
 
           if (magDice <= 0 && magBonus <= 0) {
             ui.notifications.warn('Il faut au moins 1 dé de magie pour lancer le sort.');
@@ -206,6 +225,9 @@ export async function openSpellCastDialog(actor, spell) {
 
             const summary = [];
             summary.push(`<div><strong>Jet pour :</strong> ${spell.name}</div>`);
+            if (spellDescriptionHtml) {
+              summary.push(`<div class="spell-description" style="margin:6px 0; font-style:italic;">${spellDescriptionHtml}</div>`);
+            }
             summary.push(`<div><strong>Dés de magie :</strong> ${magDice}</div>`);
             summary.push(`<div><strong>Bonus d'ingrédient :</strong> ${ingr ? `Oui (+${ingredientBonus})` : 'Non'}</div>`);
             summary.push(`<div><strong>Focalisation :</strong> ${focal? `Oui (+${magBonus})` : 'Non'}</div>`);
@@ -221,17 +243,35 @@ export async function openSpellCastDialog(actor, spell) {
               const attacksField = spell?.attaques;
               let attackCount = 0;
               const magValue = Number(defaultMag) || 0;
-              if (typeof attacksField === 'string' && attacksField.toLowerCase() === 'magie') {
+              let attackCountDetail = '';
+              let attackCountRoll = null;
+              const rawAttacksString = (typeof attacksField === 'string') ? attacksField.trim() : '';
+              if (typeof attacksField === 'string' && rawAttacksString.toLowerCase() === 'magie') {
                 attackCount = magValue;
-              } else if (!isNaN(Number(attacksField)) && Number(attacksField) > 0) {
-                attackCount = Number(attacksField);
+                attackCountDetail = `Basé sur Magie (${magValue})`;
+              } else {
+                const numericAttacks = Number(attacksField);
+                if (Number.isFinite(numericAttacks) && numericAttacks > 0) {
+                  attackCount = Math.floor(numericAttacks);
+                  attackCountDetail = `Valeur fixe (${attackCount})`;
+                } else if (rawAttacksString) {
+                  const diceExpr = rawAttacksString.replace(/\s+/g, '');
+                  if (/^\d+[dD]\d+(?:[+-]\d+)?$/.test(diceExpr)) {
+                    attackCountRoll = await new Roll(diceExpr).evaluate();
+                    attackCount = Math.max(0, Math.floor(Number(attackCountRoll.total) || 0));
+                    attackCountDetail = `Jet ${diceExpr} → ${attackCount}`;
+                  }
+                }
               }
 
               if (attackCount > 0) {
                 const dmgSpec = parseDamageSpec(spell?.degats ?? spell?.degat ?? '1d10+0');
                 const attacksRoll = await new Roll(`${attackCount}d100`).evaluate();
                 const attackResults = (attacksRoll.dice && attacksRoll.dice[0] && attacksRoll.dice[0].results) ? attacksRoll.dice[0].results.map(r => r.result) : [];
-                summary.push(`<hr><div><strong>Attaques (${attackCount}):</strong></div>`);
+                summary.push(`<hr><div><strong>Attaques (${attackCount}):</strong> ${attackCountDetail || ''}</div>`);
+                if (attackCountRoll) {
+                  summary.push(`<div class="roll-details">${await attackCountRoll.render()}</div>`);
+                }
                 for (let i=0;i<attackResults.length;i++) {
                   const atkVal = attackResults[i];
 

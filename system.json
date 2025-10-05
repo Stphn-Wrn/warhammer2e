@@ -6,7 +6,7 @@
   "compatibility": { "minimum": "13", "verified": "13" },
   "authors": [{ "name": "Courbette" }],
   "esmodules": ["module/utils.js", "module/spells.js", "module/dialogs.js", "module/handlers.js", "module/skills.js", "module/xp.js", "module/warhammer2e.js"],
-  "styles": ["styles/warhammer2e.css"],
+  "styles": ["styles/warhammer2e.css", "styles/wfrp2e-grimdark.css"],
   "languages": [
     { "lang": "fr", "name": "Français", "path": "lang/fr.json" }
   ],

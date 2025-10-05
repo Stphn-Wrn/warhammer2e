@@ -397,6 +397,7 @@
   font-size: 12px;
   background: #fff;
   resize: vertical;
+  box-sizing: border-box;
 }
 
 

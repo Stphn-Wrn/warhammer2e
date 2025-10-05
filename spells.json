@@ -8,7 +8,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 22,
     "temps": "2 actions complètes",
     "bonusIngredient": "2",
@@ -22,12 +22,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 27,
     "temps": "2 actions complètes",
     "bonusIngredient": "3",
     "ingredient": "une mèche de cheveux de la cible, coupée alors qu’elle était en pleine santé (+3)",
-    "description": "Vous enveloppez la cible du pouvoir guérisseur de Hysh, guérissant toutes ses blessures, maladies et poisons. Sort de contact, utilisable sur vous-même."
+    "description": "vous enveloppez un personnage du pouvoir guérisseur de Hysh et tous les dégâts et maladies qui l'affectent sont guéris. Cela comprend toutes les Blessures subies, les maladies dont il souffre actuellement, les poisons qu'il a en ce moment dans le corps, et autres effets semblables, Il s'agit d'un sort de contact que vous pouvez également lancer sur vous-même."
   },
   {
     "id": "bienveillance-de-hysh",
@@ -36,12 +36,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 27,
     "temps": "2 actions complètes",
     "bonusIngredient": "3",
     "ingredient": "une mèche de cheveux de la cible, coupée alors qu’elle était en pleine santé (+3)",
-    "description": "Vous enveloppez un personnage du pouvoir guérisseur de Hysh, guérissant toutes ses blessures, maladies, poisons et effets similaires. Sort de contact, utilisable sur vous-même."
+    "description": "Vous enveloppez un personnage du pouvoir guérisseur de Hysh et tous les dégâts et maladies qui l'affectent sont guéris. Cela comprend toutes les Blessures subies, les maladies dont il souffre actuellement, les poisons qu'il a en ce moment dans le corps, et autres effets semblables, Il s'agit d'un sort de contact que vous pouvez également lancer sur vous-même."
   },
   {
     "id": "clairvoyance",
@@ -50,12 +50,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 7,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
     "ingredient": "une perle de verre transparente (+1)",
-    "description": "Vous réduisez d’un maximum de 10% un malus affectant l’Intelligence, la Force Mentale ou la Sociabilité de la cible, pendant un nombre d’heures égal à votre valeur de Magie. Non cumulable sur la même caractéristique."
+    "description": "vous touchez un personnage et vous réduisez un malus qui affecte son Intelligence, sa Force Mentale ou sa Sociabilité d'un maximum de 10% (un malus de -20% passe à -10%, un malus de -10% ou moins est réduit à Zéro, etc.). La réduction du malus est effective pendant un nombre d'heures égal à votre valeur de Magie, mais le fait de lancer ce sort plusieurs fois de suite ne permet pas de cumuler les effets positifs affectant une même caractéristique d'un même personnage. Cependant, vous pouvez le lancer plusieurs fois pour réduire des malus affectant des caractéristiques différentes. II s'agit d'un sort de contact que vous pouvez lancer sur vous-même"
   },
   {
     "id": "colonne-de-gloire",
@@ -64,12 +64,12 @@
     "degats": "4",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 28,
     "temps": "1 action complète",
     "bonusIngredient": "3",
     "ingredient": "un diamant d’une valeur d’au moins 100 co (+3)",
-    "description": "Une colonne de lumière ardente frappe une zone dans un rayon de 48 mètres. Les cibles subissent un coup de dégâts de valeur 4 et doivent réussir un test d’Agilité sous peine de subir les effets de Lueur Éblouissante. Tous les sorciers dans un rayon de 7,5 km ressentent la perturbation magique."
+    "description": "vous focalisez l'énergie de Hysh qui se matérialise en une colonne meurtrière de lumière ardente, quelque part dans un rayon de 48 mètres (24 cases). Utilisez le grand gabarit. Les créatures affectées subissent un coup d'une valeur de dégâts de 4 et doivent réussir un test d'Agilité sous peine de subir également les effets du sort Lueur éblouissante. Colonne de gloire étant une invocation surpuissante, tous les sorciers presents dans un rayon de 7,5 kilomètres prennent conscience de la perturbation dans l'Aethyr provoquée par ce sort ; y recourir pour autre chose que la lutte directe contre les démons est très mal perçu par les doyens hiérophantes de l'Ordre Lumineux."
   },
   {
     "id": "edifice-illumine",
@@ -78,12 +78,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 11,
     "temps": "1 action complète",
     "bonusIngredient": "2",
     "ingredient": "une bougie de cire intacte (+2)",
-    "description": "Vous illuminez l’intérieur d’un bâtiment comme en plein jour, selon votre valeur de Magie (de masure à grand édifice). Vous devez toucher un élément structurel solide pour affecter le bâtiment."
+    "description": "Vous illuminez l’intérieur d’un bâtiment comme s’il était en plein jour. Avec une valeur de Magie de 1 vous pouvez affecter un bâtiment de la taille d’une masure ; avec une valeur de 2 un bâtiment ou une maison comportant plusieurs pièces, mais de taille modérée ; avec une valeur de 3 un grand manoir ; et avec une valeur de 4 n’importe quel bâtiment d’un seul tenant, quelle que soit sa taille. La lumière brille dans les pièces, les greniers, les placards, et dans tout autre espace défini par un plafond et des murs faits par la main de l’homme. En plus d’illuminer l’intérieur de l'édifice, la lumière brille à travers les portes, les fenêtres, et même les interstices séparant planches et bardeaux. Il s’agit d’un sort de contact ; vous devez toucher un élément structurel solide du bâtiment (mur, poutre, etc…) pour qu’il soit affecté."
   },
   {
     "id": "exorcisme",
@@ -92,12 +92,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 26,
     "temps": "1 action complète et 1 demi-action",
     "bonusIngredient": "3",
     "ingredient": "une brindille d’un chêne frappé par la foudre (+3)",
-    "description": "Vous bannissez les démons dans un rayon de 48 mètres. Ceux qui échouent un test de Force Mentale sont renvoyés dans les Royaumes du Chaos."
+    "description": "vous lacérez les vents de l'Aethyr, vous permettant ainsi de bannir un groupe de démons situé dans un rayon de 48 mètres (24 cases). Utilisez le grand gabarit. Les démons affectés doivent réussir un test de Force Mentale, sous peine d’être bannis et renvoyés dans les Royaumes du Chaos."
   },
   {
     "id": "guerison",
@@ -106,12 +106,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 16,
     "temps": "1 action complète",
     "bonusIngredient": "2",
     "ingredient": "un cataplasme (+2)",
-    "description": "Soigne un nombre de personnages égal à votre valeur de Magie dans un rayon de 8 mètres. Réduit de moitié la durée des maladies ou élimine un poison selon votre choix lors du lancement."
+    "description": "vous utilisez le pouvoir de Hysh pour aider un ou plusieurs personnages souffrant de maladie ou empoisonnés. Le sort affecte un nombre maximal de personnages égal à votre valeur de Magie, et tous doivent être situés dans un rayon de 8 mètres (4 cases) de vous. Si ce sort est lancé avec succès, toutes les maladies affectant les cibles voient leur durée réduite de moitié (en arrondissant à l'entier inférieur). Sinon, le sort peut débarrasser chaque cible d'un poison, annulant tous ses effets. Vous devez décider si guérison traitera les maladies ou les empoisonnements quand vous lancez le sort."
   },
   {
     "id": "inspiration-lumineuse",
@@ -120,12 +120,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 16,
     "temps": "1 minute",
     "bonusIngredient": "2",
     "ingredient": "une page tirée d’un livre (+2)",
-    "description": "Vous ouvrez votre esprit à Hysh et gagnez un bonus de +30% à un unique test de Connaissances effectué après la fin du sort."
+    "description": "vous ouvrez votre esprit à Hysh et laissez sa sagesse vous apporter la lumière sur un problème intellectuel des plus épineux. Une fois le sort terminé, vous pouvez effectuer un unique test de Connaissances avec un bonus de +30%."
   },
   {
     "id": "lueur-eblouissante",
@@ -134,12 +134,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 5,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
     "ingredient": "un petit miroir (+1)",
-    "description": "Vous éblouissez les créatures dans le petit gabarit. Pendant 1d10 rounds, elles subissent -10% en CC, CT, Agilité et Perception visuelle."
+    "description": "vous créez un jaillissement lumineux, dans un rayon de 36 mètres (18 cases), qui éblouit les personnes situées dans la zone. Utilisez le petit gabarit. Pendant 1d10 rounds, les créatures affectées subissent un malus de -10% à leurs tests de Capacité de Combat, de Capacité de Tir et d’Agilité, ainsi que pour tous les tests de Perception liés à la vue."
   },
   {
     "id": "lueur-purificatrice",
@@ -148,12 +148,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 5,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
     "ingredient": "un morceau de savon (+1)",
-    "description": "Vous nettoyez parfaitement un objet ou une personne : poussière, saleté, odeurs et impuretés disparaissent. La nourriture et les boissons sont purifiées."
+    "description": "Une faible lueur passe sur la surface de n’importe quel objet ou personnage, et ce dernier se retrouve d’une impeccable propreté. La poussière disparaît, les ternissures s’estompent, les odeurs rances sont éliminées et la barbe de plusieurs jours est nettement coupée. Quant à la nourriture et aux boissons gâtées, on peut les purifier (et même les rendre savoureuses si elles l’étaient à l’origine) grâce à ce sort. Il s’agit d’un sort de contact."
   },
   {
     "id": "lumiere-aveuglante",
@@ -162,12 +162,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 24,
     "temps": "1 action complète",
     "bonusIngredient": "3",
     "ingredient": "un disque de mithril poli (+3)",
-    "description": "Une explosion de lumière aveugle toutes les créatures dans le grand gabarit. Celles qui échouent un test d’Agilité voient leurs CC, CT, Agilité et Mouvement réduits de moitié, leur CT tombe à 0 et elles ratent tous les tests de Perception visuelle pendant 1d10 rounds."
+    "description": "vous créez une explosion de lumière chatoyante, apparaissant dans un rayon de 48 mètres (24 cases), aveuglant toutes les créatures comprises dans la zone. Utilisez le grand gabarit. Toutes les personnes affectées doivent effectuer un test d’Agilité. En cas d'échec, chaque victime est aveuglée, ce qui réduit ses valeurs d’Agilité, de Mouvement et de Capacité de Combat de moitié (arrondies à l’inférieur), tandis que sa Capacité de Tir tombe à 0. De plus, elle rate automatiquement tous ses tests de Perception liés à la vue. Les personnes qui réussissent le test initial ne subissent que l’équivalent du sort lueur éblouissante. Dans tous les cas, les effets du sort persistent pendant 1d10 rounds."
   },
   {
     "id": "lumiere-immunisante",
@@ -176,12 +176,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 12,
     "temps": "2 actions complètes",
     "bonusIngredient": "2",
     "ingredient": "une bougie de cire bénie par un prêtre de Shallya (+2)",
-    "description": "Tant que la flamme brûle, toutes les créatures dans la zone réussissent automatiquement leurs tests d’Endurance contre les maladies. Les flammes allumées à partir de la première partagent cet effet."
+    "description": "en lançant ce sort, vous allumez un feu de n’importe quelle taille, depuis la flamme d'une bougie jusqu'à un feu de camp. Tous ceux qui se trouvent dans la zone éclairée par cette flamme (sa portée maximale: cf. page 117 de W7DR)réussissent automatiquement tous les tests d'Endurance requis pour résister aux maladies tant qu'elle brûle. On peut accroître la taille du feu (en ajoutant du combustible, par exemple) et même le diviser en plusieurs parties (en allumant par exemple une autre bougie à l'aide de la première). Dans ce dernier cas, les feux “engendrés” ont exactement les mêmes effets que leurs “parents”, et ces effets s'appliquent à ceux qui sont illuminés par n'importe lequel de ces feux jusqu'à ce qu'ils s'éteignent."
   },
   {
     "id": "manteau-de-lumiere",
@@ -190,12 +190,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "1d10",
+    "attaques": "",
     "difficulte": 8,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
     "ingredient": "une bougie (+1)",
-    "description": "Vous êtes entouré d’un champ lumineux qui annule les dégâts des projectiles non magiques (réduits à 1d10). Dure un nombre de minutes égal à votre valeur de Magie, mais empêche tout test de Dissimulation."
+    "description": "vous êtes enveloppé d'un champ de lumière qui vous protège des attaques à distance. Tous les projectiles non magiques voient leur valeur de dégâts réduite à 0 (en d'autres termes, les dégâts s'élèvent simplement à 1d10). Manteau de lumière reste actif pendant un nombre de minutes égal à votre valeur de Magie, durant lesquelles vous ne pouvez effectuer aucun test de Dissimulation à cause de la lumière que vous dégagez."
   },
   {
     "id": "pouvoir-de-la-verite",
@@ -204,12 +204,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 18,
     "temps": "1 action complète et 1 demi-action",
     "bonusIngredient": "2",
     "ingredient": "une feuille de vélin vierge (+2)",
-    "description": "Le personnage touché gagne +30% en Charisme et double sa portée d’influence s’il parle honnêtement. Aucun effet visuel ne trahit la magie. Sort de contact."
+    "description": "un personnage que vous touchez devient plus convaincant, mais uniquement s'il parle honnêtement. S'il se conforme à cette restriction, le personnage gagne un bonus de + 30% aux tests de Charisme et peut affecter le double du nombre normal d'individus (on effectue le calcul une fois que les effets d'Éloquence et d'Orateur né ont été pris en compte). Les effets de ce sort n'ont rien d'ostentatoire (la cible n'est pas environnée d'une aura lumineuse ni accompagnée par une musique céleste), et il n'y a donc aucun moyen facile de juger de l'honnêteté du bénéficiaire. Il s'agit d'un sort de contact que vous pouvez également lancer sur vous-même."
   },
   {
     "id": "rayon-de-soumission",
@@ -218,12 +218,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 21,
     "temps": "2 actions complètes",
     "bonusIngredient": "3",
     "ingredient": "un miroir parfait (+3)",
-    "description": "Un cône de lumière affecte les démons dans la zone. Ils doivent réussir un test de Force Mentale avec un malus de -10% par point de Magie, ou rester immobiles tant que le rayon est maintenu. Peut être prolongé en sacrifiant des Blessures."
+    "description": "un trait de lumière étincelante jaillit de votre main. Si vous utilisez le miroir, la lumière émane de celui-ci et il se brise quand le sort s'achève, Utilisez le gabarit de cône. Toutes les créatures des Royaumes du Chaos (C'est-a-dire les démons) prises dans la zone d'action de ce sort doivent réussir un test de Force Mentale accompagné d'un malus de -10% multiplié par votre valeur de Magie. Ceux qui échouent ne peuvent pas entreprendre d'action de déplacement tant que vous maintenez le rayon en place. Vous pouvez projeter le cône de lumière pendant un nombre de rounds égal à votre valeur de Magie. Vous pouvez allonger la durée de ce sort d'un round supplémentaire par point de Blessures que vous sacrifiez."
   },
   {
     "id": "regard-radieux",
@@ -232,12 +232,12 @@
     "degats": "6",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "1",
     "difficulte": 7,
     "temps": "1 action complète",
     "bonusIngredient": "1",
     "ingredient": "une loupe (+1)",
-    "description": "Votre regard émet un projectile magique d’énergie radieuse infligeant 6 points de dégâts à une cible dans un rayon de 16 mètres."
+    "description": "votre regard focalise l'énergie radieuse sur une cible située dans un rayon de 16 mètres (8 cases). Il s'agit d'un projectile magique d'une valeur de dégâts de 6, Il arrive qu'un simple regard puisse tuer."
   },
   {
     "id": "sentinelle-rayonnante",
@@ -246,12 +246,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 14,
     "temps": "1 action complète",
     "bonusIngredient": "2",
     "ingredient": "une rondache (+2)",
-    "description": "Une boule de lumière flotte autour de vous et pare une attaque de Corps à Corps par round en utilisant votre Force Mentale comme CC. Dure un nombre de minutes égal à votre valeur de Magie."
+    "description": "vous créez une boule de lumière brillante de la taille d'une tête d'homme, qui flotte autour de votre corps, se déplaçant lentement ou avec vivacité, selon la situation. La boule dévie les coups qui vous prennent pour cible, vous protégeant ainsi contre les attaques. Une fois par round, la sentinelle radieuse peut parer une attaque de Corps à Corps qui vous prend pour cible, en utilisant votre Force Mentale en guise de Capacité de Combat, Cette parade n'est pas comptée comme votre parade pour ce round. La boule se dissipe après un nombre de minutes égal à votre valeur de Magie"
   },
   {
     "id": "soins-de-hysh",
@@ -260,12 +260,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 10,
     "temps": "1 action complète",
     "bonusIngredient": "2",
     "ingredient": "une perle en verre transparent (+2)",
-    "description": "Votre contact soigne un personnage blessé d’un nombre de Blessures égal à votre valeur de Magie. Sort de contact, utilisable sur vous-même."
+    "description": "votre contact soigne un personnage blessé d'un nombre de points de Blessures égal à votre valeur de Magie. Il s'agit d'un sort de Contact que vous pouvez lancer sur vous-même"
   },
   {
     "id": "yeux-de-la-verite",
@@ -274,12 +274,12 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 20,
     "temps": "1 action complète",
     "bonusIngredient": "2",
     "ingredient": "une sphère de verre (+2)",
-    "description": "Vos yeux perçoivent les illusions, ténèbres, invisibilités et déguisements dans un rayon de 48 mètres pendant un nombre de rounds égal à votre valeur de Magie."
+    "description": "vos yeux brillent de l'éclat de la vérité, Pendant un nombre de rounds égal à votre valeur de Magie, vous pouvez percer les illusions, l'obscurité magique ou normale, l'invisibilité et toutes les formes de déguisement dans un rayon de 48 mètres (24 cases). Toutes les créatures dissimulées vous sont aussi révélées."
   }
     ],
     "bete": [
@@ -291,9 +291,9 @@
     "temps": "2 actions complètes",
     "bonusIngredient": 3,
     "ingredient": "l’épine de la queue d’une mandragore (+3)",
-    "degats": "Transformation",
-    "attaques": "Altération",
-    "description": "Ce sort bouleverse la nature et les êtres vivants autour de vous. Tous les mages à 7,5 km ressentent sa puissance. Les animaux et monstres fuient la zone comme devant une catastrophe. À moins de réussir un test de Force Mentale Difficile (-20%), la cible subit une transformation catastrophique : elle devient une manticore et perd son prochain tour. La manticore ne reconnaît ni amis ni ennemis ; l’être de la victime est annihilé."
+    "degats": "",
+    "attaques": "",
+    "description": "Ce sort bouleverse les êtres vivants et la nature partout autour de vous. La magie se fait ressentir à 7,5km à la ronde par tout les utilisateurs de magie. Au delà de cela, tout les animaux et monstres fuient la zone comme si une catastrophe naturel se manifestait. Votre puissante magie réduit votre cible en la forme de vie la plus vile. A moins que la victime ne réussise un test de Force Mentale difficile (-20%), elle subit une terrible transformation : Vous vous transformer en manticore et perdez votre prochain tour. A noté que la manticore ne reconnaît plus ses alliés de ses ennemis, votre être est ballayé, détruit."
   },
   {
     "id": "ailes-du-faucon",
@@ -304,7 +304,7 @@
     "bonusIngredient": 3,
     "ingredient": "un faucon vivant (+3)",
     "degats": "0",
-    "attaques": "Déplacement",
+    "attaques": "",
     "description": "Des ailes vous poussent dans le dos, vous permettant de voler pendant PM minutes à une vitesse de Mouvement 4. Le commun des mortels, voyant un tel être, vous prendra pour un démon du Chaos."
   },
   {
@@ -316,7 +316,7 @@
     "bonusIngredient": 1,
     "ingredient": "un morceau de sucre (+1)",
     "degats": "0",
-    "attaques": "Contrôle animal",
+    "attaques": "",
     "description": "Vous apaisez un animal dans un rayon de 48 m, à moins qu’il ne réussisse un test de Force Mentale. L’animal devient calme et docile pendant PM rounds. Vous bénéficiez d’un +10% aux tests d’Équitation si vous le montez."
   },
   {
@@ -328,7 +328,7 @@
     "bonusIngredient": 1,
     "ingredient": "une bride (+1)",
     "degats": "0",
-    "attaques": "Domination",
+    "attaques": "",
     "description": "Vous brisez la volonté d’un animal domestiquable (cheval, chien, oiseau de proie…). En cas d’échec à un test de Force Mentale, l’animal devient docile envers les races civilisées pour toujours, sauf envers les créatures du Chaos ou peaux-vertes."
   },
   {
@@ -340,7 +340,7 @@
     "bonusIngredient": 2,
     "ingredient": "une lanière de cuir de sanglier tanné (+2)",
     "degats": "0",
-    "attaques": "Renforcement",
+    "attaques": "",
     "description": "Votre peau devient dure comme celle d’un sanglier. Vous réduisez la valeur critique des coups critiques subis de -1, mais subissez un malus de -10% en Agilité. Dure PM minutes."
   },
   {
@@ -352,7 +352,7 @@
     "bonusIngredient": 2,
     "ingredient": "le cœur d’un loup (+2)",
     "degats": "0",
-    "attaques": "Bénédiction",
+    "attaques": "",
     "description": "Tous vos alliés dans un rayon de 12 m sont pris d’une frénésie immédiate (comme le talent du même nom). N’affecte pas les animaux."
   },
   {
@@ -364,7 +364,7 @@
     "bonusIngredient": 2,
     "ingredient": "une corneille en cage (+2)",
     "degats": "3",
-    "attaques": "Zone (grand gabarit)",
+    "attaques": "",
     "description": "Vous invoquez un vol de corneilles aethyriques vengeresses. Toutes les cibles dans le grand gabarit subissent un coup de dégâts 3 à la tête. Les corneilles se dispersent aussitôt après."
   },
   {
@@ -375,8 +375,8 @@
     "temps": "1 demi-action",
     "bonusIngredient": 1,
     "ingredient": "une griffe de chat (+1)",
-    "degats": "4 (griffes)",
-    "attaques": "Transformation",
+    "degats": "",
+    "attaques": "",
     "description": "Vos ongles deviennent des griffes rapides. +1 Attaque, +10% CC, griffes considérées comme armes rapides. Dure PM rounds. Vous ne pouvez manier d’arme pendant ce temps."
   },
   {
@@ -388,7 +388,7 @@
     "bonusIngredient": 1,
     "ingredient": "une plume de corbeau (+1)",
     "degats": "0",
-    "attaques": "Métamorphose",
+    "attaques": "",
     "description": "Vous vous transformez en corbeau pendant 1h, conservant Intelligence et Force Mentale, mais perdant la parole et la magie. Le sort prend fin si vous subissez un coup critique."
   },
   {
@@ -400,7 +400,7 @@
     "bonusIngredient": 3,
     "ingredient": "une griffe d’ours (+3)",
     "degats": "0",
-    "attaques": "Métamorphose",
+    "attaques": "",
     "description": "Fonctionne comme L’Envol du Corbeau, mais vous prenez la forme d’un ours. Voir profil p.231 de WJDR."
   },
   {
@@ -412,7 +412,7 @@
     "bonusIngredient": 2,
     "ingredient": "un fouet miniature de poils tressés (+2)",
     "degats": "0",
-    "attaques": "Contrôle animal",
+    "attaques": "",
     "description": "Vous ordonnez à un animal d’obéir. S’il échoue à un test de FM, vous contrôlez ses actions pendant son prochain tour."
   },
   {
@@ -424,7 +424,7 @@
     "bonusIngredient": 2,
     "ingredient": "une langue de l’animal (+2)",
     "degats": "0",
-    "attaques": "Communication",
+    "attaques": "",
     "description": "Permet de parler en forme animale ou de conférer la parole à un animal pendant PM minutes."
   },
   {
@@ -436,7 +436,7 @@
     "bonusIngredient": 2,
     "ingredient": "une patte de loup (+2)",
     "degats": "0",
-    "attaques": "Métamorphose",
+    "attaques": "",
     "description": "Comme L’Envol du Corbeau, mais la forme adoptée est celle d’un loup. Voir profil p.231."
   },
   {
@@ -448,7 +448,7 @@
     "bonusIngredient": 2,
     "ingredient": "une dent d’ours (+2)",
     "degats": "0",
-    "attaques": "Altération",
+    "attaques": "",
     "description": "Vous plongez une cible consentante en hibernation magique jusqu’au prochain solstice/équinoxe. Suspend maladies et poisons. Le lanceur peut provoquer le réveil prématuré par la pensée."
   },
   {
@@ -460,7 +460,7 @@
     "bonusIngredient": 2,
     "ingredient": "un sabot de bœuf (+2)",
     "degats": "0",
-    "attaques": "Motivation",
+    "attaques": "",
     "description": "Vos alliés à 48 m ignorent les effets actuels de la Peur ou de la Terreur. Ne protège pas contre de nouvelles sources de peur ultérieures."
   },
   {
@@ -472,7 +472,7 @@
     "bonusIngredient": 2,
     "ingredient": "du crin de destrier (+2)",
     "degats": "0",
-    "attaques": "Métamorphose",
+    "attaques": "",
     "description": "Comme L’Envol du Corbeau, mais la forme adoptée est celle d’un destrier. Voir profils p.231 WJDR / p.118 Bestiaire."
   },
   {
@@ -484,7 +484,7 @@
     "bonusIngredient": 2,
     "ingredient": "une pincée de guano de chauve-souris (+2)",
     "degats": "0",
-    "attaques": "Protection animale",
+    "attaques": "",
     "description": "Toute créature intelligente blessant l’animal touché subit -10% à tous les tests de Sociabilité jusqu’à la prochaine pleine lune."
   },
   {
@@ -496,7 +496,7 @@
     "bonusIngredient": 2,
     "ingredient": "une fiole de corne de taureau en poudre (+2)",
     "degats": "0",
-    "attaques": "Altération",
+    "attaques": "",
     "description": "Tous les objets en cuir du porteur (bourses, sangles, armures…) se réduisent en poussière. Sort de contact."
   },
   {
@@ -508,7 +508,7 @@
     "bonusIngredient": 1,
     "ingredient": "un peu de baume (+1)",
     "degats": "0",
-    "attaques": "Soin",
+    "attaques": "",
     "description": "Guérit un animal naturel d’un nombre de Blessures égal à votre PM. Les créatures magiques ne sont pas affectées."
   },
   {
@@ -520,7 +520,7 @@
     "bonusIngredient": 2,
     "ingredient": "un poil de chien peureux (+2)",
     "degats": "0",
-    "attaques": "Effroi",
+    "attaques": "",
     "description": "Vous semez la panique parmi 2d10 ennemis à 48 m (ou une cible unique en Terreur -10%). Chaque cible teste la Peur chaque round jusqu’à réussite ou départ du lanceur."
   },
   {
@@ -532,7 +532,7 @@
     "bonusIngredient": 3,
     "ingredient": "la peau d’un crapaud bleu (+3)",
     "degats": "0",
-    "attaques": "Transformation",
+    "attaques": "",
     "description": "Transforme la cible en créature grotesque. Test de FM -10% pour résister. Sinon, elle adopte un comportement aléatoire (voir table 1d10) : hurler, attaquer, danser, etc. Effet permanent sauf Dissipation réussie (2 DR) ou relance du sort par le lanceur."
   }
     ],
@@ -544,7 +544,7 @@
     "degats": "6",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "1",
     "difficulte": 19,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -558,7 +558,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "1d10",
+    "attaques": "1",
     "difficulte": 16,
     "temps": "1 demi-action",
     "bonusIngredient": "2",
@@ -572,7 +572,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 29,
     "temps": "2 actions complètes",
     "bonusIngredient": "3",
@@ -586,7 +586,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 18,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -600,7 +600,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 7,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -614,7 +614,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 16,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -628,7 +628,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 14,
     "temps": "1 action complète et 1 demi-action",
     "bonusIngredient": "2",
@@ -642,7 +642,7 @@
     "degats": "5",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 8,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -656,7 +656,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 31,
     "temps": "1 action complète",
     "bonusIngredient": "3",
@@ -670,7 +670,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 5,
     "temps": "1 action complète",
     "bonusIngredient": "1",
@@ -684,7 +684,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 14,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -698,7 +698,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 10,
     "temps": "1 minute",
     "bonusIngredient": "2",
@@ -712,7 +712,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 11,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -726,7 +726,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 6,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -754,7 +754,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 12,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -768,7 +768,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 18,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -782,7 +782,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 20,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -796,7 +796,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 11,
     "temps": "1 demi-action",
     "bonusIngredient": "2",
@@ -810,7 +810,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "1d10",
+    "attaques": "1",
     "difficulte": 27,
     "temps": "1 action complète",
     "bonusIngredient": "3",
@@ -824,7 +824,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 5,
     "temps": "1 action complète",
     "bonusIngredient": "1",
@@ -840,7 +840,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 32,
     "temps": "2 actions complètes",
     "bonusIngredient": "3",
@@ -854,7 +854,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 12,
     "temps": "1 demi-action",
     "bonusIngredient": "2",
@@ -868,7 +868,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 7,
     "temps": "1 action complète et 1 demi-action",
     "bonusIngredient": "1",
@@ -882,7 +882,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 7,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -896,7 +896,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 27,
     "temps": "1 demi-action",
     "bonusIngredient": "3",
@@ -924,7 +924,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 11,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -938,7 +938,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 24,
     "temps": "1 action complète et 1 demi-action",
     "bonusIngredient": "3",
@@ -952,7 +952,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 9,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -966,7 +966,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 15,
     "temps": "1 demi-action",
     "bonusIngredient": "2",
@@ -980,7 +980,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 5,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -994,7 +994,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 15,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -1008,7 +1008,7 @@
     "degats": "3",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "1",
     "difficulte": 14,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -1022,7 +1022,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 18,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -1036,7 +1036,7 @@
     "degats": "3",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "magie",
     "difficulte": 22,
     "temps": "1 demi-action",
     "bonusIngredient": "3",
@@ -1047,10 +1047,10 @@
     "id": "strangulation",
     "name": "Strangulation",
     "portee": "12 mètres (6 cases)",
-    "degats": "1+",
+    "degats": "1",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 13,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -1064,7 +1064,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 22,
     "temps": "1 action complète",
     "bonusIngredient": "3",
@@ -1078,7 +1078,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 8,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -1092,7 +1092,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 21,
     "temps": "1 demi-action",
     "bonusIngredient": "3",
@@ -1106,7 +1106,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 6,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -1120,7 +1120,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "1d10",
+    "attaques": "",
     "difficulte": 17,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -1164,7 +1164,7 @@
     "degats": "3",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "magie",
     "difficulte": 12,
     "temps": "1 demi-action",
     "bonusIngredient": "2",
@@ -1220,7 +1220,7 @@
     "degats": "4",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "magie",
     "difficulte": 31,
     "temps": "1 action complète et 1 demi-action",
     "bonusIngredient": "3",
@@ -1248,7 +1248,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 4,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -1262,7 +1262,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 24,
     "temps": "2 actions complètes",
     "bonusIngredient": "3",
@@ -1276,7 +1276,7 @@
     "degats": "1/round",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 16,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -1290,7 +1290,7 @@
     "degats": "4",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 14,
     "temps": "1 demi-action",
     "bonusIngredient": "2",
@@ -1318,7 +1318,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 11,
     "temps": "1 demi-action",
     "bonusIngredient": "2",
@@ -1332,7 +1332,7 @@
     "degats": "4",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "1",
     "difficulte": 6,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -1346,7 +1346,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 9,
     "temps": "1 action complète",
     "bonusIngredient": "1",
@@ -1360,7 +1360,7 @@
     "degats": "3",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 14,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -1374,7 +1374,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 18,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -1388,7 +1388,7 @@
     "degats": "3",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "1",
     "difficulte": 21,
     "temps": "1 action complète",
     "bonusIngredient": "3",
@@ -1402,7 +1402,7 @@
     "degats": "8",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "1",
     "difficulte": 25,
     "temps": "1 action complète",
     "bonusIngredient": "3",
@@ -1416,7 +1416,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 26,
     "temps": "1 minute",
     "bonusIngredient": "3",
@@ -1432,8 +1432,8 @@
     "portee": "48 mètres",
     "degats": "1d10+8",
     "fureurConfirm": false,
-    "degatsBonus": "1d10+12 (armure intermédiaire ou lourde)",
-    "attaques": "Zone (12 m)",
+    "degatsBonus": "",
+    "attaques": "1",
     "difficulte": 32,
     "temps": "2 actions complètes",
     "bonusIngredient": "3",
@@ -1461,7 +1461,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 6,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -1475,7 +1475,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Analyse",
+    "attaques": "",
     "difficulte": 22,
     "temps": "1 minute",
     "bonusIngredient": "3",
@@ -1489,7 +1489,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 21,
     "temps": "1 minute",
     "bonusIngredient": "3",
@@ -1503,7 +1503,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Transmutation",
+    "attaques": "",
     "difficulte": 18,
     "temps": "1 minute",
     "bonusIngredient": "2",
@@ -1517,7 +1517,7 @@
     "degats": "3",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Projectiles magiques (PM)",
+    "attaques": "magie",
     "difficulte": 13,
     "temps": "1 demi-action",
     "bonusIngredient": "2",
@@ -1531,7 +1531,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 5,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -1545,7 +1545,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 7,
     "temps": "1 action complète",
     "bonusIngredient": "1",
@@ -1559,7 +1559,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Dissipation",
+    "attaques": "",
     "difficulte": 26,
     "temps": "1 action complète",
     "bonusIngredient": "3",
@@ -1573,7 +1573,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Transmutation",
+    "attaques": "",
     "difficulte": 5,
     "temps": "1 action complète",
     "bonusIngredient": "1",
@@ -1587,7 +1587,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Support",
+    "attaques": "",
     "difficulte": 7,
     "temps": "1d10 actions complètes",
     "bonusIngredient": "1",
@@ -1601,7 +1601,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Transmutation",
+    "attaques": "",
     "difficulte": 15,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -1615,7 +1615,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Altération",
+    "attaques": "",
     "difficulte": 9,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -1629,7 +1629,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Divination",
+    "attaques":"",
     "difficulte": 11,
     "temps": "2 actions complètes",
     "bonusIngredient": "1",
@@ -1657,7 +1657,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "+1 PA (max 5)",
-    "attaques": "Renforcement",
+    "attaques": "",
     "difficulte": 12,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -1671,7 +1671,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Communication",
+    "attaques": "",
     "difficulte": 14,
     "temps": "1 action complète",
     "bonusIngredient": "3",
@@ -1685,7 +1685,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 4,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -1699,7 +1699,7 @@
     "degats": "±1d10 Folie",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Psychique",
+    "attaques": "",
     "difficulte": 23,
     "temps": "10 minutes",
     "bonusIngredient": "3",
@@ -1713,7 +1713,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Support",
+    "attaques": "",
     "difficulte": 16,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -1731,7 +1731,7 @@
     "bonusIngredient": 2,
     "ingredient": "une plume de colombe (+2)",
     "degats": "0",
-    "attaques": "Déplacement",
+    "attaques": "",
     "description": "Vous êtes porté dans les airs par des vents célestes sous votre contrôle. Vous pouvez voler pendant un nombre de minutes égal à votre valeur de Magie avec un Mouvement de 6 en vol. Vous ne pouvez lancer ce sort sur autrui."
   },
   {
@@ -1743,7 +1743,7 @@
     "bonusIngredient": 3,
     "ingredient": "une lentille ébréchée (+3)",
     "degats": "0",
-    "attaques": "Divination",
+    "attaques":"",
     "description": "Permet de déterminer la direction générale d’un objet perdu ou caché. Vous devez connaître ou avoir vu l’objet, ou le décrire précisément. Peut aussi détecter le plus proche exemplaire d’un type d’objet. Plusieurs lancements permettent une triangulation."
   },
   {
@@ -1754,8 +1754,8 @@
     "temps": "1 heure",
     "bonusIngredient": 3,
     "ingredient": "la corde d’un pendu (+3)",
-    "degats": "–1 point de Destin",
-    "attaques": "Invocation",
+    "degats": "",
+    "attaques": "",
     "description": "Vous altérez le destin d’une cible dont vous possédez un cheveu ou du sang. Si le sort réussit, la cible doit réussir un test Très Difficile de Force Mentale (–30%) ou perdre 1 point de Destin. Sans point de Destin, le prochain coup critique subit un +10. Tous les mages à 7,5 km ressentent la perturbation."
   },
   {
@@ -1767,7 +1767,7 @@
     "bonusIngredient": 1,
     "ingredient": "un diapason (+1)",
     "degats": "5",
-    "attaques": "Projectile magique",
+    "attaques": "1",
     "description": "Vous faites jaillir un éclair sur un adversaire à 36 m. Projectile magique de dégâts 5."
   },
   {
@@ -1779,7 +1779,7 @@
     "bonusIngredient": 2,
     "ingredient": "une bouteille contenant le souffle d’un aigle (+2)",
     "degats": "0",
-    "attaques": "Météorologique",
+    "attaques": "",
     "description": "Dissipe les nuages sur 100 m de diamètre, éclaircissant le ciel ou interrompant temporairement une pluie. Les effets dépendent du vent et du temps ambiant."
   },
   {
@@ -1803,7 +1803,7 @@
     "bonusIngredient": 2,
     "ingredient": "une langue d’oiseau (+2)",
     "degats": "0",
-    "attaques": "Communication",
+    "attaques": "",
     "description": "Permet de parler et comprendre le langage des oiseaux pendant PM minutes. Les oiseaux ne sont pas obligés d’aider et peuvent mentir ou négocier. Vous comprenez aussi leurs comportements."
   },
   {
@@ -1815,7 +1815,7 @@
     "bonusIngredient": 1,
     "ingredient": "une pincée de sable pur (+1)",
     "degats": "0",
-    "attaques": "Observation",
+    "attaques": "",
     "description": "Crée un disque flottant qui grossit les objets éloignés. +20% en Perception contre la distance, +10% si brouillard ou obstacle. Utile pour observer les étoiles ou des lieux lointains."
   },
   {
@@ -1838,8 +1838,8 @@
     "temps": "1 demi-action",
     "bonusIngredient": 2,
     "ingredient": "un miroir brisé (+2)",
-    "degats": "+1 aux dégâts contre la cible",
-    "attaques": "Maléfice",
+    "degats": "",
+    "attaques": "",
     "description": "La cible subit -10% à tous les tests pendant 24 h, et les attaques qu’elle subit infligent +1 dégâts. Non cumulatif."
   },
   {
@@ -1851,7 +1851,7 @@
     "bonusIngredient": 3,
     "ingredient": "une fiole d’encre de sang d’aigle (+3)",
     "degats": "0",
-    "attaques": "Communication",
+    "attaques": "",
     "description": "Vous écrivez un message simple dans les étoiles, visible pour ceux qui réussissent un test de Connaissances (Astronomie). Peut transmettre des concepts généraux (danger, opportunité, présage). Les mages d’Azyr punissent ceux qui en abusent."
   },
   {
@@ -1863,7 +1863,7 @@
     "bonusIngredient": 1,
     "ingredient": "un chiffon propre (+1)",
     "degats": "0",
-    "attaques": "Utilitaire",
+    "attaques": "",
     "description": "Nettoie parfaitement tout équipement optique (miroir, lentille, fenêtre, télescope…). Très prisé des apprentis pour éviter les corvées."
   },
   {
@@ -1875,7 +1875,7 @@
     "bonusIngredient": 1,
     "ingredient": "un morceau de verre (+1)",
     "degats": "0",
-    "attaques": "Divination",
+    "attaques":"",
     "description": "Permet de relancer un jet de votre choix à votre prochain tour. Un seul jet relançable (test, dégâts, incantation, etc.)."
   },
   {
@@ -1887,7 +1887,7 @@
     "bonusIngredient": 2,
     "ingredient": "une patte de lapin (+2)",
     "degats": "0",
-    "attaques": "Divination",
+    "attaques":"",
     "description": "Vous gagnez 1 point de Fortune temporaire valable 24 h, utilisable uniquement pour relancer un test. Non cumulable tant qu’il n’est pas dépensé."
   },
   {
@@ -1899,7 +1899,7 @@
     "bonusIngredient": 1,
     "ingredient": "le foie d’un petit animal (+1)",
     "degats": "0",
-    "attaques": "Divination",
+    "attaques":"",
     "description": "Permet de savoir si les astres sont favorables pour une action. Le MJ effectue un test secret pour déterminer la véracité du présage. Valable 2d10 h."
   },
   {
@@ -1911,7 +1911,7 @@
     "bonusIngredient": 2,
     "ingredient": "une patte de lapin (+2)",
     "degats": "0",
-    "attaques": "Bénédiction",
+    "attaques": "",
     "description": "La cible récupère immédiatement tous ses points de Fortune. Elle ne regagnera pas ses points le lendemain. Ne peut être relancé avant le cycle normal."
   },
   {
@@ -1923,7 +1923,7 @@
     "bonusIngredient": 2,
     "ingredient": "un morceau de verre teinté (+2)",
     "degats": "0",
-    "attaques": "Divination",
+    "attaques":"",
     "description": "Identique au Premier Signe d’Amul, mais offre deux relances utilisables dans l’heure suivant l’incantation."
   },
   {
@@ -1935,7 +1935,7 @@
     "bonusIngredient": 3,
     "ingredient": "une girouette (+3)",
     "degats": "5",
-    "attaques": "Zone (grand gabarit)",
+    "attaques": "1",
     "description": "Vous invoquez un orage déchaîné dans un rayon de 48 m. Chaque cible subit un coup de dégâts 5. Peut être invoqué même dans des lieux clos."
   },
   {
@@ -1947,7 +1947,7 @@
     "bonusIngredient": 2,
     "ingredient": "une vessie animale (+2)",
     "degats": "0",
-    "attaques": "Zone (grand gabarit)",
+    "attaques": "",
     "description": "Les vents renversent les ennemis dans la zone. Ils tombent au sol et doivent réussir un test d’Endurance ou être assommés 1 round. Tir impossible. –20% CC. Dure PM rounds."
   },
   {
@@ -1959,7 +1959,7 @@
     "bonusIngredient": 2,
     "ingredient": "une goutte de votre sang (+2)",
     "degats": "0",
-    "attaques": "Divination",
+    "attaques":"",
     "description": "Si vous subissez un coup critique dans les 24 h, relancez automatiquement le résultat et gardez celui que vous préférez. Non relançable tant que l’effet n’est pas utilisé."
   }
     ],
@@ -1971,7 +1971,7 @@
       "degats": "4",
       "fureurConfirm": false,
       "degatsBonus": "0",
-      "attaques": "1d10",
+      "attaques": "1",
       "difficulte": 15,
       "temps": "1 action complète",
       "bonusIngredient": "2",
@@ -1985,7 +1985,7 @@
       "degats": "5",
       "fureurConfirm": false,
       "degatsBonus": "0",
-      "attaques": "1d10",
+      "attaques": "1",
       "difficulte": 20,
       "temps": "1 action complète",
       "bonusIngredient": "2",
@@ -1999,7 +1999,7 @@
       "degats": "0",
       "fureurConfirm": false,
       "degatsBonus": "0",
-      "attaques": "1d10",
+      "attaques": "1",
       "difficulte": 18,
       "temps": "1 action complète",
       "bonusIngredient": "2",
@@ -2013,7 +2013,7 @@
       "degats": "0",
       "fureurConfirm": false,
       "degatsBonus": "0",
-      "attaques": "Magie",
+      "attaques": "",
       "difficulte": 18,
       "temps": "1 action complète",
       "bonusIngredient": "2",
@@ -2027,7 +2027,7 @@
       "degats": "0",
       "fureurConfirm": false,
       "degatsBonus": "0",
-      "attaques": "Magie",
+      "attaques": "",
       "difficulte": 27,
       "temps": "3 actions complètes",
       "bonusIngredient": "3",
@@ -2041,7 +2041,7 @@
       "degats": "8",
       "fureurConfirm": false,
       "degatsBonus": "0",
-      "attaques": "1d10",
+      "attaques": "1",
       "difficulte": 25,
       "temps": "1 action complète",
       "bonusIngredient": "3",
@@ -2055,7 +2055,7 @@
       "degats": "2",
       "fureurConfirm": false,
       "degatsBonus": "0",
-      "attaques": "1d10",
+      "attaques": "",
       "difficulte": 8,
       "temps": "1 demi-action",
       "bonusIngredient": "2",
@@ -2069,7 +2069,7 @@
       "degats": "0",
       "fureurConfirm": false,
       "degatsBonus": "0",
-      "attaques": "Magie",
+      "attaques": "",
       "difficulte": 15,
       "temps": "1 action complète",
       "bonusIngredient": "2",
@@ -2083,7 +2083,7 @@
       "degats": "0",
       "fureurConfirm": false,
       "degatsBonus": "0",
-      "attaques": "Magie",
+      "attaques": "",
       "difficulte": 15,
       "temps": "2 actions complètes",
       "bonusIngredient": "2",
@@ -2097,7 +2097,7 @@
       "degats": "0",
       "fureurConfirm": false,
       "degatsBonus": "0",
-      "attaques": "Magie",
+      "attaques": "",
       "difficulte": 12,
       "temps": "1 action complète",
       "bonusIngredient": "2",
@@ -2111,7 +2111,7 @@
       "degats": "0",
       "fureurConfirm": false,
       "degatsBonus": "0",
-      "attaques": "1d10",
+      "attaques": "1",
       "difficulte": 20,
       "temps": "2 actions complètes",
       "bonusIngredient": "2",
@@ -2153,7 +2153,7 @@
       "degats": "2",
       "fureurConfirm": false,
       "degatsBonus": "0",
-      "attaques": "1d10",
+      "attaques": "1",
       "difficulte": 14,
       "temps": "1 demi-action",
       "bonusIngredient": "2",
@@ -2167,7 +2167,7 @@
       "degats": "0",
       "fureurConfirm": false,
       "degatsBonus": "0",
-      "attaques": "Magie",
+      "attaques": "",
       "difficulte": 9,
       "temps": "1 demi-action",
       "bonusIngredient": "1",
@@ -2175,8 +2175,7 @@
       "description": "Votre voix prend le ton glacial des reines-khans. +10 en Commandement, Intimidation, Marchandage et Torture, mais -10 en Baratin et Charisme."
     }
     ]
-
-  },
+    },
   "divin": {
     "sigmar": [
   {
@@ -2228,7 +2227,7 @@
     "degats": "6",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "projectile magique",
+    "attaques": "1",
     "difficulte": 16,
     "temps": "1 demi-action",
     "bonusIngredient": "2",
@@ -2256,7 +2255,7 @@
     "degats": "3",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "zone",
+    "attaques": "1",
     "difficulte": 20,
     "temps": "1 demi-action",
     "bonusIngredient": "2",
@@ -2284,7 +2283,7 @@
     "degats": "1d10",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "soin",
+    "attaques": "",
     "difficulte": 12,
     "temps": "1 action complète et 1 demi-action",
     "bonusIngredient": "2",
@@ -2356,7 +2355,7 @@
         "degats": "5",
         "fureurConfirm": false,
         "degatsBonus": "0",
-        "attaques": "Magie",
+        "attaques": "",
         "difficulte": 22,
         "temps": "",
         "bonusIngredient": "2",
@@ -2372,7 +2371,7 @@
     "degats": "8",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "1",
     "difficulte": 13,
     "temps": "1 demi-action",
     "bonusIngredient": "2",
@@ -2386,7 +2385,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 20,
     "temps": "1 minute",
     "bonusIngredient": "2",
@@ -2400,7 +2399,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 11,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -2414,7 +2413,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 10,
     "temps": "1 minute",
     "bonusIngredient": "1",
@@ -2428,7 +2427,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 5,
     "temps": "1 minute",
     "bonusIngredient": "1",
@@ -2442,7 +2441,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 8,
     "temps": "1 demi-action",
     "bonusIngredient": "2",
@@ -2456,7 +2455,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 16,
     "temps": "10 minutes",
     "bonusIngredient": "2",
@@ -2470,7 +2469,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 15,
     "temps": "1 minute",
     "bonusIngredient": "2",
@@ -2484,7 +2483,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 12,
     "temps": "1 minute",
     "bonusIngredient": "2",
@@ -2498,7 +2497,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 9,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -2512,7 +2511,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 20,
     "temps": "1 action complète",
     "bonusIngredient": "2",
@@ -2526,7 +2525,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 15,
     "temps": "1 minute",
     "bonusIngredient": "2",
@@ -2538,7 +2537,6 @@
   {
     "id": "benediction-de-lalbatros",
     "name": "Bénédiction de l’albatros",
-    "college": "Manann",
     "difficulte": 20,
     "temps": "1 minute",
     "duree": "cf. texte",
@@ -2550,7 +2548,6 @@
   {
     "id": "bon-vent",
     "name": "Bon vent",
-    "college": "Manann",
     "difficulte": 16,
     "temps": "1 action complète",
     "duree": "1 heure",
@@ -2562,7 +2559,6 @@
   {
     "id": "calme-plat",
     "name": "Calme plat",
-    "college": "Manann",
     "difficulte": 16,
     "temps": "1 action complète",
     "duree": "1 heure/point de Magie",
@@ -2574,11 +2570,14 @@
   {
     "id": "deflagration-marine",
     "name": "Déflagration marine",
-    "college": "Manann",
     "difficulte": 10,
     "temps": "1 demi-action",
     "duree": "instantanée",
     "portee": "36 mètres (18 cases)",
+    "attaques": "1",
+    "degats": "4",
+    "fureurConfirm": false,
+    "degatsBonus": "",
     "ingredient": "une fiole d’eau de mer (+1)",
     "bonusIngredient": 1,
     "description": "Vous projetez un torrent d’eau salée en direction de votre cible. Il s’agit d’un projectile magique infligeant 1d10+4 dégâts. La cible doit réussir un test de Force ou être projetée au sol. Le sort éteint également les flammes dans un rayon de 4 mètres."
@@ -2586,7 +2585,6 @@
   {
     "id": "malediction-de-lalbatros",
     "name": "Malédiction de l’albatros",
-    "college": "Manann",
     "difficulte": 19,
     "temps": "1 action complète",
     "duree": "1 minute (6 rounds)",
@@ -2598,7 +2596,6 @@
   {
     "id": "marche-sur-les-eaux",
     "name": "Marche sur les eaux",
-    "college": "Manann",
     "difficulte": 14,
     "temps": "1 action complète",
     "duree": "1 minute (6 rounds)/point de Magie",
@@ -2610,7 +2607,6 @@
   {
     "id": "maree-monstre",
     "name": "Marée monstre",
-    "college": "Manann",
     "difficulte": 5,
     "temps": "1 action complète",
     "duree": "1 heure",
@@ -2622,7 +2618,6 @@
   {
     "id": "navigation-benite",
     "name": "Navigation bénie",
-    "college": "Manann",
     "difficulte": 5,
     "temps": "1 minute",
     "duree": "cf. texte",
@@ -2634,7 +2629,6 @@
   {
     "id": "oeil-de-pecheur",
     "name": "Œil de pêcheur",
-    "college": "Manann",
     "difficulte": 9,
     "temps": "1 demi-action",
     "duree": "instantanée",
@@ -2646,7 +2640,6 @@
   {
     "id": "pied-marin",
     "name": "Pied marin",
-    "college": "Manann",
     "difficulte": 12,
     "temps": "1 demi-action",
     "duree": "1 minute (6 rounds)/point de Magie",
@@ -2658,7 +2651,6 @@
   {
     "id": "respiration-aquatique",
     "name": "Respiration aquatique",
-    "college": "Manann",
     "difficulte": 7,
     "temps": "1 action complète",
     "duree": "1 heure",
@@ -2670,7 +2662,6 @@
   {
     "id": "visage-du-noye",
     "name": "Visage du noyé",
-    "college": "Manann",
     "difficulte": 8,
     "temps": "1 demi-action",
     "duree": "1 round/point de Magie",
@@ -2688,7 +2679,7 @@
         "degats": "",
         "fureurConfirm": false,
         "degatsBonus": "0",
-        "attaques": "Magie",
+        "attaques": "",
         "difficulte": 15,
         "temps": "1 action complète",
         "bonusIngredient": "2",
@@ -2702,7 +2693,7 @@
         "degats": "",
         "fureurConfirm": false,
         "degatsBonus": "0",
-        "attaques": "Magie",
+        "attaques": "",
         "difficulte": 10,
         "temps": "1 action complète",
         "bonusIngredient": "1",
@@ -2716,7 +2707,7 @@
         "degats": "",
         "fureurConfirm": false,
         "degatsBonus": "0",
-        "attaques": "Magie",
+        "attaques": "",
         "difficulte": 20,
         "temps": "1 action complète et 1 demi-action",
         "bonusIngredient": "2",
@@ -2730,7 +2721,7 @@
         "degats": "",
         "fureurConfirm": false,
         "degatsBonus": "0",
-        "attaques": "Magie",
+        "attaques": "",
         "difficulte": 6,
         "temps": "1 demi-action",
         "bonusIngredient": "1",
@@ -2744,7 +2735,7 @@
         "degats": "",
         "fureurConfirm": false,
         "degatsBonus": "0",
-        "attaques": "Magie",
+        "attaques": "",
         "difficulte": 7,
         "temps": "1 action complète",
         "bonusIngredient": "1",
@@ -2758,7 +2749,7 @@
         "degats": "",
         "fureurConfirm": false,
         "degatsBonus": "0",
-        "attaques": "Magie",
+        "attaques": "",
         "difficulte": 7,
         "temps": "1 action complète",
         "bonusIngredient": "1",
@@ -2772,7 +2763,7 @@
         "degats": "",
         "fureurConfirm": false,
         "degatsBonus": "0",
-        "attaques": "Magie",
+        "attaques": "",
         "difficulte": 17,
         "temps": "1 action complète",
         "bonusIngredient": "2",
@@ -2786,7 +2777,7 @@
         "degats": "",
         "fureurConfirm": false,
         "degatsBonus": "0",
-        "attaques": "Magie",
+        "attaques": "",
         "difficulte": 14,
         "temps": "1 action complète",
         "bonusIngredient": "2",
@@ -2800,7 +2791,7 @@
         "degats": "",
         "fureurConfirm": false,
         "degatsBonus": "0",
-        "attaques": "Magie",
+        "attaques": "",
         "difficulte": 16,
         "temps": "1 demi-action",
         "bonusIngredient": "2",
@@ -2814,7 +2805,7 @@
         "degats": "",
         "fureurConfirm": false,
         "degatsBonus": "0",
-        "attaques": "Magie",
+        "attaques": "",
         "difficulte": 5,
         "temps": "1 demi-action",
         "bonusIngredient": "1",
@@ -2828,7 +2819,7 @@
         "degats": "3",
         "fureurConfirm": false,
         "degatsBonus": "0",
-        "attaques": "Magie (dégâts fixes, ignore armure)",
+        "attaques": "1",
         "difficulte": 20,
         "temps": "1 demi-action",
         "bonusIngredient": "2",
@@ -2842,7 +2833,7 @@
         "degats": "",
         "fureurConfirm": false,
         "degatsBonus": "0",
-        "attaques": "Magie",
+        "attaques": "",
         "difficulte": 13,
         "temps": "2 actions complètes",
         "bonusIngredient": "2",
@@ -2854,7 +2845,7 @@
   {
     "id": "ami-des-betes",
     "name": "Ami des bêtes",
-    "college": "Taal et Rhya",
+    "attaques": "",
     "difficulte": 4,
     "temps": "1 action complète et 1 demi-action",
     "duree": "10 minutes",
@@ -2866,7 +2857,7 @@
   {
     "id": "benediction-de-la-riviere",
     "name": "Bénédiction de la rivière",
-    "college": "Taal et Rhya",
+    "attaques": "",
     "difficulte": 10,
     "temps": "2 actions complètes",
     "duree": "10 minutes/point de Magie",
@@ -2878,7 +2869,7 @@
   {
     "id": "coeur-de-boeuf",
     "name": "Cœur de bœuf",
-    "college": "Taal et Rhya",
+    "attaques": "",
     "difficulte": 14,
     "temps": "1 action complète",
     "duree": "1 minute (6 rounds)/point de Magie",
@@ -2890,7 +2881,7 @@
   {
     "id": "coup-de-tonnerre",
     "name": "Coup de tonnerre",
-    "college": "Taal et Rhya",
+    "attaques": "",
     "difficulte": 12,
     "temps": "1 action complète",
     "duree": "instantanée",
@@ -2902,7 +2893,9 @@
   {
     "id": "fureur-de-taal",
     "name": "Fureur de Taal",
-    "college": "Taal et Rhya",
+    "attaques": "1d10",
+    "degats": "4",
+    "fureurConfirm": false,
     "difficulte": 26,
     "temps": "1 action complète",
     "duree": "instantanée",
@@ -2914,7 +2907,7 @@
   {
     "id": "jaillissement-du-cerf",
     "name": "Jaillissement du cerf",
-    "college": "Taal et Rhya",
+    "attaques": "",
     "difficulte": 6,
     "temps": "1 demi-action",
     "duree": "1 minute (6 rounds)/point de Magie",
@@ -2926,7 +2919,7 @@
   {
     "id": "patte-dours",
     "name": "Patte d’ours",
-    "college": "Taal et Rhya",
+    "attaques": "",
     "difficulte": 15,
     "temps": "1 action complète",
     "duree": "1 minute (6 rounds)",
@@ -2938,7 +2931,7 @@
   {
     "id": "plantes-immobilisantes",
     "name": "Plantes immobilisantes",
-    "college": "Taal et Rhya",
+    "attaques": "",
     "difficulte": 8,
     "temps": "1 action complète",
     "duree": "1 minute (6 rounds)",
@@ -2950,7 +2943,7 @@
   {
     "id": "rage-grondante",
     "name": "Rage grondante",
-    "college": "Taal et Rhya",
+    "attaques": "",
     "difficulte": 10,
     "temps": "1 action complète",
     "duree": "1 minute (6 rounds)",
@@ -2962,7 +2955,7 @@
   {
     "id": "reconfort-de-rhya",
     "name": "Réconfort de Rhya",
-    "college": "Taal et Rhya",
+    "attaques": "",
     "difficulte": 18,
     "temps": "1 minute",
     "duree": "instantanée",
@@ -2974,7 +2967,7 @@
   {
     "id": "seigneur-de-la-nature",
     "name": "Seigneur de la nature",
-    "college": "Taal et Rhya",
+    "attaques": "",
     "difficulte": 15,
     "temps": "1 demi-action",
     "duree": "1 round",
@@ -2986,7 +2979,7 @@
   {
     "id": "vent-violent",
     "name": "Vent violent",
-    "college": "Taal et Rhya",
+    "attaques": "",
     "difficulte": 19,
     "temps": "1 demi-action",
     "duree": "1 minute (6 rounds)",
@@ -3000,7 +2993,7 @@
   {
     "id": "coeur-des-loups",
     "name": "Cœur des loups",
-    "college": "Ulric",
+    "attaques": "",
     "difficulte": 18,
     "temps": "1 action complète et 1 demi-action",
     "duree": "1 minute (6 rounds)",
@@ -3012,7 +3005,8 @@
   {
     "id": "decret-du-roi-des-neiges",
     "name": "Décret du roi des neiges",
-    "college": "Ulric",
+    "attaques": "1",
+    "degats": "8",
     "difficulte": 21,
     "temps": "2 actions complètes et 1 demi-action",
     "duree": "1 round/point de Magie",
@@ -3024,7 +3018,7 @@
   {
     "id": "faveur-dulric",
     "name": "Faveur d’Ulric",
-    "college": "Ulric",
+    "attaques": "",
     "difficulte": 15,
     "temps": "1 action complète et 1 demi-action",
     "duree": "1 heure",
@@ -3036,7 +3030,7 @@
   {
     "id": "froid-mordant",
     "name": "Froid mordant",
-    "college": "Ulric",
+    "attaques": "",
     "difficulte": 5,
     "temps": "1 demi-action",
     "duree": "1 minute (6 rounds)",
@@ -3048,7 +3042,7 @@
   {
     "id": "furie-guerriere",
     "name": "Furie guerrière",
-    "college": "Ulric",
+    "attaques": "",
     "difficulte": 7,
     "temps": "1 action complète",
     "duree": "1 minute (6 rounds) par point de Magie",
@@ -3060,7 +3054,7 @@
   {
     "id": "hurlement-du-loup",
     "name": "Hurlement du loup",
-    "college": "Ulric",
+    "attaques": "",
     "difficulte": 11,
     "temps": "1 demi-action",
     "duree": "1 round",
@@ -3072,7 +3066,7 @@
   {
     "id": "meute-sauvage",
     "name": "Meute sauvage",
-    "college": "Ulric",
+    "attaques": "",
     "difficulte": 11,
     "temps": "1 action complète",
     "duree": "1 minute (6 rounds)",
@@ -3084,7 +3078,7 @@
   {
     "id": "morsure-de-givre",
     "name": "Morsure de givre",
-    "college": "Ulric",
+    "attaques": "1",
     "difficulte": 9,
     "temps": "1 demi-action",
     "duree": "instantanée",
@@ -3096,7 +3090,7 @@
   {
     "id": "mort-aux-faibles",
     "name": "Mort aux faibles",
-    "college": "Ulric",
+    "attaques": "",
     "difficulte": 10,
     "temps": "1 demi-action",
     "duree": "1 minute (6 rounds)",
@@ -3108,7 +3102,7 @@
   {
     "id": "muscles-de-givre",
     "name": "Muscles de givre",
-    "college": "Ulric",
+    "attaques": "",
     "difficulte": 13,
     "temps": "2 actions complètes",
     "duree": "1 jour par point de Magie",
@@ -3120,7 +3114,7 @@
   {
     "id": "rage-effrenee",
     "name": "Rage effrénée",
-    "college": "Ulric",
+    "attaques": "",
     "difficulte": 21,
     "temps": "1 action complète et 1 demi-action",
     "duree": "1 minute (6 rounds)",
@@ -3132,7 +3126,9 @@
   {
     "id": "tempete-de-glace",
     "name": "Tempête de glace",
-    "college": "Ulric",
+    "attaques": "1",
+    "degats": "5",
+    "fureurConfirm": false,
     "difficulte": 20,
     "temps": "1 demi-action",
     "duree": "instantanée",
@@ -3146,7 +3142,6 @@
   {
     "id": "chaines-de-verena",
     "name": "Chaînes de Verena",
-    "college": "Verena",
     "difficulte": 6,
     "temps": "1 demi-action",
     "duree": "1 minute (6 rounds)",
@@ -3158,7 +3153,6 @@
   {
     "id": "chatiment",
     "name": "Châtiment",
-    "college": "Verena",
     "difficulte": 14,
     "temps": "1 action complète",
     "duree": "1 minute (6 rounds)/point de Magie",
@@ -3170,7 +3164,6 @@
   {
     "id": "epee-de-justice",
     "name": "Épée de justice",
-    "college": "Verena",
     "difficulte": 10,
     "temps": "1 demi-action",
     "duree": "1 minute (6 rounds)",
@@ -3182,8 +3175,10 @@
   {
     "id": "epreuve-du-feu",
     "name": "Épreuve du feu",
-    "college": "Verena",
     "difficulte": 18,
+    "attaques": "1d10",
+    "degats": "8",
+    "fureurConfirm": false,
     "temps": "1 minute",
     "duree": "cf. texte",
     "portee": "12 mètres (6 cases)",
@@ -3194,7 +3189,6 @@
   {
     "id": "equilibre-preserve",
     "name": "Équilibre préservé",
-    "college": "Verena",
     "difficulte": 13,
     "temps": "1 action complète",
     "duree": "1 minute (6 rounds) ou jusqu’à déclenchement",
@@ -3206,7 +3200,6 @@
   {
     "id": "ouie-fine",
     "name": "Ouïe fine",
-    "college": "Verena",
     "difficulte": 15,
     "temps": "1 minute",
     "duree": "1 minute (6 rounds)/point de Magie",
@@ -3218,7 +3211,6 @@
   {
     "id": "paroles-de-verite",
     "name": "Paroles de vérité",
-    "college": "Verena",
     "difficulte": 13,
     "temps": "2 actions complètes",
     "duree": "instantanée",
@@ -3230,7 +3222,6 @@
   {
     "id": "reprobation",
     "name": "Réprobation",
-    "college": "Verena",
     "difficulte": 17,
     "temps": "1 minute",
     "duree": "1 jour/point de Magie ou jusqu’à l’aveu",
@@ -3242,7 +3233,6 @@
   {
     "id": "revelation-du-passe",
     "name": "Révélation du passé",
-    "college": "Verena",
     "difficulte": 8,
     "temps": "1 minute",
     "duree": "instantanée",
@@ -3254,7 +3244,6 @@
   {
     "id": "sagesse-du-hibou",
     "name": "Sagesse du hibou",
-    "college": "Verena",
     "difficulte": 17,
     "temps": "1 minute",
     "duree": "1 minute (6 rounds)/point de Magie",
@@ -3266,7 +3255,6 @@
   {
     "id": "verena-men-est-temoin",
     "name": "Verena m’en est témoin",
-    "college": "Verena",
     "difficulte": 14,
     "temps": "1 action gratuite (consomme l’action d’incantation du round)",
     "duree": "1 round/point de Magie",
@@ -3278,7 +3266,6 @@
   {
     "id": "vierge-aveugle",
     "name": "Vierge aveugle",
-    "college": "Verena",
     "difficulte": 16,
     "temps": "1 demi-action",
     "duree": "1 round/point de Magie",
@@ -3292,7 +3279,6 @@
   {
     "id": "flot-de-vermine",
     "name": "Flot de vermine",
-    "college": "Rat Cornu",
     "difficulte": 14,
     "temps": "1 action complète",
     "portee": "centré sur vous",
@@ -3303,7 +3289,6 @@
   {
     "id": "manteau-de-contagion",
     "name": "Manteau de contagion",
-    "college": "Rat Cornu",
     "difficulte": 6,
     "temps": "1 demi-action",
     "ingredient": "un morceau de chair extrait du dos d’une victime de la peste (+1)",
@@ -3313,7 +3298,6 @@
   {
     "id": "musc-de-terreur",
     "name": "Musc de terreur",
-    "college": "Rat Cornu",
     "difficulte": 20,
     "temps": "1 demi-action",
     "portee": "36 mètres (18 cases)",
@@ -3324,7 +3308,6 @@
   {
     "id": "peste",
     "name": "Peste",
-    "college": "Rat Cornu",
     "difficulte": 26,
     "temps": "1 action complète",
     "portee": "18 mètres (9 cases)",
@@ -3335,7 +3318,6 @@
   {
     "id": "plaies-suppurantes",
     "name": "Plaies suppurantes",
-    "college": "Rat Cornu",
     "difficulte": 12,
     "temps": "1 demi-action",
     "portee": "24 mètres (12 cases)",
@@ -3346,8 +3328,9 @@
   {
     "id": "pluie-toxique",
     "name": "Pluie toxique",
-    "college": "Rat Cornu",
     "difficulte": 24,
+    "attaques": "",
+    "degats": "2",
     "temps": "1 action complète",
     "portee": "36 mètres (18 cases)",
     "ingredient": "un serpenteau de vipère cavernicole (+3)",
@@ -3357,7 +3340,6 @@
   {
     "id": "pustule-venimeuse",
     "name": "Pustule venimeuse",
-    "college": "Rat Cornu",
     "difficulte": 10,
     "temps": "1 demi-action",
     "ingredient": "un scalpel rouillé (+2)",
@@ -3367,7 +3349,6 @@
   {
     "id": "ruine-alimentaire",
     "name": "Ruine alimentaire",
-    "college": "Rat Cornu",
     "difficulte": 8,
     "temps": "1 demi-action",
     "ingredient": "une poignée de céréales avariées (+1)",
@@ -3377,9 +3358,11 @@
   {
     "id": "souffle-pestilentiel",
     "name": "Souffle pestilentiel",
-    "college": "Rat Cornu",
     "difficulte": 16,
     "temps": "1 action complète",
+    "attaques": "1",
+    "degats": "4",
+    "fureurConfirm": false,
     "portee": "gabarit de flammes",
     "ingredient": "un bâton d’encens de malepierre embrasé aux deux extrémités (+2)",
     "bonusIngredient": 2,
@@ -3388,7 +3371,6 @@
   {
     "id": "voile-muscide",
     "name": "Voile muscidé",
-    "college": "Rat Cornu",
     "difficulte": 18,
     "temps": "1 action complète",
     "portee": "centré sur vous",
@@ -3401,7 +3383,6 @@
   {
     "id": "adherence-du-grimpeur",
     "name": "Adhérence du grimpeur",
-    "college": "Clan Eshin",
     "difficulte": 12,
     "temps": "1 demi-action",
     "portee": "vous",
@@ -3412,7 +3393,6 @@
   {
     "id": "escampette",
     "name": "Escampette",
-    "college": "Clan Eshin",
     "difficulte": 14,
     "temps": "1 demi-action",
     "portee": "vous",
@@ -3423,7 +3403,6 @@
   {
     "id": "evasion",
     "name": "Évasion",
-    "college": "Clan Eshin",
     "difficulte": 8,
     "temps": "1 demi-action",
     "portee": "12 mètres (6 cases)",
@@ -3434,7 +3413,6 @@
   {
     "id": "flottabilite",
     "name": "Flottabilité",
-    "college": "Clan Eshin",
     "difficulte": 6,
     "temps": "1 demi-action",
     "portee": "vous",
@@ -3445,7 +3423,6 @@
   {
     "id": "frenesie-mortelle",
     "name": "Frénésie mortelle",
-    "college": "Clan Eshin",
     "difficulte": 18,
     "temps": "1 action complète",
     "portee": "18 mètres (9 cases)",
@@ -3456,7 +3433,6 @@
   {
     "id": "pelage-de-lassassin",
     "name": "Pelage de l’assassin",
-    "college": "Clan Eshin",
     "difficulte": 16,
     "temps": "1 demi-action",
     "portee": "vous",
@@ -3467,9 +3443,10 @@
   {
     "id": "maletoiles",
     "name": "Malétoiles",
-    "college": "Clan Eshin",
     "difficulte": 26,
     "temps": "1 demi-action",
+    "attaques": "magie",
+    "degats": "2",
     "portee": "36 mètres (18 cases)",
     "ingredient": "un shuriken en argent gravé de runes du Chaos (+3)",
     "bonusIngredient": 3,
@@ -3478,7 +3455,6 @@
   {
     "id": "pustule-venimeuse",
     "name": "Pustule venimeuse",
-    "college": "Clan Eshin",
     "difficulte": 10,
     "temps": "1 demi-action",
     "portee": "contact",
@@ -3489,7 +3465,6 @@
   {
     "id": "tourbillon-noir",
     "name": "Tourbillon noir",
-    "college": "Clan Eshin",
     "difficulte": 20,
     "temps": "1 action complète",
     "portee": "48 mètres (24 cases)",
@@ -3500,7 +3475,6 @@
   {
     "id": "trepas-invisible",
     "name": "Trépas invisible",
-    "college": "Clan Eshin",
     "difficulte": 22,
     "temps": "1 heure",
     "portee": "alliés touchés",
@@ -3513,7 +3487,6 @@
   {
     "id": "armure-de-tenebres",
     "name": "Armure de ténèbres",
-    "college": "Clan Skryre",
     "difficulte": 10,
     "temps": "1 demi-action",
     "portee": "vous",
@@ -3524,7 +3497,9 @@
   {
     "id": "destin-crepitant",
     "name": "Destin crépitant",
-    "college": "Clan Skryre",
+    "attaques": "magie",
+    "degats": "2",
+    "fureurConfirm": false,
     "difficulte": 7,
     "temps": "1 demi-action",
     "portee": "12 mètres (6 cases)",
@@ -3535,9 +3510,11 @@
   {
     "id": "ecorchage",
     "name": "Écorchage",
-    "college": "Clan Skryre",
     "difficulte": 25,
     "temps": "1 action complète",
+    "attaques": "magie",
+    "degats": "5",
+    "fureurConfirm": false,
     "portee": "10 mètres (5 cases)",
     "ingredient": "un morceau de peau humaine, elfe ou naine tannée (+3)",
     "bonusIngredient": 3,
@@ -3546,7 +3523,6 @@
   {
     "id": "evasion",
     "name": "Évasion",
-    "college": "Clan Eshin",
     "difficulte": 8,
     "temps": "1 demi-action",
     "portee": "12 mètres (6 cases)",
@@ -3557,7 +3533,6 @@
   {
     "id": "flot-de-vermine",
     "name": "Flot de vermine",
-    "college": "Clan Pestilens",
     "difficulte": 14,
     "temps": "1 action complète",
     "portee": "centré sur vous",
@@ -3568,7 +3543,6 @@
   {
     "id": "frenesie-mortelle",
     "name": "Frénésie mortelle",
-    "college": "Clan Eshin",
     "difficulte": 18,
     "temps": "1 action complète",
     "portee": "18 mètres (9 cases)",
@@ -3579,18 +3553,20 @@
   {
     "id": "maletempete",
     "name": "Maletempête",
-    "college": "Clan Skryre",
     "difficulte": 18,
     "temps": "1 action complète",
     "portee": "48 mètres (24 cases)",
     "ingredient": "une effigie en cuivre du Rat Cornu (+2)",
+    "attaques": "magie",
+    "degats": "5",
     "bonusIngredient": 2,
     "description": "Vous invoquez une tempête de malefoudre (grand gabarit) infligeant 5 dégâts à toutes les créatures dans la zone. Pour chaque '1' sur un dé d’incantation, vous subissez une attaque de 3 dégâts en retour."
   },
   {
     "id": "maletoiles",
     "name": "Malétoiles",
-    "college": "Clan Skryre",
+    "attaques": "magie",
+    "degats": "2",
     "difficulte": 26,
     "temps": "1 demi-action",
     "portee": "36 mètres (18 cases)",
@@ -3601,7 +3577,6 @@
   {
     "id": "peste",
     "name": "Peste",
-    "college": "Clan Pestilens",
     "difficulte": 26,
     "temps": "1 action complète",
     "portee": "18 mètres (9 cases)",
@@ -3612,8 +3587,10 @@
   {
     "id": "souffle-pestilentiel",
     "name": "Souffle pestilentiel",
-    "college": "Clan Pestilens",
     "difficulte": 16,
+    "attaques": "1",
+    "degats": "4",
+    "fureurConfirm": false,
     "temps": "1 action complète",
     "portee": "gabarit de flammes",
     "ingredient": "un bâton d’encens de malepierre embrasé (+2)",
@@ -3625,7 +3602,6 @@
   {
     "id": "visage-de-la-mort",
     "name": "Visage de la mort",
-    "college": "Nécromancie",
     "difficulte": 6,
     "temps": "1 action complète",
     "portee": "vous",
@@ -3636,7 +3612,6 @@
   {
     "id": "reanimation",
     "name": "Réanimation",
-    "college": "Nécromancie",
     "difficulte": 8,
     "temps": "1 demi-action par cadavre",
     "portee": "12 mètres (6 cases)",
@@ -3647,7 +3622,6 @@
   {
     "id": "seve-necromantique",
     "name": "Sève nécromantique",
-    "college": "Nécromancie",
     "difficulte": 11,
     "temps": "1 action complète et 1 demi-action",
     "portee": "contact (vous)",
@@ -3658,9 +3632,10 @@
   {
     "id": "main-de-poussiere",
     "name": "Main de poussière",
-    "college": "Nécromancie",
     "difficulte": 13,
     "temps": "1 demi-action",
+    "attaques": "1",
+    "degats": "0",
     "portee": "contact",
     "ingredient": "une main de meurtrier (+2)",
     "bonusIngredient": 2,
@@ -3669,7 +3644,6 @@
   {
     "id": "appel-de-vanhel",
     "name": "Appel de Vanhel",
-    "college": "Nécromancie",
     "difficulte": 15,
     "temps": "1 action complète",
     "portee": "variable (morts-vivants contrôlés)",
@@ -3680,7 +3654,6 @@
   {
     "id": "controle-des-morts-vivants",
     "name": "Contrôle des morts-vivants",
-    "college": "Nécromancie",
     "difficulte": 17,
     "temps": "1 demi-action",
     "portee": "24 mètres (12 cases)",
@@ -3691,7 +3664,6 @@
   {
     "id": "chair-momifiee",
     "name": "Chair momifiée",
-    "college": "Nécromancie",
     "difficulte": 19,
     "temps": "1 action complète",
     "portee": "vous",
@@ -3702,7 +3674,6 @@
   {
     "id": "animation-des-morts",
     "name": "Animation des morts",
-    "college": "Nécromancie",
     "difficulte": 22,
     "temps": "2 actions complètes",
     "portee": "24 mètres (12 cases)",
@@ -3713,7 +3684,6 @@
   {
     "id": "incantation-deveil",
     "name": "Incantation d’éveil",
-    "college": "Nécromancie",
     "difficulte": 24,
     "temps": "2 actions complètes",
     "portee": "12 mètres (6 cases)",
@@ -3724,9 +3694,11 @@
   {
     "id": "bannissement-des-morts-vivants",
     "name": "Bannissement de morts-vivants",
-    "college": "Nécromancie",
     "difficulte": 26,
     "temps": "1 action complète",
+    "attaques": "1",
+    "degats": "5",
+    "fureurConfirm": false,
     "portee": "48 mètres (24 cases)",
     "ingredient": "une fiole d’eau bénite (+3)",
     "bonusIngredient": 3,
@@ -3737,7 +3709,6 @@
   {
     "id": "beaute-interieure",
     "name": "Beauté intérieure",
-    "college": "Nurgle",
     "difficulte": 12,
     "temps": "1 demi-action",
     "portee": "contact",
@@ -3748,7 +3719,6 @@
   {
     "id": "caresse-du-chaos",
     "name": "Caresse du Chaos",
-    "college": "Nurgle",
     "difficulte": 20,
     "temps": "1 demi-action",
     "portee": "contact",
@@ -3759,7 +3729,6 @@
   {
     "id": "faveur-de-nurgle",
     "name": "Faveur de Nurgle",
-    "college": "Nurgle",
     "difficulte": 16,
     "temps": "1 demi-action",
     "portee": "contact",
@@ -3770,9 +3739,10 @@
   {
     "id": "gerbe-corruptrice",
     "name": "Gerbe corruptrice",
-    "college": "Nurgle",
     "difficulte": 18,
     "temps": "1 demi-action",
+    "attaques": "3",
+    "degats": "4",
     "portee": "gabarit de flammes",
     "ingredient": "un morceau de viande infestée de vers (+2)",
     "bonusIngredient": 2,
@@ -3781,7 +3751,6 @@
   {
     "id": "immonde-messager",
     "name": "Immonde messager",
-    "college": "Nurgle",
     "difficulte": 8,
     "temps": "1 action complète",
     "portee": "spéciale",
@@ -3792,7 +3761,6 @@
   {
     "id": "invocation-demon-mineur",
     "name": "Invocation de démon mineur",
-    "college": "Nurgle",
     "difficulte": 12,
     "temps": "2 actions complètes",
     "portee": "12 mètres (6 cases)",
@@ -3803,7 +3771,6 @@
   {
     "id": "invocation-de-demons",
     "name": "Invocation de démons",
-    "college": "Nurgle",
     "difficulte": 25,
     "temps": "2 actions complètes",
     "portee": "12 mètres (6 cases)",
@@ -3814,7 +3781,6 @@
   {
     "id": "la-multitude-fait-le-tout",
     "name": "La multitude fait le tout",
-    "college": "Nurgle",
     "difficulte": 26,
     "temps": "1 demi-action",
     "portee": "vous",
@@ -3825,7 +3791,6 @@
   {
     "id": "main-de-la-destruction",
     "name": "Main de la destruction",
-    "college": "Nurgle",
     "difficulte": 17,
     "temps": "1 action complète",
     "portee": "contact",
@@ -3836,7 +3801,6 @@
   {
     "id": "mot-de-souffrance",
     "name": "Mot de souffrance",
-    "college": "Nurgle",
     "difficulte": 27,
     "temps": "1 demi-action",
     "portee": "grand gabarit (centré sur vous)",
@@ -3847,7 +3811,6 @@
   {
     "id": "nuage-de-miasmes",
     "name": "Nuage de miasmes",
-    "college": "Nurgle",
     "difficulte": 18,
     "temps": "1 demi-action",
     "portee": "grand gabarit (centré sur vous)",
@@ -3858,7 +3821,6 @@
   {
     "id": "pestilence-rejouissante",
     "name": "Pestilence réjouissante",
-    "college": "Nurgle",
     "difficulte": 25,
     "temps": "2 actions complètes",
     "portee": "24 mètres (12 cases)",
@@ -3869,7 +3831,6 @@
   {
     "id": "prodigieuse-sante",
     "name": "Prodigieuse santé",
-    "college": "Nurgle",
     "difficulte": 6,
     "temps": "1 demi-action",
     "portee": "contact",
@@ -3880,7 +3841,6 @@
   {
     "id": "puanteur-de-nurgle",
     "name": "Puanteur de Nurgle",
-    "college": "Nurgle",
     "difficulte": 8,
     "temps": "1 demi-action",
     "portee": "adjacent (corps à corps)",
@@ -3891,7 +3851,6 @@
   {
     "id": "vent-epidemique",
     "name": "Vent épidémique",
-    "college": "Nurgle",
     "difficulte": 29,
     "temps": "2 actions complètes",
     "portee": "24 mètres (12 cases)",
@@ -3902,7 +3861,6 @@
   {
     "id": "vision-dhorreur",
     "name": "Vision d’horreur",
-    "college": "Nurgle",
     "difficulte": 7,
     "temps": "1 demi-action",
     "portee": "24 mètres (12 cases)",
@@ -3913,7 +3871,6 @@
   {
     "id": "voile-de-corruption",
     "name": "Voile de corruption",
-    "college": "Nurgle",
     "difficulte": 24,
     "temps": "1 action complète",
     "portee": "36 mètres (18 cases)",
@@ -3926,7 +3883,6 @@
   {
     "id": "beatitude-funeste",
     "name": "Béatitude funeste",
-    "college": "Slaanesh",
     "difficulte": 6,
     "temps": "1 demi-action",
     "portee": "contact",
@@ -3937,7 +3893,6 @@
   {
     "id": "douleur-euphorisante",
     "name": "Douleur euphorisante",
-    "college": "Slaanesh",
     "difficulte": 16,
     "temps": "1 demi-action",
     "portee": "12 mètres (6 cases)",
@@ -3948,7 +3903,6 @@
   {
     "id": "insaisissable-gloire",
     "name": "Insaisissable gloire",
-    "college": "Slaanesh",
     "difficulte": 11,
     "temps": "1 demi-action",
     "portee": "contact (souffle ou voix proche)",
@@ -3959,10 +3913,11 @@
   {
     "id": "langue-cinglante",
     "name": "Langue cinglante",
-    "college": "Slaanesh",
     "difficulte": 7,
     "temps": "1 demi-action",
     "portee": "12 mètres (6 cases)",
+    "attaques": "1",
+    "degats": "3",
     "ingredient": "pétales de rose écrasés (+1)",
     "bonusIngredient": 1,
     "description": "Votre langue s’allonge et fouette vos ennemis. Projectile magique infligeant 3 dégâts qui ignorent l’armure. La langue reste active pendant un nombre de rounds égal à votre valeur de Magie et peut attaquer à chaque demi-action."
@@ -3970,7 +3925,6 @@
   {
     "id": "malediction-de-la-chair",
     "name": "Malédiction de la chair",
-    "college": "Slaanesh",
     "difficulte": 25,
     "temps": "1 demi-action",
     "portee": "24 mètres (12 cases)",
@@ -3981,7 +3935,6 @@
   {
     "id": "pantin-de-chair",
     "name": "Pantin de chair",
-    "college": "Slaanesh",
     "difficulte": 22,
     "temps": "1 demi-action",
     "portee": "24 mètres (12 cases)",
@@ -3992,7 +3945,6 @@
   {
     "id": "pavane-de-slaanesh",
     "name": "Pavane de Slaanesh",
-    "college": "Slaanesh",
     "difficulte": 18,
     "temps": "1 action complète",
     "portee": "24 mètres (12 cases)",
@@ -4003,7 +3955,6 @@
   {
     "id": "succube",
     "name": "Succube",
-    "college": "Slaanesh",
     "difficulte": 28,
     "temps": "3 actions complètes",
     "portee": "vous",
@@ -4014,7 +3965,6 @@
   {
     "id": "torrent-dore",
     "name": "Torrent doré",
-    "college": "Slaanesh",
     "difficulte": 21,
     "temps": "1 demi-action",
     "portee": "24 mètres (12 cases)",
@@ -4025,7 +3975,6 @@
   {
     "id": "voile-du-desir",
     "name": "Voile du désir",
-    "college": "Slaanesh",
     "difficulte": 14,
     "temps": "1 action complète",
     "portee": "contact",
@@ -4095,6 +4044,8 @@
     "name": "Flammes incarnates de Tzeentch",
     "college": "Tzeentch",
     "difficulte": 15,
+    "attaques": "1",
+    "degats": "4",
     "temps": "1 demi-action",
     "portee": "6 mètres (3 cases)",
     "ingredient": "une flèche enflammée (+2)",
@@ -4130,6 +4081,8 @@
     "difficulte": 10,
     "temps": "1 demi-action",
     "portee": "12 mètres (6 cases)",
+    "attaques": "1",
+    "degats": "1",
     "ingredient": "liquide crânien d’un dément (+2)",
     "bonusIngredient": 2,
     "description": "Projectile magique. Si la cible n’a aucun point de Folie, elle en gagne 1d10/2. Sinon, elle perd 1d10/2 points de Folie et subit 1 dégât ignorant l’armure et le bonus d’Endurance. Si son total de Folie atteint 0, elle est libérée de ses troubles mentaux."
@@ -4140,6 +4093,8 @@
     "college": "Tzeentch",
     "difficulte": 25,
     "temps": "2 actions complètes",
+    "attaques": "4",
+    "degats": "4",
     "portee": "24 mètres (12 cases)",
     "ingredient": "un feu de joie alimenté par les ossements de 13 mutants (+3)",
     "bonusIngredient": 3,
@@ -4161,7 +4116,6 @@
   {
     "id": "caresse-du-chaos",
     "name": "Caresse du Chaos",
-    "college": "Chaos",
     "difficulte": 20,
     "temps": "1 demi-action",
     "portee": "contact",
@@ -4172,7 +4126,6 @@
   {
     "id": "faveur-du-chaos",
     "name": "Faveur du Chaos",
-    "college": "Chaos",
     "difficulte": 9,
     "temps": "1 action complète",
     "portee": "vous",
@@ -4183,7 +4136,6 @@
   {
     "id": "invocation-demon-mineur",
     "name": "Invocation de démon mineur",
-    "college": "Chaos",
     "difficulte": 12,
     "temps": "2 actions complètes",
     "portee": "12 mètres (6 cases)",
@@ -4194,7 +4146,6 @@
   {
     "id": "invocation-de-demons",
     "name": "Invocation de démons",
-    "college": "Chaos",
     "difficulte": 25,
     "temps": "2 actions complètes",
     "portee": "12 mètres (6 cases)",
@@ -4205,7 +4156,6 @@
   {
     "id": "main-de-la-destruction",
     "name": "Main de la destruction",
-    "college": "Chaos",
     "difficulte": 17,
     "temps": "1 action complète",
     "portee": "contact",
@@ -4216,8 +4166,9 @@
   {
     "id": "mot-de-souffrance",
     "name": "Mot de souffrance",
-    "college": "Chaos",
     "difficulte": 27,
+    "attaques": "1",
+    "degats": "8",
     "temps": "1 demi-action",
     "portee": "grand gabarit centré sur vous",
     "ingredient": "le sang d'un démon (+3)",
@@ -4227,7 +4178,8 @@
   {
     "id": "sang-bouillonnant",
     "name": "Sang bouillonnant",
-    "college": "Chaos",
+    "attaques": "1",
+    "degats": "8",
     "difficulte": 13,
     "temps": "1 demi-action",
     "portee": "grand gabarit centré sur vous",
@@ -4238,7 +4190,6 @@
   {
     "id": "tentation-du-chaos",
     "name": "Tentation du Chaos",
-    "college": "Chaos",
     "difficulte": 16,
     "temps": "1 action complète",
     "portee": "24 mètres (12 cases)",
@@ -4249,7 +4200,6 @@
   {
     "id": "vision-d-horreur",
     "name": "Vision d'horreur",
-    "college": "Chaos",
     "difficulte": 7,
     "temps": "1 demi-action",
     "portee": "24 mètres (12 cases)",
@@ -4260,7 +4210,6 @@
   {
     "id": "voile-de-corruption",
     "name": "Voile de corruption",
-    "college": "Chaos",
     "difficulte": 24,
     "temps": "1 action complète",
     "portee": "36 mètres (18 cases)",
@@ -4269,7 +4218,7 @@
     "description": "Vous créez un nuage de corruption dans un rayon de 36 mètres (grand gabarit). Les cibles doivent réussir un test de Force Mentale ou perdre 1 point de Blessures, ignorant l’armure et le bonus d’Endurance. Elles continuent à perdre 1 Blessure par round jusqu’à réussite d’un test de Force Mentale. Celles qui perdent plus d’un point doivent aussi réussir un test d’Endurance sous peine de mutation. Les morts-vivants ne mutent pas mais subissent le reste des effets."
   }
     ]
-  },
+    },
     "commune": [
   {
     "id": "luminescence",
@@ -4278,7 +4227,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 3,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -4292,7 +4241,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 4,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -4306,7 +4255,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 4,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -4320,7 +4269,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 6,
     "temps": "1 action complète",
     "bonusIngredient": "1",
@@ -4334,7 +4283,7 @@
     "degats": "3",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Projectile magique",
+    "attaques": "1",
     "difficulte": 6,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -4348,7 +4297,7 @@
     "degats": "0",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 6,
     "temps": "1 demi-action",
     "bonusIngredient": "1",
@@ -4382,13 +4331,16 @@
   {
     "id": "flechette-magique",
     "name": "Fléchette magique",
-    "college": "Magie mineure",
+    "portee": "16 mètres (8 cases)",
+    "degats": "3",
+    "fureurConfirm": false,
+    "degatsBonus": "0",
+    "attaques": "1",
     "difficulte": 6,
     "temps": "1 demi-action",
-    "portee": "16 mètres (8 cases)",
+    "bonusIngredient": "1",
     "ingredient": "une fléchette (+1)",
-    "bonusIngredient": 1,
-    "description": "Vous lancez une fléchette d’énergie magique sur un adversaire situé à 16 mètres (8 cases) ou moins. Il s’agit d’un projectile magique infligeant 3 points de dégâts."
+    "description": "Vous lancez une fléchette d’énergie magique infligeant 3 dégâts."
   },
   {
     "id": "pare-pluie",
@@ -4524,7 +4476,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Magie",
+    "attaques": "",
     "difficulte": 4,
     "temps": "1 demi-action",
     "duree": "",
@@ -4614,7 +4566,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Déplacement",
+    "attaques": "",
     "difficulte": 11,
     "temps": "1 action complète",
     "duree": "instantané (effet de mouvement)",
@@ -4623,13 +4575,13 @@
     "description": "Vous vous élevez brièvement, triplez votre Mouvement ce déplacement, et pouvez atteindre 6 m de hauteur avant d’atterrir."
   },
   {
-    "id": "dissipation",
-    "name": "Dissipation",
+    "id": "",
+    "name": "",
     "portee": "12 mètres (6 cases)",
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Dissipation",
+    "attaques": "",
     "difficulte": 13,
     "temps": "1 action complète",
     "duree": "instantanée",
@@ -4689,7 +4641,7 @@
     "degats": "",
     "fureurConfirm": false,
     "degatsBonus": "0",
-    "attaques": "Utilitaire",
+    "attaques": "",
     "difficulte": 4,
     "temps": "1 demi-action",
     "duree": "tant que la cible parle",

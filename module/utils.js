@@ -109,11 +109,15 @@ export function _recalculateDiceMinRanged(html, rowElement = null) {
     const q = $row.find("select[name*='quality']").val() || "Ordinaire";
     const qmod = q === "Exceptionnelle" ? 5 : (q === "Mauvaise" ? -5 : 0);
 
-    const rawDiceMin = ctActuel + bonusCT + qmod;
+  const rawDiceMin = ctActuel + bonusCT + qmod;
 
-    const masteryInput = $row.find("input[type='checkbox'][name*='mastery']");
-    const mastered = masteryInput.length ? !!masteryInput.prop('checked') : true;
-    const diceMin = mastered ? rawDiceMin : Math.floor(rawDiceMin / 2);
+  const masteryInput = $row.find("input[type='checkbox'][name*='mastery']");
+  const mastered = masteryInput.length ? !!masteryInput.prop('checked') : true;
+  let diceMin = mastered ? rawDiceMin : Math.floor(rawDiceMin / 2);
+
+  const typeSelect = $row.find("select[name*='type']");
+  const typeVal = (typeSelect.val() || '').toString().trim().toLowerCase();
+  if (typeVal === 'jet') diceMin += 20;
 
     $row.find("input[name*='diceMin']").val(diceMin);
 

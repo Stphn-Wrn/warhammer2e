@@ -82,7 +82,12 @@
           <td><input type="number" name="system.rangedWeapons.{{i}}.damage" value="{{weapon.damage}}"></td>
           <td><input type="checkbox" name="system.rangedWeapons.{{i}}.perc" {{checked weapon.perc}}></td>
           <td><input type="text" name="system.rangedWeapons.{{i}}.attributes" value="{{weapon.attributes}}"></td>
-          <td><input type="text" name="system.rangedWeapons.{{i}}.type" value="{{weapon.type}}"></td>
+          <td>
+            <select name="system.rangedWeapons.{{i}}.type">
+              <option value="Tir" {{#unless (eq weapon.type "Jet")}}selected{{/unless}}>Tir</option>
+              <option value="Jet" {{#if (eq weapon.type "Jet")}}selected{{/if}}>Jet</option>
+            </select>
+          </td>
           <td><input type="text" name="system.rangedWeapons.{{i}}.rech" value="{{weapon.rech}}"></td>
           <td><input type="text" name="system.rangedWeapons.{{i}}.portee" value="{{weapon.portee}}"></td>
           <td><input type="text" name="system.rangedWeapons.{{i}}.munitions" value="{{weapon.munitions}}"></td>

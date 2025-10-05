@@ -12,6 +12,8 @@ export function wireSheetHandlers(sheet, html) {
   
   
   
+  
+  
   try {
     
     
@@ -708,6 +710,35 @@ export function wireSheetHandlers(sheet, html) {
       'frenzyPoints': 'system.secondaire.carriere.pf',
       'destinyPoints': 'system.secondaire.carriere.pd'
     };
+
+    const careerTextareaPaths = [
+      'system.career.primary.skills',
+      'system.career.primary.talents',
+      'system.career.primary.outcomes',
+      'system.career.secondary.skills',
+      'system.career.secondary.talents',
+      'system.career.secondary.outcomes'
+    ];
+
+    careerTextareaPaths.forEach(path => {
+      const selector = `textarea[name="${path}"]`;
+      html.find(selector).off('.careerTextarea').on('change.careerTextarea', async ev => {
+        ev.preventDefault();
+        ev.stopPropagation();
+        ev.stopImmediatePropagation();
+        const textarea = ev.currentTarget;
+        const newValue = (textarea.value ?? '').toString();
+        const currentValue = ((foundry.utils.getProperty(sheet.actor, path) ?? '').toString());
+        if (newValue === currentValue) return;
+        try {
+          await sheet.actor.update({ [path]: newValue }, { diff: false, render: false });
+          try { foundry.utils.setProperty(sheet.actor, path, newValue); } catch (err) { console.debug('Unable to sync actor cache for career textarea', { path, err }); }
+        } catch (err) {
+          console.error('Unable to persist career textarea value', { path, err });
+          try { ui.notifications.error("Erreur lors de la mise à jour du texte de carrière."); } catch (notifyErr) {}
+        }
+      });
+    });
 
   
     html.find('input[name^="system.career.secondary."]').on('change', async ev => {
@@ -1418,6 +1449,11 @@ export function wireSheetHandlers(sheet, html) {
     _recalculateDiceMinRanged.call(sheet, html, $row.get(0));
   });
 
+  html.find(".weapons-table.ranged").on("change", "select[name*='type']", ev => {
+    const $row = $(ev.currentTarget).closest('tr');
+    _recalculateDiceMinRanged.call(sheet, html, $row.get(0));
+  });
+
   
   html.find('.inventory-add').on('click', ev => {
     ev.preventDefault();
@@ -1682,7 +1718,6 @@ export function wireSheetHandlers(sheet, html) {
                     summary.push(`<div style="margin-left:12px; margin-top:6px; color:darkred"><strong>Fureur d'Ulric:</strong><br>${best.furyLogs.map(l => `<div>${l}</div>`).join('')}</div>`);
                     
                   }
-                  
                   if (Number(circDegatsBonus)) summary.push(`<div style="margin-left:12px; margin-top:6px;"><strong>Dégâts bonus :</strong> ${Number(circDegatsBonus)}</div>`);
 
                   ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content: `<div class="spell-cast-result">${summary.join('')}</div>` });
@@ -1735,148 +1770,151 @@ export function wireSheetHandlers(sheet, html) {
       buttons: {
         roll: {
           label: 'Lancer',
-          callback: async (dlgHtml) => {
+          callback: async dlgHtml => {
             try {
               const circBonus = Number(dlgHtml.find('#circ-bonus').val()) || 0;
-              const circNote = (dlgHtml.find('#circ-note').val() || '').toString();
               const circDegatsBonus = Number(dlgHtml.find('#circ-degats-bonus').val()) || 0;
               const circFuryConfirm = (dlgHtml.find('#circ-fury-confirm').val() === 'true');
 
-              
               const idx = $btn.data('index');
-              const weapon = (idx !== undefined && actor.system.rangedWeapons && Array.isArray(actor.system.rangedWeapons)) ? actor.system.rangedWeapons[idx] : null;
+              const rangedWeapons = actor.system.rangedWeapons;
+              const weapon = (idx !== undefined && rangedWeapons && Array.isArray(rangedWeapons)) ? rangedWeapons[idx] : null;
               const name = weapon?.name || $row.find("input[type='text']").first().val() || 'Arme à distance';
 
-              const q = weapon ? (weapon.quality || 'Ordinaire') : ($row.find("select[name*='quality']").val() || 'Ordinaire');
-              const qmod = q === 'Exceptionnelle' ? 5 : (q === 'Mauvaise' ? -5 : 0);
-              const bonusCT = weapon ? Number(weapon.bonusCT) || 0 : (Number($row.find("input[name*='bonusCT']").val()) || 0);
+              const quality = weapon ? (weapon.quality || 'Ordinaire') : ($row.find("select[name*='quality']").val() || 'Ordinaire');
+              const qualityMod = quality === 'Exceptionnelle' ? 5 : (quality === 'Mauvaise' ? -5 : 0);
+              const bonusCT = weapon ? Number(weapon.bonusCT) || 0 : Number($row.find("input[name*='bonusCT']").val()) || 0;
+              const typeRaw = weapon?.type || $row.find("select[name*='type']").val() || 'Tir';
+              const type = (typeRaw || 'Tir').toString().trim();
+              const isThrowing = type.toLowerCase() === 'jet';
 
-              const baseActuel = Number(actor.system.principal?.actuel?.ct) || 0;
-              let computedTarget = Number(baseActuel) + Number(qmod) + Number(bonusCT) + Number(circBonus);
+              const baseCT = Number(actor.system.principal?.actuel?.ct) || 0;
+              let computedTarget = baseCT + qualityMod + bonusCT + circBonus;
               const mastered = weapon ? !!weapon.mastery : !!$row.find("input[type='checkbox'][name*='mastery']").prop('checked');
-              const finalTarget = mastered ? computedTarget : Math.floor(computedTarget / 2);
+              let finalTarget = mastered ? computedTarget : Math.floor(computedTarget / 2);
+              if (isThrowing) finalTarget += 20;
 
-              
               const attackRoll = await new Roll('1d100').evaluate();
               const raw = attackRoll.total;
               const success = raw <= finalTarget;
 
-              
-              let zoneHtml = '';
-              if (success) {
-                const twoDigits = String(raw % 100).padStart(2, '0');
+              const circDisplay = circBonus ? (circBonus > 0 ? `+${circBonus}` : `${circBonus}`) : '';
+
+              const summaryParts = [];
+              summaryParts.push(`<div class="weapon-attack-roll"><strong>${name}</strong></div>`);
+              summaryParts.push(`<div><strong>Type :</strong> ${isThrowing ? 'Jet' : 'Tir'}</div>`);
+              summaryParts.push(`<div><strong>Objectif :</strong> ${finalTarget}</div>`);
+              summaryParts.push(`<div><strong>Jet d'attaque :</strong> <strong>${raw}</strong></div>`);
+              if (circDisplay) summaryParts.push(`<div><strong>Circonstance :</strong> ${circDisplay}</div>`);
+              summaryParts.push(`<div style="color:${success ? 'green' : 'red'}"><strong>${success ? 'RÉUSSITE' : 'ÉCHEC'}</strong></div>`);
+
+              if (!success) {
+                const failContent = `${summaryParts.join('')}<div class="roll-details">${await attackRoll.render()}</div>`;
+                ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content: failContent });
+                return;
+              }
+
+              const getZoneFromRoll = value => {
+                const twoDigits = String(value % 100).padStart(2, '0');
                 const reversed = twoDigits.split('').reverse().join('');
                 let zoneVal = Number(reversed);
                 if (zoneVal === 0) zoneVal = 100;
                 const zoneName = getZoneFromD100(zoneVal);
-                zoneHtml = `<div><strong>Zone touchée :</strong> ${zoneName}</div>`;
-              }
+                return { zoneName, original: value, computed: zoneVal };
+              };
 
-              const circText = circNote ? ` + circonstance (${circNote} ${circBonus >= 0 ? `+${circBonus}` : circBonus})` : (circBonus ? ` + circonstance ${circBonus >= 0 ? `+${circBonus}` : circBonus}` : '');
-              const circBonusNum = Number(circBonus) || 0;
-              const circDisplay = circBonusNum !== 0 ? (circBonusNum > 0 ? `+${circBonusNum}` : `${circBonusNum}`) : '';
+              const rollDamageForHit = async () => {
+                const weaponDamage = weapon ? Number(weapon.damage) || 0 : Number($row.find("input[name*='damage']").val()) || 0;
+                const isPerc = weapon ? !!weapon.perc : !!$row.find("input[name*='perc']").prop('checked');
+                const diceMinVal = weapon ? Number(weapon.diceMin) || 0 : Number($row.find("input[name*='diceMin']").val()) || 0;
 
-              const contentMsg = `
-                <div class="weapon-attack-roll">
-                  <strong>${name}</strong>
-                  <div><strong>Objectif :</strong> ${finalTarget}</div>
-                  <div><strong>Jet d'attaque :</strong> <strong>${raw}</strong></div>
-                  ${circDisplay ? `<div><strong>Circonstance :</strong> ${circDisplay}</div>` : ''}
-                  <div style="color:${success ? 'green' : 'red'}"><strong>${success ? 'RÉUSSITE' : 'ÉCHEC'}</strong></div>
-                  ${zoneHtml}
-                </div>`;
+                const rollSingle = async () => {
+                  const diceRoll = await new Roll('1d10').evaluate();
+                  let face = 0;
+                  try {
+                    face = (diceRoll.dice && diceRoll.dice[0] && Array.isArray(diceRoll.dice[0].results) && diceRoll.dice[0].results[0]) ? Number(diceRoll.dice[0].results[0].result) : 0;
+                  } catch (_) {
+                    face = 0;
+                  }
+                  return { rollObj: diceRoll, face: Number(face || 0) };
+                };
 
-              if (!success) {
-                ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content: `${contentMsg}<div class="roll-details">${await attackRoll.render()}</div>` });
-              } else {
-                try {
-                  
-                  const bf = Number(actor.system.secondaire?.actuel?.bf) || 0;
-                  const weaponDamage = weapon ? Number(weapon.damage) || 0 : Number($row.find("input[name*='damage']").val()) || 0;
-                  const isPerc = weapon ? !!weapon.perc : !!$row.find("input[name*='perc']").prop('checked');
+                const modifiers = Number(weaponDamage);
+                let d1 = await rollSingle();
+                let d2 = null;
+                if (isPerc) d2 = await rollSingle();
 
-                  const rollSingle = async () => {
-                    const expr = `1d10`;
-                    const r = await new Roll(expr).evaluate();
-                    let face = 0;
-                    try { face = (r.dice && r.dice[0] && Array.isArray(r.dice[0].results) && r.dice[0].results[0]) ? Number(r.dice[0].results[0].result) : 0; } catch (e) { face = 0; }
-                    return { rollObj: r, face: Number(face || 0) };
-                  };
+                const initialTens = [];
+                if (d1.face === 10) initialTens.push(10);
+                if (d2 && d2.face === 10) initialTens.push(10);
 
-                  const modifiers = Number(weaponDamage);
-                  let d1 = await rollSingle();
-                  let d2 = null;
-                  if (isPerc) d2 = await rollSingle();
-
-                  
-                  
-                  
-                  
-                  const initialTens = [];
-                  if (d1.face === 10 || (d2 && d2.face === 10)) initialTens.push(10);
-                  const allExtras = [];
-                  const allFuryLogs = [];
-                  if (initialTens.length > 0) {
-                    if (circFuryConfirm) {
-                      
-                      let cont = true;
-                      while (cont) {
-                        const extra = await rollDiceFaces('1d10');
-                        const added = (extra.results && extra.results[0]) ? Number(extra.results[0]) : extra.total || 0;
-                        allExtras.push(Number(added || 0));
-                        allFuryLogs.push(`Relance d10 (fureur auto): ${added}`);
-                        cont = (Number(added) === 10);
-                      }
-                    } else {
-                      const diceMinVal = weapon ? Number(weapon.diceMin) || 0 : Number($row.find("input[name*='diceMin']").val()) || 0;
-                      
-                      const furyRes = await handleUlricFury(actor, initialTens, Number(diceMinVal), 'CT');
-                      const returned = (furyRes.finalDiceArray || []).slice(initialTens.length).map(x => Number(x) || 0);
-                      if (returned && returned.length) allExtras.push(...returned);
-                      if (furyRes.furyLogs && furyRes.furyLogs.length) allFuryLogs.push(...furyRes.furyLogs);
+                const extraFaces = [];
+                const furyLogs = [];
+                if (initialTens.length > 0) {
+                  if (circFuryConfirm) {
+                    let continueRolling = true;
+                    while (continueRolling) {
+                      const extra = await rollDiceFaces('1d10');
+                      const added = (extra.results && extra.results[0]) ? Number(extra.results[0]) : extra.total || 0;
+                      extraFaces.push(Number(added || 0));
+                      furyLogs.push(`Relance d10 (fureur auto): ${added}`);
+                      continueRolling = (Number(added) === 10);
                     }
+                  } else {
+                    const furyRes = await handleUlricFury(actor, initialTens, Number(diceMinVal), 'CT');
+                    const returned = (furyRes.finalDiceArray || []).slice(initialTens.length).map(x => Number(x) || 0);
+                    if (returned && returned.length) extraFaces.push(...returned);
+                    if (furyRes.furyLogs && furyRes.furyLogs.length) furyLogs.push(...furyRes.furyLogs);
                   }
-                  const extrasSum = allExtras.reduce((s, v) => s + Number(v || 0), 0);
-
-                  let baseKept = d1.face;
-                  let best = d1;
-                  if (d2 && (Number(d2.face || 0) > Number(d1.face || 0))) { baseKept = d2.face; best = d2; }
-
-                  const finalTotal = (Number(modifiers) || 0) + (Number(baseKept || 0)) + extrasSum + (Number(circDegatsBonus) || 0);
-                  best.total = finalTotal;
-                  best.extras = allExtras;
-                  best.furyLogs = allFuryLogs;
-                  best.highestDie = baseKept;
-
-                  const summary = [];
-                  summary.push(`<div><strong>Jet pour :</strong> ${name}</div>`);
-                  summary.push(`<div><strong>Objectif :</strong> ${finalTarget}</div>`);
-                  summary.push(`<div><strong>Jet d'attaque :</strong> ${raw}</div>`);
-                  if (circDisplay) summary.push(`<div><strong>Circonstance :</strong> ${circDisplay}</div>`);
-                  summary.push(`<div style="margin-top:8px"><strong>${zoneHtml ? zoneHtml.replace(/<[^>]+>/g,'') : ''}</strong></div>`);
-
-                  const attrText = weapon ? (weapon.attributes || '') : ($row.find("input[name*='.attributes']").val() || '');
-                  if (attrText) summary.push(`<div><strong>Attribut :</strong> ${attrText}</div>`);
-
-                  summary.push(`<hr><div><strong>Dégâts ${best.total}</strong></div>`);
-                  summary.push(`<div style="margin-top:6px"><strong>Lancer de dé</strong></div>`);
-                  summary.push(`<div class="roll-details">${await best.rollObj.render()}</div>`);
-                  if (best.extras && best.extras.length) summary.push(`<div style="margin-top:6px"><strong>Dés observés (Fureur) :</strong> ${best.extras.join(', ')} — <em>le plus élevé (${best.highestDie}) est pris en compte</em></div>`);
-                  if (d2) {
-                    const other = (best === d1) ? d2 : d1;
-                    summary.push(`<div style="margin-top:6px"><em>Percutant :</em> <div class="roll-details">${await other.rollObj.render()}</div></div>`);
-                  }
-                  if (best.furyLogs && best.furyLogs.length) {
-                    summary.push(`<div style="margin-left:12px; margin-top:6px; color:darkred"><strong>Fureur d'Ulric:</strong><br>${best.furyLogs.map(l => `<div>${l}</div>`).join('')}</div>`);
-                    
-                  }
-                  if (Number(circDegatsBonus)) summary.push(`<div style="margin-left:12px; margin-top:6px;"><strong>Dégâts bonus :</strong> ${Number(circDegatsBonus)}</div>`);
-
-                  ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content: `<div class="spell-cast-result">${summary.join('')}</div>` });
-                } catch (err) {
-                  console.error('Damage roll failed (ranged)', err);
                 }
+
+                const extrasSum = extraFaces.reduce((sum, v) => sum + Number(v || 0), 0);
+                let baseKept = d1.face;
+                let best = d1;
+                if (d2 && (Number(d2.face || 0) > Number(d1.face || 0))) { baseKept = d2.face; best = d2; }
+
+                const finalTotal = modifiers + baseKept + extrasSum + circDegatsBonus;
+                best.total = finalTotal;
+                best.extras = extraFaces;
+                best.furyLogs = furyLogs;
+                best.highestDie = baseKept;
+
+                const damageParts = [];
+                damageParts.push(`<div><strong>Dégâts :</strong> ${best.total}</div>`);
+                damageParts.push(`<div class="roll-details">${await best.rollObj.render()}</div>`);
+                if (extraFaces.length) damageParts.push(`<div><strong>Dés observés (Fureur) :</strong> ${extraFaces.join(', ')} — <em>le plus élevé (${best.highestDie}) est pris en compte</em></div>`);
+                if (d2) {
+                  const other = (best === d1) ? d2 : d1;
+                  damageParts.push(`<div><em>Percutant :</em><div class="roll-details">${await other.rollObj.render()}</div></div>`);
+                }
+                if (furyLogs.length) damageParts.push(`<div style="color:darkred"><strong>Fureur d'Ulric:</strong><br>${furyLogs.map(l => `<div>${l}</div>`).join('')}</div>`);
+                if (circDegatsBonus) damageParts.push(`<div><strong>Dégâts bonus :</strong> ${circDegatsBonus}</div>`);
+
+                return damageParts.join('');
+              };
+
+              const hits = isThrowing ? Math.max(1, Math.floor((finalTarget - raw) / 10) + 1) : 1;
+              const zoneSections = [];
+              const damageSections = [];
+
+              const firstZone = getZoneFromRoll(raw);
+              zoneSections.push(`<div><strong>Zone touchée${hits > 1 ? ' (1)' : ''} :</strong> ${firstZone.zoneName}</div>`);
+              damageSections.push(`<hr><div><strong>Impact 1 — ${firstZone.zoneName}</strong></div>${await rollDamageForHit()}`);
+
+              for (let h = 1; h < hits; h++) {
+                const additionalRoll = await new Roll('1d100').evaluate();
+                const zoneInfo = getZoneFromRoll(additionalRoll.total);
+                zoneSections.push(`<div><strong>Zone touchée (${h + 1}) :</strong> ${zoneInfo.zoneName}</div>`);
+                damageSections.push(`<hr><div><strong>Impact ${h + 1} — ${zoneInfo.zoneName}</strong></div>${await rollDamageForHit()}`);
               }
+
+              const attrText = weapon ? (weapon.attributes || '') : ($row.find("input[name*='.attributes']").val() || '');
+              if (attrText) summaryParts.push(`<div><strong>Attribut :</strong> ${attrText}</div>`);
+              summaryParts.push(...zoneSections);
+              summaryParts.push(`<div><strong>Nombre de touches :</strong> ${hits}</div>`);
+              summaryParts.push(...damageSections);
+
+              ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content: `<div class="spell-cast-result">${summaryParts.join('')}</div>` });
             } catch (err) {
               console.error('Ranged attack failed', err);
               ui.notifications.error('Erreur lors du jet d\'attaque');
