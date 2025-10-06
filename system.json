@@ -18,5 +18,6 @@
   "manifest": "https://raw.githubusercontent.com/Stphn-Wrn/warhammer2e/main/system.json",
   "download": "https://github.com/Stphn-Wrn/warhammer2e/archive/refs/heads/main.zip",
   "url": "https://github.com/Stphn-Wrn/warhammer2e",
-  "background": "systems/warhammer2e/assets/system-banner.jpg"
+  "background": "systems/warhammer2e/assets/system-banner.jpg",
+  "pause": "systems/warhammer2e/assets/logo-pause.png"
 }

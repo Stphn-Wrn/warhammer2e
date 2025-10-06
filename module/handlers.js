@@ -872,42 +872,339 @@ export function wireSheetHandlers(sheet, html) {
         html.find('input[name="system.career.secondary.started"]').on('change', async ev => {
           try {
             const checked = !!ev.currentTarget.checked;
-            
             try { await sheet.actor.update({ 'system.career.secondary.started': checked }); } catch(e) {  }
-            
-            const mapping = mapSecondaryToPrincipal;
-            
-            
+
+            // Build update payload: copy name, primary profile -> system.principal.carriere, secondary profile -> system.secondaire.carriere, and lists
+            const slot = 'secondary';
+            const slotNameField = `system.career.${slot}Name`;
+            const primaryKeys = Object.keys(mapSecondaryToPrincipal || {});
+            const secondaryKeys = Object.keys(mapSecondaryToSecondaire || {});
+
             if (checked) {
-              try {
-                if (!sheet._backupPrincipalCarriereFromSecondary) sheet._backupPrincipalCarriereFromSecondary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {});
-              } catch (e) { sheet._backupPrincipalCarriereFromSecondary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {}); }
-              for (const [secKey, princPath] of Object.entries(mapping)) {
+              // Backup current principal and secondaire carriere
+              try { if (!sheet._backupPrincipalCarriereFromSecondary) sheet._backupPrincipalCarriereFromSecondary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {}); } catch(e) { sheet._backupPrincipalCarriereFromSecondary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {}); }
+              try { if (!sheet._backupSecondaireCarriereFromSecondary) sheet._backupSecondaireCarriereFromSecondary = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {}); } catch(e) { sheet._backupSecondaireCarriereFromSecondary = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {}); }
+
+              const updateData = {};
+
+              // Copy career name
+              const $nameInput = html.find(`input[name='${slotNameField}']`);
+              const nameVal = $nameInput.length ? ($nameInput.val() || '').toString() : (sheet.actor.system.career?.[slot + 'Name'] || '');
+              updateData['system.career.primaryName'] = nameVal;
+
+              // Copy primary profile fields into system.principal.carriere
+              const newPrincipal = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {});
+              for (const pk of primaryKeys) {
                 try {
+                  const inputSel = `input[name='system.career.${slot}.${pk}']`;
+                  const $inp = html.find(inputSel);
+                  const val = $inp.length ? Number(($inp.val() || '').toString().replace(/,/g, '.')) || 0 : Number(sheet.actor.system.career?.[slot]?.[pk]) || 0;
+                  const princPath = mapSecondaryToPrincipal[pk];
                   const fieldP = princPath.split('.').pop();
-                  
-                  const $secInp = html.find(`input[name='system.career.secondary.${secKey}']`);
-                  let secVal = 0;
-                  if ($secInp.length) secVal = Number(($secInp.val() || '').toString().replace(/,/g, '.')) || 0;
-                  else secVal = Number(sheet.actor.system.career?.secondary?.[secKey]) || 0;
-                  sheet.actor.system.principal = sheet.actor.system.principal || {};
-                  sheet.actor.system.principal.carriere = sheet.actor.system.principal.carriere || {};
-                  sheet.actor.system.principal.carriere[fieldP] = secVal;
-                } catch (e) {  }
+                  newPrincipal[fieldP] = val;
+                } catch(e) { }
               }
+              updateData['system.principal.carriere'] = newPrincipal;
+
+              // Copy secondary profile fields into system.secondaire.carriere
+              const newSecondaire = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {});
+              for (const sk of secondaryKeys) {
+                try {
+                  const inputSel = `input[name='system.career.${slot}.${sk}']`;
+                  const $inp = html.find(inputSel);
+                  const valRaw = $inp.length ? ($inp.val() || '').toString() : (sheet.actor.system.career?.[slot]?.[sk] || '0');
+                  const val = sk === 'strengthBonus' || sk === 'enduranceBonus' || sk === 'frenzyPoints' || sk === 'destinyPoints' ? valRaw : Number(valRaw.toString().replace(/,/g, '.')) || 0;
+                  const target = mapSecondaryToSecondaire[sk];
+                  const field = target.split('.').pop();
+                  newSecondaire[field] = val;
+                } catch(e) { }
+              }
+              updateData['system.secondaire.carriere'] = newSecondaire;
+
+              // Copy lists (skills, talents, outcomes)
+              const lists = ['skills', 'talents', 'outcomes'];
+              for (const lst of lists) {
+                const field = `system.career.${slot}.${lst}`;
+                const $ta = html.find(`textarea[name='${field}']`);
+                updateData[`system.career.primary.${lst}`] = $ta.length ? ($ta.val() || '').toString() : (sheet.actor.system.career?.[slot]?.[lst] || '');
+              }
+
+              // Persist everything at once
+              try {
+                await sheet.actor.update(updateData);
+                // Sync local actor cache
+                try { foundry.utils.setProperty(sheet.actor, 'system.principal.carriere', newPrincipal); } catch(e) {}
+                try { foundry.utils.setProperty(sheet.actor, 'system.secondaire.carriere', newSecondaire); } catch(e) {}
+                try { foundry.utils.setProperty(sheet.actor, 'system.career.primaryName', nameVal); } catch(e) {}
+                for (const lst of lists) try { foundry.utils.setProperty(sheet.actor, `system.career.primary.${lst}`, updateData[`system.career.primary.${lst}`]); } catch(e) {}
+              } catch (e) { console.error('Unable to persist career start mirror for secondary', e); }
+
               try { sheet.render(false); } catch (e) {}
               return;
             }
 
-            
+            // Unchecked: restore backups if present
+            const restoreData = {};
             if (sheet._backupPrincipalCarriereFromSecondary) {
-              try {
-                sheet.actor.system.principal = sheet.actor.system.principal || {};
-                sheet.actor.system.principal.carriere = foundry.utils.deepClone(sheet._backupPrincipalCarriereFromSecondary);
-              } catch (e) {  }
-              try { delete sheet._backupPrincipalCarriereFromSecondary; } catch(e){}
-              try { sheet.render(false); } catch (e) {}
+              restoreData['system.principal.carriere'] = foundry.utils.deepClone(sheet._backupPrincipalCarriereFromSecondary);
             }
+            if (sheet._backupSecondaireCarriereFromSecondary) {
+              restoreData['system.secondaire.carriere'] = foundry.utils.deepClone(sheet._backupSecondaireCarriereFromSecondary);
+            }
+            // Optionally restore primaryName and lists from backups (we only restored stat backups here)
+            try {
+              if (Object.keys(restoreData).length) {
+                await sheet.actor.update(restoreData);
+                try { if (restoreData['system.principal.carriere']) foundry.utils.setProperty(sheet.actor, 'system.principal.carriere', restoreData['system.principal.carriere']); } catch(e) {}
+                try { if (restoreData['system.secondaire.carriere']) foundry.utils.setProperty(sheet.actor, 'system.secondaire.carriere', restoreData['system.secondaire.carriere']); } catch(e) {}
+              }
+            } catch (e) { console.error('Unable to restore principal/secondaire from secondary backup', e); }
+
+            try { delete sheet._backupPrincipalCarriereFromSecondary; } catch(e){}
+            try { delete sheet._backupSecondaireCarriereFromSecondary; } catch(e){}
+            try { sheet.render(false); } catch (e) {}
+          } catch (err) {  }
+        });
+      } catch (e) {  }
+
+
+      // Mirror behavior for tertiary/quaternary/quinary "started" checkboxes
+      try {
+        html.find('input[name="system.career.tertiary.started"]').on('change', async ev => {
+          try {
+            const checked = !!ev.currentTarget.checked;
+            try { await sheet.actor.update({ 'system.career.tertiary.started': checked }); } catch(e) {  }
+            const slot = 'tertiary';
+            const slotNameField = `system.career.${slot}Name`;
+            const primaryKeys = Object.keys(mapSecondaryToPrincipal || {});
+            const secondaryKeys = Object.keys(mapSecondaryToSecondaire || {});
+
+            if (checked) {
+              try { if (!sheet._backupPrincipalCarriereFromTertiary) sheet._backupPrincipalCarriereFromTertiary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {}); } catch(e) { sheet._backupPrincipalCarriereFromTertiary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {}); }
+              try { if (!sheet._backupSecondaireCarriereFromTertiary) sheet._backupSecondaireCarriereFromTertiary = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {}); } catch(e) { sheet._backupSecondaireCarriereFromTertiary = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {}); }
+
+              const updateData = {};
+              const $nameInput = html.find(`input[name='${slotNameField}']`);
+              const nameVal = $nameInput.length ? ($nameInput.val() || '').toString() : (sheet.actor.system.career?.[slot + 'Name'] || '');
+              updateData['system.career.primaryName'] = nameVal;
+
+              const newPrincipal = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {});
+              for (const pk of primaryKeys) {
+                try {
+                  const $inp = html.find(`input[name='system.career.${slot}.${pk}']`);
+                  const val = $inp.length ? Number(($inp.val() || '').toString().replace(/,/g, '.')) || 0 : Number(sheet.actor.system.career?.[slot]?.[pk]) || 0;
+                  const princPath = mapSecondaryToPrincipal[pk];
+                  const fieldP = princPath.split('.').pop();
+                  newPrincipal[fieldP] = val;
+                } catch(e) { }
+              }
+              updateData['system.principal.carriere'] = newPrincipal;
+
+              const newSecondaire = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {});
+              for (const sk of secondaryKeys) {
+                try {
+                  const $inp = html.find(`input[name='system.career.${slot}.${sk}']`);
+                  const valRaw = $inp.length ? ($inp.val() || '').toString() : (sheet.actor.system.career?.[slot]?.[sk] || '0');
+                  const val = sk === 'strengthBonus' || sk === 'enduranceBonus' || sk === 'frenzyPoints' || sk === 'destinyPoints' ? valRaw : Number(valRaw.toString().replace(/,/g, '.')) || 0;
+                  const target = mapSecondaryToSecondaire[sk];
+                  const field = target.split('.').pop();
+                  newSecondaire[field] = val;
+                } catch(e) { }
+              }
+              updateData['system.secondaire.carriere'] = newSecondaire;
+
+              const lists = ['skills', 'talents', 'outcomes'];
+              for (const lst of lists) {
+                const field = `system.career.${slot}.${lst}`;
+                const $ta = html.find(`textarea[name='${field}']`);
+                updateData[`system.career.primary.${lst}`] = $ta.length ? ($ta.val() || '').toString() : (sheet.actor.system.career?.[slot]?.[lst] || '');
+              }
+
+              try {
+                await sheet.actor.update(updateData);
+                try { foundry.utils.setProperty(sheet.actor, 'system.principal.carriere', newPrincipal); } catch(e) {}
+                try { foundry.utils.setProperty(sheet.actor, 'system.secondaire.carriere', newSecondaire); } catch(e) {}
+                try { foundry.utils.setProperty(sheet.actor, 'system.career.primaryName', nameVal); } catch(e) {}
+                for (const lst of lists) try { foundry.utils.setProperty(sheet.actor, `system.career.primary.${lst}`, updateData[`system.career.primary.${lst}`]); } catch(e) {}
+              } catch (e) { console.error('Unable to persist career start mirror for tertiary', e); }
+
+              try { sheet.render(false); } catch (e) {}
+              return;
+            }
+
+            const restoreData = {};
+            if (sheet._backupPrincipalCarriereFromTertiary) restoreData['system.principal.carriere'] = foundry.utils.deepClone(sheet._backupPrincipalCarriereFromTertiary);
+            if (sheet._backupSecondaireCarriereFromTertiary) restoreData['system.secondaire.carriere'] = foundry.utils.deepClone(sheet._backupSecondaireCarriereFromTertiary);
+            try {
+              if (Object.keys(restoreData).length) {
+                await sheet.actor.update(restoreData);
+                try { if (restoreData['system.principal.carriere']) foundry.utils.setProperty(sheet.actor, 'system.principal.carriere', restoreData['system.principal.carriere']); } catch(e) {}
+                try { if (restoreData['system.secondaire.carriere']) foundry.utils.setProperty(sheet.actor, 'system.secondaire.carriere', restoreData['system.secondaire.carriere']); } catch(e) {}
+              }
+            } catch (e) { console.error('Unable to restore principal/secondaire from tertiary backup', e); }
+            try { delete sheet._backupPrincipalCarriereFromTertiary; } catch(e){}
+            try { delete sheet._backupSecondaireCarriereFromTertiary; } catch(e){}
+            try { sheet.render(false); } catch (e) {}
+          } catch (err) {  }
+        });
+      } catch (e) {  }
+
+      try {
+        html.find('input[name="system.career.quaternary.started"]').on('change', async ev => {
+          try {
+            const checked = !!ev.currentTarget.checked;
+            try { await sheet.actor.update({ 'system.career.quaternary.started': checked }); } catch(e) {  }
+            const slot = 'quaternary';
+            const slotNameField = `system.career.${slot}Name`;
+            const primaryKeys = Object.keys(mapSecondaryToPrincipal || {});
+            const secondaryKeys = Object.keys(mapSecondaryToSecondaire || {});
+
+            if (checked) {
+              try { if (!sheet._backupPrincipalCarriereFromQuaternary) sheet._backupPrincipalCarriereFromQuaternary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {}); } catch(e) { sheet._backupPrincipalCarriereFromQuaternary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {}); }
+              try { if (!sheet._backupSecondaireCarriereFromQuaternary) sheet._backupSecondaireCarriereFromQuaternary = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {}); } catch(e) { sheet._backupSecondaireCarriereFromQuaternary = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {}); }
+
+              const updateData = {};
+              const $nameInput = html.find(`input[name='${slotNameField}']`);
+              const nameVal = $nameInput.length ? ($nameInput.val() || '').toString() : (sheet.actor.system.career?.[slot + 'Name'] || '');
+              updateData['system.career.primaryName'] = nameVal;
+
+              const newPrincipal = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {});
+              for (const pk of primaryKeys) {
+                try {
+                  const $inp = html.find(`input[name='system.career.${slot}.${pk}']`);
+                  const val = $inp.length ? Number(($inp.val() || '').toString().replace(/,/g, '.')) || 0 : Number(sheet.actor.system.career?.[slot]?.[pk]) || 0;
+                  const princPath = mapSecondaryToPrincipal[pk];
+                  const fieldP = princPath.split('.').pop();
+                  newPrincipal[fieldP] = val;
+                } catch(e) { }
+              }
+              updateData['system.principal.carriere'] = newPrincipal;
+
+              const newSecondaire = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {});
+              for (const sk of secondaryKeys) {
+                try {
+                  const $inp = html.find(`input[name='system.career.${slot}.${sk}']`);
+                  const valRaw = $inp.length ? ($inp.val() || '').toString() : (sheet.actor.system.career?.[slot]?.[sk] || '0');
+                  const val = sk === 'strengthBonus' || sk === 'enduranceBonus' || sk === 'frenzyPoints' || sk === 'destinyPoints' ? valRaw : Number(valRaw.toString().replace(/,/g, '.')) || 0;
+                  const target = mapSecondaryToSecondaire[sk];
+                  const field = target.split('.').pop();
+                  newSecondaire[field] = val;
+                } catch(e) { }
+              }
+              updateData['system.secondaire.carriere'] = newSecondaire;
+
+              const lists = ['skills', 'talents', 'outcomes'];
+              for (const lst of lists) {
+                const field = `system.career.${slot}.${lst}`;
+                const $ta = html.find(`textarea[name='${field}']`);
+                updateData[`system.career.primary.${lst}`] = $ta.length ? ($ta.val() || '').toString() : (sheet.actor.system.career?.[slot]?.[lst] || '');
+              }
+
+              try {
+                await sheet.actor.update(updateData);
+                try { foundry.utils.setProperty(sheet.actor, 'system.principal.carriere', newPrincipal); } catch(e) {}
+                try { foundry.utils.setProperty(sheet.actor, 'system.secondaire.carriere', newSecondaire); } catch(e) {}
+                try { foundry.utils.setProperty(sheet.actor, 'system.career.primaryName', nameVal); } catch(e) {}
+                for (const lst of lists) try { foundry.utils.setProperty(sheet.actor, `system.career.primary.${lst}`, updateData[`system.career.primary.${lst}`]); } catch(e) {}
+              } catch (e) { console.error('Unable to persist career start mirror for quaternary', e); }
+
+              try { sheet.render(false); } catch (e) {}
+              return;
+            }
+
+            const restoreData = {};
+            if (sheet._backupPrincipalCarriereFromQuaternary) restoreData['system.principal.carriere'] = foundry.utils.deepClone(sheet._backupPrincipalCarriereFromQuaternary);
+            if (sheet._backupSecondaireCarriereFromQuaternary) restoreData['system.secondaire.carriere'] = foundry.utils.deepClone(sheet._backupSecondaireCarriereFromQuaternary);
+            try {
+              if (Object.keys(restoreData).length) {
+                await sheet.actor.update(restoreData);
+                try { if (restoreData['system.principal.carriere']) foundry.utils.setProperty(sheet.actor, 'system.principal.carriere', restoreData['system.principal.carriere']); } catch(e) {}
+                try { if (restoreData['system.secondaire.carriere']) foundry.utils.setProperty(sheet.actor, 'system.secondaire.carriere', restoreData['system.secondaire.carriere']); } catch(e) {}
+              }
+            } catch (e) { console.error('Unable to restore principal/secondaire from quaternary backup', e); }
+            try { delete sheet._backupPrincipalCarriereFromQuaternary; } catch(e){}
+            try { delete sheet._backupSecondaireCarriereFromQuaternary; } catch(e){}
+            try { sheet.render(false); } catch (e) {}
+          } catch (err) {  }
+        });
+      } catch (e) {  }
+
+      try {
+        html.find('input[name="system.career.quinary.started"]').on('change', async ev => {
+          try {
+            const checked = !!ev.currentTarget.checked;
+            try { await sheet.actor.update({ 'system.career.quinary.started': checked }); } catch(e) {  }
+            const slot = 'quinary';
+            const slotNameField = `system.career.${slot}Name`;
+            const primaryKeys = Object.keys(mapSecondaryToPrincipal || {});
+            const secondaryKeys = Object.keys(mapSecondaryToSecondaire || {});
+
+            if (checked) {
+              try { if (!sheet._backupPrincipalCarriereFromQuinary) sheet._backupPrincipalCarriereFromQuinary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {}); } catch(e) { sheet._backupPrincipalCarriereFromQuinary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {}); }
+              try { if (!sheet._backupSecondaireCarriereFromQuinary) sheet._backupSecondaireCarriereFromQuinary = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {}); } catch(e) { sheet._backupSecondaireCarriereFromQuinary = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {}); }
+
+              const updateData = {};
+              const $nameInput = html.find(`input[name='${slotNameField}']`);
+              const nameVal = $nameInput.length ? ($nameInput.val() || '').toString() : (sheet.actor.system.career?.[slot + 'Name'] || '');
+              updateData['system.career.primaryName'] = nameVal;
+
+              const newPrincipal = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {});
+              for (const pk of primaryKeys) {
+                try {
+                  const $inp = html.find(`input[name='system.career.${slot}.${pk}']`);
+                  const val = $inp.length ? Number(($inp.val() || '').toString().replace(/,/g, '.')) || 0 : Number(sheet.actor.system.career?.[slot]?.[pk]) || 0;
+                  const princPath = mapSecondaryToPrincipal[pk];
+                  const fieldP = princPath.split('.').pop();
+                  newPrincipal[fieldP] = val;
+                } catch(e) { }
+              }
+              updateData['system.principal.carriere'] = newPrincipal;
+
+              const newSecondaire = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {});
+              for (const sk of secondaryKeys) {
+                try {
+                  const $inp = html.find(`input[name='system.career.${slot}.${sk}']`);
+                  const valRaw = $inp.length ? ($inp.val() || '').toString() : (sheet.actor.system.career?.[slot]?.[sk] || '0');
+                  const val = sk === 'strengthBonus' || sk === 'enduranceBonus' || sk === 'frenzyPoints' || sk === 'destinyPoints' ? valRaw : Number(valRaw.toString().replace(/,/g, '.')) || 0;
+                  const target = mapSecondaryToSecondaire[sk];
+                  const field = target.split('.').pop();
+                  newSecondaire[field] = val;
+                } catch(e) { }
+              }
+              updateData['system.secondaire.carriere'] = newSecondaire;
+
+              const lists = ['skills', 'talents', 'outcomes'];
+              for (const lst of lists) {
+                const field = `system.career.${slot}.${lst}`;
+                const $ta = html.find(`textarea[name='${field}']`);
+                updateData[`system.career.primary.${lst}`] = $ta.length ? ($ta.val() || '').toString() : (sheet.actor.system.career?.[slot]?.[lst] || '');
+              }
+
+              try {
+                await sheet.actor.update(updateData);
+                try { foundry.utils.setProperty(sheet.actor, 'system.principal.carriere', newPrincipal); } catch(e) {}
+                try { foundry.utils.setProperty(sheet.actor, 'system.secondaire.carriere', newSecondaire); } catch(e) {}
+                try { foundry.utils.setProperty(sheet.actor, 'system.career.primaryName', nameVal); } catch(e) {}
+                for (const lst of lists) try { foundry.utils.setProperty(sheet.actor, `system.career.primary.${lst}`, updateData[`system.career.primary.${lst}`]); } catch(e) {}
+              } catch (e) { console.error('Unable to persist career start mirror for quinary', e); }
+
+              try { sheet.render(false); } catch (e) {}
+              return;
+            }
+
+            const restoreData = {};
+            if (sheet._backupPrincipalCarriereFromQuinary) restoreData['system.principal.carriere'] = foundry.utils.deepClone(sheet._backupPrincipalCarriereFromQuinary);
+            if (sheet._backupSecondaireCarriereFromQuinary) restoreData['system.secondaire.carriere'] = foundry.utils.deepClone(sheet._backupSecondaireCarriereFromQuinary);
+            try {
+              if (Object.keys(restoreData).length) {
+                await sheet.actor.update(restoreData);
+                try { if (restoreData['system.principal.carriere']) foundry.utils.setProperty(sheet.actor, 'system.principal.carriere', restoreData['system.principal.carriere']); } catch(e) {}
+                try { if (restoreData['system.secondaire.carriere']) foundry.utils.setProperty(sheet.actor, 'system.secondaire.carriere', restoreData['system.secondaire.carriere']); } catch(e) {}
+              }
+            } catch (e) { console.error('Unable to restore principal/secondaire from quinary backup', e); }
+            try { delete sheet._backupPrincipalCarriereFromQuinary; } catch(e){}
+            try { delete sheet._backupSecondaireCarriereFromQuinary; } catch(e){}
+            try { sheet.render(false); } catch (e) {}
           } catch (err) {  }
         });
       } catch (e) {  }

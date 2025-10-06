@@ -1,12 +1,15 @@
-   .wfrp2e {
-    --wfrp-gold: #a8862a;
-    --wfrp-gold-dark: #8b6f1f;
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Libre+Baskerville:wght@400;700&display=swap');
+
+.wfrp2e {
+    --wfrp-gold: #6c1f1f;
+    --wfrp-gold-dark: #6c1f1f;
     --ink: #222;
     --paper: #faf8f3;
     --panel: #ffffff;
     --row: #f2f2f2;
     --line: #d8d8d8;
     --black: #111;
+    --font-primary: 'Caslon Antique', 'Cormorant Garamond', 'Libre Baskerville', serif;
     font-family: var(--font-primary, "Inter", "Segoe UI", Arial, sans-serif);
     color: var(--ink);
   }
@@ -743,7 +746,7 @@
 
 
 .gold-tab, .gold-roll {
-  background: #8b6f1f;
+  background: #6c1f1f;
   color: #fff;
   border: 1px solid #333;
   border-radius: 6px;
@@ -754,7 +757,7 @@
   white-space: nowrap;
 }
 .gold-tab:hover, .gold-roll:hover {
-  background: #a8862a;
+  background: #6c1f1f;
 }
 
 
@@ -829,7 +832,10 @@
 .wfrp2e .career-box__title { background:#dcdcdc; padding:6px 8px; font-weight:700; border-radius:4px; margin-bottom:6px; text-align:center; }
 .wfrp2e .career-section-title { background:black; padding:6px 8px; font-weight:700; border-radius:4px; margin:8px 0; text-align:center; color:white; }
 .wfrp2e .career-card__meta { display:flex; align-items:center; gap:8px; }
-.wfrp2e .career-started { font-weight:700; font-size:12px; }
+.wfrp2e .career-started { font-weight:700; font-size:12px; display: flex
+;
+    justify-content: center;
+    align-items: center; }
 
 @media (max-width:980px){
   .wfrp2e .career-row{ flex-direction:column; }
@@ -861,4 +867,15 @@
 
 .connaissance-add, .talent-add, .regles-spe-add, .inventory-add {
   color: white; 
+}
+#pause img {
+  content: url("logo-pause.png") !important;
+  height: auto;
+  image-rendering: auto;
+}
+figcaption {
+  font-family:  var(--font-primary);
+}
+td input[type="number"] {
+  font-family: sans-serif;
 }

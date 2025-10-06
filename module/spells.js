@@ -155,8 +155,8 @@ function buildSpellCardHTML(spell, owned, fallbackSource) {
           </div>
         </div>
         <div style="width:120px; display:flex; flex-direction:column; gap:8px; align-items:center;">
-          <button type="button" class="spell-launch" data-spell-id="${escapeHtml(id)}" data-source="${escapeHtml(launchSource)}" style="background:#b7863a; color:#fff; border:none; padding:8px 12px; border-radius:6px;">🎲 Lancer</button>
-          <label style="font-size:12px"><input type="checkbox" class="spell-owned" data-spell-id="${escapeHtml(id)}" ${owned ? 'checked' : ''}> Possédé</label>
+          <button type="button" class="spell-launch" data-spell-id="${escapeHtml(id)}" data-source="${escapeHtml(launchSource)}" style="background:#6c1f1f; color:#fff; border:none; padding:8px 12px; border-radius:6px;">Lancer</button>
+          <label style="font-size:12px; display:flex; justify-content:center; align-items:center;"><input type="checkbox" class="spell-owned" data-spell-id="${escapeHtml(id)}" ${owned ? 'checked' : ''}> Possédé</label>
         </div>
       </div>
     </div>
@@ -175,7 +175,7 @@ function buildRuneCardHTML(spell, owned) {
   } = spell || {};
 
   return `
-    <div class="spell-card rune-card" data-spell-id="${escapeHtml(id)}" style="border:1px solid #ccc; border-radius:8px; padding:12px; margin-bottom:12px; background:#f1f4f7;">
+    <div class="spell-card rune-card" data-spell-id="${escapeHtml(id)}" style="border:1px solid #ccc; border-radius:8px; padding:12px; margin-bottom:12px; background:#f7f5f2;">
       <h3 style="text-align:center; color:#1a4b6b; margin:4px 0 12px">${escapeHtml(name)}</h3>
       <div style="display:flex; gap:16px; align-items:flex-start;">
         <div style="flex:1; display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:12px;">
@@ -193,8 +193,8 @@ function buildRuneCardHTML(spell, owned) {
           </div>
         </div>
         <div style="width:160px; display:flex; flex-direction:column; gap:8px; justify-content:center; align-items:center;">
-          <button type="button" class="rune-write" data-spell-id="${escapeHtml(id)}" data-difficulte="${escapeHtml(difficulte)}" style="background:#1a4b6b; color:#fff; border:none; padding:8px 14px; border-radius:6px;">✍️ Écriture</button>
-          <label style="font-size:12px"><input type="checkbox" class="spell-owned" data-spell-id="${escapeHtml(id)}" ${owned ? 'checked' : ''}> Possédé</label>
+          <button type="button" class="rune-write" data-spell-id="${escapeHtml(id)}" data-difficulte="${escapeHtml(difficulte)}" style="background:#6c1f1f; color:#fff; border:none; padding:8px 14px; border-radius:6px;">Écriture</button>
+          <label style="font-size:12px; display:flex; justify-content:center; align-items:center;"><input type="checkbox" class="spell-owned" data-spell-id="${escapeHtml(id)}" ${owned ? 'checked' : ''}> Possédé</label>
         </div>
       </div>
       <div style="margin-top:16px; display:grid; gap:12px;">
