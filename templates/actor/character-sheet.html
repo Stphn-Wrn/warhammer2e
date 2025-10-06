@@ -32,7 +32,7 @@
 
           <div class="id-row cols-4">
             <div class="id-field">
-              <input type="text" name="system.bio.race" value="{{system.bio.race}}">
+              <button type="button" class="race-button">{{#if system.bio.race}}{{else}}Race{{/if}}{{#if system.bio.subrace}}{{system.bio.subrace}}{{/if}}</button>
               <div class="field-label">Race</div>
             </div>
             <div class="id-field">

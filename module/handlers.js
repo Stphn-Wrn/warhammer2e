@@ -219,6 +219,104 @@ export function wireSheetHandlers(sheet, html) {
     const newValue = parseInt(input.value) || 0;
     sheet.actor.update({ [name]: newValue });
   });
+
+  // Open race/subrace selection dialog when the race field is clicked
+  try {
+    const openRaceDialog = ev => {
+      try { ev?.preventDefault(); } catch(e){}
+      // existing dialog logic follows; we will call this function from two bindings
+    };
+
+    // Bind both the new button and the old input (fallback) to open the dialog
+    html.find("button.race-button, input[name='system.bio.race']").on('click', ev => {
+      // call original handler body below by reusing the function body
+    });
+
+    // We'll now inline the dialog body by finding the binding and replacing it
+    html.find("button.race-button, input[name='system.bio.race']").off('click').on('click', ev => {
+      ev.preventDefault();
+      ev.preventDefault();
+  const races = ['Elfe','Halfelin','Humain','Nain','Ogre','Skaven','Troll'];
+      const subracesMap = {
+        'Elfe': ['Elfe de Marienbourg','Haut Elfe','Elfe des bois','Elfe Noir'],
+        'Halfelin': ['Paysan','Vagabond','Bourgeois'],
+        'Humain': ['Noble','Marchand','Artisan'],
+        'Nain': ['Montagnard','Mineur','Forgeur'],
+        'Ogre': ['Brutal','Berserker'],
+        'Skaven': ['Clan Eshin','Clan Moulder','Clan Skryre'],
+        'Troll': ['Rocailleux','Marécageux']
+      };
+
+      const content = document.createElement('div');
+      const raceSelect = document.createElement('select');
+      raceSelect.style.width = '100%';
+      raceSelect.className = 'race-select';
+      raceSelect.innerHTML = `<option value="">-- Choisir une race --</option>` + races.map(r => `<option value="${r}">${r}</option>`).join('');
+      content.appendChild(raceSelect);
+
+      const subLabel = document.createElement('div');
+      subLabel.style.marginTop = '8px';
+      subLabel.innerText = 'Sous-race';
+      content.appendChild(subLabel);
+
+      const subSelect = document.createElement('select');
+      subSelect.style.width = '100%';
+      subSelect.className = 'subrace-select';
+      subSelect.innerHTML = `<option value="">-- Choisir une sous-race --</option>`;
+      content.appendChild(subSelect);
+
+      // We'll populate the subrace select when the dialog is rendered, because
+      // the elements created above are not the same DOM nodes inserted by Foundry.
+
+      const d = new Dialog({
+        title: 'Sélectionner la race',
+        content: content.outerHTML,
+        buttons: {
+          ok: {
+            label: 'Valider',
+            callback: async (htmlDlg) => {
+              try {
+                // htmlDlg is a jQuery object; use .find() to access inner inputs
+                const $dlg = $(htmlDlg);
+                const r = ($dlg.find('.race-select').val() || '').toString();
+                const sr = ($dlg.find('.subrace-select').val() || '').toString();
+                await sheet.actor.update({ 'system.bio.race': r, 'system.bio.subrace': sr });
+                try { foundry.utils.setProperty(sheet.actor, 'system.bio.race', r); } catch(e){}
+                try { foundry.utils.setProperty(sheet.actor, 'system.bio.subrace', sr); } catch(e){}
+                try { sheet.render(false); } catch(e){}
+              } catch (err) { console.error('Unable to persist selected race/subrace', err); }
+            }
+          },
+          cancel: { label: 'Annuler' }
+        },
+        default: 'ok',
+        render: (htmlDlg) => {
+          try {
+            // htmlDlg is a jQuery object; preselect existing values and bind change handler
+            const $dlg = $(htmlDlg);
+            const currentRace = sheet.actor.system?.bio?.race || '';
+            const currentSub = sheet.actor.system?.bio?.subrace || '';
+            const $rs = $dlg.find('.race-select');
+            const $ss = $dlg.find('.subrace-select');
+            const updateSubOptionsLocal = (r) => {
+              const opts = subracesMap[r] || [];
+              $ss.empty();
+              $ss.append($(`<option value="">-- Choisir une sous-race --</option>`));
+              for (const s of opts) $ss.append($(`<option value="${s}">${s}</option>`));
+            };
+            if ($rs.length) {
+              $rs.off('change.race').on('change.race', () => updateSubOptionsLocal($rs.val()));
+              // initialize options based on currentRace
+              updateSubOptionsLocal(currentRace);
+              $rs.val(currentRace);
+            }
+            if ($ss.length) $ss.val(currentSub);
+          } catch (e) {}
+        }
+      });
+      d.render(true);
+    });
+  } catch (e) {  }
   html.find("input[name*='skills.base'][name*='talents'], input[name*='skills.base'][name*='divers']").on('change', ev => {
     const input = ev.currentTarget;
     const name = input.name;
