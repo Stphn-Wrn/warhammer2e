@@ -30,26 +30,32 @@
             </div>
           </div>
 
-          <div class="id-row cols-4">
+          <div class="id-row cols-2">
             <div class="id-field">
-              <button type="button" class="race-button">{{#if system.bio.race}}{{else}}Race{{/if}}{{#if system.bio.subrace}}{{system.bio.subrace}}{{/if}}</button>
-              <div class="field-label">Race</div>
+              <button type="button" class="race-button">{{#if system.bio.race}}{{else}}Race{{/if}}{{#if system.bio.subrace}}<span class="subrace">{{system.bio.subrace}}</span>{{/if}}</button>
+            </div>
+            <div class="id-field give-px-container">
+              <div class="counter-field">
+                <input type="number" class="is-readonly" name="system.xp.total" value="{{system.xp.total}}" readonly>
+                <div class="field-label center">PX gagnés</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Third row: birthplace, religion, and action -->
+          <div class="id-row cols-3">
+            <div class="id-field">
+              <input type="text" name="system.bio.birthplace" value="{{system.bio.birthplace}}">
+              <div class="field-label">Lieu de naissance</div>
             </div>
             <div class="id-field">
               <input type="text" name="system.bio.religion" value="{{system.bio.religion}}">
               <div class="field-label">Religion</div>
             </div>
             <div class="id-field">
-              <input type="text" name="system.bio.birthplace" value="{{system.bio.birthplace}}">
-              <div class="field-label">Lieu de naissance</div>
+              <button type="button" class="xp-grant button">Donner PX</button>
+              <div class="field-label">&nbsp;</div>
             </div>
-          <div class="counter-field">
-            <input type="number" class="is-readonly" name="system.xp.total" value="{{system.xp.total}}" readonly>
-            <div class="field-label center">PX gagnés</div>
-          </div>
-          <div class="counter-field">
-            <button type="button" class="xp-grant button">Donner PX</button>
-          </div>
           </div>
         </div>
       </div>

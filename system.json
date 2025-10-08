@@ -3,10 +3,25 @@
   "title": "Warhammer 2e",
   "type": "system",
   "version": "1.0.1",
-  "compatibility": { "minimum": "13", "verified": "13" },
-  "authors": [{ "name": "Courbette" }],
-  "esmodules": ["module/utils.js", "module/spells.js", "module/dialogs.js", "module/handlers.js", "module/skills.js", "module/xp.js", "module/warhammer2e.js"],
-  "styles": ["styles/warhammer2e.css"],
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "authors": [
+    { "name": "Courbette" }
+  ],
+  "esmodules": [
+    "module/utils.js",
+    "module/spells.js",
+    "module/dialogs.js",
+    "module/handlers.js",
+    "module/skills.js",
+    "module/xp.js",
+    "module/warhammer2e.js"
+  ],
+  "styles": [
+    "styles/warhammer2e.css"
+  ],
   "languages": [
     { "lang": "fr", "name": "Français", "path": "lang/fr.json" }
   ],
@@ -14,7 +29,6 @@
   "template": "template.json",
   "primaryTokenAttribute": "system.secondary.w",
   "initiative": "1d10",
-
   "manifest": "https://raw.githubusercontent.com/Stphn-Wrn/warhammer2e/main/system.json",
   "download": "https://github.com/Stphn-Wrn/warhammer2e/archive/refs/heads/main.zip",
   "url": "https://github.com/Stphn-Wrn/warhammer2e",
