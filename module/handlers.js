@@ -106,9 +106,11 @@ export function wireSheetHandlers(sheet, html) {
 
     
     try {
-      const rawBonus = ($input.val() || '').toString().replace(/,/g, '.').trim();
+      const bonusField = clickedName.replace(/\.eq$/, '.bonus');
+      const $bonusInput = html.find(`input[name='${bonusField}']`);
+      const rawBonus = ($bonusInput.val() || '').toString().replace(/,/g, '.').trim();
       const parsedBonus = Number(rawBonus);
-      updates[name] = Number.isFinite(parsedBonus) ? parsedBonus : 0;
+      updates[bonusField] = Number.isFinite(parsedBonus) ? parsedBonus : 0;
     } catch (e) {  }
 
     
@@ -201,8 +203,12 @@ export function wireSheetHandlers(sheet, html) {
     updates['system.armor.totalPA'] = grandTotal;
 
     try {
+      const raw = ($input.val() || '').toString().replace(/,/g, '.').trim();
+      const parsed = Number(raw);
+      updates[name] = Number.isFinite(parsed) ? parsed : 0;
+
       await sheet.actor.update(updates);
-      
+
       const $zoneInput = html.find(`input[name='system.armorTotals.${zone}']`);
       if ($zoneInput.length) $zoneInput.val(zoneTotal);
       const $grandInput = html.find(`input[name='system.armor.totalPA']`);
@@ -219,6 +225,91 @@ export function wireSheetHandlers(sheet, html) {
     const newValue = parseInt(input.value) || 0;
     sheet.actor.update({ [name]: newValue });
   });
+
+  try {
+    const openRaceDialog = ev => {
+      try { ev?.preventDefault(); } catch(e){}
+    };
+
+    html.find("button.race-button, input[name='system.bio.race']").on('click', ev => {
+    });
+
+    html.find("button.race-button, input[name='system.bio.race']").off('click').on('click', ev => {
+      ev.preventDefault();
+      ev.preventDefault();
+  const races = ['Elfe', 'Halfelin', 'Humain', 'Nain', 'Ogre'];
+      const subracesMap = {
+        'Elfe': ['Elfe de Marienbourg', 'Haut Elfe', 'Elfe des bois', 'Elfe Noir'],
+        'Halfelin': ['Halfelin du Moot', 'Halfelin des cités'],
+        'Humain': ['Humain de l\'Averland', 'Humain Frontalier', 'Humain du Hochland', 'Humain du Middenland', 'Humain du Nordland', 'Humain du Stirland', 'Humain de l\'Ostermark', 'Humain Strigany', 'Humain du Talabecland', 'Humain de la Sylvanie', 'Humain du Wissenland', 'Bretonnien de l\'Aquitaine', 'Bretonnien - Artenois', 'Bretonnien - Bastogne', 'Bretonnien - Bordeleaux', 'Bretonnien - Brionne', 'Bretonnien - Couronne', 'Bretonnien - Gisoreux', 'Bretonnien - Gasconnie', 'Bretonnien - Lyonesse', 'Bretonnien - L\'anguille', 'Bretonnien - Montfort', 'Bretonnien - Moussillon', 'Bretonnien - Parravon', 'Gospodar - Est', 'Gospodar - Nord', 'Gospodar - Sud', 'Ungol - Est', 'Ungol - Nord', 'Ungol - Sud', 'Norse', ],
+        'Nain': ['Nain des Karaks', 'Nain de l\'Empire'],
+        'Ogre': ['Ogre Original', 'Ogre du Chaos'],
+      };
+
+      const content = document.createElement('div');
+      const raceSelect = document.createElement('select');
+      raceSelect.style.width = '100%';
+      raceSelect.className = 'race-select';
+      raceSelect.innerHTML = `<option value="">-- Choisir une race --</option>` + races.map(r => `<option value="${r}">${r}</option>`).join('');
+      content.appendChild(raceSelect);
+
+      const subLabel = document.createElement('div');
+      subLabel.style.marginTop = '8px';
+      subLabel.innerText = 'Sous-race';
+      content.appendChild(subLabel);
+
+      const subSelect = document.createElement('select');
+      subSelect.style.width = '100%';
+      subSelect.className = 'subrace-select';
+      subSelect.innerHTML = `<option value="">-- Choisir une sous-race --</option>`;
+      content.appendChild(subSelect);
+
+      const d = new Dialog({
+        title: 'Sélectionner la race',
+        content: content.outerHTML,
+        buttons: {
+          ok: {
+            label: 'Valider',
+            callback: async (htmlDlg) => {
+              try {
+                const $dlg = $(htmlDlg);
+                const r = ($dlg.find('.race-select').val() || '').toString();
+                const sr = ($dlg.find('.subrace-select').val() || '').toString();
+                await sheet.actor.update({ 'system.bio.race': r, 'system.bio.subrace': sr });
+                try { foundry.utils.setProperty(sheet.actor, 'system.bio.race', r); } catch(e){}
+                try { foundry.utils.setProperty(sheet.actor, 'system.bio.subrace', sr); } catch(e){}
+                try { sheet.render(false); } catch(e){}
+              } catch (err) { console.error('Unable to persist selected race/subrace', err); }
+            }
+          },
+          cancel: { label: 'Annuler' }
+        },
+        default: 'ok',
+        render: (htmlDlg) => {
+          try {
+            const $dlg = $(htmlDlg);
+            const currentRace = sheet.actor.system?.bio?.race || '';
+            const currentSub = sheet.actor.system?.bio?.subrace || '';
+            const $rs = $dlg.find('.race-select');
+            const $ss = $dlg.find('.subrace-select');
+            const updateSubOptionsLocal = (r) => {
+              const opts = subracesMap[r] || [];
+              $ss.empty();
+              $ss.append($(`<option value="">-- Choisir une sous-race --</option>`));
+              for (const s of opts) $ss.append($(`<option value="${s}">${s}</option>`));
+            };
+            if ($rs.length) {
+              $rs.off('change.race').on('change.race', () => updateSubOptionsLocal($rs.val()));
+              updateSubOptionsLocal(currentRace);
+              $rs.val(currentRace);
+            }
+            if ($ss.length) $ss.val(currentSub);
+          } catch (e) {}
+        }
+      });
+      d.render(true);
+    });
+  } catch (e) {  }
   html.find("input[name*='skills.base'][name*='talents'], input[name*='skills.base'][name*='divers']").on('change', ev => {
     const input = ev.currentTarget;
     const name = input.name;
@@ -645,7 +736,7 @@ export function wireSheetHandlers(sheet, html) {
       const fmtTotal = n => {
         const v = (Math.round(n * 1000) / 1000).toFixed(3);
         
-        return v.replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        return v.replace('.', ', ').replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       };
 
       html.find('.co-value').text(fmtTotal(totalCO));
@@ -874,25 +965,21 @@ export function wireSheetHandlers(sheet, html) {
             const checked = !!ev.currentTarget.checked;
             try { await sheet.actor.update({ 'system.career.secondary.started': checked }); } catch(e) {  }
 
-            // Build update payload: copy name, primary profile -> system.principal.carriere, secondary profile -> system.secondaire.carriere, and lists
             const slot = 'secondary';
             const slotNameField = `system.career.${slot}Name`;
             const primaryKeys = Object.keys(mapSecondaryToPrincipal || {});
             const secondaryKeys = Object.keys(mapSecondaryToSecondaire || {});
 
             if (checked) {
-              // Backup current principal and secondaire carriere
               try { if (!sheet._backupPrincipalCarriereFromSecondary) sheet._backupPrincipalCarriereFromSecondary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {}); } catch(e) { sheet._backupPrincipalCarriereFromSecondary = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {}); }
               try { if (!sheet._backupSecondaireCarriereFromSecondary) sheet._backupSecondaireCarriereFromSecondary = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {}); } catch(e) { sheet._backupSecondaireCarriereFromSecondary = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {}); }
 
               const updateData = {};
 
-              // Copy career name
               const $nameInput = html.find(`input[name='${slotNameField}']`);
               const nameVal = $nameInput.length ? ($nameInput.val() || '').toString() : (sheet.actor.system.career?.[slot + 'Name'] || '');
               updateData['system.career.primaryName'] = nameVal;
 
-              // Copy primary profile fields into system.principal.carriere
               const newPrincipal = foundry.utils.deepClone(sheet.actor.system.principal?.carriere || {});
               for (const pk of primaryKeys) {
                 try {
@@ -906,7 +993,6 @@ export function wireSheetHandlers(sheet, html) {
               }
               updateData['system.principal.carriere'] = newPrincipal;
 
-              // Copy secondary profile fields into system.secondaire.carriere
               const newSecondaire = foundry.utils.deepClone(sheet.actor.system.secondaire?.carriere || {});
               for (const sk of secondaryKeys) {
                 try {
@@ -921,7 +1007,6 @@ export function wireSheetHandlers(sheet, html) {
               }
               updateData['system.secondaire.carriere'] = newSecondaire;
 
-              // Copy lists (skills, talents, outcomes)
               const lists = ['skills', 'talents', 'outcomes'];
               for (const lst of lists) {
                 const field = `system.career.${slot}.${lst}`;
@@ -929,10 +1014,8 @@ export function wireSheetHandlers(sheet, html) {
                 updateData[`system.career.primary.${lst}`] = $ta.length ? ($ta.val() || '').toString() : (sheet.actor.system.career?.[slot]?.[lst] || '');
               }
 
-              // Persist everything at once
               try {
                 await sheet.actor.update(updateData);
-                // Sync local actor cache
                 try { foundry.utils.setProperty(sheet.actor, 'system.principal.carriere', newPrincipal); } catch(e) {}
                 try { foundry.utils.setProperty(sheet.actor, 'system.secondaire.carriere', newSecondaire); } catch(e) {}
                 try { foundry.utils.setProperty(sheet.actor, 'system.career.primaryName', nameVal); } catch(e) {}
@@ -943,7 +1026,6 @@ export function wireSheetHandlers(sheet, html) {
               return;
             }
 
-            // Unchecked: restore backups if present
             const restoreData = {};
             if (sheet._backupPrincipalCarriereFromSecondary) {
               restoreData['system.principal.carriere'] = foundry.utils.deepClone(sheet._backupPrincipalCarriereFromSecondary);
@@ -951,7 +1033,6 @@ export function wireSheetHandlers(sheet, html) {
             if (sheet._backupSecondaireCarriereFromSecondary) {
               restoreData['system.secondaire.carriere'] = foundry.utils.deepClone(sheet._backupSecondaireCarriereFromSecondary);
             }
-            // Optionally restore primaryName and lists from backups (we only restored stat backups here)
             try {
               if (Object.keys(restoreData).length) {
                 await sheet.actor.update(restoreData);
@@ -968,7 +1049,6 @@ export function wireSheetHandlers(sheet, html) {
       } catch (e) {  }
 
 
-      // Mirror behavior for tertiary/quaternary/quinary "started" checkboxes
       try {
         html.find('input[name="system.career.tertiary.started"]').on('change', async ev => {
           try {

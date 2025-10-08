@@ -59,6 +59,7 @@
   
   .wfrp2e .id-row.cols-3{ grid-template-columns: 1fr 1fr 180px; }  
   .wfrp2e .id-row.cols-4{ grid-template-columns: 1fr 1fr 1fr 180px; } 
+  .wfrp2e .id-row.cols-2{ grid-template-columns: 1fr 220px; align-items: center; gap: 12px; }
   
   .wfrp2e .id-field{ display:flex; flex-direction:column; }
   .wfrp2e .id-field input{
@@ -873,9 +874,80 @@
   height: auto;
   image-rendering: auto;
 }
+#interface {
+  background-image: url("bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
 figcaption {
   font-family:  var(--font-primary);
 }
 td input[type="number"] {
   font-family: sans-serif;
+}
+
+/* ---- UI Polishing additions ---- */
+/* Race button in the header (big clickable tile with subtle subrace line) */
+.wfrp2e .race-button {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #d0cbc3;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fbf8f4, #f0ebe6);
+  color: #111;
+  font-weight: 800;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.04);
+}
+.wfrp2e .race-button .subrace {
+  display: block;
+  font-weight: 600;
+  font-size: 12px;
+  color: #4a4038;
+}
+.wfrp2e .race-button:focus,
+.wfrp2e .race-button:focus-visible {
+  outline: 3px solid rgba(108,31,31,0.12);
+  outline-offset: 2px;
+}
+.wfrp2e .race-button.active {
+  border-color: var(--wfrp-gold-dark);
+  box-shadow: 0 6px 18px rgba(108,31,31,0.08);
+  background: linear-gradient(180deg,#fffaf6,#f7f1ea);
+}
+
+/* Career block emphasis when 'started' */
+.wfrp2e .career-started input[type="checkbox"]{ transform: scale(1.18); margin-right:8px; }
+.wfrp2e .career-card.started { border-color: var(--wfrp-gold); box-shadow: 0 6px 12px rgba(108,31,31,0.06); }
+
+/* Primary style for important buttons */
+.wfrp2e .btn.primary {
+  background: linear-gradient(180deg, var(--wfrp-gold), #4f1616);
+  color: #fff; border: 1px solid rgba(0,0,0,0.25);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.12);
+}
+
+/* Improve spacing on id panel and header for readable layout */
+
+/* Make pills and small titles slightly larger and with letter-spacing */
+.wfrp2e .pill-title, .wfrp2e .section-title { letter-spacing: 0.6px; font-size: 13px; }
+
+/* Accessible focus for inputs */
+.wfrp2e input:focus, .wfrp2e select:focus, .wfrp2e textarea:focus, .wfrp2e button:focus{ outline: 3px solid rgba(108,31,31,0.08); outline-offset: 2px; }
+
+/* Small responsive tweak for very narrow screens */
+@media (max-width:520px){
+  .wfrp2e .race-button{ width:100px; height:72px; font-size:14px; }
+  .wfrp2e .header-grid { grid-template-columns: 1fr; }
+}
+.give-px-container {
+  width: 100%;
+  flex-direction: row-reverse !important;
+  padding-right: 6px;
+}
+.give-px-container div {
+  width:178px;
 }

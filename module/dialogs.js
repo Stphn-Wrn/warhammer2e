@@ -69,7 +69,7 @@ export async function openMaledictionDialog(actor) {
 }
 
 async function resolveEchoTableResult(tableName) {
-  const url = `systems/warhammer2e/echos.json`;
+  const url = `systems/warhammer2e/json/echos.json`;
   const resp = await fetch(url);
   if (!resp.ok) throw new Error(`Impossible de charger ${url}`);
   const data = await resp.json();
@@ -121,7 +121,7 @@ export async function openColereDialog(actor) {
 }
 
 async function resolveColereResult() {
-  const url = `systems/warhammer2e/colere.json`;
+  const url = `systems/warhammer2e/json/colere.json`;
   const resp = await fetch(url);
   if (!resp.ok) throw new Error(`Impossible de charger ${url}`);
   const data = await resp.json();
