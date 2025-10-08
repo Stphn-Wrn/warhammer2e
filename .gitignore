@@ -1,1 +1,3 @@
-./assets/audio/*
+# Ignore all audio assets (recursively). Keep a .gitkeep to preserve the folder in the repo.
+assets/audio/**
+!assets/audio/.gitkeep
