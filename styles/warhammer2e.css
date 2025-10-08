@@ -356,7 +356,6 @@
 @media (max-width:720px){
   .wfrp2e table.coins-grid th, .wfrp2e table.coins-grid td{ padding:8px; }
   .wfrp2e .exchange-image-wrap img{ max-width:140px; }
-  
   .wfrp2e table.coins-grid td.exchange-card{ display:block; width:100%; }
 }
 
@@ -391,7 +390,6 @@
   font-weight: bold;
 }
 
-
 .wfrp2e textarea {
   width: 100%;
   min-height: 80px;
@@ -404,9 +402,6 @@
   box-sizing: border-box;
 }
 
-
-
-
 .wfrp2e nav.tabs {
   display: flex;
   align-items: center;
@@ -416,7 +411,6 @@
   overflow-x: auto;
   scrollbar-width: thin;
 }
-
 
 .wfrp2e nav.tabs .item.gold {
   flex: 0 0 auto;
@@ -435,13 +429,10 @@
   text-transform: uppercase;
 }
 
-
 .wfrp2e nav.tabs .item.gold.active {
   background: #d4b469;
   color: #000;
 }
-
-
 
 .wfrp2e .career-block {
   border: 2px solid var(--line);
@@ -882,12 +873,10 @@
 figcaption {
   font-family:  var(--font-primary);
 }
-td input[type="number"] {
+td input[type="number"], .armor-zone input {
   font-family: sans-serif;
 }
 
-/* ---- UI Polishing additions ---- */
-/* Race button in the header (big clickable tile with subtle subrace line) */
 .wfrp2e .race-button {
   display: inline-flex;
   flex-direction: column;
@@ -919,26 +908,20 @@ td input[type="number"] {
   background: linear-gradient(180deg,#fffaf6,#f7f1ea);
 }
 
-/* Career block emphasis when 'started' */
 .wfrp2e .career-started input[type="checkbox"]{ transform: scale(1.18); margin-right:8px; }
 .wfrp2e .career-card.started { border-color: var(--wfrp-gold); box-shadow: 0 6px 12px rgba(108,31,31,0.06); }
 
-/* Primary style for important buttons */
 .wfrp2e .btn.primary {
   background: linear-gradient(180deg, var(--wfrp-gold), #4f1616);
   color: #fff; border: 1px solid rgba(0,0,0,0.25);
   box-shadow: 0 2px 0 rgba(0,0,0,0.12);
 }
 
-/* Improve spacing on id panel and header for readable layout */
 
-/* Make pills and small titles slightly larger and with letter-spacing */
 .wfrp2e .pill-title, .wfrp2e .section-title { letter-spacing: 0.6px; font-size: 13px; }
 
-/* Accessible focus for inputs */
 .wfrp2e input:focus, .wfrp2e select:focus, .wfrp2e textarea:focus, .wfrp2e button:focus{ outline: 3px solid rgba(108,31,31,0.08); outline-offset: 2px; }
 
-/* Small responsive tweak for very narrow screens */
 @media (max-width:520px){
   .wfrp2e .race-button{ width:100px; height:72px; font-size:14px; }
   .wfrp2e .header-grid { grid-template-columns: 1fr; }
