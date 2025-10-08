@@ -2,13 +2,15 @@
   "id": "warhammer2e",
   "title": "Warhammer 2e",
   "type": "system",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
   },
   "authors": [
-    { "name": "Courbette" }
+    {
+      "name": "Courbette"
+    }
   ],
   "esmodules": [
     "module/utils.js",
@@ -23,14 +25,18 @@
     "styles/warhammer2e.css"
   ],
   "languages": [
-    { "lang": "fr", "name": "Français", "path": "lang/fr.json" }
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "lang/fr.json"
+    }
   ],
   "packs": [],
   "template": "template.json",
   "primaryTokenAttribute": "system.secondary.w",
   "initiative": "1d10",
   "manifest": "https://raw.githubusercontent.com/Stphn-Wrn/warhammer2e/main/system.json",
-  "download": "https://github.com/Stphn-Wrn/warhammer2e/archive/refs/heads/main.zip",
+  "download": "https://github.com/Stphn-Wrn/warhammer2e/releases/download/v1.1.0/warhammer2e.zip",
   "url": "https://github.com/Stphn-Wrn/warhammer2e",
   "background": "systems/warhammer2e/assets/system-banner.jpg",
   "pause": "systems/warhammer2e/assets/logo-pause.png"
