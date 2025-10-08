@@ -2,7 +2,7 @@
   "id": "warhammer2e",
   "title": "Warhammer 2e",
   "type": "system",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
@@ -36,7 +36,7 @@
   "primaryTokenAttribute": "system.secondary.w",
   "initiative": "1d10",
   "manifest": "https://raw.githubusercontent.com/Stphn-Wrn/warhammer2e/main/system.json",
-  "download": "https://github.com/Stphn-Wrn/warhammer2e/releases/download/v1.3.0/warhammer2e.zip",
+  "download": "https://github.com/Stphn-Wrn/warhammer2e/releases/download/v1.4.0/warhammer2e.zip",
   "url": "https://github.com/Stphn-Wrn/warhammer2e",
   "background": "systems/warhammer2e/assets/system-banner.jpg",
   "pause": "systems/warhammer2e/assets/logo-pause.png"
