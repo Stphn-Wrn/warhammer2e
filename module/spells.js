@@ -40,7 +40,7 @@ function sanitizeSpell(spell, sourceKey, index) {
 export async function loadSpells() {
   if (_spellsCache) return _spellsCache;
   try {
-    const res = await fetch('systems/warhammer2e/spells.json');
+    const res = await fetch('systems/warhammer2e/json/spells.json');
     const raw = await res.json();
     const normalized = {};
 
