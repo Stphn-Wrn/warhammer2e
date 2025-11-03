@@ -206,6 +206,212 @@
         "legLeft": 0,
         "legRight": 0
       }
+    },
+    "monster": {
+      "career": {
+        "current": "",
+        "previous": "",
+        "primaryName": "",
+        "secondaryName": "",
+        "tertiaryName": "",
+        "quaternaryName": "",
+        "quinaryName": "",
+        "primary": {
+          "a": 0,
+          "b": 0,
+          "bf": "",
+          "be": "",
+          "mvt": 0,
+          "mag": 0,
+          "pf": "",
+          "pd": "",
+          "skills": "",
+          "talents": "",
+          "outcomes": ""
+        },
+        "secondary": {
+          "a": 0,
+          "b": 0,
+          "bf": "",
+          "be": "",
+          "mvt": 0,
+          "mag": 0,
+          "pf": "",
+          "pd": "",
+          "skills": "",
+          "talents": "",
+          "outcomes": "",
+          "started": false
+        },
+        "tertiary": {
+          "a": 0,
+          "b": 0,
+          "bf": "",
+          "be": "",
+          "mvt": 0,
+          "mag": 0,
+          "pf": "",
+          "pd": "",
+          "skills": "",
+          "talents": "",
+          "outcomes": "",
+          "started": false
+        },
+        "quaternary": {
+          "a": 0,
+          "b": 0,
+          "bf": "",
+          "be": "",
+          "mvt": 0,
+          "mag": 0,
+          "pf": "",
+          "pd": "",
+          "skills": "",
+          "talents": "",
+          "outcomes": "",
+          "started": false
+        },
+        "quinary": {
+          "attacks": 0,
+          "b": 0,
+          "bf": "",
+          "be": "",
+          "mvt": 0,
+          "mag": 0,
+          "pf": "",
+          "pd": "",
+          "skills": "",
+          "talents": "",
+          "outcomes": "",
+          "started": false
+        }
+      },
+      "progression": 0,
+      "bio": {
+        "race": "",
+        "religion": "",
+        "birthplace": "",
+        "astrology": "",
+        "corruption": "",
+        "gender": "",
+        "distinctive": "",
+        "age": "",
+        "height": "",
+        "weight": "",
+        "eyes": "",
+        "skin": "",
+        "hair": "",
+        "description": "",
+        "history": "",
+        "notes": ""
+      },
+      "xp": {
+        "total": 0
+      },
+      "principal": {
+        "base":         { "cc": 0, "ct": 0, "force": 0, "endurance": 0, "agilite": 0, "intelligence": 0, "forceMentale": 0, "sociabilite": 0 },
+        "talents":      { "cc": 0, "ct": 0, "force": 0, "endurance": 0, "agilite": 0, "intelligence": 0, "forceMentale": 0, "sociabilite": 0 },
+        "carriere":     { "cc": 0, "ct": 0, "force": 0, "endurance": 0, "agilite": 0, "intelligence": 0, "forceMentale": 0, "sociabilite": 0 },
+        "avance":       { "cc": 0, "ct": 0, "force": 0, "endurance": 0, "agilite": 0, "intelligence": 0, "forceMentale": 0, "sociabilite": 0 },
+        "mod": { "cc": 0, "ct": 0, "force": 0, "endurance": 0, "agilite": 0, "intelligence": 0, "forceMentale": 0, "sociabilite": 0 },
+        "actuel":       { "cc": 0, "ct": 0, "force": 0, "endurance": 0, "agilite": 0, "intelligence": 0, "forceMentale": 0, "sociabilite": 0 }
+      },
+      "secondaire": {
+        "base":         { "a": 0, "b": 0, "bf": 0, "be": 0, "mag": 0, "mvt": 0, "pf": 0, "pd": 0 },
+        "talents":      { "a": 0, "b": 0, "bf": 0, "be": 0, "mag": 0, "mvt": 0, "pf": 0, "pd": 0 },
+        "carriere":     { "a": 0, "b": 0, "bf": 0, "be": 0, "mag": 0, "mvt": 0, "pf": 0, "pd": 0 },
+        "avance":       { "a": 0, "b": 0, "bf": 0, "be": 0, "mag": 0, "mvt": 0, "pf": 0, "pd": 0 },
+        "mod": { "a": 0, "b": 0, "bf": 0, "be": 0, "mag": 0, "mvt": 0, "pf": 0, "pd": 0 },
+        "actuel":       { "a": 0, "b": 0, "bf": 0, "be": 0, "mag": 0, "mvt": 0, "pf": 0, "pd": 0 }
+      },
+      "points": {
+      "destin": 0,
+      "chance": 0,
+      "folie": 0,
+      "corruption": 0
+    },
+    "skills": {
+    "base": {
+      "soinsAnimaux": { "label": "Soins des animaux", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "charisme": { "label": "Charisme", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "commandement": { "label": "Commandement", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "dissimulation": { "label": "Dissimulation", "cara": "AGI", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "resistanceAlcool": { "label": "Résistance à l'alcool", "cara": "END", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "deguisement": { "label": "Déguisement", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "conduiteAttelage": { "label": "Conduite d'attelages", "cara": "AGI", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "evaluation": { "label": "Évaluation", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "jeu": { "label": "Jeu", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "commerage": { "label": "Commérage", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "marchandage": { "label": "Marchandage", "cara": "SOC", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "intimidation": { "label": "Intimidation", "cara": "FOR", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "survie": { "label": "Survie", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "perception": { "label": "Perception", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "equitation": { "label": "Équitation", "cara": "AGI", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "canotage": { "label": "Canotage", "cara": "FOR", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "escalade": { "label": "Escalade", "cara": "FOR", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "fouille": { "label": "Fouille", "cara": "INT", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "deplacementSilencieux": { "label": "Déplacement Silencieux", "cara": "AGI", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false },
+      "natation": { "label": "Natation", "cara": "FOR", "niveau": 0, "talents": 0, "divers": 0, "total": 0, "avance": false }
+    },
+    "advanced": []
+    },
+    "mag": {
+      "level": 0,
+      "spells": ""
+    },
+  "regles": [],
+  "connaissances": [],
+    "notes": "",
+      "combat": {
+        "ini": 0,
+        "hp": 0,
+        "charge": 0,
+        "move": 0,
+        "jump": 0
+      },
+      "talents": [],
+      "weapons": [],
+      "rangedWeapons": [],
+      "armor": {
+        "head": {
+          "light": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "medium": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "heavy": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 }
+        },
+        "body": {
+          "light": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "medium": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "heavy": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 }
+        },
+        "armLeft": {
+          "light": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "medium": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "heavy": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 }
+        },
+        "armRight": {
+          "light": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "medium": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "heavy": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 }
+        },
+        "legLeft": {
+          "light": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "medium": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "heavy": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 }
+        },
+        "legRight": {
+          "light": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "medium": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
+          "heavy": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 }
+        }
+      },
+      "armorTotals": {
+        "head": 0,
+        "body": 0,
+        "armLeft": 0,
+        "armRight": 0,
+        "legLeft": 0,
+        "legRight": 0
+      }
     }
   },
   "Item": {
