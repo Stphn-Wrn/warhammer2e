@@ -397,7 +397,7 @@ Hooks.once("init", function () {
   CONFIG.Item.documentClass = WarhammerItem;
 
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("warhammer2e", WarhammerActorSheet, { types: ["character","npc"], makeDefault: true });
+  Actors.registerSheet("warhammer2e", WarhammerActorSheet, { types: ["character", "monster"], makeDefault: true });
 
   try {
     const _origRender = WarhammerActorSheet.prototype.render;
@@ -413,6 +413,13 @@ Hooks.once("init", function () {
 
   registerHandlebarsHelpers();
   preloadHandlebarsTemplates();
+});
+
+Hooks.on("preCreateToken", (token, options, userId) => {
+  const actor = token.actor;
+  if (actor?.type === "monster") {
+    token.updateSource({ actorLink: false });
+  }
 });
 
 Hooks.once('ready', () => {
