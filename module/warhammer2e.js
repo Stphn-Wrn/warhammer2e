@@ -422,79 +422,102 @@ Hooks.on("preCreateToken", (token, options, userId) => {
   }
 });
 
-Hooks.once('ready', () => {
-  try {
-    if (typeof Combatant !== 'undefined' && Combatant.prototype && Combatant.prototype.rollInitiative) {
-      const _origRollInitiative = Combatant.prototype.rollInitiative;
-      Combatant.prototype.rollInitiative = async function(options = {}) {
-        const actor = this.actor || (this.token ? this.token.actor : null) || (this.actorId ? game.actors.get(this.actorId) : null);
-        const agilite = actor?.system?.principal?.actuel?.agilite ? Number(actor.system.principal.actuel.agilite) : 0;
-        const tens = Math.floor((agilite || 0) / 10);
+Hooks.on("renderActorSheet", (app, html, data) => {
+  const img = html[0]?.querySelector('[data-action="showPortrait"]');
+  if (!img) return;
 
-  const count = 1 + (tens || 0);
-  const expr = `${count}d10`;
+  img.addEventListener("click", async (event) => {
+    event.stopImmediatePropagation();
+    event.preventDefault();
 
-  const roll = await new Roll(expr).evaluate();
-  const total = roll.total;
+    const actor = app.actor;
+    const imagePath = actor?.img;
+    if (!imagePath) return;
 
-        if (options.update !== false) {
-          try { await this.update({ initiative: total }); } catch (e) { console.error('Failed to set initiative on combatant', e); }
-        }
-
-        try {
-          const speaker = ChatMessage.getSpeaker({ actor });
-          const faces = (roll.dice || []).flatMap(d => (d.results || []).map(r => r.result));
-          const facesStr = faces.length ? faces.join(' + ') : '';
-          const content = `<div class="initiative-roll"><strong>${actor?.name || 'Combatant'}</strong> — Initiative : <strong>${total}</strong>${facesStr ? ` (result ${facesStr})` : ''}</div>`;
-          ChatMessage.create({ user: game.user.id, speaker, content });
-        } catch (e) { console.warn('Failed to create initiative chat message', e); }
-
-        return roll;
-      };
-      console.log('Warhammer2e | Patched Combatant.rollInitiative to use 1d10 + 1d10 per 10 Agilité');
+    if (!game.user.isGM) {
+      return new ImagePopout(imagePath, {
+        title: actor.name,
+        shareable: false
+      }).render(true);
     }
-    try {
-      if (typeof Combat !== 'undefined' && Combat.prototype && Combat.prototype.rollAll) {
-        const _origRollAll = Combat.prototype.rollAll;
-        Combat.prototype.rollAll = async function(options = {}) {
-          try {
-            await _origRollAll.call(this, options);
-          } catch (err) {
-          }
 
-          const results = [];
-          for (const c of this.combatants) {
-            try {
-              const actor = c.actor || (c.token ? c.token.actor : null) || (c.actorId ? game.actors.get(c.actorId) : null) || null;
-              const agilite = actor?.system?.principal?.actuel?.agilite ? Number(actor.system.principal.actuel.agilite) : 0;
-              const tens = Math.floor((agilite || 0) / 10);
-              const count = 1 + (tens || 0);
-              const expr = `${count}d10`;
-              const roll = await new Roll(expr).evaluate();
-              const total = roll.total;
-              if (options.update !== false) {
-                try { await c.update({ initiative: total }); } catch (e) { console.warn('Warhammer2e | Failed to update combatant initiative', e); }
-              }
-              try {
-                const speaker = ChatMessage.getSpeaker({ actor });
-                const faces = (roll.dice || []).flatMap(d => (d.results || []).map(r => r.result));
-                const facesStr = faces.length ? faces.join(' + ') : '';
-                const content = `<div class="initiative-roll"><strong>${actor?.name || 'Combatant'}</strong> — Initiative : <strong>${total}</strong>${facesStr ? ` (result ${facesStr})` : ''}</div>`;
-                ChatMessage.create({ user: game.user.id, speaker, content });
-              } catch (e) {}
-              results.push({ combatant: c, roll, total });
-            } catch (err) {
-              console.warn('Warhammer2e | rollAll failed for combatant', err);
-            }
-          }
-          return results;
-        };
-        console.log('Warhammer2e | Patched Combat.rollAll to use system initiative formula');
-      }
-    } catch (err) { console.warn('Warhammer2e | Unable to patch Combat.rollAll', err); }
-  } catch (err) {
-    console.warn('Warhammer2e | Unable to patch Combatant.rollInitiative', err);
-  }
+    const content = `
+      <div class="portrait-dialog" style="
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+      ">
+        <img src="${imagePath}" style="
+          max-width:100%;
+          max-height:65vh;
+          border-radius:6px;
+          border:1px solid #000;
+          box-shadow:0 0 12px rgba(0,0,0,0.8);
+          margin-bottom:1rem;
+        "/>
+        <div class="portrait-buttons" style="
+          display:flex;
+          gap:10px;
+          justify-content:center;
+          margin-top:5px;
+        ">
+          <button type="button" class="show-all">
+            <i class="fas fa-eye"></i> Montrer à tout le monde
+          </button>
+          <button type="button" class="edit-img">
+            <i class="fas fa-edit"></i> Modifier l'image
+          </button>
+        </div>
+      </div>
+    `;
+
+    const dlg = new Dialog({
+      title: `Portrait de ${actor.name}`,
+      content,
+      buttons: {},
+      render: (html) => {
+        html[0].querySelector(".show-all")?.addEventListener("click", async () => {
+          await ChatMessage.create({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor }),
+            content: `
+              <div class="portrait-broadcast" style="text-align:center;">
+                <h3 style="margin-bottom:8px;">${actor.name}</h3>
+                <img src="${imagePath}" style="max-width:280px; border:2px solid #3a2a1c; border-radius:6px; box-shadow:0 0 6px rgba(0,0,0,0.5);" />
+              </div>
+            `
+          });
+
+          const popout = new ImagePopout(imagePath, {
+            title: actor.name,
+            shareable: true
+          });
+          popout.render(true);
+          popout.shareImage();
+        });
+
+        html[0].querySelector(".edit-img")?.addEventListener("click", async () => {
+          const fp = new FilePicker({
+            type: "image",
+            current: imagePath || "icons/",
+            callback: async (path) => {
+              await actor.update({ img: path });
+              ui.notifications.info(`${actor.name} : portrait mis à jour.`);
+              dlg.close();
+            },
+            top: Math.min(window.innerHeight - 700, window.innerHeight / 2 - 350),
+            left: Math.min(window.innerWidth - 720, window.innerWidth / 2 - 360)
+          });
+          fp.render(true);
+        });
+      },
+      default: ""
+    }, { width: 650, height: "auto", resizable: true });
+
+    dlg.render(true);
+  });
 });
 
 async function _resolveEchoTableResult(tableName) {
@@ -560,3 +583,17 @@ async function _resolveColereResult() {
   if (!result) return `Jet: ${val} — Aucun résultat trouvé.`;
   return `Jet: ${val} — ${result.text}`;
 }
+
+Hooks.once("ready", () => {
+  Combatant.prototype._getInitiativeFormula = function() {
+    const actor = this.actor;
+    if (!actor) return "1d10";
+
+    const agilite = Number(actor.system.principal?.actuel?.agilite) || 0;
+    const nbDes = 1 + Math.floor(agilite / 10);
+    const formula = Array(nbDes).fill("1d10").join(" + ");
+
+    console.debug(`Warhammer 2e | ${actor.name} -> formule initiative = ${formula}`);
+    return formula;
+  };
+});
