@@ -24,7 +24,6 @@
     display: grid;
     grid-template-columns: 380px 1fr;
     gap: 16px;
-    align-items: center;
   }
   .wfrp2e .logo-wrap img { max-width: 100%; height: auto; display: block; }
   
@@ -885,7 +884,9 @@ figcaption {
 td input[type="number"] {
   font-family: sans-serif;
 }
-
+thead { 
+  background-color: var(--wfrp-gold);
+}
 /* ---- UI Polishing additions ---- */
 /* Race button in the header (big clickable tile with subtle subrace line) */
 .wfrp2e .race-button {
@@ -950,4 +951,44 @@ td input[type="number"] {
 }
 .give-px-container div {
   width:178px;
+}
+/* ====== Bandeau portrait + logo ====== */
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+  margin-bottom: 8px;
+}
+.logo-col {
+      justify-content: space-evenly;
+    display: flex;
+    flex-direction: column;
+}
+.portrait-wrap {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.actor-portrait {
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  border: 2px solid #3a2a1c;
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+}
+
+.actor-portrait:hover {
+  filter: brightness(1.2);
+  transform: scale(1.03);
+}
+
+.logo-wrap img {
+  width: auto;
+  display: block;
 }
