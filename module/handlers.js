@@ -3,23 +3,7 @@ import { openGrantXpDialog } from './xp.js';
 import { _recalculateDiceMin, _recalculateDiceMinRanged, getZoneFromD100, handleUlricFury, rollDiceFaces } from './utils.js';
 
 export function wireSheetHandlers(sheet, html) {
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
   try {
-    
-    
-    
-    
-    
     html.find('input[type="number"]').each((_, el) => {
       try {
         const $el = $(el);
@@ -34,9 +18,7 @@ export function wireSheetHandlers(sheet, html) {
           
     const step = $el.attr('step');
     const nameAttr = ($el.attr('name') || '');
-    
-    
-    
+
     const isCareerField = nameAttr.startsWith('system.principal.carriere') || nameAttr.startsWith('system.career.');
     if (step && String(step).indexOf('.') === -1 && Number(step) === 1 && !isCareerField) $el.val(Math.round(n));
     else $el.val(n);
@@ -51,9 +33,7 @@ export function wireSheetHandlers(sheet, html) {
 
   
   html.find('.armor-equip').on('change', async ev => {
-    
-    
-    
+
     try { ev.preventDefault(); ev.stopImmediatePropagation(); } catch(e){}
     const input = ev.currentTarget; 
     const $input = $(input);
@@ -1757,89 +1737,6 @@ export function wireSheetHandlers(sheet, html) {
     const newBfActuel = (baseBf || 0) + (modBf || 0);
     await updateWeaponsBfFromActor(newBfActuel);
   });
-
-  
-  html.find('.combat-roll[data-attr="initiative"]').on('click', async ev => {
-    ev.preventDefault();
-    const actor = sheet.actor;
-    const agilite = Number(actor.system.principal?.actuel?.agilite) || 0;
-    const tens = Math.floor(agilite / 10);
-
-    try {
-  
-      const baseRoll = await new Roll('1d10').evaluate();
-      let total = baseRoll.total;
-
-  
-  let detailsHtml = '';
-
-      
-      let extraRolls = [];
-      if (tens > 0) {
-        extraRolls = [];
-        for (let i = 0; i < tens; i++) {
-          const r = await new Roll('1d10').evaluate();
-          extraRolls.push(r);
-          total += r.total;
-        }
-      }
-
-      
-      try {
-        const baseRendered = await baseRoll.render();
-        const extrasRendered = extraRolls.length ? extraRolls.map(r => r.total).join(' + ') : '';
-        detailsHtml = `<div class="roll-details">${baseRendered}${extrasRendered ? `<div class="extra-rolls">${extrasRendered}</div>` : ''}</div>`;
-      } catch (e) {
-        
-        detailsHtml = '';
-      }
-
-      
-      const combat = game.combat;
-      if (combat && combat.combatants && (combat.round === 0 || !combat.started)) {
-        
-        const combatant = combat.combatants.find(c => c.actor?.id === actor.id || c.token?.actorId === actor.id);
-        if (combatant) {
-          try {
-            await combatant.update({ initiative: total });
-            
-              const content = `
-              <div class="initiative-roll">
-                Initiative : <strong>${total}</strong>
-              </div>
-            `;
-            ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content });
-          } catch (e) {
-            console.error('Unable to set combatant initiative', e);
-            ui.notifications.warn('Impossible de définir l\'initiative sur le combatant');
-          }
-        } else {
-          
-          const content = `
-            <div class="initiative-roll">
-              Initiative : <strong>${total}</strong>
-              <div>${detailsHtml}</div>
-            </div>
-          `;
-          ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content });
-        }
-      } else {
-        
-        const content = `
-          <div class="initiative-roll">
-            <strong>${actor.name}</strong> — Initiative : <strong>${total}</strong>
-            <div class="roll-details">${await baseRoll.render()}${tens > 0 ? extraRolls.map(r => `<div class="roll-details">${r.total}</div>`).join('') : ''}</div>
-            <div>${detailsHtml}</div>
-          </div>
-        `;
-        ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content });
-      }
-    } catch (err) {
-      console.error('Initiative roll failed', err);
-      ui.notifications.error('Erreur lors du jet d\'initiative');
-    }
-  });
-
   
   html.find(".weapons-table.melee").on("change", "input[name*='bonusCC'], select[name*='quality']", ev => {
     const $row = $(ev.currentTarget).closest('tr');
