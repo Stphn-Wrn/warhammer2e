@@ -2,15 +2,26 @@
 <div class="wfrp2e">
   <header class="header">
     <div class="header-grid">
-      <div class="logo-col">
-        <div class="logo-wrap">
-          <img src="https://imgsrv.roll20.net/?src=https%3A//i.imgur.com/yXgvZ1G.png" alt="Warhammer Fantasy Roleplay (2nd edition)">
-        </div>
-        <div class="name-wrap">
-          <input class="char-name" type="text" name="name" value="{{actor.name}}">
-          <div class="field-label">Nom du personnage</div>
-        </div>
-      </div>
+<div class="logo-col">
+  <div class="header-row">
+    <div class="portrait-wrap">
+<img src="{{actor.img}}" 
+     data-action="showPortrait"
+     title="{{actor.name}}" 
+     class="actor-portrait" />    </div>
+
+    <div class="logo-wrap">
+      <img src="https://imgsrv.roll20.net/?src=https%3A//i.imgur.com/yXgvZ1G.png" alt="Warhammer Fantasy Roleplay (2nd edition)">
+    </div>
+  </div>
+
+  <div class="name-wrap">
+    <input class="char-name" type="text" name="name" value="{{actor.name}}">
+    <div class="field-label">Nom du personnage</div>
+  </div>
+</div>
+
+
 
       <div class="id-col">
         <div class="id-panel">
