@@ -218,6 +218,8 @@
         <th>Nom</th>
         <th>Type</th>
         <th>Cara</th>
+        <th>Talents</th>
+        <th>Divers</th>
         <th>Valeur</th>
         <th>Jet</th>
         <th>Supp.</th>
@@ -225,41 +227,55 @@
     </thead>
     <tbody>
       {{#each system.connaissances as |connaissance i|}}
-      <tr>
-        <td>
-          <input type="hidden" name="system.connaissances.{{i}}.id" value="{{connaissance.id}}">
-          <input type="text" name="system.connaissances.{{i}}.name" value="{{connaissance.name}}" placeholder="Nom de la connaissance">
-        </td>
-        <td>
-          <select name="system.connaissances.{{i}}.type" class="connaissance-type">
-            <option value="generale" {{#if (eq connaissance.type "generale")}}selected{{/if}}>Générale</option>
-            <option value="academique" {{#if (eq connaissance.type "academique")}}selected{{/if}}>Académique</option>
-            <option value="artistique" {{#if (eq connaissance.type "artistique")}}selected{{/if}}>Expr. Artistique</option>
-            <option value="metier" {{#if (eq connaissance.type "metier")}}selected{{/if}}>Métier</option>
-          </select>
-        </td>
-        <td>
-          <select name="system.connaissances.{{i}}.cara" class="connaissance-cara">
-            <option value="cc" {{#if (eq connaissance.cara "cc")}}selected{{/if}}>CC</option>
-            <option value="ct" {{#if (eq connaissance.cara "ct")}}selected{{/if}}>CT</option>
-            <option value="force" {{#if (eq connaissance.cara "force")}}selected{{/if}}>FOR</option>
-            <option value="endurance" {{#if (eq connaissance.cara "endurance")}}selected{{/if}}>END</option>
-            <option value="agilite" {{#if (eq connaissance.cara "agilite")}}selected{{/if}}>AGI</option>
-            <option value="intelligence" {{#if (eq connaissance.cara "intelligence")}}selected{{/if}}>INT</option>
-            <option value="forceMentale" {{#if (eq connaissance.cara "forceMentale")}}selected{{/if}}>FM</option>
-            <option value="sociabilite" {{#if (eq connaissance.cara "sociabilite")}}selected{{/if}}>SOC</option>
-          </select>
-        </td>
-        <td>
-          <input type="number" class="connaissance-target" value="{{connaissance.targetValue}}" readonly>
-        </td>
-        <td>
-          <button type="button" class="connaissance-roll button" data-index="{{i}}">🎲</button>
-        </td>
-        <td>
-          <button type="button" class="connaissance-delete" data-connaissance-id="{{connaissance.id}}">🗑</button>
-        </td>
-      </tr>
+<tr>
+  <td>
+    <input type="hidden" name="system.connaissances.{{i}}.id" value="{{connaissance.id}}">
+    <input type="text" name="system.connaissances.{{i}}.name" value="{{connaissance.name}}" placeholder="Nom de la connaissance">
+  </td>
+
+  <td>
+    <select name="system.connaissances.{{i}}.type" class="connaissance-type">
+      <option value="generale"   {{#if (eq connaissance.type "generale")}}selected{{/if}}>Générale</option>
+      <option value="academique" {{#if (eq connaissance.type "academique")}}selected{{/if}}>Académique</option>
+      <option value="artistique" {{#if (eq connaissance.type "artistique")}}selected{{/if}}>Expr. Artistique</option>
+      <option value="metier"     {{#if (eq connaissance.type "metier")}}selected{{/if}}>Métier</option>
+    </select>
+  </td>
+
+  <td>
+    <select name="system.connaissances.{{i}}.cara" class="connaissance-cara">
+      <option value="cc"            {{#if (eq connaissance.cara "cc")}}selected{{/if}}>CC</option>
+      <option value="ct"            {{#if (eq connaissance.cara "ct")}}selected{{/if}}>CT</option>
+      <option value="force"         {{#if (eq connaissance.cara "force")}}selected{{/if}}>FOR</option>
+      <option value="endurance"     {{#if (eq connaissance.cara "endurance")}}selected{{/if}}>END</option>
+      <option value="agilite"       {{#if (eq connaissance.cara "agilite")}}selected{{/if}}>AGI</option>
+      <option value="intelligence"  {{#if (eq connaissance.cara "intelligence")}}selected{{/if}}>INT</option>
+      <option value="forceMentale"  {{#if (eq connaissance.cara "forceMentale")}}selected{{/if}}>FM</option>
+      <option value="sociabilite"   {{#if (eq connaissance.cara "sociabilite")}}selected{{/if}}>SOC</option>
+    </select>
+  </td>
+
+  <td>
+    <input type="number" name="system.connaissances.{{i}}.talents" class="connaissance-talents" value="{{connaissance.talents}}">
+  </td>
+
+  <td>
+    <input type="number" name="system.connaissances.{{i}}.divers" class="connaissance-divers" value="{{connaissance.divers}}">
+  </td>
+
+  <td>
+    <input type="number" class="connaissance-target" name="system.connaissances.{{i}}.targetValue" value="{{connaissance.targetValue}}" readonly>
+  </td>
+
+  <td>
+    <button type="button" class="connaissance-roll button" data-index="{{i}}">🎲</button>
+  </td>
+
+  <td>
+    <button type="button" class="connaissance-delete" data-connaissance-id="{{connaissance.id}}">🗑</button>
+  </td>
+</tr>
+
       {{/each}}
     </tbody>
   </table>
@@ -301,9 +317,6 @@
     </tbody>
   </table>
 </div>
-
-
-
 
 
 </div>
@@ -536,8 +549,6 @@
       </tbody>
     </table>
   </div>
-
-
   <div class="section">
     <div class="section-title">
   Compétences Avancées
@@ -559,25 +570,18 @@
       <tbody>
         {{#each displayAdvanced as |skill i|}}
         <tr>
-
           <td>
             <input type="hidden" name="system.skills.advanced.{{i}}.id" value="{{skill.id}}" readonly>
             <input type="hidden" name="system.skills.advanced.{{i}}.key" value="{{skill.key}}" readonly>
             <input type="text" name="system.skills.advanced.{{i}}.label" value="{{skill.label}}" readonly>
           </td>
-
-
           <td>
             <input type="text" name="system.skills.advanced.{{i}}.cara" value="{{skill.cara}}" readonly>
           </td>
-
-
           <td><input type="number" name="system.skills.advanced.{{i}}.niveau" value="{{skill.niveau}}" ></td>
           <td><input type="number" name="system.skills.advanced.{{i}}.talents" value="{{skill.talents}}" ></td>
           <td><input type="number" name="system.skills.advanced.{{i}}.divers" value="{{skill.divers}}"></td>
           <td><input type="number" name="system.skills.advanced.{{i}}.total" value="{{advancedSkillTotal skill ../system}}" readonly></td>
-
-
           <td><button type="button" class="skill-roll" data-skill="{{i}}">🎲</button></td>
           <td><input type="checkbox" name="system.skills.advanced.{{i}}.avance" {{checked skill.avance}}></td>
         </tr>
