@@ -493,8 +493,18 @@ export function wireSheetHandlers(sheet, html) {
       $cara.removeClass('locked');
     }
     const statValue = getStatValue(cara);
+    // read talents/divers if present and add to statValue
+    let talents = 0;
+    let divers = 0;
+    try {
+      const tRaw = ($row.find("input[name$='.talents']").val() || $row.find('.connaissance-talents').val() || '0').toString().replace(/,/g, '.');
+      const dRaw = ($row.find("input[name$='.divers']").val() || $row.find('.connaissance-divers').val() || '0').toString().replace(/,/g, '.');
+      talents = Number(tRaw) || 0;
+      divers = Number(dRaw) || 0;
+    } catch (e) { talents = 0; divers = 0; }
+    const total = (Number(statValue) || 0) + talents + divers;
     const $target = $row.find('.connaissance-target');
-    if ($target.length) $target.val(statValue);
+    if ($target.length) $target.val(total);
   };
 
   const bindConnaissanceRow = $row => {
@@ -508,6 +518,8 @@ export function wireSheetHandlers(sheet, html) {
       }
       updateConnaissanceRowState($row);
     });
+    // also update when talents/divers change
+    $row.find('.connaissance-talents, .connaissance-divers').off('.connaissance').on('change.connaissance', () => updateConnaissanceRowState($row));
     updateConnaissanceRowState($row);
   };
 
@@ -569,7 +581,13 @@ export function wireSheetHandlers(sheet, html) {
             </select>
           </td>
           <td>
-            <input type="number" class="connaissance-target" value="${intValue}" readonly>
+            <input type="number" name="system.connaissances.${nextIndex}.talents" class="connaissance-talents" value="0">
+          </td>
+          <td>
+            <input type="number" name="system.connaissances.${nextIndex}.divers" class="connaissance-divers" value="0">
+          </td>
+          <td>
+            <input type="number" name="system.connaissances.${nextIndex}.targetValue" class="connaissance-target" value="${intValue}" readonly>
           </td>
           <td>
             <button type="button" class="connaissance-roll button">🎲</button>
@@ -584,6 +602,8 @@ export function wireSheetHandlers(sheet, html) {
       $row.find('.connaissance-roll').on('click', handleConnaissanceRoll);
       $row.find('.connaissance-delete').on('click', ev2 => { ev2.preventDefault(); $row.remove(); });
       bindConnaissanceRow($row);
+      // bind talents/divers changes for dynamic row
+      $row.find('.connaissance-talents, .connaissance-divers').on('change', () => updateConnaissanceRowState($row));
       setTimeout(() => { try { $row[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch(e){} }, 50);
       ui.notifications.info('Nouvelle connaissance ajoutée');
     } catch (err) {
@@ -755,6 +775,28 @@ export function wireSheetHandlers(sheet, html) {
     await sheet.actor.update({ [name]: parsed });
       } catch (err) {  }
     });
+
+  // Notes validate button: persist textarea value and update display span
+  html.find('.notes-validate').on('click', async ev => {
+    try {
+      ev.preventDefault();
+      const $btn = $(ev.currentTarget);
+      const $section = $btn.closest('.section');
+      const $textarea = $section.find('textarea[name="system.bio.notes"]');
+      if (!$textarea.length) return;
+      const raw = ($textarea.val() || '').toString();
+      // suppress the next automatic render to avoid DOM shift, update UI manually
+      try { sheet._suppressNextRender = true; } catch(e){}
+      await sheet.actor.update({ 'system.bio.notes': raw });
+      // update span in UI (manual, since we suppressed re-render)
+      const $span = $section.find('.notes-value');
+      if ($span.length) $span.text(raw);
+      ui.notifications.info('Notes sauvegardées');
+    } catch (err) {
+      console.error('Unable to persist bio notes', err);
+      ui.notifications.error('Impossible de sauvegarder les notes');
+    }
+  });
 
     
     const mapSecondaryToPrincipal = {
@@ -2017,9 +2059,12 @@ export function wireSheetHandlers(sheet, html) {
                   if (attrText) summary.push(`<div><strong>Attribut :</strong> ${attrText}</div>`);
 
                   
-                  summary.push(`<hr><div><strong>Dégâts ${best.total}</strong></div>`);
-                  
-                  summary.push(`<div style="margin-top:6px"><strong>Lancer de dé</strong></div>`);
+                  summary.push(`<div><strong>Dégats de l'arme :</strong> ${baseKept}</div>`);
+                  summary.push(`<div><strong>BF + Dégâts de l'arme :</strong> ${modifiers}</div>`);
+                  if (Number(circDegatsBonus))  summary.push(`<div><strong>Dégâts bonus :</strong> ${circDegatsBonus}</div>`);
+                  summary.push(`<div><strong>Fureur :</strong> ${extrasSum}</div>`);
+                  summary.push(`<hr><div><strong>Total :</strong> ${best.total}</div>`);
+
                   summary.push(`<div class="roll-details">${await best.rollObj.render()}</div>`);
                   if (best.extras && best.extras.length) summary.push(`<div style="margin-top:6px"><strong>Dés observés (Fureur) :</strong> ${best.extras.join(', ')} — <em>le plus élevé (${best.highestDie}) est pris en compte</em></div>`);
                   if (d2) {
@@ -2030,7 +2075,6 @@ export function wireSheetHandlers(sheet, html) {
                     summary.push(`<div style="margin-left:12px; margin-top:6px; color:darkred"><strong>Fureur d'Ulric:</strong><br>${best.furyLogs.map(l => `<div>${l}</div>`).join('')}</div>`);
                     
                   }
-                  if (Number(circDegatsBonus)) summary.push(`<div style="margin-left:12px; margin-top:6px;"><strong>Dégâts bonus :</strong> ${Number(circDegatsBonus)}</div>`);
 
                   ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content: `<div class="spell-cast-result">${summary.join('')}</div>` });
                 } catch (err) {
@@ -2190,9 +2234,15 @@ export function wireSheetHandlers(sheet, html) {
                 best.extras = extraFaces;
                 best.furyLogs = furyLogs;
                 best.highestDie = baseKept;
-
+                
                 const damageParts = [];
-                damageParts.push(`<div><strong>Dégâts :</strong> ${best.total}</div>`);
+                damageParts.push(`<div><strong>Dégats de l'arme :</strong> ${baseKept}</div>`);
+                damageParts.push(`<div><strong>BF + Dégâts de l'arme :</strong> ${modifiers}</div>`);
+                  if (Number(circDegatsBonus))  damageParts.push(`<div><strong>Dégâts bonus :</strong> ${circDegatsBonus}</div>`);
+                damageParts.push(`<div><strong>Fureur :</strong> ${extrasSum}</div>`);
+                damageParts.push(`<hr><div><strong>Total :</strong> ${best.total}</div>`);
+
+                if (circDegatsBonus) damageParts.push(`<div><strong>Dégâts bonus :</strong> ${circDegatsBonus}</div>`);
                 damageParts.push(`<div class="roll-details">${await best.rollObj.render()}</div>`);
                 if (extraFaces.length) damageParts.push(`<div><strong>Dés observés (Fureur) :</strong> ${extraFaces.join(', ')} — <em>le plus élevé (${best.highestDie}) est pris en compte</em></div>`);
                 if (d2) {
@@ -2200,7 +2250,6 @@ export function wireSheetHandlers(sheet, html) {
                   damageParts.push(`<div><em>Percutant :</em><div class="roll-details">${await other.rollObj.render()}</div></div>`);
                 }
                 if (furyLogs.length) damageParts.push(`<div style="color:darkred"><strong>Fureur d'Ulric:</strong><br>${furyLogs.map(l => `<div>${l}</div>`).join('')}</div>`);
-                if (circDegatsBonus) damageParts.push(`<div><strong>Dégâts bonus :</strong> ${circDegatsBonus}</div>`);
 
                 return damageParts.join('');
               };
