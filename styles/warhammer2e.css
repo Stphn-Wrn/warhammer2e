@@ -644,6 +644,10 @@
   gap: 8px;
 }
 
+.armor-points-grid > div:last-child {
+  grid-column: 1 / -1;
+}
+
 .armor-zone.full {
   grid-column: span 2; 
   text-align: center;
