@@ -131,6 +131,53 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
+  Hooks.on('renderChatMessage', (app, html, data) => {
+    try {
+      html.find('.reroll-roll').off('click').on('click', async ev => {
+        ev.preventDefault();
+        const btn = ev.currentTarget;
+        const $btn = $(btn);
+        const actorId = $btn.data('actor-id');
+        const target = Number($btn.data('target')) || 0;
+        const modifier = Number($btn.data('modifier')) || 0;
+        const actor = game.actors.get(actorId);
+        if (!actor) { ui.notifications.error('Acteur introuvable pour la relance'); return; }
+
+        const currentChance = Number(actor.system?.points?.chance) || 0;
+        if (currentChance <= 0) { ui.notifications.warn('Pas assez de points de chance pour relancer'); return; }
+
+        try { await actor.update({ 'system.points.chance': currentChance - 1 }); } catch (e) { console.error('Unable to consume chance for reroll', e); ui.notifications.error('Impossible de consommer un point de chance'); return; }
+
+        const roll = new Roll('1d100');
+        await roll.evaluate();
+        const result = roll.total;
+        const success = result <= target;
+        const degrees = Math.floor(Math.abs(target - result) / 10);
+        const resultText = success ? `<span style="color:green;"><strong>RÉUSSITE</strong>${degrees?` avec ${degrees} degré${degrees>1?'s':''}`:''}</span>` : `<span style="color:red;"><strong>ÉCHEC</strong>${degrees?` avec ${degrees} degré${degrees>1?'s':''}`:''}</span>`;
+
+        let container = $btn.closest('.skill-roll-result');
+        if (!container.length) container = $btn.closest('.stat-roll-result');
+        if (!container.length) container = $btn.closest('.parade-roll');
+        if (!container.length) container = $btn.closest('.weapon-attack-roll');
+        // If the button isn't a child of the expected container, try to find the container inside the same chat message
+        if (!container.length) {
+          const msgRoot = $btn.closest('.message, .chat-message, .message-content');
+          if (msgRoot && msgRoot.length) {
+            const nested = msgRoot.find('.weapon-attack-roll').first();
+            if (nested && nested.length) container = nested;
+          }
+        }
+        if (container.length) {
+          const info = `<div class="reroll-result">Relance : ${result} — ${resultText}</div>`;
+          container.append(info);
+          $btn.prop('disabled', true).text('Relancé');
+        } else {
+          ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content: `Relance: ${result} — ${resultText}` });
+        }
+      });
+    } catch (e) { console.error('Error wiring reroll buttons', e); }
+  });
+
   
   html.find("input[name$='.bonus']").on('change', async ev => {
     
@@ -1642,13 +1689,17 @@ export function wireSheetHandlers(sheet, html) {
                 else resultText = `<span style="color: red;"><strong>ÉCHEC</strong> avec ${degrees} degré${degrees > 1 ? 's' : ''}</span>`;
               }
 
-              const contentMsg = `
+              let contentMsg = `
                 <div class="stat-roll-result">
                   <h3>Jet ${label}</h3>
                   <div><strong>Bonus/Malus :</strong> ${bonusText}</div>
                   <div><strong>Résultat :</strong> <strong>${total}</strong> vs <strong>${target}</strong></div>
                   <div>${resultText}</div>
                   <div class="roll-details">${await roll.render()}</div>
+                  <br/>
+                  <div class="reroll-controls">
+                    <button class="reroll-roll" data-actor-id="${actor?.id || ''}" data-target="${target}" data-modifier="${total - target}">Relancer (Coût: 1 Chance)</button>
+                  </div>
                 </div>
               `;
 
@@ -1983,7 +2034,7 @@ export function wireSheetHandlers(sheet, html) {
               const circBonusNum = Number(circBonus) || 0;
               const circDisplay = circBonusNum !== 0 ? (circBonusNum > 0 ? `+${circBonusNum}` : `${circBonusNum}`) : '';
 
-              const contentMsg = `
+              let contentMsg = `
                 <div class="weapon-attack-roll">
                   <strong>${name}</strong>
                   <div><strong>Objectif :</strong> ${finalTarget}</div>
@@ -1991,6 +2042,11 @@ export function wireSheetHandlers(sheet, html) {
                   ${circDisplay ? `<div><strong>Circonstance :</strong> ${circDisplay}</div>` : ''}
                   <div style="color:${success ? 'green' : 'red'}"><strong>${success ? 'RÉUSSITE' : 'ÉCHEC'}</strong></div>
                   ${zoneHtml}
+                  <br/>
+                  <div class="reroll-controls">
+                    <button class="reroll-roll" data-actor-id="${actor?.id || ''}" data-target="${finalTarget}" data-modifier="${raw - finalTarget}">Relancer (Coût: 1 Chance)</button>
+                  </div>
+                  <br/>
                 </div>`;
               
               if (!success) {
@@ -2183,6 +2239,7 @@ export function wireSheetHandlers(sheet, html) {
               summaryParts.push(`<div><strong>Jet d'attaque :</strong> <strong>${raw}</strong></div>`);
               if (circDisplay) summaryParts.push(`<div><strong>Circonstance :</strong> ${circDisplay}</div>`);
               summaryParts.push(`<div style="color:${success ? 'green' : 'red'}"><strong>${success ? 'RÉUSSITE' : 'ÉCHEC'}</strong></div>`);
+              summaryParts.push(`<br/><div class="reroll-controls"><button class="reroll-roll" data-actor-id="${actor?.id || ''}" data-target="${finalTarget}" data-modifier="${raw - finalTarget}">Relancer (Coût: 1 Chance)</button></div><br/>`);
 
               if (!success) {
                 const failContent = `${summaryParts.join('')}<div class="roll-details">${await attackRoll.render()}</div>`;
@@ -2326,13 +2383,18 @@ export function wireSheetHandlers(sheet, html) {
       const total = roll.total;
       const success = total <= target;
 
-      const content = `
+      let content = `
         <div class="parade-roll">
           <strong>Parade — ${name}</strong>
           <div><strong>Objectif :</strong> ${target}</div>
           <div><strong>Jet :</strong> <strong>${total}</strong></div>
           <div style="color:${success ? 'green' : 'red'}"><strong>${success ? 'RÉUSSITE' : 'ÉCHEC'}</strong></div>
           <div class="roll-details">${await roll.render()}</div>
+          <br/>
+          <div class="reroll-controls">
+            <button class="reroll-roll" data-actor-id="${actor?.id || ''}" data-target="${target}" data-modifier="${total - target}">Relancer (Coût: 1 Chance)</button>
+          </div>
+          <br/>
         </div>
       `;
       ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content });

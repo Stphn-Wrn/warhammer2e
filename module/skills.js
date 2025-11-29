@@ -141,5 +141,18 @@ export async function rollSkillTest(sheet, skillName, targetNumber, modifier) {
     sound: CONFIG.sounds.dice
   };
 
+    chatData.content = `
+      <div class="skill-roll-result">
+        <h3>Jet de ${skillDisplayName}</h3>
+        <div><strong>Cible:</strong> ${targetNumber}${modifier !== 0 ? ` (${targetNumber - modifier}${modifier >= 0 ? '+' : ''}${modifier})` : ''}</div>
+        <div><strong>Résultat:</strong> ${result}</div>
+        <div>${resultText}</div>
+        </br>
+        <div class="reroll-controls">
+          <button class="reroll-roll" data-actor-id="${sheet.actor.id}" data-target="${targetNumber}" data-modifier="${modifier}">Relancer (Coût: 1 Chance)</button>
+        </div>
+      </div>
+    `;
+
   ChatMessage.create(chatData);
 }
