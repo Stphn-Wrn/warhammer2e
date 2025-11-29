@@ -1773,6 +1773,30 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
+    html.find('.apply-armor-agility-penalty').off('change').on('change', async ev => {
+    try {
+      const input = ev.currentTarget;
+      const checked = !!input.checked;
+        const updates = { 'system.armor.applyAgilityPenalty': checked };
+        // Use a one-shot flag so the -10 is applied only once
+        const alreadyApplied = !!sheet.actor.system?.armor?.agilityPenaltyAppliedOnce;
+        if (checked && !alreadyApplied) {
+          const currentMod = sheet.actor.system.principal?.mod ? foundry.utils.deepClone(sheet.actor.system.principal.mod) : {};
+          currentMod.agilite = (Number(currentMod.agilite) || 0) - 10;
+          updates['system.principal.mod'] = currentMod;
+          updates['system.armor.agilityPenaltyAppliedOnce'] = true;
+        }
+        await sheet.actor.update(updates);
+        try { foundry.utils.setProperty(sheet.actor, 'system.armor.applyAgilityPenalty', checked); } catch(e){}
+        try { if (updates['system.principal.mod']) foundry.utils.setProperty(sheet.actor, 'system.principal.mod', updates['system.principal.mod']); } catch(e){}
+        try { if (updates['system.armor.agilityPenaltyAppliedOnce']) foundry.utils.setProperty(sheet.actor, 'system.armor.agilityPenaltyAppliedOnce', updates['system.armor.agilityPenaltyAppliedOnce']); } catch(e){}
+        try { sheet.render(false); } catch(e){}
+        if (checked) ui.notifications.info("Malus d'agilité appliqué (-10)");
+    } catch (err) {
+      console.error('Unable to apply armor agility penalty', err);
+      ui.notifications.error('Impossible d\'appliquer le malus d\'agilité');
+    }
+  });
   
   html.find("input[name='system.principal.base.ct']").on('change', async ev => {
     const input = ev.currentTarget;
