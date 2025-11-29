@@ -1695,6 +1695,33 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
+  // Apply armor movement penalty checkbox: when checked apply -1 to system.secondaire.mod.mvt once; unchecking does nothing
+  html.find('.apply-armor-move-penalty').off('change').on('change', async ev => {
+    try {
+      const input = ev.currentTarget;
+      const checked = !!input.checked;
+      // Persist checkbox state under system.armor.applyMovePenalty
+      const updates = { 'system.armor.applyMovePenalty': checked };
+      // Only apply -1 movement once. Track with system.armor.movePenaltyAppliedOnce
+      const alreadyApplied = !!sheet.actor.system?.armor?.movePenaltyAppliedOnce;
+      if (checked && !alreadyApplied) {
+        const currentMod = sheet.actor.system.secondaire?.mod ? foundry.utils.deepClone(sheet.actor.system.secondaire.mod) : {};
+        currentMod.mvt = (Number(currentMod.mvt) || 0) - 1;
+        updates['system.secondaire.mod'] = currentMod;
+        updates['system.armor.movePenaltyAppliedOnce'] = true;
+      }
+      await sheet.actor.update(updates);
+      try { foundry.utils.setProperty(sheet.actor, 'system.armor.applyMovePenalty', checked); } catch(e){}
+      try { if (updates['system.secondaire.mod']) foundry.utils.setProperty(sheet.actor, 'system.secondaire.mod', updates['system.secondaire.mod']); } catch(e){}
+      try { if (updates['system.armor.movePenaltyAppliedOnce']) foundry.utils.setProperty(sheet.actor, 'system.armor.movePenaltyAppliedOnce', updates['system.armor.movePenaltyAppliedOnce']); } catch(e){}
+      try { sheet.render(false); } catch(e){}
+      if (checked) ui.notifications.info('Malus de mouvement appliqué (-1)');
+    } catch (err) {
+      console.error('Unable to apply armor movement penalty', err);
+      ui.notifications.error('Impossible d\'appliquer le malus de mouvement');
+    }
+  });
+
   
   html.find("input[name='system.principal.base.ct']").on('change', async ev => {
     const input = ev.currentTarget;
