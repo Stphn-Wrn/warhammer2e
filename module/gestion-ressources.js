@@ -18,7 +18,7 @@ export class GestionRessourcesApp extends Application {
 
     html.find("input[name='reset-luck']").on('click', async (ev) => {
       ev.preventDefault();
-      const actorIds = game.actors.filter(a => a.type === 'character').map(a => a.id);
+      const actorIds = game.actors.filter(a => a.type === 'character' || a.type === 'monster').map(a => a.id);
       for (const aid of actorIds) {
         try {
           const actor = game.actors.get(aid);
@@ -33,7 +33,7 @@ export class GestionRessourcesApp extends Application {
 
     html.find("input[name='heal-all']").on('click', async (ev) => {
       ev.preventDefault();
-      const actorIds = game.actors.filter(a => a.type === 'character').map(a => a.id);
+      const actorIds = game.actors.filter(a => a.type === 'character' || a.type === 'monster').map(a => a.id);
       for (const aid of actorIds) {
         try {
           const actor = game.actors.get(aid);
