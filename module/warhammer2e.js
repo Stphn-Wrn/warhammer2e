@@ -122,6 +122,27 @@ class WarhammerActorSheet extends ActorSheet {
       agilite: sumPrincipal("agilite"), intelligence: sumPrincipal("intelligence"), forceMentale: sumPrincipal("forceMentale"), sociabilite: sumPrincipal("sociabilite")
     };
 
+    try {
+      const armorZones = ["head","body","armLeft","armRight","legLeft","legRight"];
+      const hasMediumOutsideHead = armorZones.some(z => {
+        if (z === 'head') return false;
+        return (sys.armor?.[z]?.medium?.eq || '').toString().toUpperCase() === 'YES';
+      });
+      const agiliteRaw = Number(sys.principal.actuel.agilite) || 0;
+      sys.principal.actuel.agiliteRaw = agiliteRaw;
+      if (hasMediumOutsideHead) {
+        const agiliteEff = Math.floor(agiliteRaw * 0.9);
+        sys.principal.actuel.agilite = agiliteEff;
+        sys.armor ??= {};
+        sys.armor.mediumAgilityPenaltyPercent = 10;
+        sys.armor.mediumAgilityPenaltyApplied = true;
+      } else {
+        sys.armor ??= {};
+        sys.armor.mediumAgilityPenaltyPercent = 0;
+        sys.armor.mediumAgilityPenaltyApplied = false;
+      }
+    } catch (e) { /* ignore penalty calc errors */ }
+
     sys.secondaire ??= {};
     for (const k of ["base", "talents", "carriere", "avance", "mod", "actuel"]) {
       sys.secondaire[k] ??= { a: 0, b: 0, bf: 0, be: 0, mag: 0, mvt: 0, pf: 0, pd: 0 };
@@ -271,7 +292,6 @@ class WarhammerActorSheet extends ActorSheet {
         c.type = normalizedType;
         let cara = (c.cara ?? '').toString();
         if (!allowedConnaissanceCara.includes(cara)) cara = 'intelligence';
-        if (!specialConnaissanceTypes.has(normalizedType)) cara = 'intelligence';
         c.cara = cara;
         const statValue = Number(sys.principal?.actuel?.[cara]) || 0;
         c.targetValue = statValue;
@@ -375,11 +395,42 @@ class WarhammerActorSheet extends ActorSheet {
         if (!allowedCara.includes(cara)) cara = 'intelligence';
         if (!specialTypes.has(normType)) cara = 'intelligence';
         const id = (entry.id !== undefined && entry.id !== null && entry.id !== '') ? entry.id : undefined;
-        const payload = { name, type: normType, cara };
+        const talents = Number(entry.talents ?? 0) || 0;
+        const divers = Number(entry.divers ?? 0) || 0;
+        const statValue = Number(this.actor.system?.principal?.actuel?.[cara]) || 0;
+        const targetValue = Number(entry.targetValue ?? (statValue + talents + divers)) || 0;
+        const payload = { name, type: normType, cara, talents, divers, targetValue };
         if (id !== undefined) payload.id = id;
         sanitized.push(payload);
       }
       updateData.system.connaissances = sanitized;
+    }
+    if (updateData.system.armor) {
+      try {
+        const zones = ["head","body","armLeft","armRight","legLeft","legRight"];
+        const existingArmor = this.actor.system?.armor || {};
+        updateData.system.armor = updateData.system.armor || {};
+        for (const z of zones) {
+          const newZone = updateData.system.armor[z] || {};
+          const oldZone = existingArmor[z] || {};
+          for (const slot of ['light','medium','heavy']) {
+            const newSlot = newZone[slot] || {};
+            const oldSlot = oldZone[slot] || {};
+            if (newSlot.eq !== undefined) {
+              const rawEq = newSlot.eq;
+              const truthy = (rawEq === true) || (String(rawEq).toLowerCase() === 'on') || (String(rawEq).toLowerCase() === 'true') || (String(rawEq).toUpperCase() === 'YES') || (String(rawEq) === '1');
+              newSlot.eq = truthy ? 'YES' : 'NO';
+            } else {
+              newSlot.eq = (oldSlot.eq !== undefined) ? oldSlot.eq : 'NO';
+            }
+            newSlot.name = (newSlot.name !== undefined) ? newSlot.name : (oldSlot.name !== undefined ? oldSlot.name : '');
+            newSlot.qualite = (newSlot.qualite !== undefined) ? newSlot.qualite : (oldSlot.qualite !== undefined ? oldSlot.qualite : 'Ordinaire');
+            newSlot.enc = Number(newSlot.enc ?? oldSlot.enc ?? 0) || 0;
+            newZone[slot] = newSlot;
+          }
+          updateData.system.armor[z] = newZone;
+        }
+      } catch (e) { console.debug('armor preserve merge failed', e); }
     }
     await this.actor.update(updateData);
     try { this.render(false); } catch (e) {}
