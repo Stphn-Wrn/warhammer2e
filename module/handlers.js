@@ -485,15 +485,8 @@ export function wireSheetHandlers(sheet, html) {
     const type = ($type.val() || 'generale').toString().toLowerCase();
     let cara = ($cara.val() || 'intelligence').toString();
     if (!connaissanceAllowedCara.includes(cara)) cara = 'intelligence';
-    if (!isSpecialType(type)) {
-      if (cara !== 'intelligence') $cara.val('intelligence');
-      cara = 'intelligence';
-      $cara.addClass('locked');
-    } else {
-      $cara.removeClass('locked');
-    }
+    $cara.removeClass('locked');
     const statValue = getStatValue(cara);
-    // read talents/divers if present and add to statValue
     let talents = 0;
     let divers = 0;
     try {
@@ -518,7 +511,6 @@ export function wireSheetHandlers(sheet, html) {
       }
       updateConnaissanceRowState($row);
     });
-    // also update when talents/divers change
     $row.find('.connaissance-talents, .connaissance-divers').off('.connaissance').on('change.connaissance', () => updateConnaissanceRowState($row));
     updateConnaissanceRowState($row);
   };
@@ -602,7 +594,6 @@ export function wireSheetHandlers(sheet, html) {
       $row.find('.connaissance-roll').on('click', handleConnaissanceRoll);
       $row.find('.connaissance-delete').on('click', ev2 => { ev2.preventDefault(); $row.remove(); });
       bindConnaissanceRow($row);
-      // bind talents/divers changes for dynamic row
       $row.find('.connaissance-talents, .connaissance-divers').on('change', () => updateConnaissanceRowState($row));
       setTimeout(() => { try { $row[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch(e){} }, 50);
       ui.notifications.info('Nouvelle connaissance ajoutée');
@@ -638,7 +629,12 @@ export function wireSheetHandlers(sheet, html) {
             const cara = ($r.find("select[name$='.cara']").val() || 'intelligence').toString();
             const normalizedType = connaissanceLabels[type] ? type : 'generale';
             const normalizedCara = connaissanceAllowedCara.includes(cara) ? cara : 'intelligence';
-            const obj = { name, type: normalizedType, cara: connaissanceSpecialTypes.has(normalizedType) ? normalizedCara : 'intelligence' };
+            const talents = Number($r.find("input[name$='.talents']").val() || $r.find('.connaissance-talents').val() || 0) || 0;
+            const divers = Number($r.find("input[name$='.divers']").val() || $r.find('.connaissance-divers').val() || 0) || 0;
+            const finalCara = normalizedCara;
+            const statValue = getStatValue(finalCara);
+            const targetValue = Number($r.find("input[name$='.targetValue']").val()) || (statValue + talents + divers);
+            const obj = { name, type: normalizedType, cara: finalCara, talents, divers, targetValue };
             if (id) obj.id = id;
             newConnaissances.push(obj);
           }
@@ -776,7 +772,6 @@ export function wireSheetHandlers(sheet, html) {
       } catch (err) {  }
     });
 
-  // Notes validate button: persist textarea value and update display span
   html.find('.notes-validate').on('click', async ev => {
     try {
       ev.preventDefault();
@@ -785,10 +780,8 @@ export function wireSheetHandlers(sheet, html) {
       const $textarea = $section.find('textarea[name="system.bio.notes"]');
       if (!$textarea.length) return;
       const raw = ($textarea.val() || '').toString();
-      // suppress the next automatic render to avoid DOM shift, update UI manually
       try { sheet._suppressNextRender = true; } catch(e){}
       await sheet.actor.update({ 'system.bio.notes': raw });
-      // update span in UI (manual, since we suppressed re-render)
       const $span = $section.find('.notes-value');
       if ($span.length) $span.text(raw);
       ui.notifications.info('Notes sauvegardées');
