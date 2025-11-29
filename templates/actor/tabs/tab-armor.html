@@ -456,6 +456,10 @@
           <label for="armor-leg-right">Jambe Droite (81-90)</label>
           <input type="number" id="armor-leg-right" name="system.armorTotals.legRight" value="{{system.armorTotals.legRight}}" readonly>
         </div>
+        <div style="margin-top:12px; display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="apply-armor-move-penalty" class="apply-armor-move-penalty" name="system.armor.applyMovePenalty" {{#if system.armor.applyMovePenalty}}checked{{/if}}>
+          <label for="apply-armor-move-penalty">Appliquer malus de mouvement lié à l'armure (-1 mvt)</label>
+        </div>
       </div>
     </div>
   </div>
