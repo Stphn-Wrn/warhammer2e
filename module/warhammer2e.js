@@ -175,6 +175,7 @@ class WarhammerActorSheet extends ActorSheet {
     sys.combat.jump = mvt + 6;
 
     sys.armor ??= {};
+    sys.armor.applyMovePenalty = !!sys.armor.applyMovePenalty;
     const initZone = () => ({ light: { eq: "NO", name: "", qualite: "Ordinaire", enc: 0 }, medium: { eq: "NO", name: "", qualite: "Ordinaire", enc: 0 }, heavy: { eq: "NO", name: "", qualite: "Ordinaire", enc: 0 } });
     for (const zone of ["head", "body", "armLeft", "armRight", "legLeft", "legRight"]) {
       const z = sys.armor[zone];
