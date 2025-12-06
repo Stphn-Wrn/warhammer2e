@@ -33,7 +33,7 @@
             </td>
             <td><input type="number" name="system.armor.head.light.enc" value="{{system.armor.head.light.enc}}"></td>
             <td><input type="number" value="1" readonly></td>
-            <td><input type="number" name="system.armor.head.light.bonus" value="{{system.armor.head.light.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.head.light.bonus" value="{{system.armor.head.light.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 1 system.armor.head.light.bonus}}" readonly></td>
           </tr>
           {{!-- Moyenne --}}
@@ -52,7 +52,7 @@
             </td>
             <td><input type="number" name="system.armor.head.medium.enc" value="{{system.armor.head.medium.enc}}"></td>
             <td><input type="number" value="2" readonly></td>
-            <td><input type="number" name="system.armor.head.medium.bonus" value="{{system.armor.head.medium.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.head.medium.bonus" value="{{system.armor.head.medium.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 2 system.armor.head.medium.bonus}}" readonly></td>
           </tr>
           {{!-- Lourde --}}
@@ -71,7 +71,7 @@
             </td>
             <td><input type="number" name="system.armor.head.heavy.enc" value="{{system.armor.head.heavy.enc}}"></td>
             <td><input type="number" value="2" readonly></td>
-            <td><input type="number" name="system.armor.head.heavy.bonus" value="{{system.armor.head.heavy.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.head.heavy.bonus" value="{{system.armor.head.heavy.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 2 system.armor.head.heavy.bonus}}" readonly></td>
           </tr>
         </tbody>
@@ -103,7 +103,7 @@
             </td>
             <td><input type="number" name="system.armor.body.light.enc" value="{{system.armor.body.light.enc}}"></td>
             <td><input type="number" value="1" readonly></td>
-            <td><input type="number" name="system.armor.body.light.bonus" value="{{system.armor.body.light.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.body.light.bonus" value="{{system.armor.body.light.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 1 system.armor.body.light.bonus}}" readonly></td>
           </tr>
           {{!-- Moyenne --}}
@@ -122,7 +122,7 @@
             </td>
             <td><input type="number" name="system.armor.body.medium.enc" value="{{system.armor.body.medium.enc}}"></td>
             <td><input type="number" value="2" readonly></td>
-            <td><input type="number" name="system.armor.body.medium.bonus" value="{{system.armor.body.medium.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.body.medium.bonus" value="{{system.armor.body.medium.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 2 system.armor.body.medium.bonus}}" readonly></td>
           </tr>
           {{!-- Lourde --}}
@@ -141,7 +141,7 @@
             </td>
             <td><input type="number" name="system.armor.body.heavy.enc" value="{{system.armor.body.heavy.enc}}"></td>
             <td><input type="number" value="2" readonly></td>
-            <td><input type="number" name="system.armor.body.heavy.bonus" value="{{system.armor.body.heavy.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.body.heavy.bonus" value="{{system.armor.body.heavy.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 2 system.armor.body.heavy.bonus}}" readonly></td>
           </tr>
         </tbody>
@@ -173,7 +173,7 @@
             </td>
             <td><input type="number" name="system.armor.armLeft.light.enc" value="{{system.armor.armLeft.light.enc}}"></td>
             <td><input type="number" value="1" readonly></td>
-            <td><input type="number" name="system.armor.armLeft.light.bonus" value="{{system.armor.armLeft.light.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.armLeft.light.bonus" value="{{system.armor.armLeft.light.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 1 system.armor.armLeft.light.bonus}}" readonly></td>
           </tr>
           {{!-- Moyenne --}}
@@ -192,7 +192,7 @@
             </td>
             <td><input type="number" name="system.armor.armLeft.medium.enc" value="{{system.armor.armLeft.medium.enc}}"></td>
             <td><input type="number" value="2" readonly></td>
-            <td><input type="number" name="system.armor.armLeft.medium.bonus" value="{{system.armor.armLeft.medium.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.armLeft.medium.bonus" value="{{system.armor.armLeft.medium.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 2 system.armor.armLeft.medium.bonus}}" readonly></td>
           </tr>
           {{!-- Lourde --}}
@@ -211,7 +211,7 @@
             </td>
             <td><input type="number" name="system.armor.armLeft.heavy.enc" value="{{system.armor.armLeft.heavy.enc}}"></td>
             <td><input type="number" value="2" readonly></td>
-            <td><input type="number" name="system.armor.armLeft.heavy.bonus" value="{{system.armor.armLeft.heavy.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.armLeft.heavy.bonus" value="{{system.armor.armLeft.heavy.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 2 system.armor.armLeft.heavy.bonus}}" readonly></td>
           </tr>
         </tbody>
@@ -243,7 +243,7 @@
             </td>
             <td><input type="number" name="system.armor.armRight.light.enc" value="{{system.armor.armRight.light.enc}}"></td>
             <td><input type="number" value="1" readonly></td>
-            <td><input type="number" name="system.armor.armRight.light.bonus" value="{{system.armor.armRight.light.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.armRight.light.bonus" value="{{system.armor.armRight.light.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 1 system.armor.armRight.light.bonus}}" readonly></td>
           </tr>
           {{!-- Moyenne --}}
@@ -262,7 +262,7 @@
             </td>
             <td><input type="number" name="system.armor.armRight.medium.enc" value="{{system.armor.armRight.medium.enc}}"></td>
             <td><input type="number" value="2" readonly></td>
-            <td><input type="number" name="system.armor.armRight.medium.bonus" value="{{system.armor.armRight.medium.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.armRight.medium.bonus" value="{{system.armor.armRight.medium.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 2 system.armor.armRight.medium.bonus}}" readonly></td>
           </tr>
           {{!-- Lourde --}}
@@ -281,7 +281,7 @@
             </td>
             <td><input type="number" name="system.armor.armRight.heavy.enc" value="{{system.armor.armRight.heavy.enc}}"></td>
             <td><input type="number" value="2" readonly></td>
-            <td><input type="number" name="system.armor.armRight.heavy.bonus" value="{{system.armor.armRight.heavy.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.armRight.heavy.bonus" value="{{system.armor.armRight.heavy.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 2 system.armor.armRight.heavy.bonus}}" readonly></td>
           </tr>
         </tbody>
@@ -313,7 +313,7 @@
             </td>
             <td><input type="number" name="system.armor.legLeft.light.enc" value="{{system.armor.legLeft.light.enc}}"></td>
             <td><input type="number" value="1" readonly></td>
-            <td><input type="number" name="system.armor.legLeft.light.bonus" value="{{system.armor.legLeft.light.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.legLeft.light.bonus" value="{{system.armor.legLeft.light.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 1 system.armor.legLeft.light.bonus}}" readonly></td>
           </tr>
           {{!-- Moyenne --}}
@@ -332,7 +332,7 @@
             </td>
             <td><input type="number" name="system.armor.legLeft.medium.enc" value="{{system.armor.legLeft.medium.enc}}"></td>
             <td><input type="number" value="2" readonly></td>
-            <td><input type="number" name="system.armor.legLeft.medium.bonus" value="{{system.armor.legLeft.medium.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.legLeft.medium.bonus" value="{{system.armor.legLeft.medium.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 2 system.armor.legLeft.medium.bonus}}" readonly></td>
           </tr>
           {{!-- Lourde --}}
@@ -351,7 +351,7 @@
             </td>
             <td><input type="number" name="system.armor.legLeft.heavy.enc" value="{{system.armor.legLeft.heavy.enc}}"></td>
             <td><input type="number" value="2" readonly></td>
-            <td><input type="number" name="system.armor.legLeft.heavy.bonus" value="{{system.armor.legLeft.heavy.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.legLeft.heavy.bonus" value="{{system.armor.legLeft.heavy.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 2 system.armor.legLeft.heavy.bonus}}" readonly></td>
           </tr>
         </tbody>
@@ -383,7 +383,7 @@
             </td>
             <td><input type="number" name="system.armor.legRight.light.enc" value="{{system.armor.legRight.light.enc}}"></td>
             <td><input type="number" value="1" readonly></td>
-            <td><input type="number" name="system.armor.legRight.light.bonus" value="{{system.armor.legRight.light.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.legRight.light.bonus" value="{{system.armor.legRight.light.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 1 system.armor.legRight.light.bonus}}" readonly></td>
           </tr>
           {{!-- Moyenne --}}
@@ -402,7 +402,7 @@
             </td>
             <td><input type="number" name="system.armor.legRight.medium.enc" value="{{system.armor.legRight.medium.enc}}"></td>
             <td><input type="number" value="2" readonly></td>
-            <td><input type="number" name="system.armor.legRight.medium.bonus" value="{{system.armor.legRight.medium.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.legRight.medium.bonus" value="{{system.armor.legRight.medium.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 2 system.armor.legRight.medium.bonus}}" readonly></td>
           </tr>
           {{!-- Lourde --}}
@@ -421,7 +421,7 @@
             </td>
             <td><input type="number" name="system.armor.legRight.heavy.enc" value="{{system.armor.legRight.heavy.enc}}"></td>
             <td><input type="number" value="2" readonly></td>
-            <td><input type="number" name="system.armor.legRight.heavy.bonus" value="{{system.armor.legRight.heavy.bonus}}"></td>
+            <td><input type="number" class="armor-bonus" name="system.armor.legRight.heavy.bonus" value="{{system.armor.legRight.heavy.bonus}}" {{#unless editable}}readonly{{/unless}}></td>
             <td><input type="number" value="{{sum 2 system.armor.legRight.heavy.bonus}}" readonly></td>
           </tr>
         </tbody>
@@ -457,11 +457,25 @@
           <input type="number" id="armor-leg-right" name="system.armorTotals.legRight" value="{{system.armorTotals.legRight}}" readonly>
         </div>
         <div style="margin-top:12px; display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" id="apply-armor-move-penalty" class="apply-armor-move-penalty" name="system.armor.applyMovePenalty" {{#if system.armor.applyMovePenalty}}checked{{/if}}>
+          <input type="hidden" name="system.armor.applyMovePenalty" value="false">
+          <input type="checkbox"
+            id="apply-armor-move-penalty"
+            class="apply-armor-move-penalty"
+            name="system.armor.applyMovePenalty"
+            value="true"
+            {{#if system.armor.applyMovePenalty}}checked{{/if}}
+          >
           <label for="apply-armor-move-penalty">Appliquer malus de mouvement lié à l'armure</label>
         </div>
         <div style="margin-top:12px; display:flex; align-items:center; gap:8px;">
-          <input type="checkbox" id="apply-armor-agility-penalty" class="apply-armor-agility-penalty" name="system.armor.applyAgilityPenalty" {{#if system.armor.applyAgilityPenalty}}checked{{/if}}>
+          <input type="hidden" name="system.armor.applyAgilityPenalty" value="false">
+          <input type="checkbox"
+            id="apply-armor-agility-penalty"
+            class="apply-armor-agility-penalty"
+            name="system.armor.applyAgilityPenalty"
+            value="true"
+            {{#if system.armor.applyAgilityPenalty}}checked{{/if}}
+          >
           <label for="apply-armor-agility-penalty">Appliquer malus d'agilité lié à l'armure</label>
         </div>
       </div>
