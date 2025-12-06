@@ -168,11 +168,20 @@ export function wireSheetHandlers(sheet, html) {
           }
         }
         if (container.length) {
-          const info = `<div class="reroll-result">Relance : ${result} — ${resultText}</div>`;
-          container.append(info);
+          const messageId = $btn.closest('.chat-message').data('message-id');
+          const message = game.messages.get(messageId);
+
+          const html = message.content + `</br><div class="reroll-result">Relance : ${result} — ${resultText}</div>`;
+          message.update({ content: html });
+
           $btn.prop('disabled', true).text('Relancé');
+
         } else {
-          ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content: `Relance: ${result} — ${resultText}` });
+          ChatMessage.create({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor }),
+            content: `Relance: ${result} — ${resultText}`
+          });
         }
       });
     } catch (e) { console.error('Error wiring reroll buttons', e); }
