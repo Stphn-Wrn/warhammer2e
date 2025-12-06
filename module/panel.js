@@ -3,7 +3,7 @@ import { GestionRessourcesApp } from "./gestion-ressources.js";
 Hooks.on("getSceneControlButtons", controls => {
   controls.tokens.tools.myTool = {
     name: "myTool",
-    title: "Gestion Des Ressources",
+    title: "Gestion des Ressources",
     icon: "fa-solid fa-wrench",
     order: Object.keys(controls.tokens.tools).length,
     button: true,
