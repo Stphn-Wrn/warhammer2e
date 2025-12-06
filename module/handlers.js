@@ -4,6 +4,30 @@ import { _recalculateDiceMin, _recalculateDiceMinRanged, getZoneFromD100, handle
 
 export function wireSheetHandlers(sheet, html) {
   try {
+    // Normalize boolean-ish fields that may have been persisted as strings
+    try {
+      const armor = sheet.actor?.system?.armor || {};
+      const updates = {};
+      if (typeof armor.applyMovePenalty === 'string') {
+        const v = (armor.applyMovePenalty || '').toString().toLowerCase();
+        updates['system.armor.applyMovePenalty'] = (v === 'true');
+      }
+      if (typeof armor.applyAgilityPenalty === 'string') {
+        const v = (armor.applyAgilityPenalty || '').toString().toLowerCase();
+        updates['system.armor.applyAgilityPenalty'] = (v === 'true');
+      }
+      if (typeof armor.movePenaltyAppliedOnce === 'string') {
+        const v = (armor.movePenaltyAppliedOnce || '').toString().toLowerCase();
+        updates['system.armor.movePenaltyAppliedOnce'] = (v === 'true');
+      }
+      if (typeof armor.agilityPenaltyAppliedOnce === 'string') {
+        const v = (armor.agilityPenaltyAppliedOnce || '').toString().toLowerCase();
+        updates['system.armor.agilityPenaltyAppliedOnce'] = (v === 'true');
+      }
+      if (Object.keys(updates).length) {
+        try { sheet.actor.update(updates); } catch(e) { /* best-effort */ }
+      }
+    } catch(e) { /* ignore normalization errors */ }
     html.find('input[type="number"]').each((_, el) => {
       try {
         const $el = $(el);
@@ -61,7 +85,10 @@ export function wireSheetHandlers(sheet, html) {
       const clickedName = $input.attr('name') || '';
       const bonusField = clickedName.replace(/\.eq$/, '.bonus');
       const $bonusInput = html.find(`input[name='${bonusField}']`);
-      if ($bonusInput.length) $bonusInput.prop('disabled', !checked);
+      if ($bonusInput.length) {
+        $bonusInput.prop('readonly', !checked);
+        $bonusInput.toggleClass('editable', !!checked);
+      }
     } catch(e) {  }
 
     
@@ -131,6 +158,24 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
+  // Initialize armor bonus inputs readonly/editable state based on equipped checkboxes
+  try {
+    html.find('.armor-equip').each((_, el) => {
+      try {
+        const $el = $(el);
+        const val = ($el.val() || '').toString().toUpperCase().trim();
+        const isEquipped = (val === 'YES') || ($el.is(':checkbox') && $el.prop('checked'));
+        const clickedName = $el.attr('name') || '';
+        const bonusField = clickedName.replace(/\.eq$/, '.bonus');
+        const $bonusInput = html.find(`input[name='${bonusField}']`);
+        if ($bonusInput.length) {
+          $bonusInput.prop('readonly', !isEquipped);
+          $bonusInput.toggleClass('editable', !!isEquipped);
+        }
+      } catch (e) { /* ignore per-row errors */ }
+    });
+  } catch (e) { /* ignore init errors */ }
+
   Hooks.on('renderChatMessage', (app, html, data) => {
     try {
       html.find('.reroll-roll').off('click').on('click', async ev => {
@@ -191,6 +236,16 @@ export function wireSheetHandlers(sheet, html) {
   html.find("input[name$='.bonus']").on('change', async ev => {
     
     try { ev.preventDefault(); ev.stopImmediatePropagation(); } catch(e){}
+    if (!sheet.actor?.isOwner && !sheet?.isEditable) {
+      ui.notifications.warn('Vous n\'avez pas la permission de modifier les bonus d\'armure sur cette fiche.');
+      // reset value to actor value
+      const input = ev.currentTarget;
+      const $input = $(input);
+      const name = input.name || '';
+      const actorVal = Number(sheet.actor?.system?.armor?.[name.split('.')[2]]?.[name.split('.')[3]]?.bonus) || 0;
+      $input.val(actorVal);
+      return;
+    }
     const input = ev.currentTarget;
     const $input = $(input);
     const name = input.name || '';
@@ -1758,55 +1813,74 @@ export function wireSheetHandlers(sheet, html) {
   // Apply armor movement penalty checkbox: when checked apply -1 to system.secondaire.mod.mvt once; unchecking does nothing
   html.find('.apply-armor-move-penalty').off('change').on('change', async ev => {
     try {
-      const input = ev.currentTarget;
-      const checked = !!input.checked;
-      // Persist checkbox state under system.armor.applyMovePenalty
+      try { ev.preventDefault(); ev.stopImmediatePropagation(); } catch(e){}
+      const checked = ev.currentTarget.checked;
+
       const updates = { 'system.armor.applyMovePenalty': checked };
-      // Only apply -1 movement once. Track with system.armor.movePenaltyAppliedOnce
-      const alreadyApplied = !!sheet.actor.system?.armor?.movePenaltyAppliedOnce;
+
+      const alreadyApplied = !!sheet.actor.system.armor.movePenaltyAppliedOnce;
+
       if (checked && !alreadyApplied) {
-        const currentMod = sheet.actor.system.secondaire?.mod ? foundry.utils.deepClone(sheet.actor.system.secondaire.mod) : {};
+        const currentMod = foundry.utils.deepClone(sheet.actor.system.secondaire.mod || {});
         currentMod.mvt = (Number(currentMod.mvt) || 0) - 1;
+
         updates['system.secondaire.mod'] = currentMod;
         updates['system.armor.movePenaltyAppliedOnce'] = true;
       }
+
+      if (!checked && alreadyApplied) {
+        // retirer le -1
+        const currentMod = foundry.utils.deepClone(sheet.actor.system.secondaire.mod || {});
+        currentMod.mvt = (Number(currentMod.mvt) || 0) + 1;
+
+        updates['system.secondaire.mod'] = currentMod;
+        updates['system.armor.movePenaltyAppliedOnce'] = false;
+      }
+
       await sheet.actor.update(updates);
-      try { foundry.utils.setProperty(sheet.actor, 'system.armor.applyMovePenalty', checked); } catch(e){}
-      try { if (updates['system.secondaire.mod']) foundry.utils.setProperty(sheet.actor, 'system.secondaire.mod', updates['system.secondaire.mod']); } catch(e){}
-      try { if (updates['system.armor.movePenaltyAppliedOnce']) foundry.utils.setProperty(sheet.actor, 'system.armor.movePenaltyAppliedOnce', updates['system.armor.movePenaltyAppliedOnce']); } catch(e){}
-      try { sheet.render(false); } catch(e){}
+
       if (checked) ui.notifications.info('Malus de mouvement appliqué (-1)');
-    } catch (err) {
-      console.error('Unable to apply armor movement penalty', err);
-      ui.notifications.error('Impossible d\'appliquer le malus de mouvement');
+      else ui.notifications.info('Malus de mouvement retiré');
+    }
+    catch (err) {
+      console.error(err);
     }
   });
 
-    html.find('.apply-armor-agility-penalty').off('change').on('change', async ev => {
+  html.find('.apply-armor-agility-penalty').off('change').on('change', async ev => {
     try {
-      const input = ev.currentTarget;
-      const checked = !!input.checked;
-        const updates = { 'system.armor.applyAgilityPenalty': checked };
-        // Use a one-shot flag so the -10 is applied only once
-        const alreadyApplied = !!sheet.actor.system?.armor?.agilityPenaltyAppliedOnce;
-        if (checked && !alreadyApplied) {
-          const currentMod = sheet.actor.system.principal?.mod ? foundry.utils.deepClone(sheet.actor.system.principal.mod) : {};
-          currentMod.agilite = (Number(currentMod.agilite) || 0) - 10;
-          updates['system.principal.mod'] = currentMod;
-          updates['system.armor.agilityPenaltyAppliedOnce'] = true;
-        }
-        await sheet.actor.update(updates);
-        try { foundry.utils.setProperty(sheet.actor, 'system.armor.applyAgilityPenalty', checked); } catch(e){}
-        try { if (updates['system.principal.mod']) foundry.utils.setProperty(sheet.actor, 'system.principal.mod', updates['system.principal.mod']); } catch(e){}
-        try { if (updates['system.armor.agilityPenaltyAppliedOnce']) foundry.utils.setProperty(sheet.actor, 'system.armor.agilityPenaltyAppliedOnce', updates['system.armor.agilityPenaltyAppliedOnce']); } catch(e){}
-        try { sheet.render(false); } catch(e){}
-        if (checked) ui.notifications.info("Malus d'agilité appliqué (-10)");
-    } catch (err) {
-      console.error('Unable to apply armor agility penalty', err);
-      ui.notifications.error('Impossible d\'appliquer le malus d\'agilité');
+      try { ev.preventDefault(); ev.stopImmediatePropagation(); } catch(e){}
+      const checked = ev.currentTarget.checked;
+
+      const updates = { 'system.armor.applyAgilityPenalty': checked };
+      const alreadyApplied = !!sheet.actor.system.armor.agilityPenaltyAppliedOnce;
+
+      if (checked && !alreadyApplied) {
+        const currentMod = foundry.utils.deepClone(sheet.actor.system.principal.mod || {});
+        currentMod.agilite = (Number(currentMod.agilite) || 0) - 10;
+
+        updates['system.principal.mod'] = currentMod;
+        updates['system.armor.agilityPenaltyAppliedOnce'] = true;
+      }
+
+      if (!checked && alreadyApplied) {
+        const currentMod = foundry.utils.deepClone(sheet.actor.system.principal.mod || {});
+        currentMod.agilite = (Number(currentMod.agilite) || 0) + 10;
+
+        updates['system.principal.mod'] = currentMod;
+        updates['system.armor.agilityPenaltyAppliedOnce'] = false;
+      }
+
+      await sheet.actor.update(updates);
+
+      if (checked) ui.notifications.info('Malus d’agilité appliqué (-10)');
+      else ui.notifications.info('Malus d’agilité retiré');
+    }
+    catch (err) {
+      console.error(err);
     }
   });
-  
+
   html.find("input[name='system.principal.base.ct']").on('change', async ev => {
     const input = ev.currentTarget;
     const newCt = Math.max(1, Number(input.value) || 0);
