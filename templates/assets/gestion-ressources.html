@@ -1,15 +1,36 @@
 <form class="gestion-ressources flexcol">
-
   <h2>Gestion des Ressources</h2>
-  <div class="option-line">
-    <input type="button" name="reset-luck" style="width:20px; height: 20px;"/>
-    <label for="reset-luck">Réattribuer les Points de Chance</label>
+  <div class="option-line flexcol">
+    <div class="option-control">
+      <input type="button" name="reset-luck" style="width:20px; height:20px;" />
+      <label for="reset-luck">Donner la totalité des points de chance</label>
+    </div>
+    <select name="reset-luck-target" class="resource-target"></select>
+    <input type="number"
+           name="reset-luck-value"
+           class="resource-value"
+           min="0"
+           placeholder="Donner X points de chance" />
+    <input type="button"
+           name="reset-luck-custom"
+           value="Appliquer la valeur"
+           class="apply-custom" />
   </div>
-
-  <div class="option-line">
-    <input type="button" name="heal-all" style="width:20px; height: 20px;"/>
-    <label for="heal-all">Redonner tous les points de Blessures</label>
+  <div class="option-line flexcol" style="margin-top: 12px;">
+    <div class="option-control">
+      <input type="button" name="heal-all" style="width:20px; height:20px;" />
+      <label for="heal-all">Donner la totalité des points de blessure</label>
+    </div>
+    <select name="heal-all-target" class="resource-target"></select>
+    <input type="number"
+           name="heal-all-value"
+           class="resource-value"
+           min="0"
+           placeholder="Donner X points de blessure" />
+    <input type="button"
+           name="heal-all-custom"
+           value="Appliquer la valeur"
+           class="apply-custom" />
   </div>
-
   <hr />
 </form>
