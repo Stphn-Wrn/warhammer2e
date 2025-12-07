@@ -3,11 +3,11 @@
   <h2>Gestion des Ressources</h2>
 
   <div class="option-line flexcol">
-    
     <div class="option-control">
-      <input type="button" name="reset-luck" style="width:20px; height:20px;" />
-      <label for="reset-luck">Donner la totalité des points de chance</label>
+      <input type="button" name="reset-luck"  style="width:20px; height:20px;" />
+      <label for="reset-luck">Donner les points de chance*</label>
     </div>
+
     <select name="reset-luck-target" class="resource-target"></select>
 
     <input type="number"
@@ -16,18 +16,13 @@
            min="0"
            placeholder="Donner X points de chance" />
 
-    <input type="button"
-           name="reset-luck-custom"
-           value="Appliquer la valeur"
-           class="apply-custom" />
-
+    <p class="hint">* Ne pas sélectionner d'acteur applique à tout le monde</p>
   </div>
 
   <div class="option-line flexcol" style="margin-top: 12px;">
-
     <div class="option-control">
-      <input type="button" name="heal-all" style="width:20px; height:20px;" />
-      <label for="heal-all">Donner la totalité des points de blessure</label>
+      <input type="button" name="heal-all"  style="width:20px; height:20px;" />
+      <label for="heal-all">Donner les points de blessure*</label>
     </div>
 
     <select name="heal-all-target" class="resource-target"></select>
@@ -38,47 +33,45 @@
            min="0"
            placeholder="Donner X points de blessure" />
 
-    <input type="button"
-           name="heal-all-custom"
-           value="Appliquer la valeur"
-           class="apply-custom" />
+    <p class="hint">* Ne pas sélectionner d'acteur applique à tout le monde</p>
   </div>
+
   <hr />
 
-<div class="option-line flexcol" style="margin-top: 12px;">
-  <h3 style="margin-bottom: 6px;">Coup Critique</h3>
-  <label>Localisation du Critique :</label>
-  <select name="critique-zone" class="critique-zone">
-    <option value="">-- Choisir une zone --</option>
-    <option value="tete">Coup critique à la Tête</option>
-    <option value="bras">Coup critique au Bras</option>
-    <option value="corps">Coup critique au Corps</option>
-    <option value="jambe">Coup critique à la Jambe</option>
-    <option value="feu">Coup critique lié au Feu</option>
-  </select>
+  <div class="option-line flexcol" style="margin-top: 12px;">
 
+    <h3 style="margin-bottom: 6px;">Coup Critique</h3>
 
-  <label>Résultat du d100</label>
-  <input type="number"
-        name="critique-roll-d100"
-        class="critique-roll-d100"
-        min="1" max="100"
-        placeholder="Entrez le résultat du d100" />
+    <label>Localisation du Critique :</label>
+    <select name="critique-zone" class="critique-zone resource-target">
+      <option value="">-- Choisir une zone --</option>
+      <option value="tete">Coup critique à la Tête</option>
+      <option value="bras">Coup critique au Bras</option>
+      <option value="corps">Coup critique au Corps</option>
+      <option value="jambe">Coup critique à la Jambe</option>
+      <option value="feu">Coup critique lié au Feu</option>
+    </select>
 
-  <label>Valeur du coup critique</label>
-  <input type="number"
-        name="critique-roll-value"
-        class="critique-roll-value"
-        min="1" max="10"
-        placeholder="Entrez la valeur du coup critique"/>
+    <label>Résultat du d100</label>
+    <input type="number"
+          name="critique-roll-d100"
+          class="resource-value"
+          min="1" max="100"
+          placeholder="Entrez le résultat du d100" />
 
+    <label>Valeur du coup critique</label>
+    <input type="number"
+          name="critique-roll-value"
+          class="resource-value"
+          min="1" max="10"
+          placeholder="Entrez la valeur du coup critique"/>
 
-  <input type="button"
-         name="apply-critique"
-         class="apply-custom"
-         value="Lancer le Critique"
-         style="margin-top: 6px;" />
+    <input type="button"
+           name="apply-critique"
+           class="apply-custom"
+           value="Lancer le Critique"
+           style="margin-top: 6px;" />
 
-</div>
+  </div>
 
 </form>
