@@ -1414,9 +1414,6 @@ export function wireSheetHandlers(sheet, html) {
           } catch (err) {  }
         });
       } catch (e) {  }
-
-    
-    
     
     const mapPrimarySecondaryToSecondaire = {
       'attacks': 'a',
@@ -1453,11 +1450,8 @@ export function wireSheetHandlers(sheet, html) {
       } catch (e) {  }
     });
   } catch (e) {  }
-
   
   try { computeTotalCO(); } catch (e) {}
-
-  
   try {
     html.find('.armor-equip').each((_, el) => {
       try {
@@ -1471,12 +1465,7 @@ export function wireSheetHandlers(sheet, html) {
         $bonusInput.prop('disabled', !isEquipped);
       } catch (e) {  }
     });
-  } catch (e) {  }
-
-  
-  
-  
-  
+  } catch (e) {  }  
   try {
     html.find('.armor-tables, .armor-table').on('change', "input[name*='system.armor'][name$='.name'], input[name*='system.armor'][name$='.enc'], select[name*='system.armor'][name$='.qualite']", async ev => {
       try {
@@ -1495,9 +1484,6 @@ export function wireSheetHandlers(sheet, html) {
       } catch (err) {  }
     });
   } catch (e) {  }
-
-  
-
   
   html.find("table.skills-table .skill-delete").on('click', ev => {
     ev.preventDefault();
@@ -1518,7 +1504,6 @@ export function wireSheetHandlers(sheet, html) {
     });
   });
 
-  
   html.find('.skill-roll').on('click', ev => {
     ev.preventDefault();
     const button = ev.currentTarget;
@@ -1562,7 +1547,6 @@ export function wireSheetHandlers(sheet, html) {
     const skillTotal = niveau + talents + divers + caracBase;
     sheet._showSkillRollDialog(skillName, skillTotal);
   });
-
   
   const spellsSection = html.find('.spells-section');
   if (spellsSection.length) {
@@ -1695,8 +1679,6 @@ export function wireSheetHandlers(sheet, html) {
       }
     });
   }
-
-  
   
   if (!game.user.isGM) {
     html.find('.xp-grant').hide();
@@ -1706,7 +1688,6 @@ export function wireSheetHandlers(sheet, html) {
     if (!game.user.isGM) return ui.notifications.warn('Seul le MJ peut attribuer des PX');
     openGrantXpDialog(sheet);
   });
-
   
   html.find('.stat-roll').on('click', ev => {
     ev.preventDefault();
@@ -1727,59 +1708,74 @@ export function wireSheetHandlers(sheet, html) {
       content,
       buttons: {
         roll: {
-          label: 'Lancer',
+          label: "Lancer",
           callback: async (dlgHtml) => {
             const bonus = Number(dlgHtml.find('#stat-bonus').val()) || 0;
-
-            const baseVal = Number(actor.system.principal?.actuel?.[attr]) || 0;
-            const target = baseVal + bonus;
-
-            try {
-              const roll = await new Roll('1d100').evaluate();
-              const total = roll.total;
-              const success = total <= target;
-              const labels = { cc: 'de CC', ct: 'de CT', force: 'de Force', endurance: 'd\'Endurance', agilite: 'd\'Agilité', intelligence: 'd\'Intelligence', forceMentale: 'de Force Mentale', sociabilite: 'de Sociabilité' };
-              const label = labels[attr] || attr;
-              
-              const bonusText = bonus !== 0 ? (bonus > 0 ? `+${bonus}` : `${bonus}`) : '0';
-
-              const degrees = Math.floor(Math.abs(target - total) / 10);
-              let resultText = '';
-              if (success) {
-                if (degrees === 0) resultText = `<span style="color: green;"><strong>RÉUSSITE</strong></span>`;
-                else resultText = `<span style="color: green;"><strong>RÉUSSITE</strong> avec ${degrees} degré${degrees > 1 ? 's' : ''}</span>`;
-              } else {
-                if (degrees === 0) resultText = `<span style="color: red;"><strong>ÉCHEC</strong></span>`;
-                else resultText = `<span style="color: red;"><strong>ÉCHEC</strong> avec ${degrees} degré${degrees > 1 ? 's' : ''}</span>`;
-              }
-
-              let contentMsg = `
-                <div class="stat-roll-result">
-                  <h3>Jet ${label}</h3>
-                  <div><strong>Bonus/Malus :</strong> ${bonusText}</div>
-                  <div><strong>Résultat :</strong> <strong>${total}</strong> vs <strong>${target}</strong></div>
-                  <div>${resultText}</div>
-                  <div class="roll-details">${await roll.render()}</div>
-                  <br/>
-                  <div class="reroll-controls">
-                    <button class="reroll-roll" data-actor-id="${actor?.id || ''}" data-target="${target}" data-modifier="${total - target}">Relancer (Coût: 1 Chance)</button>
-                  </div>
-                </div>
-              `;
-
-              ChatMessage.create({ user: game.user.id, speaker: ChatMessage.getSpeaker({ actor }), content: contentMsg });
-            } catch (err) {
-              console.error('Stat roll failed', err);
-              ui.notifications.error('Erreur lors du jet de caractéristique');
-            }
+            await doStatRoll(actor, attr, bonus, false);
           }
         },
-        cancel: { label: 'Annuler' }
-      },
-      default: 'roll'
-    }).render(true);
-  });
 
+        gmroll: {
+          label: "BlindRoll GM",
+          callback: async (dlgHtml) => {
+            const bonus = Number(dlgHtml.find('#stat-bonus').val()) || 0;
+            await doStatRoll(actor, attr, bonus, true);
+          }
+        },
+
+        cancel: { label: "Annuler" }
+      },
+      default: "roll"
+    }).render(true);
+    async function doStatRoll(actor, attr, bonus = 0, blind = false) {
+  const baseVal = Number(actor.system.principal?.actuel?.[attr]) || 0;
+  const target = baseVal + bonus;
+
+  const roll = await new Roll("1d100").evaluate();
+  const total = roll.total;
+  const success = total <= target;
+  const degrees = Math.floor(Math.abs(target - total) / 10);
+
+  const labels = {
+    cc: 'de CC', ct: 'de CT', force: 'de Force', endurance: 'd\'Endurance',
+    agilite: 'd\'Agilité', intelligence: 'd\'Intelligence',
+    forceMentale: 'de Force Mentale', sociabilite: 'de Sociabilité'
+  };
+  const label = labels[attr] || attr;
+
+  const resultText = success
+    ? `<span style="color:green;"><strong>RÉUSSITE</strong>${degrees ? ` avec ${degrees} degré(s)` : ''}</span>`
+    : `<span style="color:red;"><strong>ÉCHEC</strong>${degrees ? ` avec ${degrees} degré(s)` : ''}</span>`;
+
+  const contentMsg = `
+    <div class="stat-roll-result">
+      <h3>Jet ${label}</h3>
+      <div><strong>Bonus/Malus :</strong> ${bonus >= 0 ? "+"+bonus : bonus}</div>
+      <div><strong>Résultat :</strong> <strong>${total}</strong> vs <strong>${target}</strong></div>
+      <div>${resultText}</div>
+      <div class="roll-details">${await roll.render()}</div>
+      <br/>
+      <div class="reroll-controls">
+        <button class="reroll-roll"
+                data-actor-id="${actor.id}"
+                data-target="${target}"
+                data-modifier="${total - target}">
+          Relancer (Coût: 1 Chance)
+        </button>
+      </div>
+    </div>
+  `;
+
+  ChatMessage.create({
+    user: game.user.id,
+    speaker: ChatMessage.getSpeaker({ actor }),
+    content: contentMsg,
+    blind,
+    whisper: blind ? ChatMessage.getWhisperRecipients("GM") : []
+  });
+}
+
+  });
     
   html.find("input[name='system.principal.base.cc']").on('change', async ev => {
     const input = ev.currentTarget;
@@ -1810,7 +1806,6 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
-  // Apply armor movement penalty checkbox: when checked apply -1 to system.secondaire.mod.mvt once; unchecking does nothing
   html.find('.apply-armor-move-penalty').off('change').on('change', async ev => {
     try {
       try { ev.preventDefault(); ev.stopImmediatePropagation(); } catch(e){}
@@ -1910,33 +1905,30 @@ export function wireSheetHandlers(sheet, html) {
     }
   });
 
-  
   const updateWeaponsBfFromActor = async (newBfActuel) => {
-    
-    html.find("input[name$='.bf']").each((_, el) => {
-      const $el = $(el);
-      if (($el.attr('name') || '').match(/^system\.weapons\.\d+\.bf$/)) {
-        $el.val(newBfActuel);
-      }
-    });
-
-    
-    try {
-      const sysWeapons = Array.isArray(sheet.actor.system.weapons) ? sheet.actor.system.weapons.slice() : [];
-      const oldBf = Number(sheet.actor.system.secondaire?.actuel?.bf) || 0;
-      let changed = false;
-      const updated = sysWeapons.map(w => {
-        if (!w) return w;
-        
-        const current = Number(w.bf) || 0;
-        if (current === oldBf) { changed = true; return Object.assign({}, w, { bf: newBfActuel }); }
-        return w;
+      
+      html.find("input[name$='.bf']").each((_, el) => {
+        const $el = $(el);
+        if (($el.attr('name') || '').match(/^system\.weapons\.\d+\.bf$/)) {
+          $el.val(newBfActuel);
+        }
       });
-      if (changed) await sheet.actor.update({ 'system.weapons': updated });
-    } catch (err) {
-      console.error('Unable to persist updated weapon BF from actor BF change', err);
-    }
-  };
+      try {
+        const sysWeapons = Array.isArray(sheet.actor.system.weapons) ? sheet.actor.system.weapons.slice() : [];
+        const oldBf = Number(sheet.actor.system.secondaire?.actuel?.bf) || 0;
+        let changed = false;
+        const updated = sysWeapons.map(w => {
+          if (!w) return w;
+          
+          const current = Number(w.bf) || 0;
+          if (current === oldBf) { changed = true; return Object.assign({}, w, { bf: newBfActuel }); }
+          return w;
+        });
+        if (changed) await sheet.actor.update({ 'system.weapons': updated });
+      } catch (err) {
+        console.error('Unable to persist updated weapon BF from actor BF change', err);
+      }
+    };
 
   html.find("input[name='system.principal.base.force']").on('change', async ev => {
     const input = ev.currentTarget;
@@ -1946,7 +1938,6 @@ export function wireSheetHandlers(sheet, html) {
     const newBfActuel = (baseBf || 0) + (modBf || 0);
     await updateWeaponsBfFromActor(newBfActuel);
   });
-
   
   html.find("input[name='system.secondaire.mod.bf']").on('change', async ev => {
     const input = ev.currentTarget;
@@ -1985,7 +1976,6 @@ export function wireSheetHandlers(sheet, html) {
     const $row = $(ev.currentTarget).closest('tr');
     _recalculateDiceMinRanged.call(sheet, html, $row.get(0));
   });
-
   
   html.find('.inventory-add').on('click', ev => {
     ev.preventDefault();
@@ -2053,16 +2043,10 @@ export function wireSheetHandlers(sheet, html) {
     });
   });
 
-  
   html.find('.inventory-table').on('input change', "input[name*='.name'], input[name*='.quantity']", ev => {
     
   });
 
-  
-
-  
-
-  
   html.find('.weapons-table.melee').on('click', '.gold-roll.melee-attack', ev => {
     ev.preventDefault();
     const $btn = $(ev.currentTarget);
@@ -2276,7 +2260,6 @@ export function wireSheetHandlers(sheet, html) {
     }).render(true);
   });
 
-  
   html.find('.weapons-table.ranged').on('click', '.gold-roll', ev => {
     ev.preventDefault();
     const $btn = $(ev.currentTarget);
@@ -2472,7 +2455,6 @@ export function wireSheetHandlers(sheet, html) {
     }).render(true);
   });
 
-  
   html.find('.weapons-table.melee').on('click', '.gold-roll.melee-parade', async ev => {
     ev.preventDefault();
     const $btn = $(ev.currentTarget);
