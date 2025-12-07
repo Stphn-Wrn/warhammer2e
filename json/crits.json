@@ -1,0 +1,285 @@
+{
+    "corps_label": "Coup critique au Corps",
+    "tete_label": "Coup critique à la Tête",
+    "bras_label": "Coup critique au Bras",
+    "feu_label": "Coup critique lié au Feu",
+    "jambe_label": "Coup critique à la Jambe",
+  "corps": [
+    {
+      "roll": 1,
+      "effet": "Votre souffle est coupé, vous empêchant de bouger. Vous subissez également -10% pendant un tour.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 2,
+      "effet": "Désorienté, vous perdez votre prochain tour mais êtes toujours en capacité de vous déplacer.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 3,
+      "effet": "Armure endommagée sauf si 2.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 4,
+      "effet": "Vos côtes sont touchées : -10% à tous vos tests.",
+      "operation": "Fracture"
+    },
+    {
+      "roll": 5,
+      "effet": "Hémorragie : 20% de mourir à chaque round sans soins (pas de mort subite).",
+      "operation": "Hémorragie"
+      
+    },
+    {
+      "roll": 6,
+      "effet": "Vous tombez au sol pour 1d10 rounds, sans défense, impossible de se relever.",
+      "operation": "Fracture"
+    },
+    {
+      "roll": 7,
+      "effet": "Entrejambe détruite, hémorragie sévère (20%/round). Incapable de manger/parler jusqu'à CHIRURGIE. Risque de stérilité.",
+      "operation": "Hémorragie"
+    },
+    {
+      "roll": 8,
+      "effet": "Colonne pulvérisée. Jeté à terre, sans défense tant que non soigné. Risque de paralysie définitive.",
+      "operation": "Fracture"
+    },
+    {
+      "roll": 9,
+      "effet": "Artère sectionnée. Mort imminente, phrase d'agonie.",
+      "operation": "Hémorragie"
+    },
+    {
+      "roll": 10,
+      "effet": "Tout témoin fait un test de FM ou gagne 1 Folie. Phrase finale avant exécution.",
+      "operation": "-"
+    }
+  ],
+
+  "tete": [
+    {
+      "roll": 1,
+      "effet": "Blessure du cuir chevelu : impossible d’attaquer/défendre. -10% à tous les tests jusqu’aux soins.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 2,
+      "effet": "Désorienté : perdez votre prochain tour mais vous pouvez vous défendre.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 3,
+      "effet": "Armure endommagée sauf si résultat 2.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 4,
+      "effet": "Oreille interne touchée : perdez votre tour, sans défense jusqu'à la fin du tour.",
+      "operation": "Fracture"
+    },
+    {
+      "roll": 5,
+      "effet": "Hémorragie (20%/round, pas de mort subite).",
+      "operation": "Hémorragie"
+    },
+    {
+      "roll": 6,
+      "effet": "Assommé pour 1d10 rounds.",
+      "operation": "Hémorragie"
+    },
+    {
+      "roll": 7,
+      "effet": "Mâchoire explosée, hémorragie sévère, risque de défiguration et perte de sociabilité.",
+      "operation": "Hémorragie"
+    },
+    {
+      "roll": 8,
+      "effet": "Visage réduit en bouillie, jeté à terre, hémorragie sévère, risque de perdre un œil.",
+      "operation": "Hémorragie"
+    },
+    {
+      "roll": 9,
+      "effet": "Artère sectionnée : mort imminente, phrase d’agonie.",
+      "operation": "-"
+    },
+    {
+      "roll": 10,
+      "effet": "Tout témoin test FM ou gagne 1 Folie. Une dernière phrase puis mort.",
+      "operation": "-"
+    }
+  ],
+
+  "bras": [
+    {
+      "roll": 1,
+      "effet": "Perd l’objet en main (sauf bouclier/lanière).",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 2,
+      "effet": "Bras inutilisable pendant un round.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 3,
+      "effet": "Armure endommagée sauf si 2.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 4,
+      "effet": "Bras hors d’usage jusqu'à soins.",
+      "operation": "Fracture"
+    },
+    {
+      "roll": 5,
+      "effet": "Hémorragie sévère (20%/round).",
+      "operation": "Hémorragie"
+    },
+    {
+      "roll": 6,
+      "effet": "Main frappée : perte de 1d3 doigts, -5 Ag permanent, main inutilisable.",
+      "operation": "Fracture"
+    },
+    {
+      "roll": 7,
+      "effet": "Main explosée, hémorragie sévère, risque de perte définitive.",
+      "operation": "Hémorragie"
+    },
+    {
+      "roll": 8,
+      "effet": "Bras explosé, hémorragie sévère, risque de perte définitive.",
+      "operation": "Hémorragie"
+    },
+    {
+      "roll": 9,
+      "effet": "Artère sectionnée, mort imminente.",
+      "operation": "-"
+    },
+    {
+      "roll": 10,
+      "effet": "Phrase finale, tous les témoins test FM.",
+      "operation": "-"
+    }
+  ],
+
+  "feu": [
+    {
+      "roll": 1,
+      "effet": "Un bras enflammé, test de FM pour ne pas lâcher l’objet.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 2,
+      "effet": "Un bras enflammé, -5% Ag/CC/CT pendant 2 rounds.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 3,
+      "effet": "Jambes enflammées, -10% Ag/CC/CT pendant 3 rounds.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 4,
+      "effet": "Corps enflammé, tombe au sol et éteint le feu sur 2 rounds.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 5,
+      "effet": "Corps enflammé, jet d’Ag difficile chaque round pour éteindre le feu.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 6,
+      "effet": "Bras entièrement enflammés. Séquelles permanentes possibles.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 7,
+      "effet": "Torse + tête enflammés. Jet de mort subite chaque round.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 8,
+      "effet": "Le personnage devient une torche humaine. Très longues séquelles.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 9,
+      "effet": "Torche humaine → mort en 1d10 rounds, équipement détruit.",
+      "operation": "-"
+    },
+    {
+      "roll": 10,
+      "effet": "Grillé instantanément, corps réduit à la cendre.",
+      "operation": "-"
+    }
+  ],
+
+  "jambe": [
+    {
+      "roll": 1,
+      "effet": "Perdez une demi-action au prochain tour.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 2,
+      "effet": "Jambe engourdie : -1 Mouvement pendant 1 round. Impossible d’esquiver.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 3,
+      "effet": "Armure endommagée sauf si résultat 2.",
+      "operation": "Blessure profonde"
+    },
+    {
+      "roll": 4,
+      "effet": "Jambe hors d’usage, -1 PM, impossible d’esquiver jusqu’aux soins.",
+      "operation": "Fracture"
+    },
+    {
+      "roll": 5,
+      "effet": "Hémorragie (20%/round, pas de mort subite).",
+      "operation": "Hémorragie"
+    },
+    {
+      "roll": 6,
+      "effet": "Muscle sévèrement touché. Perte permanente d’1 Mvt.",
+      "operation": "Fracture"
+    },
+    {
+      "roll": 7,
+      "effet": "Pied explosé, hémorragie sévère, risque de perte définitive.",
+      "operation": "Hémorragie"
+    },
+    {
+      "roll": 8,
+      "effet": "Jambe explosée, hémorragie sévère, risque de perte définitive.",
+      "operation": "Hémorragie"
+    },
+    {
+      "roll": 9,
+      "effet": "Artère sectionnée : mort imminente.",
+      "operation": "-"
+    },
+    {
+      "roll": 10,
+      "effet": "Tous les témoins test FM ou 1 Folie. Phrase finale avant mort.",
+      "operation": "-"
+    }
+  ],
+
+  "ranges": [
+    { "min": 91, "max": 100, "values": [5,7,9,10,10,10,10,10,10,10] },
+    { "min": 81, "max": 90,  "values": [5,6,8,9,10,10,10,10,10,10] },
+    { "min": 71, "max": 80,  "values": [4,6,8,9,9,10,10,10,10,10] },
+    { "min": 61, "max": 70,  "values": [4,5,7,8,9,9,10,10,10,10] },
+    { "min": 51, "max": 60,  "values": [3,5,7,8,8,9,9,10,10,10] },
+    { "min": 41, "max": 50,  "values": [3,4,6,7,8,9,9,10,10,10] },
+    { "min": 31, "max": 40,  "values": [2,4,6,7,7,8,8,9,9,10] },
+    { "min": 21, "max": 30,  "values": [2,3,5,6,7,7,8,8,9,9] },
+    { "min": 11, "max": 20,  "values": [1,3,5,6,6,7,7,8,8,9] },
+    { "min": 1,  "max": 10,  "values": [1,2,4,5,6,6,7,7,8,8] }
+  ]
+}
