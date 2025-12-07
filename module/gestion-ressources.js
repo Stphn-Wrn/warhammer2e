@@ -39,11 +39,12 @@ export class GestionRessourcesApp extends Application {
     return row.values[index];
   }
 
-
   async activateListeners(html) {
     super.activateListeners(html);
 
     await this.constructor.loadCritData();
+
+    const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
     const playerActors = game.actors.filter(a =>
       a.hasPlayerOwner && (a.type === "character" || a.type === "monster")
@@ -57,7 +58,7 @@ export class GestionRessourcesApp extends Application {
       sel.innerHTML = `<option value="">-- Sélectionner un acteur --</option>` + options;
     });
 
-
+    // ---------- Donner la totalité / X points de chance ----------
     html.find("input[name='reset-luck']").on("click", async ev => {
       ev.preventDefault();
 
@@ -67,22 +68,36 @@ export class GestionRessourcesApp extends Application {
       const targetId = html.find("select[name='reset-luck-target']").val();
       const customValue = html.find("input[name='reset-luck-value']").val();
 
-      if (!targetId)
-        return ui.notifications.warn("Veuillez choisir un acteur.");
+      // Aucun acteur sélectionné → tous
+      if (!targetId) {
+        const actors = game.actors.filter(a => a.hasPlayerOwner && (a.type === "character" || a.type === "monster"));
 
+        for (const actor of actors) {
+          const maxLuck = Number(actor.system?.secondaire?.actuel?.pd) || 0;
+          const valueRaw = customValue !== "" ? Number(customValue) : maxLuck;
+          const value = clamp(valueRaw, 0, maxLuck);
+
+          await actor.update({ "system.points.chance": value });
+        }
+
+        return ui.notifications.info(
+          `Tous les acteurs reçoivent ${customValue !== "" ? customValue : "leurs max"} points de Chance.`
+        );
+      }
+
+      // Acteur ciblé
       const actor = game.actors.get(targetId);
       if (!actor) return ui.notifications.error("Acteur introuvable.");
 
       const maxLuck = Number(actor.system?.secondaire?.actuel?.pd) || 0;
-      const value = customValue !== "" ? Number(customValue) : maxLuck;
+      const valueRaw = customValue !== "" ? Number(customValue) : maxLuck;
+      const value = clamp(valueRaw, 0, maxLuck);
 
-      await actor.update({
-        "system.points.chance": Math.clamp(value, 0, maxLuck)
-      });
-
-      ui.notifications.info(`${actor.name} reçoit ${value} point(s) de Chance.`);
+      await actor.update({ "system.points.chance": value });
+      ui.notifications.info(`${actor.name} reçoit ${value} Point(s) de Chance.`);
     });
 
+    // ---------- Donner la totalité / X points de blessure ----------
     html.find("input[name='heal-all']").on("click", async ev => {
       ev.preventDefault();
 
@@ -92,23 +107,36 @@ export class GestionRessourcesApp extends Application {
       const targetId = html.find("select[name='heal-all-target']").val();
       const customValue = html.find("input[name='heal-all-value']").val();
 
-      if (!targetId)
-        return ui.notifications.warn("Veuillez choisir un acteur.");
+      // Aucun acteur sélectionné → tous
+      if (!targetId) {
+        const actors = game.actors.filter(a => a.hasPlayerOwner && (a.type === "character" || a.type === "monster"));
 
+        for (const actor of actors) {
+          const maxWounds = Number(actor.system?.secondaire?.actuel?.b) || 0;
+          const valueRaw = customValue !== "" ? Number(customValue) : maxWounds;
+          const value = clamp(valueRaw, 0, maxWounds);
+
+          await actor.update({ "system.combat.hp": value });
+        }
+
+        return ui.notifications.info(
+          `Tous les acteurs récupèrent ${customValue !== "" ? customValue : "leurs max"} points de Blessure.`
+        );
+      }
+
+      // Acteur ciblé
       const actor = game.actors.get(targetId);
       if (!actor) return ui.notifications.error("Acteur introuvable.");
 
       const maxWounds = Number(actor.system?.secondaire?.actuel?.b) || 0;
-      const value = customValue !== "" ? Number(customValue) : maxWounds;
+      const valueRaw = customValue !== "" ? Number(customValue) : maxWounds;
+      const value = clamp(valueRaw, 0, maxWounds);
 
-      await actor.update({
-        "system.combat.hp": Math.clamp(value, 0, maxWounds)
-      });
-
-      ui.notifications.info(`${actor.name} récupère ${value} point(s) de Blessure.`);
+      await actor.update({ "system.combat.hp": value });
+      ui.notifications.info(`${actor.name} récupère ${value} Point(s) de Blessure.`);
     });
 
-
+    // ---------- Coup critique ----------
     html.find("input[name='apply-critique']").on("click", async ev => {
       ev.preventDefault();
 
@@ -137,7 +165,8 @@ export class GestionRessourcesApp extends Application {
 
       if (!entry)
         return ui.notifications.error("Aucun résultat correspondant dans la table critique.");
-        const label = this.constructor.critData[`${zone}_label`];
+
+      const label = this.constructor.critData[`${zone}_label`] ?? `Coup critique – ${zone}`;
 
       ChatMessage.create({
         content: `
@@ -147,9 +176,10 @@ export class GestionRessourcesApp extends Application {
           <p><strong>Résultat final :</strong> ${finalIndex}</p>
           <hr/>
           <p><strong>Effet :</strong> ${entry.effet}</p>
-          <p><em> <strong>Type d'opération médicale : </strong> ${entry.operation}</em></p>
+          <p><em><strong>Type d'opération médicale :</strong> ${entry.operation}</em></p>
         `
       });
     });
   }
+
 }
