@@ -1,4 +1,5 @@
 export class GestionRessourcesApp extends Application {
+
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       id: "gestion-ressources",
@@ -6,78 +7,149 @@ export class GestionRessourcesApp extends Application {
       template: "systems/warhammer2e/templates/assets/gestion-ressources.html",
       width: 400,
       height: "auto",
-      resizable: true,
+      resizable: true
     });
   }
 
-  activateListeners(html) {
-  super.activateListeners(html);
+  static critData = null;
 
-  const playerActors = game.actors.filter(a => a.hasPlayerOwner && (a.type === "character" || a.type === "monster"));
-  const options = playerActors.map(a => `<option value="${a.id}">${a.name}</option>`).join("");
+  static async loadCritData() {
+    if (this.critData) return this.critData;
 
-  html.find("select.resource-target").each((i, sel) => {
-    sel.innerHTML = `<option value="">-- Sélectionner un acteur --</option>` + options;
-  });
+    const path = "systems/warhammer2e/json/crits.json";
+    const response = await fetch(path);
+    if (!response.ok) {
+      ui.notifications.error("Impossible de charger le fichier crits.json");
+      return null;
+    }
 
-  html.find("input[name='reset-luck']").on("click", async ev => {
-    ev.preventDefault();
-    if (!game.user.isGM) return ui.notifications.warn("Seul le MJ peut utiliser cette option.");
+    this.critData = await response.json();
+    console.log("CRIT DATA LOADED", this.critData);
+    return this.critData;
+  }
 
-    const targetId = html.find("select[name='reset-luck-target']").val();
-    const customValue = html.find("input[name='reset-luck-value']").val();
+  getCritResultValue(d100, critValue) {
+    const table = this.constructor.critData;
+    if (!table) return null;
 
-    if (!targetId) return ui.notifications.warn("Veuillez choisir un acteur.");
+    const row = table.ranges.find(r => d100 >= r.min && d100 <= r.max);
+    if (!row) return null;
 
-    const actor = game.actors.get(targetId);
-    if (!actor) return ui.notifications.error("Acteur introuvable.");
+    const index = critValue - 1;
+    return row.values[index];
+  }
 
-    const maxLuck = Number(actor.system?.secondaire?.actuel?.pd) || 0;
-    const value = customValue !== "" ? Number(customValue) : maxLuck;
 
-    await actor.update({ "system.points.chance": Math.clamp(value, 0, maxLuck) });
+  async activateListeners(html) {
+    super.activateListeners(html);
 
-    ui.notifications.info(`${actor.name} reçoit ${value} Point(s) de Chance.`);
-  });
+    await this.constructor.loadCritData();
 
-  html.find("input[name='heal-all']").on("click", async ev => {
-    ev.preventDefault();
-    if (!game.user.isGM) return ui.notifications.warn("Seul le MJ peut utiliser cette option.");
+    const playerActors = game.actors.filter(a =>
+      a.hasPlayerOwner && (a.type === "character" || a.type === "monster")
+    );
 
-    const targetId = html.find("select[name='heal-all-target']").val();
-    const customValue = html.find("input[name='heal-all-value']").val();
+    const options = playerActors
+      .map(a => `<option value="${a.id}">${a.name}</option>`)
+      .join("");
 
-    if (!targetId) return ui.notifications.warn("Veuillez choisir un acteur.");
+    html.find("select.resource-target").each((i, sel) => {
+      sel.innerHTML = `<option value="">-- Sélectionner un acteur --</option>` + options;
+    });
 
-    const actor = game.actors.get(targetId);
-    if (!actor) return ui.notifications.error("Acteur introuvable.");
 
-    const maxWounds = Number(actor.system?.secondaire?.actuel?.b) || 0;
-    const value = customValue !== "" ? Number(customValue) : maxWounds;
+    html.find("input[name='reset-luck']").on("click", async ev => {
+      ev.preventDefault();
 
-    await actor.update({ "system.combat.hp": Math.clamp(value, 0, maxWounds) });
+      if (!game.user.isGM)
+        return ui.notifications.warn("Seul le MJ peut utiliser cette option.");
 
-    ui.notifications.info(`${actor.name} récupère ${value} Point(s) de Blessure.`);
-  });
+      const targetId = html.find("select[name='reset-luck-target']").val();
+      const customValue = html.find("input[name='reset-luck-value']").val();
 
-html.find("input[name='reset-luck-custom']").on("click", async ev => {
-  ev.preventDefault();
-  if (!game.user.isGM) return ui.notifications.warn("MJ uniquement.");
+      if (!targetId)
+        return ui.notifications.warn("Veuillez choisir un acteur.");
 
-  const id = html.find("select[name='reset-luck-target']").val();
-  const value = html.find("input[name='reset-luck-value']").val();
+      const actor = game.actors.get(targetId);
+      if (!actor) return ui.notifications.error("Acteur introuvable.");
 
-  if (!id) return ui.notifications.warn("Sélectionnez un acteur.");
-  if (value === "") return ui.notifications.warn("Entrez une valeur de chance.");
+      const maxLuck = Number(actor.system?.secondaire?.actuel?.pd) || 0;
+      const value = customValue !== "" ? Number(customValue) : maxLuck;
 
-  const actor = game.actors.get(id);
-  const max = Number(actor.system?.secondaire?.actuel?.pd) || 0;
+      await actor.update({
+        "system.points.chance": Math.clamp(value, 0, maxLuck)
+      });
 
-  const val = Math.clamp(Number(value), 0, max);
+      ui.notifications.info(`${actor.name} reçoit ${value} point(s) de Chance.`);
+    });
 
-  await actor.update({ "system.points.chance": val });
-  ui.notifications.info(`${actor.name} reçoit ${val} Point(s) de Chance.`);
-});
+    html.find("input[name='heal-all']").on("click", async ev => {
+      ev.preventDefault();
 
-}
+      if (!game.user.isGM)
+        return ui.notifications.warn("Seul le MJ peut utiliser cette option.");
+
+      const targetId = html.find("select[name='heal-all-target']").val();
+      const customValue = html.find("input[name='heal-all-value']").val();
+
+      if (!targetId)
+        return ui.notifications.warn("Veuillez choisir un acteur.");
+
+      const actor = game.actors.get(targetId);
+      if (!actor) return ui.notifications.error("Acteur introuvable.");
+
+      const maxWounds = Number(actor.system?.secondaire?.actuel?.b) || 0;
+      const value = customValue !== "" ? Number(customValue) : maxWounds;
+
+      await actor.update({
+        "system.combat.hp": Math.clamp(value, 0, maxWounds)
+      });
+
+      ui.notifications.info(`${actor.name} récupère ${value} point(s) de Blessure.`);
+    });
+
+
+    html.find("input[name='apply-critique']").on("click", async ev => {
+      ev.preventDefault();
+
+      if (!game.user.isGM)
+        return ui.notifications.warn("Seul le MJ peut lancer les critiques.");
+
+      const zone = html.find("select[name='critique-zone']").val();
+      const d100 = Number(html.find("input[name='critique-roll-d100']").val());
+      const critValue = Number(html.find("input[name='critique-roll-value']").val());
+
+      if (!zone)
+        return ui.notifications.warn("Sélectionnez une zone.");
+
+      if (!d100 || d100 < 1 || d100 > 100)
+        return ui.notifications.warn("Entrez un résultat d100 valide.");
+
+      if (!critValue || critValue < 1 || critValue > 10)
+        return ui.notifications.warn("La valeur critique doit être entre +1 et +10.");
+
+      const finalIndex = this.getCritResultValue(d100, critValue);
+      if (!finalIndex)
+        return ui.notifications.error("Impossible de résoudre le critique.");
+
+      const table = this.constructor.critData[zone];
+      const entry = table.find(e => e.roll === finalIndex);
+
+      if (!entry)
+        return ui.notifications.error("Aucun résultat correspondant dans la table critique.");
+        const label = this.constructor.critData[`${zone}_label`];
+
+      ChatMessage.create({
+        content: `
+          <h2>${label}</h2>
+          <p><strong>d100 :</strong> ${d100}</p>
+          <p><strong>Critique :</strong> +${critValue}</p>
+          <p><strong>Résultat final :</strong> ${finalIndex}</p>
+          <hr/>
+          <p><strong>Effet :</strong> ${entry.effet}</p>
+          <p><em> <strong>Type d'opération médicale : </strong> ${entry.operation}</em></p>
+        `
+      });
+    });
+  }
 }
