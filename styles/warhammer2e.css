@@ -1035,7 +1035,7 @@ thead {
   color: #422b1f;
 }
 
-.gestion-ressources select.resource-target {
+.gestion-ressources select.resource-target, .gestion-ressources select.critique-zone {
   width: 100%;
   padding: 4px;
   border-radius: 4px;
