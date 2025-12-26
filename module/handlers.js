@@ -382,6 +382,8 @@ export function wireSheetHandlers(sheet, html) {
           const $detailGroup = $dlg.find('.detail-select-group');
           const $detailSelect = $dlg.find('select[name="slotDetail"]');
           const $noteInput = $dlg.find('input[name="slotLabel"]');
+          const initialNoteFromPreset = !currentNote && !!initialPresetNote;
+          let lastPresetApplied = initialNoteFromPreset ? initialPresetNote : '';
           const refreshSubOptions = typeVal => {
             const htmlOpts = buildSubOptions(typeVal, typeVal === initialType ? initialSubType : '');
             if (!htmlOpts) {
@@ -411,9 +413,14 @@ export function wireSheetHandlers(sheet, html) {
           const applyPresetNote = detailVal => {
             if (!$noteInput.length) return;
             const existing = ($noteInput.val() || '').trim();
-            if (existing) return;
             const preset = WEAPON_PRESETS[detailVal];
-            if (preset?.note) $noteInput.val(preset.note);
+            const presetNote = preset?.note || '';
+            if (!presetNote) return;
+            const canReplace = !existing || (lastPresetApplied && existing === lastPresetApplied);
+            if (canReplace) {
+              $noteInput.val(presetNote);
+              lastPresetApplied = presetNote;
+            }
           };
           // Initialize quality select with current value
           $dlg.find('select[name="slotQuality"]').val(currentQuality || 'ordinaire');
