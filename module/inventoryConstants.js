@@ -246,7 +246,7 @@ export const MELEE_WEAPON_PRESETS = {
 export const RANGED_WEAPON_PRESETS = {
   'arc-simple': { note: 'Groupe: Commun | Degats: 4 | Portee: 24/48 | Recharge: 1/2 AC | Attributs: Deux mains' },
   'arc-court': { note: 'Groupe: Commun | Degats: 4 | Portee: 16/32 | Recharge: 1/2 AC | Attributs: Utilisable à cheval, Deux mains' },
-  'arc-long': { note: 'Groupe: Arcs longs | Degats: 4 | Portee: 30/60 | Recharge: 1/2 AC | Attributs: Perforante, Deux mains' },
+  'arc-long': { note: 'Groupe: Arc longs | Degats: 4 | Portee: 30/60 | Recharge: 1/2 AC | Attributs: Perforante, Deux mains' },
   'arc-elfique': { note: 'Groupe: Arme elfique | Degats: 5 | Portee: 36/72 | Recharge: 1 AC | Attributs: Perforante, Utilisable à cheval, Deux mains' },
   'arc-carnum': { note: 'Groupe: Arme elfique | Degats: 5 | Portee: 36/72 | Recharge: 1 AC | Attributs: Destructeur, Precise, Deux mains' },
   'arbalete-lourde': { note: 'Groupe: Arbalète | Degats: 5 | Portee: 30/60 | Recharge: 2 AC | Attributs: Perforante, Deux mains' },
