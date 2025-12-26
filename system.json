@@ -33,6 +33,7 @@
       "path": "lang/fr.json"
     }
   ],
+  "Item": {},
   "packs": [],
   "template": "template.json",
   "primaryTokenAttribute": "system.secondary.w",
