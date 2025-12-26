@@ -1,6 +1,11 @@
-<form class="warhammer2e item-sheet" novalidate>
-  <header>
-    <h1>{{name}}</h1>
+<form class="warhammer2e item-sheet" novalidate autocomplete="off">
+  <header class="sheet-header" style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+    <div class="item-image" style="width:64px;height:64px;flex:0 0 auto;">
+      <img src="{{imgDisplay}}" data-edit="img" style="width:64px;height:64px;object-fit:cover;border:1px solid #999;border-radius:4px;" />
+    </div>
+    <div class="item-name" style="flex:1;">
+      <input type="text" name="name" value="{{name}}" placeholder="Nom de l'objet" style="width:100%;font-size:20px;padding:6px;">
+    </div>
   </header>
   <div class="sheet-body">
     {{#if isTalent}}
@@ -17,6 +22,30 @@
       <section>
         <h2>Skill Details</h2>
         <p>Define specific fields for skills here.</p>
+      </section>
+    {{else if isAmmunition}}
+      <section>
+        <h2>Munitions</h2>
+        <div class="form-group">
+          <label>Catégorie</label>
+          <input type="text" name="system.category" value="{{system.category}}" placeholder="Arc, Arbalète, Poudre...">
+        </div>
+        <div class="form-group">
+          <label>Calibre / Type</label>
+          <input type="text" name="system.caliber" value="{{system.caliber}}" placeholder=".54, carreau, flèche...">
+        </div>
+        <div class="form-group">
+          <label>Quantité</label>
+          <input type="number" name="system.quantity" value="{{system.quantity}}" min="0">
+        </div>
+        <div class="form-group">
+          <label>Poids (par unité)</label>
+          <input type="number" step="0.01" name="system.weight" value="{{system.weight}}" min="0">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="system.description" rows="4">{{system.description}}</textarea>
+        </div>
       </section>
     {{else}}
       <section>
