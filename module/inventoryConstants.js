@@ -1,0 +1,232 @@
+// Shared inventory icon/label definitions
+export const INVENTORY_ICON_MAP = {
+  "": "",
+  "pouch": "icons/commodities/currency/coin-inset-crown-gold.webp",
+  "armor-light": "icons/equipment/chest/breastplate-scale-leather.webp",
+  "light-armor": "icons/equipment/chest/breastplate-scale-leather.webp",
+  "armor-medium": "icons/equipment/chest/breastplate-scale-grey.webp",
+  "medium-armor": "icons/equipment/chest/breastplate-scale-grey.webp", // legacy alias
+  "armor-heavy": "icons/equipment/chest/breastplate-cuirass-steel-grey.webp",
+  "heavy-armor": "icons/equipment/chest/breastplate-cuirass-steel-grey.webp", // legacy alias
+  "weapon-melee": "icons/weapons/swords/sword-bastard.webp",
+  "weapon-ranged": "icons/weapons/crossbows/crossbow-simple.webp",
+  "weapon": "icons/weapons/swords/sword-bastard.webp",
+  "ammo-arrows": "icons/weapons/ammunition/arrow-broadhead-green.webp",
+  "ammo-bolts": "icons/weapons/ammunition/arrow-broadhead-white.webp",
+  "ammo-bullets": "icons/weapons/ammunition/shot-round-lead.webp",
+  "ammo": "icons/weapons/ammunition/arrows-green.webp",
+  "potion": "icons/consumables/potions/potion-bottle-corked-blue.webp",
+  "food": "icons/consumables/food/bread-toast-tan.webp",
+  "epee-longue": "icons/weapons/swords/greatsword-blue.webp",
+  "sabre": "icons/weapons/swords/greatsword-blue.webp",
+  "claymore": "icons/weapons/swords/greatsword-blue.webp",
+  "espadon": "icons/weapons/swords/greatsword-blue.webp",
+  "epee-batarde-1m": "icons/weapons/swords/greatsword-blue.webp",
+  "epee-batarde-2m": "icons/weapons/swords/greatsword-blue.webp",
+  "hache-1m": "icons/weapons/axes/axe-battle-heavy-black.webp",
+  "hache-2m": "icons/weapons/axes/axe-battle-heavy-black.webp",
+  "epee-de-cote": "icons/weapons/swords/greatsword-blue.webp",
+  "pic-1m": "icons/weapons/polearms/pike-flared-brown.webp",
+  "piolet-2m": "icons/weapons/hammers/hammer-war-spiked.webp",
+  "baton": "icons/weapons/staves/staff-simple-gold.webp",
+  "marteau-1m": "icons/weapons/hammers/hammer-double-engraved-gold.webp",
+  "marteau-2m": "icons/weapons/hammers/hammer-double-engraved-gold.webp",
+  "bouclier": "icons/equipment/shield/buckler-wooden-boss.webp",
+  "coup-de-poing": "icons/weapons/fist/fist-knuckles-brass.webp",
+  "arme-improvisee": "icons/weapons/maces/club-banded-brown.webp",
+  "mains-nues": "icons/skills/melee/unarmed-punch-fist.webp",
+  "bocle": "icons/equipment/shield/buckler-wooden-boss.webp",
+  "main-gauche": "icons/equipment/shield/buckler-wooden-boss.webp",
+  "dague": "",
+  "stylet": "",
+  "pique": "",
+  "lance": "",
+  "lance-d'arcon": "",
+  "hallebarde": "",
+  "coup-de-poing-a-pique": "",
+  "rapiere": "",
+  "fleuret": "",
+  "fleau": "",
+  "marteau-du-loup-blanc": "",
+  "fleau-multiples": "",
+  "khepesh": "",
+  "pavois": "",
+  "pavois-qe": "",
+  "katana": "",
+  "wakisashi": "",
+  "brise-epee": "",
+  "couteau-asrai": "",
+  "poignard": "",
+  "morgenstern": "",
+  "lame-pistolet": "",
+  "bardysh": ""
+};
+
+export const INVENTORY_LABEL_MAP = {
+  "pouch": "Bourse",
+  "armor-light": "Armure 1ère couche",
+  "light-armor": "Armure 1ère couche",
+  "armor-medium": "Armure 2nde couche",
+  "medium-armor": "Armure 2nde couche",
+  "armor-heavy": "Armure 3ème couche",
+  "heavy-armor": "Armure 3ème couche",
+  "weapon-melee": "Arme de mêlée",
+  "weapon-ranged": "Arme de tir",
+  "weapon": "Arme",
+  "ammo-arrows": "Flèches",
+  "ammo-bolts": "Carreaux",
+  "ammo-bullets": "Balles",
+  "ammo": "Munitions",
+  "potion": "Potion",
+  "food": "Rations",
+  "epee-longue": "Épée longue",
+  "sabre": "Sabre",
+  "claymore": "Claymore",
+  "espadon": "Espadon",
+  "epee-batarde-1m": "Épée bâtarde à une main",
+  "epee-batarde-2m": "Épée bâtarde à deux mains",
+  "hache-1m": "Hache à une main",
+  "hache-2m": "Hache à deux mains",
+  "epee-de-cote": "Épée de côté",
+  "pic-1m": "Pic à une main",
+  "piolet-2m": "Piolet à deux mains",
+  "baton": "Bâton",
+  "marteau-1m": "Marteau à une main",
+  "marteau-2m": "Marteau à deux mains",
+  "bouclier": "Bouclier",
+  "coup-de-poing": "Coup-de-poing",
+  "arme-improvisee": "Arme improvisée",
+  "mains-nues": "Mains nues",
+  "bocle": "Bocle",
+  "main-gauche": "Main-gauche",
+  "dague": "Dague",
+  "stylet": "Stylet",
+  "pique": "Pique",
+  "lance": "Lance",
+  "lance-d'arcon": "Lance d'arçon",
+  "hallebarde": "Hallebarde",
+  "coup-de-poing-a-pique": "Coup-de-poing à pique",
+  "rapiere": "Rapière",
+  "fleuret": "Fleuret",
+  "fleau": "Fléau",
+  "marteau-du-loup-blanc": "Marteau du loup blanc",
+  "fleau-multiples": "Fléau multiples",
+  "khepesh": "Khépesh",
+  "pavois": "Pavois",
+  "pavois-qe": "Pavois QE",
+  "katana": "Katana",
+  "wakisashi": "Wakisashi",
+  "brise-epee": "Brise-épée",
+  "couteau-asrai": "Couteau Asrai",
+  "poignard": "Poignard",
+  "morgenstern": "Morgenstern",
+  "lame-pistolet": "Lame-pistolet",
+  "bardysh": "Bardysh"
+};
+
+export const INVENTORY_CHILD_TO_PARENT = {
+  "light-armor": "armor",
+  "armor-light": "armor",
+  "medium-armor": "armor",
+  "armor-medium": "armor",
+  "heavy-armor": "armor",
+  "armor-heavy": "armor",
+  "weapon-melee": "weapon",
+  "weapon-ranged": "weapon",
+  "ammo-arrows": "ammo",
+  "ammo-bolts": "ammo",
+  "ammo-bullets": "ammo"
+};
+
+// Qualities available for items
+export const INVENTORY_QUALITY_OPTIONS = [
+  { value: 'mauvaise', label: 'Mauvaise' },
+  { value: 'ordinaire', label: 'Ordinaire' },
+  { value: 'exceptionnelle', label: 'Exceptionnelle' }
+];
+
+export const INVENTORY_QUALITY_COLORS = {
+  mauvaise: '#c62828',
+  ordinaire: '#444444',
+  exceptionnelle: '#7b3fff'
+};
+
+// Presets for melee weapon details to auto-fill notes
+export const MELEE_WEAPON_PRESETS = {
+  'epee-longue': { note: 'Groupe: Commun | Degats: BF | Attributs: Vicelarde, Defensive | Prix: 10 CO' },
+  'sabre': { note: 'Groupe: Commun | Degats: BF | Attributs: Vicelarde, Rapide, Offensive | Prix: 10 CO' },
+  'claymore': { note: 'Groupe: Arme lourde | Degats: BF+2 | Attributs: Tres lent, Precise, Offensive | Prix: 20 CO' },
+  'espadon': { note: 'Groupe: Arme lourde | Degats: BF+2 | Attributs: Lent, Offensive, Vicelarde | Prix: 20 CO' },
+  'epee-batarde-1m': { note: 'Groupe: Arme lourde | Degats: BF+1 | Attributs: Vicelarde, Defensive, Batarde | Prix: 20 CO' },
+  'epee-batarde-2m': { note: 'Groupe: Arme lourde | Degats: BF+1 | Attributs: Vicelarde, Defensive | Prix: 20 CO' },
+  'hache-1m': { note: 'Groupe: Commun | Degats: BF | Attributs: Aucun | Prix: 10 CO' },
+  'hache-2m': { note: 'Groupe: Arme lourde | Degats: BF+2 | Attributs: Lent | Prix: 20 CO' },
+  'epee-de-cote': { note: 'Groupe: Arme d\'escrime | Degats: BF | Attributs: Precise, Vicelarde, Offensive | Prix: 15 CO' },
+  'pic-1m': { note: 'Groupe: Commun | Degats: BF | Attributs: Perforant, Lent | Prix: 10 CO' },
+  'piolet-2m': { note: 'Groupe: Arme lourde | Degats: BF+1 | Attributs: Perforant, Lent | Prix: 20 CO' },
+  'baton': { note: 'Groupe: Commun | Degats: BF-2 | Attributs: Rapide, Assommant, Defensive | Prix: 2 CO' },
+  'marteau-1m': { note: 'Groupe: Commun | Degats: BF | Attributs: Contondant, Assommant | Prix: 10 CO' },
+  'marteau-2m': { note: 'Groupe: Arme lourde | Degats: BF+2 | Attributs: Lent, Contondant, Assommant | Prix: 20 CO' },
+  'bouclier': { note: 'Groupe: Commun | Degats: BF-2 | Attributs: Defensive, Contondante, Special^2 | Prix: 10 CO' },
+  'coup-de-poing': { note: 'Groupe: Commun | Degats: BF-2 | Attributs: Assommante | Prix: 1 CO' },
+  'arme-improvisee': { note: 'Groupe: Commun | Degats: BF-3 | Attributs: Aucun | Prix: -' },
+  'main-nues': { note: 'Groupe: Commun | Degats: BF-4 | Attributs: Aucun | Prix: -' },
+  'bocle': { note: 'Groupe: Arme de parade | Degats: BF-2 | Attributs: Assommante, Defensive, Contondante, Equilibre | Prix: -' },
+  'main-gauche': { note: 'Groupe: Arme de parade | Degats: BF-2 | Attributs: Defensive, Equilibre, Rapide | Prix: 4 CO' },
+  'dague': { note: 'Groupe: Commun | Degats: BF-2 | Attributs: Rapide, Perforante, Offensive | Prix: 1 CO' },
+  'stylet': { note: 'Groupe: Commun | Degats: BF-3 | Attributs: Precise, Offensive, Rapide, Special^3 | Prix: 2 CO' },
+  'pique': { note: 'Groupe: Commun | Degats: BF-1 | Attributs: Longue, Offensive, Perforante, Rapide | Prix: 20 PO' },
+  'lance': { note: 'Groupe: Commun | Degats: BF | Attributs: Perforante, Offensive | Prix: 10 PO' },
+  "lance-d'arcon": { note: 'Groupe: Arme de cavalerie | Degats: BF+1 | Attributs: Percutant, Offensive, Perforante, Rapide, Charge, A cheval uniquement | Prix: 40 CO' },
+  'hallebarde': { note: 'Groupe: Arme lourde | Degats: BF | Attributs: Longue, Perforante, Offensive, Assommante | Prix: 15 CO' },
+  'coup-de-poing-a-pique': { note: 'Groupe: Commun | Degats: BF-2 | Attributs: Vicelarde | Prix: 1 CO' },
+  'rapiere': { note: 'Groupe: Arme d\'escrime | Degats: BF-1 | Attributs: Rapide, Precise, Vicelarde, Defensive | Prix: 20 CO' },
+  'fleuret': { note: 'Groupe: Arme d\'escrime | Degats: BF-1 | Attributs: Rapide, Precise, Perforante, Offensive | Prix: 20 CO' },
+  'fleau': { note: 'Groupe: Fleaux | Degats: BF+1 | Attributs: Tres lent, Peu fiable, Percutant, Epuisant, Offensive | Prix: 15 CO' },
+  'marteau-du-loup-blanc': { note: 'Groupe: Arme de cavalerie | Degats: BF | Attributs: Special^7, Contondant, Perforant, Offensive | Prix: Quasi impossible a trouver' },
+  'fleau-multiples': { note: 'Groupe: Fleaux | Degats: BF+3 | Attributs: Tres lent, Experimentale, Percutant, Epuisant, Offensive | Prix: 30 CO' },
+  'khepesh': { note: 'Groupe: Commun | Degats: BF | Attributs: Lent | Prix: -' },
+  'pavois': { note: 'Groupe: Commun | Degats: / | Attributs: Mur | Prix: 50 CO' },
+  'pavois-qe': { note: 'Groupe: Commun | Degats: / | Attributs: Mur, Trepied | Prix: 200 CO' },
+  'katana': { note: 'Groupe: Cathay | Degats: BF+1 | Attributs: Rapide, Vicelarde (x3), Precis (x3), Rasoir | Prix: 50-1000 CO (rare)' },
+  'wakisashi': { note: 'Groupe: Cathay | Degats: BF-1 | Attributs: Equilibre, Rasoir, Vicelarde, Rapide, Precis | Prix: 50-1000 CO (rare)' },
+  'brise-epee': { note: 'Groupe: Arme de parade | Degats: BF-3 | Attributs: Special^6 | Prix: 5 CO' },
+  'couteau-asrai': { note: 'Groupe: Arme elfique | Degats: BF-1 | Attributs: Rapide, Destructeur | Prix: Rare' },
+  'poignard': { note: 'Groupe: Commune | Degats: BF-2 | Attributs: Rapide, Offensive, Precise | Prix: 2 CO' },
+  'lame-pistolet': { note: 'Groupe: Kislev | Degats: BF | Attributs: Defensive, Peu fiable, Vicelarde | Prix: -' },
+  'bardysh': { note: 'Groupe: Kislev | Degats: BF+2 | Attributs: Lent, Peu fiable | Prix: -' }
+};
+
+// Detail options for specific item picks inside subcategories
+export const INVENTORY_DETAIL_OPTIONS = {
+  'weapon-melee': [
+    'epee-longue', 'sabre', 'claymore', 'espadon', 'epee-batarde-1m', 'epee-batarde-2m', 'epee-de-cote',
+    'rapiere', 'fleuret', 'brise-epee', 'katana', 'wakisashi', 'khepesh',
+    'hache-1m', 'hache-2m', 'marteau-1m', 'marteau-2m', 'marteau-du-loup-blanc', 'morgenstern', 'fleau', 'fleau-multiples',
+    'pic-1m', 'piolet-2m', 'pique', 'lance', "lance-d'arcon", 'hallebarde', 'bardysh',
+    'baton', 'arme-improvisee', 'coup-de-poing', 'coup-de-poing-a-pique', 'mains-nues',
+    'bocle', 'main-gauche', 'bouclier', 'pavois', 'pavois-qe',
+    'dague', 'stylet', 'couteau-asrai', 'poignard', 'lame-pistolet'
+  ].map(key => ({ value: key, label: INVENTORY_LABEL_MAP[key] || key, icon: INVENTORY_ICON_MAP[key] || '' }))
+};
+
+export const INVENTORY_CATEGORY_OPTIONS = [
+  { value: '', label: '— Vide —' },
+  { value: 'pouch', label: 'Bourse', icon: INVENTORY_ICON_MAP['pouch'] },
+  { value: 'armor', label: 'Armure', children: [
+    { value: 'armor-light', label: 'Armure 1ère couche', icon: INVENTORY_ICON_MAP['armor-light'] },
+    { value: 'armor-medium', label: 'Armure 2nde couche', icon: INVENTORY_ICON_MAP['armor-medium'] },
+    { value: 'armor-heavy', label: 'Armure 3ème couche', icon: INVENTORY_ICON_MAP['armor-heavy'] }
+  ] },
+  { value: 'weapon', label: 'Arme', children: [
+    { value: 'weapon-melee', label: 'Arme de mêlée', icon: INVENTORY_ICON_MAP['weapon-melee'] },
+    { value: 'weapon-ranged', label: 'Arme de tir', icon: INVENTORY_ICON_MAP['weapon-ranged'] }
+  ] },
+  { value: 'ammo', label: 'Munitions', children: [
+    { value: 'ammo-arrows', label: 'Flèches', icon: INVENTORY_ICON_MAP['ammo-arrows'] },
+    { value: 'ammo-bolts', label: 'Carreaux', icon: INVENTORY_ICON_MAP['ammo-bolts'] },
+    { value: 'ammo-bullets', label: 'Balles', icon: INVENTORY_ICON_MAP['ammo-bullets'] }
+  ] },
+  { value: 'potion', label: 'Potion', icon: INVENTORY_ICON_MAP['potion'] },
+  { value: 'food', label: 'Rations', icon: INVENTORY_ICON_MAP['food'] }
+];
