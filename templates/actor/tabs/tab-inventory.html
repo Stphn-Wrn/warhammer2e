@@ -28,32 +28,101 @@
 
   <div class="section-title">
     Inventaire
-    <button type="button" class="inventory-add">+ Ajouter</button>
   </div>
 
-  <table class="inventory-table">
-    <thead>
-      <tr>
-        <th>Transporté?</th>
-        <th>Qté</th>
-        <th>Nom</th>
-        <th>Poids</th>
-        <th>Description</th>
-        <th>Supp.</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each system.inventory as |it i|}}
-      <tr>
-        <td><input type="checkbox" name="system.inventory.{{i}}.transported" {{#if it.transported}}checked{{/if}}></td>
-        <td><input type="number" name="system.inventory.{{i}}.quantity" value="{{it.quantity}}" min="1"></td>
-        <td><input type="text" name="system.inventory.{{i}}.name" value="{{it.name}}"></td>
-        <td><input type="number" step="0.1" name="system.inventory.{{i}}.weight" value="{{it.weight}}"></td>
-        <td><input type="text" name="system.inventory.{{i}}.description" value="{{it.description}}"></td>
-        <td><button type="button" class="inventory-delete" data-inv-id="{{it.id}}">🗑</button></td>
-        <input type="hidden" name="system.inventory.{{i}}.id" value="{{it.id}}">
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
+  <div class="inventory-bag" style="display:flex;align-items:center;gap:8px;margin:6px 0 10px 0;">
+    <label for="inventory-bag" style="font-weight:600;">Sac porté</label>
+    <select name="system.inventoryBag" id="inventory-bag" style="flex:1;">
+      <option value="" {{#if (eq system.inventoryBag "")}}selected{{/if}}>— Aucun —</option>
+      <option value="backpack" {{#if (eq system.inventoryBag "backpack")}}selected{{/if}}>Sac à dos</option>
+      <option value="pouch" {{#if (eq system.inventoryBag "pouch")}}selected{{/if}}>Sac Bandoulière</option>
+      <option value="satchel" {{#if (eq system.inventoryBag "satchel")}}selected{{/if}}>Sac large</option>
+      <option value="grizzly" {{#if (eq system.inventoryBag "grizzly")}}selected{{/if}}>Sac grizzly</option>
+      <option value="medic" {{#if (eq system.inventoryBag "medic")}}selected{{/if}}>Sac médical</option>
+      <option value="holster" {{#if (eq system.inventoryBag "holster")}}selected{{/if}}>Poche/Holster/Bandoulière à potions</option>
+    </select>
+  </div>
+  <div class="inventory-strong-shoulders" style="display:flex;align-items:center;gap:8px;margin:2px 0 8px 0;font-size:13px;">
+    <input type="checkbox" name="system.strongShoulders" {{#if system.strongShoulders}}checked{{/if}}>
+    <label style="cursor:pointer;">Talent "Épaules solides" (+2 emplacements)</label>
+  </div>
+    <div class="inventory-legend" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin:4px 0 10px 0;font-size:13px;">
+      <div style="font-weight:600;">Légende des qualités d'items :</div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span aria-hidden="true" style="width:16px;height:10px;border-radius:6px;background:#c62828;border:2px solid #c62828;"></span>
+        <span>Mauvaise</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span aria-hidden="true" style="width:16px;height:10px;border-radius:6px;background:#444444;border:2px solid #444444;"></span>
+        <span>Ordinaire</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span aria-hidden="true" style="width:16px;height:10px;border-radius:6px;background:#7b3fff;border:2px solid #7b3fff;"></span>
+        <span>Exceptionnelle</span>
+      </div>
+    </div>
+    <div class="inventory-slots" style="display:flex;gap:24px;align-items:flex-start;margin-bottom:14px;">
+      <div class="slots-col" style="flex:1;">
+        <div style="font-weight:600;margin-bottom:6px;">Emplacement bonus du Sac</div>
+        <div class="slots-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;">
+          {{#each inventoryBagSlots}}
+            <div class="inventory-slot" data-index="{{this.index}}" draggable="true" title="{{this.label}}{{#if this.detail}} - {{this.detail}}{{/if}}"
+              style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:2px solid {{this.borderColor}};border-radius:14px;background:rgba(200,0,0,0.06);cursor:pointer;">
+              <div class="slot-icon" aria-hidden="true"
+                style="width:44px;height:44px;border-radius:12px;background:rgba(200,0,0,0.1);background-image:url('{{#if this.icon}}{{this.icon}}{{/if}}');background-size:contain;background-position:center;background-repeat:no-repeat;"></div>
+              <div class="slot-text" style="flex:1;display:flex;flex-direction:column;min-width:0;">
+                <div style="font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{#if this.label}}{{this.label}}{{else}}Emplacement vide{{/if}}</div>
+                {{#if this.note}}
+                  <div style="font-size:12px;color:#555;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{this.note}}</div>
+                {{else if this.detail}}
+                  <div style="font-size:12px;color:#555;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{this.detail}}</div>
+                {{/if}}
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="slots-col" style="flex:1;">
+        <div style="font-weight:600;margin-bottom:6px;">Encombrement</div>
+        <div class="slots-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;">
+          {{#each inventoryBaseSlotsDisplay}}
+            <div class="inventory-slot {{#if this.isBagSlot}}bag-slot{{/if}}" data-index="{{this.index}}" draggable="{{#if this.isBagSlot}}false{{else}}true{{/if}}" title="{{this.label}}{{#if this.detail}} - {{this.detail}}{{/if}}"
+              style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:2px solid {{this.borderColor}};border-radius:14px;background:{{#if this.isBagSlot}}rgba(255,196,125,0.18){{else}}rgba(0,0,0,0.04){{/if}};cursor:{{#if this.isBagSlot}}default{{else}}pointer{{/if}};">
+              <div class="slot-icon" aria-hidden="true"
+                style="width:44px;height:44px;border-radius:12px;background:{{#if this.isBagSlot}}rgba(255,196,125,0.32){{else}}rgba(0,0,0,0.08){{/if}};background-image:url('{{#if this.icon}}{{this.icon}}{{/if}}');background-size:contain;background-position:center;background-repeat:no-repeat;"></div>
+              <div class="slot-text" style="flex:1;display:flex;flex-direction:column;min-width:0;">
+                <div style="font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{#if this.label}}{{this.label}}{{else}}Emplacement vide{{/if}}</div>
+                {{#if this.note}}
+                  <div style="font-size:12px;color:#555;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{this.note}}</div>
+                {{else if this.detail}}
+                  <div style="font-size:12px;color:#555;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{this.detail}}</div>
+                {{/if}}
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:10px;">Non transporté</div>
+    <div class="inventory-overflow" style="display:flex;flex-direction:column;gap:6px;margin-bottom:4px;">
+      {{#if inventoryOverflow.length}}
+        {{#each inventoryOverflow}}
+          <div class="inventory-slot" data-index="{{this.index}}" draggable="true" title="{{this.label}}{{#if this.detail}} - {{this.detail}}{{/if}}" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:2px dashed {{this.borderColor}};border-radius:12px;background:rgba(0,0,0,0.03);cursor:pointer;">
+            <div class="slot-icon" aria-hidden="true" style="width:40px;height:40px;border-radius:10px;background:rgba(0,0,0,0.06);background-image:url('{{#if this.icon}}{{this.icon}}{{/if}}');background-size:contain;background-position:center;background-repeat:no-repeat;"></div>
+            <div class="slot-text" style="flex:1;min-width:0;display:flex;flex-direction:column;">
+              <div style="font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{#if this.label}}{{this.label}}{{else}}Objet sans nom{{/if}}</div>
+              {{#if this.note}}
+                <div style="font-size:12px;color:#555;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{this.note}}</div>
+              {{else if this.detail}}
+                <div style="font-size:12px;color:#555;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{this.detail}}</div>
+              {{/if}}
+            </div>
+          </div>
+        {{/each}}
+      {{else}}
+        <div style="font-size:13px;color:#555;">Aucun objet en dehors de l'inventaire.</div>
+      {{/if}}
+    </div>
 </div>
