@@ -1,6 +1,7 @@
 import { openMaledictionDialog, openColereDialog, openSpellCastDialog } from './dialogs.js';
 import { openGrantXpDialog } from './xp.js';
 import { _recalculateDiceMin, _recalculateDiceMinRanged, getZoneFromD100, handleUlricFury, rollDiceFaces } from './utils.js';
+import { INVENTORY_CATEGORY_OPTIONS, INVENTORY_CHILD_TO_PARENT, INVENTORY_DETAIL_OPTIONS, INVENTORY_ICON_MAP, INVENTORY_QUALITY_OPTIONS, MELEE_WEAPON_PRESETS } from './inventoryConstants.js';
 
 export function wireSheetHandlers(sheet, html) {
   try {
@@ -230,6 +231,250 @@ export function wireSheetHandlers(sheet, html) {
         }
       });
     } catch (e) { console.error('Error wiring reroll buttons', e); }
+  });
+  
+  // Inventory slot click: choose an item type/icon for the slot
+  html.find('.inventory-slot').off('click').on('click', async ev => {
+    if (ev.currentTarget?.classList?.contains('bag-slot')) return;
+    ev.preventDefault();
+    const el = ev.currentTarget;
+    const slotIndex = Number(el.dataset.index) || 0;
+    const actor = sheet.actor;
+    if (!actor?.isOwner) { ui.notifications.warn('Vous ne pouvez pas modifier cet inventaire.'); return; }
+
+    const current = Array.isArray(actor.system?.inventory) ? actor.system.inventory[slotIndex] || {} : {};
+    const currentLabel = current.label || '';
+    const currentNote = current.note || '';
+    const currentDetail = current.detail || '';
+    const currentQuality = current.quality || 'ordinaire';
+    const childToParent = { ...INVENTORY_CHILD_TO_PARENT };
+
+    const findDetailParent = (detailVal) => {
+      if (!detailVal) return '';
+      for (const [parentKey, options] of Object.entries(INVENTORY_DETAIL_OPTIONS)) {
+        if (options.some(o => o.value === detailVal)) return parentKey;
+      }
+      return '';
+    };
+
+    let initialType = current.type || '';
+    let initialSubType = current.subType || '';
+    let initialDetail = currentDetail;
+    if (!initialSubType && childToParent[initialType]) {
+      initialSubType = initialType;
+      initialType = childToParent[initialType];
+    }
+    if (!initialDetail) {
+      const inferredParent = findDetailParent(current.subType || '');
+      if (inferredParent) {
+        initialDetail = current.subType;
+        if (!initialSubType) initialSubType = inferredParent;
+        if (!initialType) initialType = childToParent[inferredParent] || 'weapon';
+      }
+    }
+    const hasType = INVENTORY_CATEGORY_OPTIONS.some(o => o.value === initialType);
+    if (!hasType) initialType = '';
+
+    const buildCategoryOptions = selected => INVENTORY_CATEGORY_OPTIONS
+      .map(o => `<option value="${o.value}" ${o.value === selected ? 'selected' : ''}>${o.label}</option>`)
+      .join('');
+
+    const buildSubOptions = (parentVal, selected) => {
+      const cat = INVENTORY_CATEGORY_OPTIONS.find(o => o.value === parentVal);
+      const subs = Array.isArray(cat?.children) ? cat.children : [];
+      return subs.map(o => `<option value="${o.value}" ${o.value === selected ? 'selected' : ''}>${o.label}</option>`).join('');
+    };
+
+    const buildDetailOptions = (subVal, selected) => {
+      const options = INVENTORY_DETAIL_OPTIONS[subVal] || [];
+      return options.map(o => `<option value="${o.value}" ${o.value === selected ? 'selected' : ''}>${o.label}</option>`).join('');
+    };
+
+    const buildQualityOptions = selected => INVENTORY_QUALITY_OPTIONS
+      .map(o => `<option value="${o.value}" ${o.value === selected ? 'selected' : ''}>${o.label}</option>`)
+      .join('');
+
+    const categorySelectHtml = buildCategoryOptions(initialType);
+    const subSelectHtml = buildSubOptions(initialType, initialSubType);
+    const detailSelectHtml = buildDetailOptions(initialSubType, initialDetail);
+    const qualitySelectHtml = buildQualityOptions(currentQuality);
+    const initialPresetNote = (!currentNote && MELEE_WEAPON_PRESETS[initialDetail]?.note) ? MELEE_WEAPON_PRESETS[initialDetail].note : '';
+    const initialNote = currentNote || initialPresetNote;
+
+    const content = `
+      <div class="option-line flexcol" style="gap:12px;align-items:flex-start;padding:12px;border:1px solid #c7b08a;border-radius:12px;background:#f7f4ee;">
+        <div class="option-control" style="display:flex;flex-direction:column;gap:6px;width:100%;">
+          <label style="font-weight:700;font-size:16px;">Contenu de la case</label>
+          <select name="slotType" style="width:100%;">${categorySelectHtml}</select>
+        </div>
+        <div class="option-control sub-select-group" style="display:${subSelectHtml ? 'flex' : 'none'};flex-direction:column;gap:6px;width:100%;">
+          <label style="font-weight:700;font-size:16px;">Détail</label>
+          <select name="slotSubType" style="width:100%;">${subSelectHtml}</select>
+        </div>
+        <div class="option-control detail-select-group" style="display:${detailSelectHtml ? 'flex' : 'none'};flex-direction:column;gap:6px;width:100%;">
+          <label style="font-weight:700;font-size:16px;">Arme</label>
+          <select name="slotDetail" style="width:100%;">${detailSelectHtml}</select>
+        </div>
+        <div class="option-control" style="display:flex;flex-direction:column;gap:6px;width:100%;">
+          <label style="font-weight:700;font-size:16px;">Qualité</label>
+          <select name="slotQuality" style="width:100%;">${qualitySelectHtml}</select>
+        </div>
+        <div class="option-control" style="display:flex;flex-direction:column;gap:6px;width:100%;">
+          <label style="font-weight:700;font-size:16px;">Note (facultatif)</label>
+          <input type="text" name="slotLabel" value="${initialNote || ''}" style="width:100%;" />
+        </div>
+      </div>
+    `;
+
+    return new Promise(resolve => {
+      const dlg = new Dialog({
+        title: `Case d'inventaire #${slotIndex + 1}`,
+        content,
+        buttons: {
+          save: {
+            label: 'Enregistrer',
+            callback: async html => {
+              const form = html[0];
+              const typeRaw = form.querySelector('select[name="slotType"]').value || '';
+              const subSelect = form.querySelector('select[name="slotSubType"]');
+              let subTypeVal = subSelect ? (subSelect.value || '') : '';
+              const detailSelect = form.querySelector('select[name="slotDetail"]');
+              const detailVal = detailSelect ? (detailSelect.value || '') : '';
+              const qualitySelect = form.querySelector('select[name="slotQuality"]');
+              const qualityVal = (qualitySelect?.value || 'ordinaire');
+              let typeVal = typeRaw;
+              if (!subTypeVal && childToParent[typeVal]) {
+                subTypeVal = typeVal;
+                typeVal = childToParent[typeVal];
+              }
+              const category = INVENTORY_CATEGORY_OPTIONS.find(o => o.value === typeVal);
+              const child = category?.children?.find(c => c.value === subTypeVal);
+              const detailOption = (INVENTORY_DETAIL_OPTIONS[subTypeVal] || []).find(o => o.value === detailVal);
+              const selectionLabel = detailOption?.label || child?.label || category?.label || '';
+              const noteVal = (form.querySelector('input[name="slotLabel"]').value || '').trim();
+              const iconKey = detailVal || subTypeVal || typeVal;
+              const icon = INVENTORY_ICON_MAP[iconKey] || detailOption?.icon || child?.icon || '';
+              const inv = Array.isArray(actor.system?.inventory) ? actor.system.inventory.slice() : [];
+              while (inv.length <= slotIndex) inv.push({ type: '', subType: '', label: '', icon: '' });
+              inv[slotIndex] = { type: typeVal, subType: subTypeVal, detail: detailVal, quality: qualityVal, label: selectionLabel, note: noteVal, icon };
+              await actor.update({ 'system.inventory': inv });
+              resolve();
+            }
+          },
+          clear: {
+            label: 'Vider',
+            callback: async () => {
+              const inv = Array.isArray(actor.system?.inventory) ? actor.system.inventory.slice() : [];
+              while (inv.length <= slotIndex) inv.push({ type: '', subType: '', label: '', icon: '' });
+              inv[slotIndex] = { type: '', subType: '', label: '', note: '', icon: '' };
+              await actor.update({ 'system.inventory': inv });
+              resolve();
+            }
+          },
+          cancel: { label: 'Annuler', callback: () => resolve() }
+        },
+        default: 'save',
+        render: htmlDlg => {
+          const $dlg = $(htmlDlg);
+          const $typeSelect = $dlg.find('select[name="slotType"]');
+          const $subGroup = $dlg.find('.sub-select-group');
+          const $subSelect = $dlg.find('select[name="slotSubType"]');
+          const $detailGroup = $dlg.find('.detail-select-group');
+          const $detailSelect = $dlg.find('select[name="slotDetail"]');
+          const $noteInput = $dlg.find('input[name="slotLabel"]');
+          const refreshSubOptions = typeVal => {
+            const htmlOpts = buildSubOptions(typeVal, typeVal === initialType ? initialSubType : '');
+            if (!htmlOpts) {
+              $subSelect.html('');
+              $subSelect.val('');
+              $subGroup.hide();
+              $detailSelect.html('');
+              $detailSelect.val('');
+              $detailGroup.hide();
+              return '';
+            }
+            $subSelect.html(htmlOpts);
+            $subGroup.show();
+            return $subSelect.val();
+          };
+          const refreshDetailOptions = (subVal, detailDefault) => {
+            const htmlOpts = buildDetailOptions(subVal, detailDefault);
+            if (!htmlOpts) {
+              $detailSelect.html('');
+              $detailSelect.val('');
+              $detailGroup.hide();
+              return;
+            }
+            $detailSelect.html(htmlOpts);
+            $detailGroup.show();
+          };
+          const applyPresetNote = detailVal => {
+            if (!$noteInput.length) return;
+            const existing = ($noteInput.val() || '').trim();
+            if (existing) return;
+            const preset = MELEE_WEAPON_PRESETS[detailVal];
+            if (preset?.note) $noteInput.val(preset.note);
+          };
+          // Initialize quality select with current value
+          $dlg.find('select[name="slotQuality"]').val(currentQuality || 'ordinaire');
+          const initialSub = refreshSubOptions(initialType);
+          const defaultDetail = (initialSubType === initialSub) ? initialDetail : '';
+          refreshDetailOptions(initialSubType, defaultDetail);
+          applyPresetNote(initialDetail);
+          $typeSelect.off('change.inventorySub').on('change.inventorySub', ev => {
+            const newSub = refreshSubOptions(ev.currentTarget.value || '');
+            refreshDetailOptions(newSub || '', '');
+          });
+          $subSelect.off('change.inventoryDetail').on('change.inventoryDetail', ev => {
+            const newSub = ev.currentTarget.value || '';
+            refreshDetailOptions(newSub, '');
+            const newDetail = $detailSelect.val() || '';
+            applyPresetNote(newDetail);
+          });
+          $detailSelect.off('change.inventoryDetailDirect').on('change.inventoryDetailDirect', ev => {
+            const newDetail = ev.currentTarget.value || '';
+            applyPresetNote(newDetail);
+          });
+        }
+      });
+      dlg.render(true);
+    });
+  });
+
+  // Drag and drop to reorder/move inventory slots (includes overflow)
+  html.find('.inventory-slot').off('dragstart').on('dragstart', ev => {
+    if (ev.currentTarget?.classList?.contains('bag-slot')) return;
+    try { ev.stopPropagation(); } catch (e) {}
+    const idx = Number(ev.currentTarget?.dataset?.index);
+    if (Number.isNaN(idx)) return;
+    const dt = ev.originalEvent?.dataTransfer;
+    if (!dt) return;
+    dt.effectAllowed = 'move';
+    dt.setData('text/plain', String(idx));
+  });
+
+  html.find('.inventory-slot').off('dragover').on('dragover', ev => {
+    if (ev.currentTarget?.classList?.contains('bag-slot')) return;
+    try { ev.preventDefault(); ev.stopPropagation(); } catch (e) {}
+    const dt = ev.originalEvent?.dataTransfer;
+    if (dt) dt.dropEffect = 'move';
+  });
+
+  html.find('.inventory-slot').off('drop').on('drop', async ev => {
+    if (ev.currentTarget?.classList?.contains('bag-slot')) return;
+    try { ev.preventDefault(); ev.stopPropagation(); } catch (e) {}
+    const dt = ev.originalEvent?.dataTransfer;
+    const fromIdx = dt ? Number(dt.getData('text/plain')) : NaN;
+    const toIdx = Number(ev.currentTarget?.dataset?.index);
+    if (Number.isNaN(fromIdx) || Number.isNaN(toIdx)) return;
+    if (fromIdx === toIdx) return;
+    const inv = Array.isArray(sheet.actor.system?.inventory) ? sheet.actor.system.inventory.slice() : [];
+    const maxIdx = Math.max(fromIdx, toIdx);
+    while (inv.length <= maxIdx) inv.push({ type: '', subType: '', label: '', note: '', icon: '' });
+    const tmp = inv[fromIdx];
+    inv[fromIdx] = inv[toIdx];
+    inv[toIdx] = tmp;
+    try { await sheet.actor.update({ 'system.inventory': inv }); } catch (e) { console.error('Inventory swap failed', e); }
   });
 
   
