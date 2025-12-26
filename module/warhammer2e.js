@@ -3,9 +3,9 @@ import { handleAdvancedSkillRoll, showSkillRollDialog, getSkillDisplayName, roll
 import { loadSpells, renderSpellsList, renderSpellsBySchool, renderOwnedSpells } from './spells.js';
 import { registerHandlebarsHelpers, preloadHandlebarsTemplates } from './helpers.js';
 import { findTalentIndexById, addTalent, deleteTalentById, findRegleIndexById, addRegle, deleteRegleById, findConnaissanceIndexById, addConnaissance, deleteConnaissanceById } from './talents.js';
+import { INVENTORY_CHILD_TO_PARENT, INVENTORY_ICON_MAP, INVENTORY_LABEL_MAP, INVENTORY_QUALITY_COLORS } from './inventoryConstants.js';
 
 class WarhammerActor extends Actor {}
-class WarhammerItem extends Item {}
 class WarhammerActorSheet extends ActorSheet {
   static get advancedSkillsList() {
     return [
@@ -46,22 +46,18 @@ class WarhammerActorSheet extends ActorSheet {
     const data = super.getData(options);
     const sys = this.actor.system;
 
-    const sanitizeNumberFields = (obj, keys=[]) => {
+    const sanitizeNumberFields = (obj, keys = []) => {
       if (!obj || typeof obj !== 'object') return;
       for (const k of keys) {
         if (obj[k] === undefined || obj[k] === null) continue;
         try {
           const raw = String(obj[k]).replace(/,/g, '.').trim();
           const n = Number(raw);
-          if (Number.isFinite(n)) {
-            obj[k] = n;
-            continue;
-          }
+          if (Number.isFinite(n)) { obj[k] = n; continue; }
           const digits = raw.replace(/[^0-9-]/g, '');
           if (digits.length > 0) {
             const ni = parseInt(digits, 10);
-            if (!Number.isNaN(ni)) obj[k] = ni;
-            else obj[k] = 0;
+            obj[k] = Number.isNaN(ni) ? 0 : ni;
           } else {
             obj[k] = 0;
           }
@@ -149,23 +145,23 @@ class WarhammerActorSheet extends ActorSheet {
     }
 
     const S = sys.secondaire;
-    S.base.bf = Math.round((sys.principal.actuel.force || 0) / 10);
-    S.base.be = Math.round((sys.principal.actuel.endurance || 0) / 10);
+    S.base.bf = Math.floor((sys.principal.actuel.force || 0) / 10);
+    S.base.be = Math.floor((sys.principal.actuel.endurance || 0) / 10);
 
     const sumSecondaire = (s) => (Number(S.base?.[s]) || 0) + (Number(S.talents?.[s]) || 0) + (Number(S.avance?.[s]) || 0) + (Number(S.mod?.[s]) || 0);
 
     sys.secondaire.actuel = { a: sumSecondaire("a"), b: sumSecondaire("b"), bf: (S.base.bf || 0) + (S.mod.bf || 0), be: (S.base.be || 0) + (S.mod.be || 0), mag: sumSecondaire("mag"), mvt: sumSecondaire("mvt"), pf: sumSecondaire("pf"), pd: sumSecondaire("pd") };
 
-  sys.points ??= {};
-  const pointKeys = ["destin", "chance", "folie", "corruption"];
-  sanitizeNumberFields(sys.points, pointKeys);
-  for (const key of pointKeys) sys.points[key] = Number(sys.points[key]) || 0;
-  if (sys.points.destin < 0) sys.points.destin = 0;
-  if (sys.points.folie < 0) sys.points.folie = 0;
-  if (sys.points.corruption < 0) sys.points.corruption = 0;
-  const chanceMax = Number(sys.secondaire?.actuel?.pd) || 0;
-  if (sys.points.chance < 0) sys.points.chance = 0;
-  if (sys.points.chance > chanceMax) sys.points.chance = chanceMax;
+    sys.points ??= {};
+    const pointKeys = ["destin", "chance", "folie", "corruption"];
+    sanitizeNumberFields(sys.points, pointKeys);
+    for (const key of pointKeys) sys.points[key] = Number(sys.points[key]) || 0;
+    if (sys.points.destin < 0) sys.points.destin = 0;
+    if (sys.points.folie < 0) sys.points.folie = 0;
+    if (sys.points.corruption < 0) sys.points.corruption = 0;
+    const chanceMax = Number(sys.secondaire?.actuel?.pd) || 0;
+    if (sys.points.chance < 0) sys.points.chance = 0;
+    if (sys.points.chance > chanceMax) sys.points.chance = chanceMax;
 
     sys.combat ??= {};
     const mvt = sys.secondaire.actuel.mvt || 0;
@@ -193,14 +189,112 @@ class WarhammerActorSheet extends ActorSheet {
 
     sys.spellsOwned ??= {};
 
-  sys.weapons ??= [];
-  sys.rangedWeapons ??= [];
+    sys.inventory ??= [];
+    sys.inventoryBag ??= "";
+    sys.strongShoulders = Boolean(sys.strongShoulders);
+    const bagCapacities = {
+      backpack: 3,
+      pouch: 2,
+      satchel: 4,
+      grizzly: 6,
+      medic: 12,
+      holster: 0
+    };
+    const bagDisplayNames = {
+      backpack: "Sac à dos",
+      pouch: "Sac Bandoulière",
+      satchel: "Sac large",
+      grizzly: "Sac grizzly",
+      medic: "Sac médical",
+      holster: "Poche/Holster/Bandoulière à potions"
+    };
+    const bagIconPath = "icons/containers/bags/pack-leather-strapped-tan.webp";
+
+    const normalizeInventorySlot = slot => {
+      const rawType = slot?.type || "";
+      const rawSub = slot?.subType || "";
+      const rawDetail = (slot?.detail || "").toString().trim();
+      const rawQuality = (slot?.quality || "ordinaire").toString().toLowerCase();
+      let type = rawType;
+      let subType = rawSub;
+      if (!subType && INVENTORY_CHILD_TO_PARENT[rawType]) {
+        subType = rawType;
+        type = INVENTORY_CHILD_TO_PARENT[rawType];
+      }
+      const note = (slot?.note || '').toString().trim();
+      const iconKey = rawDetail || subType || type;
+      const icon = (slot?.icon || "").toString().trim() || INVENTORY_ICON_MAP[iconKey] || "";
+      const label = (slot?.label || "").toString().trim() || INVENTORY_LABEL_MAP[iconKey] || INVENTORY_LABEL_MAP[subType || type] || "";
+      const quality = ['mauvaise','ordinaire','exceptionnelle'].includes(rawQuality) ? rawQuality : 'ordinaire';
+      const borderColor = INVENTORY_QUALITY_COLORS[quality] || INVENTORY_QUALITY_COLORS.ordinaire;
+      return { type, subType: subType || "", detail: rawDetail, quality, label, note, icon, borderColor };
+    };
+    const beVal = Number(sys.secondaire?.actuel?.be) || 0;
+    const bfVal = Number(sys.secondaire?.actuel?.bf) || 0;
+    data.inventorySlotsBase = beVal + bfVal * 2 + 1 + (sys.strongShoulders ? 2 : 0);
+    data.inventorySlotsBag = bagCapacities[sys.inventoryBag] || 0;
+    const bagSlotCost = sys.inventoryBag ? 1 : 0;
+    // Exceptional armor quality grants one bonus slot each
+    let qualityBonusSlots = 0;
+    const totalSlotsPre = data.inventorySlotsBase + data.inventorySlotsBag - bagSlotCost;
+
+    const totalSlots = Math.max(0, totalSlotsPre);
+    if (!Array.isArray(sys.inventory)) sys.inventory = [];
+    // Normalize all stored items; do not truncate so overflow can be shown when capacity shrinks.
+    const normalizedInventory = sys.inventory.map(normalizeInventorySlot);
+    // All exceptional armors always grant +1 slot (they count 0 ENC), even if they were beyond current capacity.
+    qualityBonusSlots = normalizedInventory.filter(slot => slot.subType?.startsWith('armor') && slot.quality === 'exceptionnelle').length;
+
+    data.inventorySlotsTotal = totalSlotsPre + qualityBonusSlots;
+
+    const bagSlotDisplay = sys.inventoryBag ? {
+      index: null,
+      isBagSlot: true,
+      type: "bag",
+      subType: "bag",
+      detail: "",
+      quality: "ordinaire",
+      label: bagDisplayNames[sys.inventoryBag] || "Sac porté",
+      note: "Occupe 1 case",
+      icon: bagIconPath,
+      borderColor: INVENTORY_QUALITY_COLORS.ordinaire
+    } : null;
+
+    const totalSlotsFinal = Math.max(0, data.inventorySlotsTotal);
+    // Items beyond totalSlotsFinal become non-transported; keep them intact.
+    const overflowItems = normalizedInventory.slice(totalSlotsFinal);
+    // Pad carried slots for display only.
+    const carriedPadded = normalizedInventory.slice(0, totalSlotsFinal);
+    while (carriedPadded.length < totalSlotsFinal) carriedPadded.push({ type: "", subType: "", label: "", icon: "" });
+
+    const mapSlot = (slot, idxBase = 0) => ({
+      index: idxBase,
+      type: slot?.type || "",
+      subType: slot?.subType || "",
+      detail: slot?.detail || "",
+      quality: slot?.quality || "ordinaire",
+      label: slot?.label || "",
+      note: slot?.note || "",
+      icon: slot?.icon || "",
+      borderColor: slot?.borderColor || INVENTORY_QUALITY_COLORS.ordinaire
+    });
+
+    data.inventorySlots = carriedPadded.map((slot, idx) => mapSlot(slot, idx));
+    data.inventoryOverflow = overflowItems.map((slot, idx) => mapSlot(slot, totalSlotsFinal + idx));
+    data.inventoryBaseSlots = data.inventorySlots.slice(0, data.inventorySlotsBase + qualityBonusSlots);
+    data.inventoryBagSlots = data.inventorySlots.slice(data.inventorySlotsBase + qualityBonusSlots, totalSlotsFinal);
+    data.inventoryBaseSlotsDisplay = bagSlotDisplay ? [bagSlotDisplay, ...data.inventoryBaseSlots] : data.inventoryBaseSlots;
+    // Preserve full list (carried + overflow) on the actor data so nothing is lost.
+    sys.inventory = [...carriedPadded, ...overflowItems];
+
+    sys.weapons ??= [];
+    sys.rangedWeapons ??= [];
     const MIN_WEAPON_SLOTS = 8;
-  const ccBase = Number(sys.principal?.base?.cc) || 0;
-  const ctBase = Number(sys.principal?.base?.ct) || 0;
+    const ccBase = Number(sys.principal?.base?.cc) || 0;
+    const ctBase = Number(sys.principal?.base?.ct) || 0;
     const bfActuel = Number(sys.secondaire?.actuel?.bf) || 0;
-  const defaultMeleeDiceMin = Math.max(1, ccBase);
-  const defaultRangedDiceMin = Math.max(1, ctBase);
+    const defaultMeleeDiceMin = Math.max(1, ccBase);
+    const defaultRangedDiceMin = Math.max(1, ctBase);
     for (let wi = 0; wi < MIN_WEAPON_SLOTS; wi++) {
       sys.weapons[wi] ??= {};
       sys.weapons[wi].name ??= '';
@@ -210,7 +304,7 @@ class WarhammerActorSheet extends ActorSheet {
       sys.weapons[wi].diceMin ??= defaultMeleeDiceMin;
       sys.weapons[wi].damage ??= 0;
       sys.weapons[wi].perc ??= false;
-  sys.weapons[wi].bf = bfActuel;
+      sys.weapons[wi].bf = bfActuel;
       sys.weapons[wi].def ??= 0;
       sys.weapons[wi].attributes ??= '';
       sys.weapons[wi].mastery ??= false;
@@ -239,7 +333,7 @@ class WarhammerActorSheet extends ActorSheet {
     sys.skills ??= {}; sys.skills.base ??= {}; sys.skills.advanced ??= [];
     sys._nextId ??= Number(sys._nextId) || 1;
 
-  const defaultSkillCaracteristics = {};
+    const defaultSkillCaracteristics = {};
     for (const [skillKey, defaultCara] of Object.entries(defaultSkillCaracteristics)) {
       sys.skills.base[skillKey] ??= {};
       sys.skills.base[skillKey].cara ??= defaultCara;
@@ -266,10 +360,8 @@ class WarhammerActorSheet extends ActorSheet {
       }
     }
 
-    if (Array.isArray(sys.talents)) for (const t of sys.talents) if (t && (t.id === undefined || t.id === null)) t.id = sys._nextId++;
-    else sys.talents = [];
-    if (Array.isArray(sys.regles)) for (const r of sys.regles) if (r && (r.id === undefined || r.id === null)) r.id = sys._nextId++;
-    else sys.regles = [];
+    if (Array.isArray(sys.talents)) for (const t of sys.talents) if (t && (t.id === undefined || t.id === null)) t.id = sys._nextId++; else sys.talents = [];
+    if (Array.isArray(sys.regles)) for (const r of sys.regles) if (r && (r.id === undefined || r.id === null)) r.id = sys._nextId++; else sys.regles = [];
     if (!Array.isArray(sys.connaissances)) {
       if (sys.connaissances && typeof sys.connaissances === 'object') {
         const entries = Object.keys(sys.connaissances)
@@ -445,7 +537,6 @@ WarhammerActorSheet.prototype._renderOwnedSpells = async function() { return ren
 Hooks.once("init", function () {
   console.log("Warhammer2e | init");
   CONFIG.Actor.documentClass = WarhammerActor;
-  CONFIG.Item.documentClass = WarhammerItem;
 
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("warhammer2e", WarhammerActorSheet, { types: ["character", "monster"], makeDefault: true });
@@ -460,17 +551,16 @@ Hooks.once("init", function () {
     };
   } catch (e) {}
 
-  Items.unregisterSheet("core", ItemSheet);
-
   registerHandlebarsHelpers();
   preloadHandlebarsTemplates();
 });
 
 Hooks.on("preCreateToken", (token, options, userId) => {
   const actor = token.actor;
-  if (actor?.type === "monster") {
-    token.updateSource({ actorLink: false });
-  }
+  // Characters stay linked; monsters stay unlinked.
+  if (!actor) return;
+  const isMonster = actor.type === "monster";
+  token.updateSource({ actorLink: !isMonster });
 });
 
 Hooks.on("renderActorSheet", (app, html, data) => {
