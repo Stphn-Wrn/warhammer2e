@@ -9,6 +9,7 @@ export const INVENTORY_ICON_MAP = {
   "armor-heavy": "icons/equipment/chest/breastplate-cuirass-steel-grey.webp",
   "heavy-armor": "icons/equipment/chest/breastplate-cuirass-steel-grey.webp", // legacy alias
   "weapon-melee": "icons/weapons/swords/sword-bastard.webp",
+  "weapon-firearm": "icons/weapons/guns/gun-pistol-flintlock.webp",
   "weapon-ranged": "icons/weapons/crossbows/crossbow-simple.webp",
   "weapon": "icons/weapons/swords/sword-bastard.webp",
   "ammo-arrows": "icons/weapons/ammunition/arrow-broadhead-green.webp",
@@ -112,6 +113,7 @@ export const INVENTORY_LABEL_MAP = {
   "armor-heavy": "Armure 3ème couche",
   "heavy-armor": "Armure 3ème couche",
   "weapon-melee": "Arme de mêlée",
+  "weapon-firearm": "Arme à feu",
   "weapon-ranged": "Arme de tir",
   "weapon": "Arme",
   "ammo-arrows": "Flèches",
@@ -214,6 +216,7 @@ export const INVENTORY_CHILD_TO_PARENT = {
   "heavy-armor": "armor",
   "armor-heavy": "armor",
   "weapon-melee": "weapon",
+  "weapon-firearm": "weapon",
   "weapon-ranged": "weapon",
   "ammo-arrows": "ammo",
   "ammo-bolts": "ammo",
@@ -336,13 +339,17 @@ export const INVENTORY_DETAIL_OPTIONS = {
     'bocle', 'main-gauche', 'bouclier', 'pavois', 'pavois-qe',
     'dague', 'stylet', 'couteau-asrai', 'poignard', 'lame-pistolet'
   ].map(key => ({ value: key, label: INVENTORY_LABEL_MAP[key] || key, icon: INVENTORY_ICON_MAP[key] || '' })),
+  'weapon-firearm': [
+    'pistolet', 'pistolet-mq', 'pistolet-qe', 'pistolet-repetition', 'pistolet-repetition-mq',
+    'arquebuse', 'arquebuse-repetition', 'fusil-hochland', 'patte-de-canard', 'tromblon',
+    'bombe', 'canne-fusil', 'lance-feu', 'mitrailleuse-ratling', 'arme-technologique'
+  ].map(key => ({ value: key, label: INVENTORY_LABEL_MAP[key] || key, icon: INVENTORY_ICON_MAP[key] || '' })),
   'weapon-ranged': [
     'arc-simple', 'arc-court', 'arc-long', 'arc-elfique', 'arc-carnum',
     'arbalete-lourde', 'arbalete', 'arbalete-repetition', 'arbalete-de-poing', 'arbalete-de-poing-repetition',
     'arme-improvisee-jet', 'filet', 'bolas', 'dague-de-jet', 'fouet', 'fouet-epines',
     'fronde', 'fustibale', 'hache-marteau-de-jet', 'javelot', 'lance-de-jet', 'lasso', 'sarbacane',
-    'pistolet', 'pistolet-mq', 'pistolet-qe', 'pistolet-repetition', 'pistolet-repetition-mq', 'arquebuse', 'arquebuse-repetition', 'fusil-hochland',
-    'patte-de-canard', 'tromblon', 'bombe', 'canne-fusil', 'hache-jet', 'bardysh-distance', 'lame-pistolet-feu', 'lance-feu', 'mitrailleuse-ratling', 'arme-technologique'
+    'hache-jet', 'bardysh-distance', 'lame-pistolet-feu'
   ].map(key => ({ value: key, label: INVENTORY_LABEL_MAP[key] || key, icon: INVENTORY_ICON_MAP[key] || '' }))
 };
 
@@ -356,7 +363,8 @@ export const INVENTORY_CATEGORY_OPTIONS = [
   ] },
   { value: 'weapon', label: 'Arme', children: [
     { value: 'weapon-melee', label: 'Arme de mêlée', icon: INVENTORY_ICON_MAP['weapon-melee'] },
-    { value: 'weapon-ranged', label: 'Arme de tir', icon: INVENTORY_ICON_MAP['weapon-ranged'] }
+    { value: 'weapon-ranged', label: 'Arme de tir', icon: INVENTORY_ICON_MAP['weapon-ranged'] },
+    { value: 'weapon-firearm', label: 'Arme à feu', icon: INVENTORY_ICON_MAP['weapon-firearm'] }
   ] },
   { value: 'ammo', label: 'Munitions', children: [
     { value: 'ammo-arrows', label: 'Flèches', icon: INVENTORY_ICON_MAP['ammo-arrows'] },
