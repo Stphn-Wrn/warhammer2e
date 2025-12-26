@@ -59,7 +59,30 @@ export const INVENTORY_ICON_MAP = {
   "poignard": "",
   "morgenstern": "",
   "lame-pistolet": "",
-  "bardysh": ""
+  "bardysh": "",
+  "arc-simple": "icons/weapons/crossbows/crossbow-simple.webp",
+  "arc-court": "icons/weapons/crossbows/crossbow-simple.webp",
+  "arc-long": "icons/weapons/crossbows/crossbow-simple.webp",
+  "arc-elfique": "icons/weapons/crossbows/crossbow-simple.webp",
+  "arc-carnum": "icons/weapons/crossbows/crossbow-simple.webp",
+  "arbalete-lourde": "icons/weapons/crossbows/crossbow-simple.webp",
+  "arbalete": "icons/weapons/crossbows/crossbow-simple.webp",
+  "arbalete-repetition": "icons/weapons/crossbows/crossbow-simple.webp",
+  "arbalete-de-poing": "icons/weapons/crossbows/crossbow-simple.webp",
+  "arbalete-de-poing-repetition": "icons/weapons/crossbows/crossbow-simple.webp",
+  "arme-improvisee-jet": "icons/weapons/crossbows/crossbow-simple.webp",
+  "filet": "icons/weapons/crossbows/crossbow-simple.webp",
+  "bolas": "icons/weapons/crossbows/crossbow-simple.webp",
+  "dague-de-jet": "icons/weapons/crossbows/crossbow-simple.webp",
+  "fouet": "icons/weapons/crossbows/crossbow-simple.webp",
+  "fouet-epines": "icons/weapons/crossbows/crossbow-simple.webp",
+  "fronde": "icons/weapons/crossbows/crossbow-simple.webp",
+  "fustibale": "icons/weapons/crossbows/crossbow-simple.webp",
+  "hache-marteau-de-jet": "icons/weapons/crossbows/crossbow-simple.webp",
+  "javelot": "icons/weapons/crossbows/crossbow-simple.webp",
+  "lance-de-jet": "icons/weapons/crossbows/crossbow-simple.webp",
+  "lasso": "icons/weapons/crossbows/crossbow-simple.webp",
+  "sarbacane": "icons/weapons/crossbows/crossbow-simple.webp"
 };
 
 export const INVENTORY_LABEL_MAP = {
@@ -121,7 +144,30 @@ export const INVENTORY_LABEL_MAP = {
   "poignard": "Poignard",
   "morgenstern": "Morgenstern",
   "lame-pistolet": "Lame-pistolet",
-  "bardysh": "Bardysh"
+  "bardysh": "Bardysh",
+  "arc-simple": "Arc simple",
+  "arc-court": "Arc court",
+  "arc-long": "Arc long",
+  "arc-elfique": "Arc elfique",
+  "arc-carnum": "Arc de Carnum",
+  "arbalete-lourde": "Arbalète lourde",
+  "arbalete": "Arbalète",
+  "arbalete-repetition": "Arbalète à répétition",
+  "arbalete-de-poing": "Arbalète de poing",
+  "arbalete-de-poing-repetition": "Arbalète de poing à répétition",
+  "arme-improvisee-jet": "Arme improvisée (jet)",
+  "filet": "Filet",
+  "bolas": "Bolas",
+  "dague-de-jet": "Dague de jet",
+  "fouet": "Fouet",
+  "fouet-epines": "Fouet à épines",
+  "fronde": "Fronde",
+  "fustibale": "Fustibale",
+  "hache-marteau-de-jet": "Hache/marteau de jet",
+  "javelot": "Javelot",
+  "lance-de-jet": "Lance (jet)",
+  "lasso": "Lasso",
+  "sarbacane": "Sarbacane"
 };
 
 export const INVENTORY_CHILD_TO_PARENT = {
@@ -197,6 +243,34 @@ export const MELEE_WEAPON_PRESETS = {
   'bardysh': { note: 'Groupe: Kislev | Degats: BF+2 | Attributs: Lent, Peu fiable | Prix: -' }
 };
 
+export const RANGED_WEAPON_PRESETS = {
+  'arc-simple': { note: 'Groupe: Commun | Degats: 4 | Portee: 24/48 | Recharge: 1/2 AC | Attributs: Deux mains' },
+  'arc-court': { note: 'Groupe: Commun | Degats: 4 | Portee: 16/32 | Recharge: 1/2 AC | Attributs: Utilisable à cheval, Deux mains' },
+  'arc-long': { note: 'Groupe: Arcs longs | Degats: 4 | Portee: 30/60 | Recharge: 1/2 AC | Attributs: Perforante, Deux mains' },
+  'arc-elfique': { note: 'Groupe: Arme elfique | Degats: 5 | Portee: 36/72 | Recharge: 1 AC | Attributs: Perforante, Utilisable à cheval, Deux mains' },
+  'arc-carnum': { note: 'Groupe: Arme elfique | Degats: 5 | Portee: 36/72 | Recharge: 1 AC | Attributs: Destructeur, Precise, Deux mains' },
+  'arbalete-lourde': { note: 'Groupe: Arbalète | Degats: 5 | Portee: 30/60 | Recharge: 2 AC | Attributs: Perforante, Deux mains' },
+  'arbalete': { note: 'Groupe: Commun | Degats: 4 | Portee: 30/60 | Recharge: 1 AC | Attributs: Perforante, Simple, Deux mains' },
+  'arbalete-repetition': { note: 'Groupe: Arbalète | Degats: 2 | Portee: 16/32 | Recharge: 4 AC (chargeur), gratuit ensuite | Attributs: 6 carreaux, Special, Deux mains' },
+  'arbalete-de-poing': { note: 'Groupe: Arbalète | Degats: 3 | Portee: 8/16 | Recharge: 1/2 AC | Attributs: Simple' },
+  'arbalete-de-poing-repetition': { note: 'Groupe: Arbalète | Degats: 1 | Portee: 8/16 | Recharge: 4 AC (chargeur), gratuit ensuite | Attributs: 5 carreaux, Special (70 CO)' },
+  'arme-improvisee-jet': { note: 'Groupe: Commun | Degats: BF-3 | Portee: 6/- | Recharge: 1/2 AC | Attributs: Aucun' },
+  'filet': { note: 'Groupe: Arme paralysante | Degats: - | Portee: 4/8 | Recharge: - | Attributs: Immobilisante' },
+  'bolas': { note: 'Groupe: Arme paralysante | Degats: - | Portee: 8/16 | Recharge: - | Attributs: Immobilisante, Legere' },
+  'dague-de-jet': { note: 'Groupe: Arme de jet | Degats: BF-1 | Portee: 6/12 | Recharge: - | Attributs: Prise rapide' },
+  'fouet': { note: 'Groupe: Arme paralysante | Degats: BF-4 | Portee: 3/6 | Recharge: - | Attributs: Immobilisante, Legere' },
+  'fouet-epines': { note: 'Groupe: Arme paralysante | Degats: BF-2 | Portee: 3/6 | Recharge: - | Attributs: Vicelarde' },
+  'fronde': { note: 'Groupe: Lance-pierre | Degats: 3 | Portee: 16/32 | Recharge: 1/2 AC | Attributs: Vicelarde, Assommant' },
+  'fustibale': { note: 'Groupe: Lance-pierre | Degats: 4 | Portee: 24/48 | Recharge: 1 AC | Attributs: Contondant, Assommant, Deux mains' },
+  'hache-marteau-de-jet': { note: 'Groupe: Arme de jet | Degats: BF | Portee: 4/8 | Recharge: - | Attributs: Aucun' },
+  'javelot': { note: 'Groupe: Commun | Degats: BF-2 | Portee: 12/24 | Recharge: - | Attributs: Perforante' },
+  'lance-de-jet': { note: 'Groupe: Commun | Degats: BF-1 | Portee: 12/24 | Recharge: - | Attributs: Perforante, Arme de CàC' },
+  'lasso': { note: 'Groupe: Arme paralysante | Degats: - | Portee: 4/8 | Recharge: - | Attributs: Immobilisante, Piegeante, Deux mains' },
+  'sarbacane': { note: 'Groupe: Special^4 | Degats: - | Portee: - | Recharge: - | Attributs: Special^4 (aucun degat)' }
+};
+
+export const WEAPON_PRESETS = { ...MELEE_WEAPON_PRESETS, ...RANGED_WEAPON_PRESETS };
+
 // Detail options for specific item picks inside subcategories
 export const INVENTORY_DETAIL_OPTIONS = {
   'weapon-melee': [
@@ -207,6 +281,12 @@ export const INVENTORY_DETAIL_OPTIONS = {
     'baton', 'arme-improvisee', 'coup-de-poing', 'coup-de-poing-a-pique', 'mains-nues',
     'bocle', 'main-gauche', 'bouclier', 'pavois', 'pavois-qe',
     'dague', 'stylet', 'couteau-asrai', 'poignard', 'lame-pistolet'
+  ].map(key => ({ value: key, label: INVENTORY_LABEL_MAP[key] || key, icon: INVENTORY_ICON_MAP[key] || '' })),
+  'weapon-ranged': [
+    'arc-simple', 'arc-court', 'arc-long', 'arc-elfique', 'arc-carnum',
+    'arbalete-lourde', 'arbalete', 'arbalete-repetition', 'arbalete-de-poing', 'arbalete-de-poing-repetition',
+    'arme-improvisee-jet', 'filet', 'bolas', 'dague-de-jet', 'fouet', 'fouet-epines',
+    'fronde', 'fustibale', 'hache-marteau-de-jet', 'javelot', 'lance-de-jet', 'lasso', 'sarbacane'
   ].map(key => ({ value: key, label: INVENTORY_LABEL_MAP[key] || key, icon: INVENTORY_ICON_MAP[key] || '' }))
 };
 
