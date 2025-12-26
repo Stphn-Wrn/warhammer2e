@@ -1,7 +1,7 @@
 import { openMaledictionDialog, openColereDialog, openSpellCastDialog } from './dialogs.js';
 import { openGrantXpDialog } from './xp.js';
 import { _recalculateDiceMin, _recalculateDiceMinRanged, getZoneFromD100, handleUlricFury, rollDiceFaces } from './utils.js';
-import { INVENTORY_CATEGORY_OPTIONS, INVENTORY_CHILD_TO_PARENT, INVENTORY_DETAIL_OPTIONS, INVENTORY_ICON_MAP, INVENTORY_QUALITY_OPTIONS, MELEE_WEAPON_PRESETS } from './inventoryConstants.js';
+import { INVENTORY_CATEGORY_OPTIONS, INVENTORY_CHILD_TO_PARENT, INVENTORY_DETAIL_OPTIONS, INVENTORY_ICON_MAP, INVENTORY_QUALITY_OPTIONS, WEAPON_PRESETS } from './inventoryConstants.js';
 
 export function wireSheetHandlers(sheet, html) {
   try {
@@ -298,7 +298,7 @@ export function wireSheetHandlers(sheet, html) {
     const subSelectHtml = buildSubOptions(initialType, initialSubType);
     const detailSelectHtml = buildDetailOptions(initialSubType, initialDetail);
     const qualitySelectHtml = buildQualityOptions(currentQuality);
-    const initialPresetNote = (!currentNote && MELEE_WEAPON_PRESETS[initialDetail]?.note) ? MELEE_WEAPON_PRESETS[initialDetail].note : '';
+    const initialPresetNote = (!currentNote && WEAPON_PRESETS[initialDetail]?.note) ? WEAPON_PRESETS[initialDetail].note : '';
     const initialNote = currentNote || initialPresetNote;
 
     const content = `
@@ -412,7 +412,7 @@ export function wireSheetHandlers(sheet, html) {
             if (!$noteInput.length) return;
             const existing = ($noteInput.val() || '').trim();
             if (existing) return;
-            const preset = MELEE_WEAPON_PRESETS[detailVal];
+            const preset = WEAPON_PRESETS[detailVal];
             if (preset?.note) $noteInput.val(preset.note);
           };
           // Initialize quality select with current value
