@@ -166,6 +166,8 @@
       "talents": [],
       "weapons": [],
       "rangedWeapons": [],
+      "inventory": [],
+      "inventoryBag": "",
       "armor": {
         "head": {
           "light": { "eq": "", "name": "", "qualite": "Ordinaire", "enc": 0, "bonus": 0 },
@@ -414,28 +416,6 @@
       }
     }
   },
-  "Item": {
-  "types": ["talent", "spell"],
-  "talent": {
-    "characteristic": "",
-    "bonus": 0,
-    "description": ""
-  },
-  "spell": {
-    "school": "",
-    "divine": "",
-    "difficulte": "",
-    "temps": "",
-    "duree": "",
-    "portee": "",
-    "cible": "",
-    "soin": "",
-    "ingredient": "",
-    "description": "",
-    "attaques": "",
-    "degats": "",
-    "isFav": false
-  }
-}
+  "Item": {}
 
 }
