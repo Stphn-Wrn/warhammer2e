@@ -112,7 +112,7 @@
           <div class="inventory-slot" data-index="{{this.index}}" draggable="true" title="{{this.label}}{{#if this.detail}} - {{this.detail}}{{/if}}" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border:2px dashed {{this.borderColor}};border-radius:12px;background:rgba(0,0,0,0.03);cursor:pointer;">
             <div class="slot-icon" aria-hidden="true" style="width:40px;height:40px;border-radius:10px;background:rgba(0,0,0,0.06);background-image:url('{{#if this.icon}}{{this.icon}}{{/if}}');background-size:contain;background-position:center;background-repeat:no-repeat;"></div>
             <div class="slot-text" style="flex:1;min-width:0;display:flex;flex-direction:column;">
-              <div style="font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{#if this.label}}{{this.label}}{{else}}Objet sans nom{{/if}}</div>
+              <div style="font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{#if this.label}}{{this.label}}{{else if this.detail}}{{this.detail}}{{else}}Emplacement vide{{/if}}</div>
               {{#if this.note}}
                 <div style="font-size:12px;color:#555;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{this.note}}</div>
               {{else if this.detail}}
