@@ -200,6 +200,7 @@ class WarhammerActorSheet extends ActorSheet {
       medic: 12,
       holster: 0
     };
+    const MIN_NON_TRANSPORTED_SLOTS = 10;
     const bagDisplayNames = {
       backpack: "Sac à dos",
       pouch: "Sac Bandoulière",
@@ -263,6 +264,10 @@ class WarhammerActorSheet extends ActorSheet {
     const totalSlotsFinal = Math.max(0, data.inventorySlotsTotal);
     // Items beyond totalSlotsFinal become non-transported; keep them intact.
     const overflowItems = normalizedInventory.slice(totalSlotsFinal);
+    const overflowDisplay = [...overflowItems];
+    while (overflowDisplay.length < MIN_NON_TRANSPORTED_SLOTS) {
+      overflowDisplay.push({ type: "", subType: "", detail: "", quality: "ordinaire", label: "", note: "", icon: "", borderColor: INVENTORY_QUALITY_COLORS.ordinaire });
+    }
     // Pad carried slots for display only.
     const carriedPadded = normalizedInventory.slice(0, totalSlotsFinal);
     while (carriedPadded.length < totalSlotsFinal) carriedPadded.push({ type: "", subType: "", label: "", icon: "" });
@@ -280,7 +285,7 @@ class WarhammerActorSheet extends ActorSheet {
     });
 
     data.inventorySlots = carriedPadded.map((slot, idx) => mapSlot(slot, idx));
-    data.inventoryOverflow = overflowItems.map((slot, idx) => mapSlot(slot, totalSlotsFinal + idx));
+    data.inventoryOverflow = overflowDisplay.map((slot, idx) => mapSlot(slot, totalSlotsFinal + idx));
     data.inventoryBaseSlots = data.inventorySlots.slice(0, data.inventorySlotsBase + qualityBonusSlots);
     data.inventoryBagSlots = data.inventorySlots.slice(data.inventorySlotsBase + qualityBonusSlots, totalSlotsFinal);
     data.inventoryBaseSlotsDisplay = bagSlotDisplay ? [bagSlotDisplay, ...data.inventoryBaseSlots] : data.inventoryBaseSlots;
