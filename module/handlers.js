@@ -405,10 +405,11 @@ export function wireSheetHandlers(sheet, html) {
               $detailSelect.html('');
               $detailSelect.val('');
               $detailGroup.hide();
-              return;
+              return '';
             }
             $detailSelect.html(htmlOpts);
             $detailGroup.show();
+            return $detailSelect.val() || '';
           };
           const applyPresetNote = detailVal => {
             if (!$noteInput.length) return;
@@ -426,16 +427,16 @@ export function wireSheetHandlers(sheet, html) {
           $dlg.find('select[name="slotQuality"]').val(currentQuality || 'ordinaire');
           const initialSub = refreshSubOptions(initialType);
           const defaultDetail = (initialSubType === initialSub) ? initialDetail : '';
-          refreshDetailOptions(initialSubType, defaultDetail);
-          applyPresetNote(initialDetail);
+          const initialDetailVal = refreshDetailOptions(initialSubType, defaultDetail) || initialDetail;
+          applyPresetNote(initialDetailVal);
           $typeSelect.off('change.inventorySub').on('change.inventorySub', ev => {
             const newSub = refreshSubOptions(ev.currentTarget.value || '');
-            refreshDetailOptions(newSub || '', '');
+            const newDetail = refreshDetailOptions(newSub || '', '');
+            applyPresetNote(newDetail);
           });
           $subSelect.off('change.inventoryDetail').on('change.inventoryDetail', ev => {
             const newSub = ev.currentTarget.value || '';
-            refreshDetailOptions(newSub, '');
-            const newDetail = $detailSelect.val() || '';
+            const newDetail = refreshDetailOptions(newSub, '') || '';
             applyPresetNote(newDetail);
           });
           $detailSelect.off('change.inventoryDetailDirect').on('change.inventoryDetailDirect', ev => {
