@@ -101,7 +101,8 @@ export const INVENTORY_ICON_MAP = {
   "javelot": "icons/weapons/crossbows/crossbow-simple.webp",
   "lance-de-jet": "icons/weapons/crossbows/crossbow-simple.webp",
   "lasso": "icons/weapons/crossbows/crossbow-simple.webp",
-  "sarbacane": "icons/weapons/crossbows/crossbow-simple.webp"
+  "sarbacane": "icons/weapons/crossbows/crossbow-simple.webp",
+  "others": ""
 };
 
 export const INVENTORY_LABEL_MAP = {
@@ -372,5 +373,6 @@ export const INVENTORY_CATEGORY_OPTIONS = [
     { value: 'ammo-bullets', label: 'Balles', icon: INVENTORY_ICON_MAP['ammo-bullets'] }
   ] },
   { value: 'potion', label: 'Potion', icon: INVENTORY_ICON_MAP['potion'] },
-  { value: 'food', label: 'Rations', icon: INVENTORY_ICON_MAP['food'] }
+  { value: 'food', label: 'Rations', icon: INVENTORY_ICON_MAP['food'] },
+  { value: 'others', label: 'Autres', icon: INVENTORY_ICON_MAP['others'] }
 ];
