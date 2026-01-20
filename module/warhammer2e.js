@@ -118,26 +118,24 @@ class WarhammerActorSheet extends ActorSheet {
       agilite: sumPrincipal("agilite"), intelligence: sumPrincipal("intelligence"), forceMentale: sumPrincipal("forceMentale"), sociabilite: sumPrincipal("sociabilite")
     };
 
-    try {
-      const armorZones = ["head","body","armLeft","armRight","legLeft","legRight"];
-      const hasMediumOutsideHead = armorZones.some(z => {
-        if (z === 'head') return false;
-        return (sys.armor?.[z]?.medium?.eq || '').toString().toUpperCase() === 'YES';
-      });
-      const agiliteRaw = Number(sys.principal.actuel.agilite) || 0;
-      sys.principal.actuel.agiliteRaw = agiliteRaw;
-      if (hasMediumOutsideHead) {
-        const agiliteEff = Math.floor(agiliteRaw * 0.9);
-        sys.principal.actuel.agilite = agiliteEff;
+  try {
+        const armorZones = ["head","body","armLeft","armRight","legLeft","legRight"];
+        const hasMediumOutsideHead = armorZones.some(z => {
+          if (z === 'head') return false;
+          return (sys.armor?.[z]?.medium?.eq || '').toString().toUpperCase() === 'YES';
+        });
+        const agiliteRaw = Number(sys.principal.actuel.agilite) || 0;
+        sys.principal.actuel.agiliteRaw = agiliteRaw;
         sys.armor ??= {};
-        sys.armor.mediumAgilityPenaltyPercent = 10;
-        sys.armor.mediumAgilityPenaltyApplied = true;
-      } else {
-        sys.armor ??= {};
-        sys.armor.mediumAgilityPenaltyPercent = 0;
-        sys.armor.mediumAgilityPenaltyApplied = false;
-      }
-    } catch (e) { /* ignore penalty calc errors */ }
+        if (hasMediumOutsideHead) {
+          sys.armor.mediumAgilityPenaltyPercent = 10;
+          sys.armor.mediumAgilityPenaltyApplied = true;
+        } else {
+          sys.armor.mediumAgilityPenaltyPercent = 0;
+          sys.armor.mediumAgilityPenaltyApplied = false;
+        }
+      } catch (e) { /* ignore penalty calc errors */ }
+
 
     sys.secondaire ??= {};
     for (const k of ["base", "talents", "carriere", "avance", "mod", "actuel"]) {
