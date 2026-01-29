@@ -3,7 +3,7 @@ export function getSkillDisplayName(skillName) {
     'soinsAnimaux': 'Soins des animaux',
     'charisme': 'Charisme',
     'commandement': 'Commandement', 
-    'resistanceAlcool': 'Résistance à l\'alcool',
+    'resistancePoison': 'Résistance au Poison',
     'deguisement': 'Déguisement',
     'conduiteAttelage': 'Conduite d\'attelages',
     'dissimulation': 'Dissimulation',
