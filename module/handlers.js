@@ -1777,7 +1777,7 @@ export function wireSheetHandlers(sheet, html) {
         'soinsAnimaux': sheet.actor.system.principal?.actuel?.intelligence || 0,
         'charisme': sheet.actor.system.principal?.actuel?.sociabilite || 0,
         'commandement': sheet.actor.system.principal?.actuel?.sociabilite || 0,
-        'resistanceAlcool': sheet.actor.system.principal?.actuel?.endurance || 0,
+        'resistancePoison': sheet.actor.system.principal?.actuel?.endurance || 0,
         'deguisement': sheet.actor.system.principal?.actuel?.sociabilite || 0,
         'conduiteAttelage': sheet.actor.system.principal?.actuel?.agilite || 0,
         'dissimulation': sheet.actor.system.principal?.actuel?.agilite || 0,
