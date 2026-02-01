@@ -25,7 +25,6 @@ class WarhammerActorSheet extends ActorSheet {
       { key: "lireEcrire", label: "Lire/Écrire", cara: "Int" },
       { key: "navigation", label: "Navigation", cara: "Ag" },
       { key: "braconnage", label: "Braconnage", cara: "Ag" },
-      { key: "filature", label: "Filature", cara: "Ag" },
       { key: "escamotage", label: "Escamotage", cara: "Ag" },
       { key: "torture", label: "Torture", cara: "Soc" },
       { key: "ventriloquie", label: "Ventriloquie", cara: "Soc" }
