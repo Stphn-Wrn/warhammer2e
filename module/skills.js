@@ -1,27 +1,9 @@
+import { buildSkillCaracLookup, computeSkillTotal } from './utils.js';
+import { BASE_SKILL_LABELS } from './constants/advancedSkills.js';
+import { rollD100, formatD100Result, buildRerollButton } from './rolls/RollService.js';
+
 export function getSkillDisplayName(skillName) {
-  const names = {
-    'soinsAnimaux': 'Soins des animaux',
-    'charisme': 'Charisme',
-    'commandement': 'Commandement', 
-    'resistancePoison': 'Résistance au Poison',
-    'deguisement': 'Déguisement',
-    'conduiteAttelage': 'Conduite d\'attelages',
-    'dissimulation': 'Dissimulation',
-    'evaluation': 'Évaluation',
-    'jeu': 'Jeu',
-    'commerage': 'Commérage',
-    'marchandage': 'Marchandage',
-    'intimidation': 'Intimidation',
-    'survie': 'Survie',
-    'perception': 'Perception',
-    'equitation': 'Équitation',
-    'canotage': 'Canotage',
-    'escalade': 'Escalade',
-    'fouille': 'Fouille',
-    'deplacementSilencieux': 'Déplacement Silencieux',
-    'natation': 'Natation'
-  };
-  return names[skillName] || skillName;
+  return BASE_SKILL_LABELS[skillName] ?? skillName;
 }
 
 export function handleAdvancedSkillRoll(sheet, skillIndex) {
@@ -31,10 +13,6 @@ export function handleAdvancedSkillRoll(sheet, skillIndex) {
     return;
   }
 
-  const niveau = Number(skillData.niveau) || 0;
-  const talents = Number(skillData.talents) || 0;
-  const divers = Number(skillData.divers) || 0;
-  const avance = skillData.avance || false;
   const cara = skillData.cara;
   const skillName = skillData.label || "Compétence";
 
@@ -43,20 +21,9 @@ export function handleAdvancedSkillRoll(sheet, skillIndex) {
     return;
   }
 
-  const caracMapping = {
-    "CC": sheet.actor.system.principal?.actuel?.cc || 0,
-    "CT": sheet.actor.system.principal?.actuel?.ct || 0,
-    "F": sheet.actor.system.principal?.actuel?.force || 0,
-    "E": sheet.actor.system.principal?.actuel?.endurance || 0,
-    "Ag": sheet.actor.system.principal?.actuel?.agilite || 0,
-    "Int": sheet.actor.system.principal?.actuel?.intelligence || 0,
-    "FM": sheet.actor.system.principal?.actuel?.forceMentale || 0,
-    "Soc": sheet.actor.system.principal?.actuel?.sociabilite || 0
-  };
-
+  const caracMapping = buildSkillCaracLookup(sheet.actor.system.principal?.actuel);
   const caracValue = Number(caracMapping[cara]) || 0;
-  const caracBase = avance ? caracValue : Math.floor(caracValue / 2);
-  const skillTotal = niveau + talents + divers + caracBase;
+  const skillTotal = computeSkillTotal(skillData, caracValue);
 
   showSkillRollDialog(sheet, skillName, skillTotal);
 }
@@ -83,7 +50,7 @@ export function showSkillRollDialog(sheet, skillName, skillTotal) {
 
   new Dialog({
     title: `${skillDisplayName}`,
-    content: content,
+    content,
     buttons: {
       roll: {
         icon: '<i class="fas fa-dice"></i>',
@@ -103,56 +70,31 @@ export function showSkillRollDialog(sheet, skillName, skillTotal) {
     render: (html) => {
       html.find("#skill-modifier").on("input", (ev) => {
         const modifier = parseInt(ev.target.value) || 0;
-        const finalTotal = skillTotal + modifier;
-        html.find("#final-total").val(finalTotal);
+        html.find("#final-total").val(skillTotal + modifier);
       });
     }
   }).render(true);
 }
 
 export async function rollSkillTest(sheet, skillName, targetNumber, modifier) {
-  const roll = new Roll("1d100");
-  await roll.evaluate();
-  const result = roll.total;
-  const success = result <= targetNumber;
-  const degrees = Math.floor(Math.abs(targetNumber - result) / 10);
+  const roll = await rollD100();
+  const { html: resultHtml } = formatD100Result(roll.total, targetNumber);
   const skillDisplayName = getSkillDisplayName(skillName);
+  const modifierStr = modifier !== 0 ? ` (${targetNumber - modifier}${modifier >= 0 ? '+' : ''}${modifier})` : '';
 
-  let resultText = "";
-  if (success) {
-    if (degrees === 0) resultText = `<span style="color: green;"><strong>RÉUSSITE</strong></span>`;
-    else resultText = `<span style="color: green;"><strong>RÉUSSITE</strong> avec ${degrees} degré${degrees > 1 ? 's' : ''}</span>`;
-  } else {
-    if (degrees === 0) resultText = `<span style="color: red;"><strong>ÉCHEC</strong></span>`;
-    else resultText = `<span style="color: red;"><strong>ÉCHEC</strong> avec ${degrees} degré${degrees > 1 ? 's' : ''}</span>`;
-  }
-
-  const chatData = {
+  ChatMessage.create({
     user: game.user.id,
     speaker: ChatMessage.getSpeaker({actor: sheet.actor}),
     content: `
       <div class="skill-roll-result">
         <h3>Jet de ${skillDisplayName}</h3>
-        <div><strong>Cible:</strong> ${targetNumber}${modifier !== 0 ? ` (${targetNumber - modifier}${modifier >= 0 ? '+' : ''}${modifier})` : ''}</div>
-        <div><strong>Résultat:</strong> ${result}</div>
-        <div>${resultText}</div>
+        <div><strong>Cible:</strong> ${targetNumber}${modifierStr}</div>
+        <div><strong>Résultat:</strong> ${roll.total}</div>
+        <div>${resultHtml}</div>
+        </br>
+        ${buildRerollButton(sheet.actor.id, targetNumber, modifier)}
       </div>
     `,
     sound: CONFIG.sounds.dice
-  };
-
-    chatData.content = `
-      <div class="skill-roll-result">
-        <h3>Jet de ${skillDisplayName}</h3>
-        <div><strong>Cible:</strong> ${targetNumber}${modifier !== 0 ? ` (${targetNumber - modifier}${modifier >= 0 ? '+' : ''}${modifier})` : ''}</div>
-        <div><strong>Résultat:</strong> ${result}</div>
-        <div>${resultText}</div>
-        </br>
-        <div class="reroll-controls">
-          <button class="reroll-roll" data-actor-id="${sheet.actor.id}" data-target="${targetNumber}" data-modifier="${modifier}">Relancer (Coût: 1 Chance)</button>
-        </div>
-      </div>
-    `;
-
-  ChatMessage.create(chatData);
+  });
 }

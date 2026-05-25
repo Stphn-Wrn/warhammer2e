@@ -15,156 +15,103 @@ export class GestionRessourcesApp extends Application {
 
   static async loadCritData() {
     if (this.critData) return this.critData;
-
-    const path = "systems/warhammer2e/json/crits.json";
-    const response = await fetch(path);
+    const response = await fetch("systems/warhammer2e/json/crits.json");
     if (!response.ok) {
       ui.notifications.error("Impossible de charger le fichier crits.json");
       return null;
     }
-
     this.critData = await response.json();
-    console.log("CRIT DATA LOADED", this.critData);
     return this.critData;
   }
 
   getCritResultValue(d100, critValue) {
     const table = this.constructor.critData;
     if (!table) return null;
-
     const row = table.ranges.find(r => d100 >= r.min && d100 <= r.max);
     if (!row) return null;
-
-    const index = critValue - 1;
-    return row.values[index];
+    return row.values[critValue - 1];
   }
 
   async activateListeners(html) {
     super.activateListeners(html);
-
     await this.constructor.loadCritData();
 
     const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+    const playerActors = game.actors.filter(a => a.hasPlayerOwner && (a.type === "character" || a.type === "monster"));
 
-    const playerActors = game.actors.filter(a =>
-      a.hasPlayerOwner && (a.type === "character" || a.type === "monster")
-    );
-
-    const options = playerActors
+    const actorOptions = playerActors
       .map(a => `<option value="${a.id}">${a.name}</option>`)
       .join("");
-
-    html.find("select.resource-target").each((i, sel) => {
-      sel.innerHTML = `<option value="">-- Sélectionner un acteur --</option>` + options;
+    html.find("select.resource-target").each((_, sel) => {
+      sel.innerHTML = `<option value="">-- Sélectionner un acteur --</option>` + actorOptions;
     });
 
-    // ---------- Donner la totalité / X points de chance ----------
-    html.find("input[name='reset-luck']").on("click", async ev => {
-      ev.preventDefault();
+    const applyResourceValue = async ({ inputBtn, selectName, valueName, getMax, updatePath, successMsg, allMsg }) => {
+      html.find(inputBtn).on("click", async ev => {
+        ev.preventDefault();
+        if (!game.user.isGM) return ui.notifications.warn("Seul le MJ peut utiliser cette option.");
 
-      if (!game.user.isGM)
-        return ui.notifications.warn("Seul le MJ peut utiliser cette option.");
+        const targetId = html.find(`select[name='${selectName}']`).val();
+        const customValue = html.find(`input[name='${valueName}']`).val();
 
-      const targetId = html.find("select[name='reset-luck-target']").val();
-      const customValue = html.find("input[name='reset-luck-value']").val();
+        const computeValue = (actor) => {
+          const max = getMax(actor);
+          return clamp(customValue !== "" ? Number(customValue) : max, 0, max);
+        };
 
-      // Aucun acteur sélectionné → tous
-      if (!targetId) {
-        const actors = game.actors.filter(a => a.hasPlayerOwner && (a.type === "character" || a.type === "monster"));
-
-        for (const actor of actors) {
-          const maxLuck = Number(actor.system?.secondaire?.actuel?.pd) || 0;
-          const valueRaw = customValue !== "" ? Number(customValue) : maxLuck;
-          const value = clamp(valueRaw, 0, maxLuck);
-
-          await actor.update({ "system.points.chance": value });
+        if (!targetId) {
+          for (const actor of playerActors) {
+            await actor.update({ [updatePath]: computeValue(actor) });
+          }
+          return ui.notifications.info(allMsg(customValue));
         }
 
-        return ui.notifications.info(
-          `Tous les acteurs reçoivent ${customValue !== "" ? customValue : "leurs max"} points de Chance.`
-        );
-      }
+        const actor = game.actors.get(targetId);
+        if (!actor) return ui.notifications.error("Acteur introuvable.");
+        await actor.update({ [updatePath]: computeValue(actor) });
+        ui.notifications.info(successMsg(actor, computeValue(actor)));
+      });
+    };
 
-      // Acteur ciblé
-      const actor = game.actors.get(targetId);
-      if (!actor) return ui.notifications.error("Acteur introuvable.");
-
-      const maxLuck = Number(actor.system?.secondaire?.actuel?.pd) || 0;
-      const valueRaw = customValue !== "" ? Number(customValue) : maxLuck;
-      const value = clamp(valueRaw, 0, maxLuck);
-
-      await actor.update({ "system.points.chance": value });
-      ui.notifications.info(`${actor.name} reçoit ${value} Point(s) de Chance.`);
+    applyResourceValue({
+      inputBtn:   "input[name='reset-luck']",
+      selectName: 'reset-luck-target',
+      valueName:  'reset-luck-value',
+      getMax:     actor => Number(actor.system?.secondaire?.actuel?.pd) || 0,
+      updatePath: 'system.points.chance',
+      successMsg: (actor, value) => `${actor.name} reçoit ${value} Point(s) de Chance.`,
+      allMsg:     (customValue) => `Tous les acteurs reçoivent ${customValue !== "" ? customValue : "leurs max"} points de Chance.`
     });
 
-    // ---------- Donner la totalité / X points de blessure ----------
-    html.find("input[name='heal-all']").on("click", async ev => {
-      ev.preventDefault();
-
-      if (!game.user.isGM)
-        return ui.notifications.warn("Seul le MJ peut utiliser cette option.");
-
-      const targetId = html.find("select[name='heal-all-target']").val();
-      const customValue = html.find("input[name='heal-all-value']").val();
-
-      // Aucun acteur sélectionné → tous
-      if (!targetId) {
-        const actors = game.actors.filter(a => a.hasPlayerOwner && (a.type === "character" || a.type === "monster"));
-
-        for (const actor of actors) {
-          const maxWounds = Number(actor.system?.secondaire?.actuel?.b) || 0;
-          const valueRaw = customValue !== "" ? Number(customValue) : maxWounds;
-          const value = clamp(valueRaw, 0, maxWounds);
-
-          await actor.update({ "system.combat.hp": value });
-        }
-
-        return ui.notifications.info(
-          `Tous les acteurs récupèrent ${customValue !== "" ? customValue : "leurs max"} points de Blessure.`
-        );
-      }
-
-      // Acteur ciblé
-      const actor = game.actors.get(targetId);
-      if (!actor) return ui.notifications.error("Acteur introuvable.");
-
-      const maxWounds = Number(actor.system?.secondaire?.actuel?.b) || 0;
-      const valueRaw = customValue !== "" ? Number(customValue) : maxWounds;
-      const value = clamp(valueRaw, 0, maxWounds);
-
-      await actor.update({ "system.combat.hp": value });
-      ui.notifications.info(`${actor.name} récupère ${value} Point(s) de Blessure.`);
+    applyResourceValue({
+      inputBtn:   "input[name='heal-all']",
+      selectName: 'heal-all-target',
+      valueName:  'heal-all-value',
+      getMax:     actor => Number(actor.system?.secondaire?.actuel?.b) || 0,
+      updatePath: 'system.combat.hp',
+      successMsg: (actor, value) => `${actor.name} récupère ${value} Point(s) de Blessure.`,
+      allMsg:     (customValue) => `Tous les acteurs récupèrent ${customValue !== "" ? customValue : "leurs max"} points de Blessure.`
     });
 
     // ---------- Coup critique ----------
     html.find("input[name='apply-critique']").on("click", async ev => {
       ev.preventDefault();
-
-      if (!game.user.isGM)
-        return ui.notifications.warn("Seul le MJ peut lancer les critiques.");
+      if (!game.user.isGM) return ui.notifications.warn("Seul le MJ peut lancer les critiques.");
 
       const zone = html.find("select[name='critique-zone']").val();
       const d100 = Number(html.find("input[name='critique-roll-d100']").val());
       const critValue = Number(html.find("input[name='critique-roll-value']").val());
 
-      if (!zone)
-        return ui.notifications.warn("Sélectionnez une zone.");
-
-      if (!d100 || d100 < 1 || d100 > 100)
-        return ui.notifications.warn("Entrez un résultat d100 valide.");
-
-      if (!critValue || critValue < 1 || critValue > 10)
-        return ui.notifications.warn("La valeur critique doit être entre +1 et +10.");
+      if (!zone)                                return ui.notifications.warn("Sélectionnez une zone.");
+      if (!d100 || d100 < 1 || d100 > 100)     return ui.notifications.warn("Entrez un résultat d100 valide.");
+      if (!critValue || critValue < 1 || critValue > 10) return ui.notifications.warn("La valeur critique doit être entre +1 et +10.");
 
       const finalIndex = this.getCritResultValue(d100, critValue);
-      if (!finalIndex)
-        return ui.notifications.error("Impossible de résoudre le critique.");
+      if (!finalIndex) return ui.notifications.error("Impossible de résoudre le critique.");
 
       const table = this.constructor.critData[zone];
       const entry = table.find(e => e.roll === finalIndex);
-
-      if (!entry)
-        return ui.notifications.error("Aucun résultat correspondant dans la table critique.");
+      if (!entry) return ui.notifications.error("Aucun résultat correspondant dans la table critique.");
 
       const label = this.constructor.critData[`${zone}_label`] ?? `Coup critique – ${zone}`;
 

@@ -1,10 +1,30 @@
+async function applyXpToActor(actor, amount, reason) {
+  const sys = actor.system || {};
+  sys.xp = sys.xp || {};
+  const current = Number(sys.xp.total) || 0;
+  const next = current + amount;
+  const history = Array.isArray(sys.xp.history) ? sys.xp.history.slice() : [];
+  history.push({
+    id: Date.now(),
+    by: game.user.id,
+    amount,
+    action: amount > 0 ? 'add' : 'remove',
+    previous: current,
+    next,
+    reason,
+    date: new Date().toISOString()
+  });
+  await actor.update({ 'system.xp.total': next, 'system.xp.history': history });
+  return next;
+}
+
 export async function openGrantXpDialog(sheet) {
   const actor = sheet.actor;
   if (!game.user.isGM) return ui.notifications.warn('Seul le MJ peut attribuer des PX');
 
   const content = `
     <form>
-        <div class="form-group">
+      <div class="form-group">
         <label>Montant de PX (positif pour donner, négatif pour retirer)</label>
         <input type="number" id="xp-amount" name="xp-amount" value="0" />
       </div>
@@ -38,22 +58,17 @@ export async function openGrantXpDialog(sheet) {
           const toAll = !!dlgHtml.find('#xp-to-all').prop('checked');
           if (amount === 0) return ui.notifications.warn('Entrez un montant différent de 0');
 
+          const verb = amount > 0 ? 'a attribué' : 'a retiré';
+          const display = Math.abs(amount);
+
           if (toAll) {
             const includeNpcs = !!dlgHtml.find('#xp-include-npcs').prop('checked');
             let targets = game.actors.filter(a => a.type === 'character');
-            if (!includeNpcs) targets = targets.filter(a => a.hasPlayerOwner === true || a.hasPlayerOwner === undefined ? a.hasPlayerOwner : false);
-            targets = targets.filter(a => includeNpcs ? true : a.hasPlayerOwner || (a.ownership && Object.values(a.ownership).some(v=>v>=1)));
+            if (!includeNpcs) targets = targets.filter(a => a.hasPlayerOwner || (a.ownership && Object.values(a.ownership).some(v => v >= 1)));
             const results = [];
             for (const a of targets) {
-              const sys = a.system || {};
-              sys.xp = sys.xp || {};
-              const current = Number(sys.xp.total) || 0;
-              const next = current + amount;
-              const history = Array.isArray(sys.xp.history) ? sys.xp.history.slice() : [];
-              const action = amount > 0 ? 'add' : 'remove';
-              history.push({ id: Date.now(), by: game.user.id, amount, action, previous: current, next, reason, date: (new Date()).toISOString() });
               try {
-                await a.update({ 'system.xp.total': next, 'system.xp.history': history });
+                await applyXpToActor(a, amount, reason);
                 results.push({ actor: a.name, success: true });
                 const openSheet = ui.windows.find(w => w.actor && w.actor.id === a.id);
                 if (openSheet) try { openSheet.render(false); } catch (e) {}
@@ -63,30 +78,20 @@ export async function openGrantXpDialog(sheet) {
               }
             }
             if (announce) {
-              const successCount = results.filter(r => r.success).length;
-              const verb = amount > 0 ? 'a attribué' : 'a retiré';
-              const display = Math.abs(amount);
-              ChatMessage.create({ user: game.user.id, content: `<div class="xp-award"><strong>${game.user.name}</strong> ${verb} <strong>${display} PX</strong> à <strong>${successCount}</strong> personnages${reason ? ` &ndash; ${reason}` : ''}.</div>` });
+              ChatMessage.create({
+                user: game.user.id,
+                content: `<div class="xp-award"><strong>${game.user.name}</strong> ${verb} <strong>${display} PX</strong> à <strong>${results.filter(r => r.success).length}</strong> personnages${reason ? ` &ndash; ${reason}` : ''}.</div>`
+              });
             }
-            try { await _recordXpJournal({ by: game.user, amount, reason, recipients: results.map(r=>r.actor) }); } catch (e) { console.warn('Warhammer2e | Unable to record XP in journal', e); }
-            ui.notifications.info(`${amount > 0 ? 'PX attribués' : 'PX retirés'} à ${results.length} personnages (${results.filter(r=>r.success).length} réussites)`);
+            try { await _recordXpJournal({ by: game.user, amount, reason, recipients: results.map(r => r.actor) }); } catch (e) { console.warn('Warhammer2e | Unable to record XP in journal', e); }
+            ui.notifications.info(`${amount > 0 ? 'PX attribués' : 'PX retirés'} à ${results.length} personnages (${results.filter(r => r.success).length} réussites)`);
             return;
           }
 
-          const sys = actor.system || {};
-          sys.xp = sys.xp || {};
-          const current = Number(sys.xp.total) || 0;
-          const next = current + amount;
-          const history = Array.isArray(sys.xp.history) ? sys.xp.history.slice() : [];
-          const action = amount > 0 ? 'add' : 'remove';
-          history.push({ id: Date.now(), by: game.user.id, amount, action, previous: current, next, reason, date: (new Date()).toISOString() });
-
           try {
-            await actor.update({ 'system.xp.total': next, 'system.xp.history': history });
+            await applyXpToActor(actor, amount, reason);
             try { sheet.render(false); } catch (e) {}
             if (announce) {
-              const verb = amount > 0 ? 'a attribué' : 'a retiré';
-              const display = Math.abs(amount);
               ChatMessage.create({
                 user: game.user.id,
                 speaker: ChatMessage.getSpeaker({ actor }),
@@ -96,7 +101,7 @@ export async function openGrantXpDialog(sheet) {
             try { await _recordXpJournal({ by: game.user, amount, reason, recipients: [actor.name] }); } catch (e) { console.warn('Warhammer2e | Unable to record XP in journal', e); }
           } catch (err) {
             console.error('Unable to award XP', err);
-            ui.notifications.error('Impossible d\'attribuer les PX.');
+            ui.notifications.error("Impossible d'attribuer les PX.");
           }
         }
       },
@@ -108,7 +113,7 @@ export async function openGrantXpDialog(sheet) {
 
 async function _recordXpJournal({ by, amount, reason, recipients }) {
   const title = 'XP Log';
-  const when = (new Date()).toLocaleString();
+  const when = new Date().toLocaleString();
   const gmName = by?.name || 'GM';
   const recList = Array.isArray(recipients) ? recipients.join(', ') : (recipients || 'N/A');
   const verb = amount > 0 ? 'a attribué' : 'a retiré';
@@ -116,49 +121,38 @@ async function _recordXpJournal({ by, amount, reason, recipients }) {
   const entryLine = `<p><strong>${when}</strong> — <em>${gmName}</em> ${verb} <strong>${display} PX</strong> à <strong>${recList}</strong>${reason ? ` &ndash; ${reason}` : ''}</p>`;
 
   try {
-    console.log('Warhammer2e | _recordXpJournal start', { title, by: gmName, amount, recipients, reason });
-    const je = (game.journal?.getName ? game.journal.getName(title) : null) || Array.from(game.journal || []).find(j => j.name === title) || game.journal?.find?.(j => j.name === title) || null;
+    const je = (game.journal?.getName ? game.journal.getName(title) : null)
+      || Array.from(game.journal || []).find(j => j.name === title)
+      || game.journal?.find?.(j => j.name === title)
+      || null;
 
     if (je) {
       try {
         if (je.createEmbeddedDocuments) {
-          const pageName = `XP ${when}`;
-          await je.createEmbeddedDocuments('JournalEntryPage', [{ name: pageName, type: 'text', text: { content: entryLine } }]);
-          console.log('Warhammer2e | _recordXpJournal created new journal page for event');
+          await je.createEmbeddedDocuments('JournalEntryPage', [{ name: `XP ${when}`, type: 'text', text: { content: entryLine } }]);
           return true;
         }
       } catch (e) {
         console.warn('Warhammer2e | _recordXpJournal createEmbeddedDocuments failed, will fallback', e);
       }
-
       try {
         const oldTop = je.data?.content || je.data?.text?.content || '';
-        const newTop = oldTop + entryLine;
-        await je.update?.({ content: newTop }) || await je.update({ content: newTop });
-        console.log('Warhammer2e | _recordXpJournal updated top-level content (fallback)');
+        await (je.update?.({ content: oldTop + entryLine }) || je.update({ content: oldTop + entryLine }));
         return true;
       } catch (e) {
         console.warn('Warhammer2e | _recordXpJournal top-level update failed', e);
       }
-
-      console.warn('Warhammer2e | _recordXpJournal: failed to record event in existing JournalEntry');
       return false;
-    } else {
+    }
+
+    if (typeof JournalEntry.create === 'function') {
       try {
-        if (typeof JournalEntry.create === 'function') {
-          try {
-            await JournalEntry.create({ name: title, pages: [{ name: 'Log', type: 'text', text: { content: entryLine } }] });
-            console.log('Warhammer2e | _recordXpJournal created new JournalEntry with pages');
-            return true;
-          } catch (e) {
-            console.warn('Warhammer2e | _recordXpJournal create with pages failed, will fallback', e);
-          }
-          await JournalEntry.create({ name: title, content: entryLine });
-          console.log('Warhammer2e | _recordXpJournal created new JournalEntry with content fallback');
-          return true;
-        }
+        await JournalEntry.create({ name: title, pages: [{ name: 'Log', type: 'text', text: { content: entryLine } }] });
+        return true;
       } catch (e) {
-        console.warn('Warhammer2e | _recordXpJournal create JournalEntry failed', e);
+        console.warn('Warhammer2e | _recordXpJournal create with pages failed, will fallback', e);
+        await JournalEntry.create({ name: title, content: entryLine });
+        return true;
       }
     }
   } catch (err) {

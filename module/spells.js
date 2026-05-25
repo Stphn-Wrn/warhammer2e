@@ -1,4 +1,5 @@
 import { openSpellCastDialog } from './dialogs.js';
+import { escapeHtml, formatDescription } from './utils.js';
 
 let _spellsCache = null;
 
@@ -11,16 +12,6 @@ function slugify(str) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
   return base || '';
-}
-
-function escapeHtml(value) {
-  return (value ?? '')
-    .toString()
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
 }
 
 function sanitizeSpell(spell, sourceKey, index) {
@@ -99,11 +90,7 @@ function formatCell(value) {
   return str ? escapeHtml(str) : '&mdash;';
 }
 
-function formatDescription(value) {
-  const str = (value ?? '').toString().trim();
-  if (!str) return '<em>Aucune description.</em>';
-  return escapeHtml(str).replace(/\n+/g, '<br>');
-}
+const formatDesc = (value) => formatDescription(value, '<em>Aucune description.</em>');
 
 function buildSpellCardHTML(spell, owned, fallbackSource) {
   const source = spell?.__source || fallbackSource || '';
@@ -146,7 +133,7 @@ function buildSpellCardHTML(spell, owned, fallbackSource) {
             </div>
             <div style="flex:1; text-align:center">
               <div style="height:1px; background:#ddd; margin:8px 0"></div>
-              <div style="text-align:left;">${formatDescription(description)}</div>
+              <div style="text-align:left;">${formatDesc(description)}</div>
             </div>
             <div style="width:180px; text-align:center">
               <div style="margin-bottom:8px">Attaques<br><div style="background:#fff; padding:6px; border-radius:4px">${formatCell(attaques)}</div></div>
@@ -200,11 +187,11 @@ function buildRuneCardHTML(spell, owned) {
       <div style="margin-top:16px; display:grid; gap:12px;">
         <div style="background:#fff; border-radius:6px; padding:12px;">
           <div style="font-weight:600; color:#1a4b6b; margin-bottom:6px;">Version permanente</div>
-          <div>${formatDescription(descPermanent)}</div>
+          <div>${formatDesc(descPermanent)}</div>
         </div>
         <div style="background:#fff; border-radius:6px; padding:12px;">
           <div style="font-weight:600; color:#1a4b6b; margin-bottom:6px;">Version temporaire</div>
-          <div>${formatDescription(descTemporary)}</div>
+          <div>${formatDesc(descTemporary)}</div>
         </div>
       </div>
     </div>

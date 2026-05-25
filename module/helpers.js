@@ -1,3 +1,5 @@
+import { buildSkillCaracLookup, computeSkillTotal } from './utils.js';
+
 export function registerHandlebarsHelpers() {
   Handlebars.registerHelper("capitalize", function (str) {
     if (typeof str !== "string") return "";
@@ -8,36 +10,15 @@ export function registerHandlebarsHelpers() {
 
   Handlebars.registerHelper("skillTotal", function (skill, caracValue) {
     if (!skill || typeof skill !== 'object') return 0;
-    const niveau = Number(skill.niveau) || 0;
-    const talents = Number(skill.talents) || 0;
-    const divers = Number(skill.divers) || 0;
-    const avance = skill.avance || false;
-    const caraVal = Number(caracValue) || 0;
-    const caraBase = avance ? caraVal : Math.floor(caraVal / 2);
-    return niveau + talents + divers + caraBase;
+    return computeSkillTotal(skill, Number(caracValue) || 0);
   });
 
   Handlebars.registerHelper("advancedSkillTotal", function (skill, actorData) {
-    if (!skill || typeof skill !== 'object' || !actorData || !actorData.principal) return 0;
-    const niveau = Number(skill.niveau) || 0;
-    const talents = Number(skill.talents) || 0;
-    const divers = Number(skill.divers) || 0;
-    const avance = skill.avance || false;
+    if (!skill || typeof skill !== 'object' || !actorData?.principal) return 0;
     const cara = skill.cara;
-    if (!cara) return niveau + talents + divers;
-    const caracMapping = {
-      "CC": actorData.principal.actuel.cc,
-      "CT": actorData.principal.actuel.ct,
-      "F": actorData.principal.actuel.force,
-      "E": actorData.principal.actuel.endurance,
-      "Ag": actorData.principal.actuel.agilite,
-      "Int": actorData.principal.actuel.intelligence,
-      "FM": actorData.principal.actuel.forceMentale,
-      "Soc": actorData.principal.actuel.sociabilite
-    };
-    const caracValue = Number(caracMapping[cara]) || 0;
-    const caraBase = avance ? caracValue : Math.floor(caracValue / 2);
-    return niveau + talents + divers + caraBase;
+    if (!cara) return (Number(skill.niveau) || 0) + (Number(skill.talents) || 0) + (Number(skill.divers) || 0);
+    const caracMapping = buildSkillCaracLookup(actorData.principal?.actuel);
+    return computeSkillTotal(skill, Number(caracMapping[cara]) || 0);
   });
 
   Handlebars.registerHelper("sum", function (a, b) {

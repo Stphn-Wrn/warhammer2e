@@ -1,21 +1,11 @@
-import { parseDamageSpec, getZoneFromD100, rollDiceFaces, handleUlricFury } from './utils.js';
+import { parseDamageSpec, rollDiceFaces, handleUlricFury, escapeHtml, formatDescription } from './utils.js';
+import { zoneFromAttackRoll } from './rolls/RollService.js';
 
-function escapeHtml(value) {
-  return (value ?? '')
-    .toString()
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-
-function formatSpellDescription(value) {
-  const str = (value ?? '')
-    .toString()
-    .trim();
-  if (!str) return '';
-  return escapeHtml(str).replace(/\n+/g, '<br>');
+async function rollAndLookup(results) {
+  const roll = await new Roll('1d100').evaluate();
+  const val = roll.total;
+  const result = (results || []).find(r => r.range?.length === 2 && val >= r.range[0] && val <= r.range[1]);
+  return result ? `Jet: ${val} — ${result.text}` : `Jet: ${val} — Aucun résultat trouvé.`;
 }
 
 export async function openMaledictionDialog(actor) {
@@ -69,17 +59,12 @@ export async function openMaledictionDialog(actor) {
 }
 
 async function resolveEchoTableResult(tableName) {
-  const url = `systems/warhammer2e/json/echos.json`;
-  const resp = await fetch(url);
-  if (!resp.ok) throw new Error(`Impossible de charger ${url}`);
+  const resp = await fetch('systems/warhammer2e/json/echos.json');
+  if (!resp.ok) throw new Error('Impossible de charger echos.json');
   const data = await resp.json();
   const table = (data.tables || []).find(t => t.name === tableName);
   if (!table) throw new Error('Table non trouvée: ' + tableName);
-  const roll = await new Roll('1d100').evaluate();
-  const val = roll.total;
-  const result = (table.results || []).find(r => r.range && r.range.length === 2 && val >= r.range[0] && val <= r.range[1]);
-  if (!result) return `Jet: ${val} — Aucun résultat trouvé.`;
-  return `Jet: ${val} — ${result.text}`;
+  return rollAndLookup(table.results);
 }
 
 export async function openColereDialog(actor) {
@@ -121,15 +106,10 @@ export async function openColereDialog(actor) {
 }
 
 async function resolveColereResult() {
-  const url = `systems/warhammer2e/json/colere.json`;
-  const resp = await fetch(url);
-  if (!resp.ok) throw new Error(`Impossible de charger ${url}`);
+  const resp = await fetch('systems/warhammer2e/json/colere.json');
+  if (!resp.ok) throw new Error('Impossible de charger colere.json');
   const data = await resp.json();
-  const roll = await new Roll('1d100').evaluate();
-  const val = roll.total;
-  const result = (data.results || []).find(r => r.range && r.range.length === 2 && val >= r.range[0] && val <= r.range[1]);
-  if (!result) return `Jet: ${val} — Aucun résultat trouvé.`;
-  return `Jet: ${val} — ${result.text}`;
+  return rollAndLookup(data.results);
 }
 
 export async function openSpellCastDialog(actor, spell) {
@@ -187,7 +167,7 @@ export async function openSpellCastDialog(actor, spell) {
           const magBonus = focal ? (Number(defaultMag) || 0) : 0;
           let flatBonus = Number(html.find('#spell-flat-bonus').val()) || 0;
           if (ingr) flatBonus += Number(ingredientBonus) || 0;
-          const spellDescriptionHtml = formatSpellDescription(spell?.description ?? spell?.desc ?? '');
+          const spellDescriptionHtml = formatDescription(spell?.description ?? spell?.desc ?? '', '');
 
           if (magDice <= 0 && magBonus <= 0) {
             ui.notifications.warn('Il faut au moins 1 dé de magie pour lancer le sort.');
@@ -213,14 +193,13 @@ export async function openSpellCastDialog(actor, spell) {
               }
             }
 
-            const diceHtml = dice.map((d, i) => {
+            const diceHtml = dice.map(d => {
               const cls = (d === 1) ? 'die-one' : (counts[d] >= 2 ? 'die-dupe' : 'die-normal');
               return `<span class="die ${cls}" style="display:inline-block; padding:6px; margin:3px; border-radius:4px; background:#fff; border:1px solid #ccc;">${d}</span>`;
             }).join('');
 
-            const sumDice = dice.reduce((a,b)=>a+b,0);
+            const sumDice = dice.reduce((a, b) => a + b, 0);
             const total = sumDice + magBonus + flatBonus;
-
             const success = total >= diff;
 
             const summary = [];
@@ -230,7 +209,7 @@ export async function openSpellCastDialog(actor, spell) {
             }
             summary.push(`<div><strong>Dés de magie :</strong> ${magDice}</div>`);
             summary.push(`<div><strong>Bonus d'ingrédient :</strong> ${ingr ? `Oui (+${ingredientBonus})` : 'Non'}</div>`);
-            summary.push(`<div><strong>Focalisation :</strong> ${focal? `Oui (+${magBonus})` : 'Non'}</div>`);
+            summary.push(`<div><strong>Focalisation :</strong> ${focal ? `Oui (+${magBonus})` : 'Non'}</div>`);
             summary.push(`<div><strong>Difficulté :</strong> ${diff}</div>`);
             summary.push(`<div style="margin-top:8px">${diceHtml}</div>`);
             if (ones > 0) summary.push(`<div style="color:crimson; margin-top:6px"><strong>1 détecté(s):</strong> ${ones}</div>`);
@@ -272,15 +251,10 @@ export async function openSpellCastDialog(actor, spell) {
                 if (attackCountRoll) {
                   summary.push(`<div class="roll-details">${await attackCountRoll.render()}</div>`);
                 }
-                for (let i=0;i<attackResults.length;i++) {
+                for (let i = 0; i < attackResults.length; i++) {
                   const atkVal = attackResults[i];
-
-                  const twoDigits = String(atkVal % 100).padStart(2, '0');
-                  const reversed = twoDigits.split('').reverse().join('');
-                  let zoneVal = Number(reversed);
-                  if (zoneVal === 0) zoneVal = 100;
-                  const zone = getZoneFromD100(zoneVal);
-                  summary.push(`<div style="margin-top:8px"><strong>Attaque ${i+1}:</strong> d100=${atkVal} → ${zone}</div>`);
+                  const { zoneName: zone } = zoneFromAttackRoll(atkVal);
+                  summary.push(`<div style="margin-top:8px"><strong>Attaque ${i + 1}:</strong> d100=${atkVal} → ${zone}</div>`);
                   const flat = dmgSpec.flat || 0;
                   const dmgExpression = `1d10${flat ? `+${flat}` : ''}`;
                   const dmgRoll = await rollDiceFaces(dmgExpression);
@@ -309,8 +283,8 @@ export async function openSpellCastDialog(actor, spell) {
                     furyLogs = furyResult.furyLogs;
                   }
 
-                  const dmgSum = dmgDice.reduce((a,b)=>a+b,0) + (Number(flat) || 0) + (Number(degatsBonusInput) || 0);
-                  summary.push(`<div style="margin-left:12px">Dégâts (${dmgExpression}): ${dmgDice.join(', ')} ${flat? `+ ${flat}` : ''}${degatsBonusInput ? ` + ${degatsBonusInput}` : ''} → <strong>${dmgSum}</strong></div>`);
+                  const dmgSum = dmgDice.reduce((a, b) => a + b, 0) + (Number(flat) || 0) + (Number(degatsBonusInput) || 0);
+                  summary.push(`<div style="margin-left:12px">Dégâts (${dmgExpression}): ${dmgDice.join(', ')} ${flat ? `+ ${flat}` : ''}${degatsBonusInput ? ` + ${degatsBonusInput}` : ''} → <strong>${dmgSum}</strong></div>`);
                   if (furyLogs.length) {
                     summary.push(`<div style="margin-left:12px; margin-top:6px; color:darkred"><strong>Fureur d'Ulric :</strong><br>${furyLogs.map(l => `<div>${l}</div>`).join('')}</div>`);
                   }
