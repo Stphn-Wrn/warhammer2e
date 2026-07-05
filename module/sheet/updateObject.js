@@ -2,6 +2,18 @@ import { ARMOR_ZONES } from '../constants/armorZones.js';
 
 // ── Advanced Skills ──────────────────────────────────────────────────────────
 
+// Talents and règles are persisted live by the dedicated handlers in
+// handlers/talents.js, which rebuild the whole array from the DOM on every
+// edit. The generic full-form submit that fires on sheet close must not
+// also rebuild them from raw formData: it lacks the hidden `.id` fields and
+// can race with (and clobber) the value the dedicated handler just saved.
+function stripManagedArrayFromFormData(formData, key) {
+  const prefix = `system.${key}.`;
+  for (const k of Object.keys(formData)) {
+    if (k.startsWith(prefix)) delete formData[k];
+  }
+}
+
 function extractAdvancedSkillsFromFormData(formData) {
   const map = {};
   for (const k of Object.keys(formData)) {
@@ -124,6 +136,9 @@ function clampChancePoints(updateData, actor) {
 // ── Entry point ──────────────────────────────────────────────────────────────
 
 export async function updateActorObject(sheet, formData) {
+  stripManagedArrayFromFormData(formData, 'talents');
+  stripManagedArrayFromFormData(formData, 'regles');
+
   const fromForm   = extractAdvancedSkillsFromFormData(formData);
   const existing   = Array.isArray(sheet.actor.system.skills?.advanced) ? sheet.actor.system.skills.advanced.slice() : [];
   const finalSkills= mergeAdvancedSkills(existing, fromForm);
