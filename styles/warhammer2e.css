@@ -1068,3 +1068,93 @@ thead {
   background: #c6ac86;
   box-shadow: 0 0 4px rgba(0,0,0,0.3);
 }
+
+/* ── Fiche sort (item sheet) ───────────────────────────── */
+.warhammer2e.item-sheet .sort-sheet {
+  padding: 8px 4px;
+}
+
+.warhammer2e.item-sheet .sort-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.warhammer2e.item-sheet .sort-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.warhammer2e.item-sheet .sort-combat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.warhammer2e.item-sheet .sort-ingredient-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.warhammer2e.item-sheet .sort-sheet .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.warhammer2e.item-sheet .sort-sheet .form-group label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #666;
+  letter-spacing: 0.3px;
+}
+
+.warhammer2e.item-sheet .sort-sheet input[type="text"],
+.warhammer2e.item-sheet .sort-sheet input[type="number"],
+.warhammer2e.item-sheet .sort-sheet select,
+.warhammer2e.item-sheet .sort-sheet textarea {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 13px;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.warhammer2e.item-sheet .sort-sheet textarea {
+  resize: vertical;
+}
+
+.warhammer2e.item-sheet .sort-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.warhammer2e.item-sheet .sort-check input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.warhammer2e.item-sheet .sort-rune-section {
+  margin-top: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: #f9f7f4;
+}
+
+.warhammer2e.item-sheet .sort-rune-section summary {
+  cursor: pointer;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #1a4b6b;
+  letter-spacing: 0.4px;
+  font-weight: 600;
+}
