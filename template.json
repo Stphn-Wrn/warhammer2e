@@ -416,6 +416,30 @@
       }
     }
   },
-  "Item": {}
+  "Item": {
+    "types": ["sort"],
+    "sort": {
+      "categorie": "",
+      "ecole": "",
+      "portee": "",
+      "degats": "0",
+      "fureurConfirm": false,
+      "degatsBonus": "0",
+      "attaques": "",
+      "difficulte": 0,
+      "temps": "",
+      "duree": "",
+      "cible": "",
+      "soin": "",
+      "bonusIngredient": "0",
+      "ingredient": "",
+      "college": "",
+      "description": "",
+      "activation": "",
+      "typeRune": "",
+      "descriptionPermanente": "",
+      "descriptionTemporaire": ""
+    }
+  }
 
 }
