@@ -9,6 +9,7 @@ on:
         default: "patch"
         type: choice
         options:
+          - fix
           - patch
           - minor
           - major
@@ -35,17 +36,23 @@ jobs:
         run: |
           VERSION=${{ steps.get_version.outputs.current_version }}
           INCREMENT=${{ github.event.inputs.increment }}
-          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+          IFS='.' read -r MAJOR MINOR PATCH FIX <<< "$VERSION"
+          FIX=${FIX:-0}
 
           if [ "$INCREMENT" = "major" ]; then
             MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0
+            NEW_VERSION="$MAJOR.$MINOR.$PATCH"
           elif [ "$INCREMENT" = "minor" ]; then
             MINOR=$((MINOR + 1)); PATCH=0
+            NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          elif [ "$INCREMENT" = "fix" ]; then
+            FIX=$((FIX + 1))
+            NEW_VERSION="$MAJOR.$MINOR.$PATCH.$FIX"
           else
             PATCH=$((PATCH + 1))
+            NEW_VERSION="$MAJOR.$MINOR.$PATCH"
           fi
 
-          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
       - name: Update system.json (version + download)
