@@ -1,4 +1,5 @@
 import { WarhammerActorSheet } from './sheet/WarhammerActorSheet.js';
+import { WarhammerItemSheet } from './WarhammerItemSheet.js';
 import { registerHandlebarsHelpers, preloadHandlebarsTemplates } from './helpers.js';
 
 class WarhammerActor extends Actor {}
@@ -9,6 +10,9 @@ Hooks.once('init', function () {
 
   Actors.unregisterSheet('core', ActorSheet);
   Actors.registerSheet('warhammer2e', WarhammerActorSheet, { types: ['character', 'monster'], makeDefault: true });
+
+  Items.unregisterSheet('core', ItemSheet);
+  Items.registerSheet('warhammer2e', WarhammerItemSheet, { types: ['sort'], makeDefault: true });
 
   // Suppress spurious re-renders triggered from within _updateObject
   try {
