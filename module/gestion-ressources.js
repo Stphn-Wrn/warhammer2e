@@ -1,15 +1,24 @@
-export class GestionRessourcesApp extends Application {
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
-  static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
-      id: "gestion-ressources",
+export class GestionRessourcesApp extends HandlebarsApplicationMixin(ApplicationV2) {
+
+  static DEFAULT_OPTIONS = {
+    id: "gestion-ressources",
+    window: {
       title: "Gestion des Ressources",
-      template: "systems/warhammer2e/templates/assets/gestion-ressources.html",
-      width: 400,
-      height: "auto",
       resizable: true
-    });
-  }
+    },
+    position: {
+      width: 400,
+      height: "auto"
+    }
+  };
+
+  static PARTS = {
+    form: {
+      template: "systems/warhammer2e/templates/assets/gestion-ressources.html"
+    }
+  };
 
   static critData = null;
 
@@ -32,10 +41,11 @@ export class GestionRessourcesApp extends Application {
     return row.values[critValue - 1];
   }
 
-  async activateListeners(html) {
-    super.activateListeners(html);
+  async _onRender(context, options) {
+    await super._onRender(context, options);
     await this.constructor.loadCritData();
 
+    const html = $(this.element);
     const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
     const playerActors = game.actors.filter(a => a.hasPlayerOwner && (a.type === "character" || a.type === "monster"));
 
