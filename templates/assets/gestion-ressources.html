@@ -3,10 +3,7 @@
   <h2>Gestion des Ressources</h2>
 
   <div class="option-line flexcol">
-    <div class="option-control">
-      <input type="button" name="reset-luck"  style="width:20px; height:20px;" />
-      <label for="reset-luck">Donner les points de chance*</label>
-    </div>
+    <label>Donner les points de chance*</label>
 
     <select name="reset-luck-target" class="resource-target"></select>
 
@@ -16,14 +13,16 @@
            min="0"
            placeholder="Donner X points de chance" />
 
+    <input type="button"
+           name="reset-luck"
+           class="apply-custom"
+           value="Donner les points de chance" />
+
     <p class="hint">* Ne pas sélectionner d'acteur applique à tout le monde</p>
   </div>
 
   <div class="option-line flexcol" style="margin-top: 12px;">
-    <div class="option-control">
-      <input type="button" name="heal-all"  style="width:20px; height:20px;" />
-      <label for="heal-all">Donner les points de blessure*</label>
-    </div>
+    <label>Donner les points de blessure*</label>
 
     <select name="heal-all-target" class="resource-target"></select>
 
@@ -32,6 +31,11 @@
            class="resource-value"
            min="0"
            placeholder="Donner X points de blessure" />
+
+    <input type="button"
+           name="heal-all"
+           class="apply-custom"
+           value="Donner les points de blessure" />
 
     <p class="hint">* Ne pas sélectionner d'acteur applique à tout le monde</p>
   </div>
