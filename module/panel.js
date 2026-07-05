@@ -1,5 +1,11 @@
 import { GestionRessourcesApp } from "./gestion-ressources.js";
 
+function toggleGestionRessources() {
+  const existing = foundry.applications.instances.get("gestion-ressources");
+  if (existing) existing.close();
+  else new GestionRessourcesApp().render({ force: true });
+}
+
 Hooks.on("getSceneControlButtons", controls => {
   controls.tokens.tools.myTool = {
     name: "myTool",
@@ -8,10 +14,13 @@ Hooks.on("getSceneControlButtons", controls => {
     order: Object.keys(controls.tokens.tools).length,
     button: true,
     visible: game.user.isGM,
-    onChange: () => {
-      const existing = foundry.applications.instances.get("my-tool");
-      if ( existing ) existing.close();
-      else new GestionRessourcesApp().render({force: true});
-    }
+    onChange: toggleGestionRessources
   };
+});
+
+Hooks.on("renderSettings", (app, html) => {
+  if (!game.user.isGM) return;
+  const button = $(`<button style="margin-top:4px"><i class="fa-solid fa-wrench"></i> Gestion des Ressources</button>`);
+  button.on("click", toggleGestionRessources);
+  html.find("#settings-game").append(button);
 });
