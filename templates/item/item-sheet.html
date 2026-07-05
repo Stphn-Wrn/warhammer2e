@@ -8,7 +8,145 @@
     </div>
   </header>
   <div class="sheet-body">
-    {{#if isTalent}}
+    {{#if isSort}}
+      <section class="sort-sheet">
+        <div class="sort-meta-grid">
+          <div class="form-group">
+            <label>Catégorie</label>
+            <select name="system.categorie">
+              <option value="" {{#if (eq system.categorie "")}}selected{{/if}}>— Choisir —</option>
+              <optgroup label="Magie occulte (École)">
+                <option value="lumiere"       {{#if (eq system.categorie "lumiere")}}selected{{/if}}>Lumière</option>
+                <option value="bete"          {{#if (eq system.categorie "bete")}}selected{{/if}}>Bête</option>
+                <option value="mort"          {{#if (eq system.categorie "mort")}}selected{{/if}}>Mort</option>
+                <option value="ombres"        {{#if (eq system.categorie "ombres")}}selected{{/if}}>Ombres</option>
+                <option value="feu"           {{#if (eq system.categorie "feu")}}selected{{/if}}>Feu</option>
+                <option value="vie"           {{#if (eq system.categorie "vie")}}selected{{/if}}>Vie</option>
+                <option value="metal"         {{#if (eq system.categorie "metal")}}selected{{/if}}>Métal</option>
+                <option value="cieux"         {{#if (eq system.categorie "cieux")}}selected{{/if}}>Cieux</option>
+                <option value="glace"         {{#if (eq system.categorie "glace")}}selected{{/if}}>Glace</option>
+              </optgroup>
+              <optgroup label="Magie commune">
+                <option value="commune"       {{#if (eq system.categorie "commune")}}selected{{/if}}>Magie commune</option>
+                <option value="commune-chaos" {{#if (eq system.categorie "commune-chaos")}}selected{{/if}}>Magie commune (Chaos)</option>
+                <option value="commune-glace" {{#if (eq system.categorie "commune-glace")}}selected{{/if}}>Magie commune (Glace)</option>
+                <option value="mineure"       {{#if (eq system.categorie "mineure")}}selected{{/if}}>Magie mineure</option>
+              </optgroup>
+              <optgroup label="Magie divine">
+                <option value="manann"        {{#if (eq system.categorie "manann")}}selected{{/if}}>Manann</option>
+                <option value="morr"          {{#if (eq system.categorie "morr")}}selected{{/if}}>Morr</option>
+                <option value="myrmidia"      {{#if (eq system.categorie "myrmidia")}}selected{{/if}}>Myrmidia</option>
+                <option value="shallya"       {{#if (eq system.categorie "shallya")}}selected{{/if}}>Shallya</option>
+                <option value="sigmar"        {{#if (eq system.categorie "sigmar")}}selected{{/if}}>Sigmar</option>
+                <option value="taal"          {{#if (eq system.categorie "taal")}}selected{{/if}}>Taal & Rhya</option>
+                <option value="ulric"         {{#if (eq system.categorie "ulric")}}selected{{/if}}>Ulric</option>
+                <option value="verena"        {{#if (eq system.categorie "verena")}}selected{{/if}}>Verena</option>
+                <option value="nurgle"        {{#if (eq system.categorie "nurgle")}}selected{{/if}}>Nurgle</option>
+                <option value="slaanesh"      {{#if (eq system.categorie "slaanesh")}}selected{{/if}}>Slaanesh</option>
+                <option value="tzeentch"      {{#if (eq system.categorie "tzeentch")}}selected{{/if}}>Tzeentch</option>
+                <option value="chaos"         {{#if (eq system.categorie "chaos")}}selected{{/if}}>Chaos</option>
+                <option value="necromancie"   {{#if (eq system.categorie "necromancie")}}selected{{/if}}>Nécromancie</option>
+                <option value="skaven-peste"  {{#if (eq system.categorie "skaven-peste")}}selected{{/if}}>Skaven – Peste</option>
+                <option value="skaven-ruse"   {{#if (eq system.categorie "skaven-ruse")}}selected{{/if}}>Skaven – Ruse</option>
+                <option value="skaven-warp"   {{#if (eq system.categorie "skaven-warp")}}selected{{/if}}>Skaven – Warp</option>
+              </optgroup>
+              <optgroup label="Autres">
+                <option value="runes"         {{#if (eq system.categorie "runes")}}selected{{/if}}>Runes</option>
+                <option value="rituels"       {{#if (eq system.categorie "rituels")}}selected{{/if}}>Rituels</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Collège / École</label>
+            <input type="text" name="system.college" value="{{system.college}}" placeholder="ex: Ordre Lumineux">
+          </div>
+        </div>
+
+        <div class="sort-stats-grid">
+          <div class="form-group">
+            <label>Difficulté</label>
+            <input type="number" name="system.difficulte" value="{{system.difficulte}}" min="0">
+          </div>
+          <div class="form-group">
+            <label>Temps d'incantation</label>
+            <input type="text" name="system.temps" value="{{system.temps}}" placeholder="ex: 1 action complète">
+          </div>
+          <div class="form-group">
+            <label>Durée</label>
+            <input type="text" name="system.duree" value="{{system.duree}}" placeholder="ex: PM rounds">
+          </div>
+          <div class="form-group">
+            <label>Portée</label>
+            <input type="text" name="system.portee" value="{{system.portee}}" placeholder="ex: 24 mètres">
+          </div>
+          <div class="form-group">
+            <label>Cible / Zone</label>
+            <input type="text" name="system.cible" value="{{system.cible}}" placeholder="ex: 1 cible">
+          </div>
+          <div class="form-group">
+            <label>Soin</label>
+            <input type="text" name="system.soin" value="{{system.soin}}" placeholder="—">
+          </div>
+        </div>
+
+        <div class="sort-combat-grid">
+          <div class="form-group">
+            <label>Dégâts</label>
+            <input type="text" name="system.degats" value="{{system.degats}}" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label>Dégâts bonus</label>
+            <input type="text" name="system.degatsBonus" value="{{system.degatsBonus}}" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label>Attaques</label>
+            <input type="text" name="system.attaques" value="{{system.attaques}}" placeholder="—">
+          </div>
+          <div class="form-group sort-check">
+            <label>Fureur (confirmée)</label>
+            <input type="checkbox" name="system.fureurConfirm" {{#if system.fureurConfirm}}checked{{/if}}>
+          </div>
+        </div>
+
+        <div class="sort-ingredient-row">
+          <div class="form-group" style="flex:0 0 80px">
+            <label>Bonus ingrédient</label>
+            <input type="text" name="system.bonusIngredient" value="{{system.bonusIngredient}}" placeholder="0">
+          </div>
+          <div class="form-group" style="flex:1">
+            <label>Ingrédient</label>
+            <input type="text" name="system.ingredient" value="{{system.ingredient}}" placeholder="Description de l'ingrédient">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="system.description" rows="5" placeholder="Effet du sort...">{{system.description}}</textarea>
+        </div>
+
+        <details class="sort-rune-section">
+          <summary>Champs rune (optionnel)</summary>
+          <div class="sort-stats-grid" style="margin-top:8px">
+            <div class="form-group">
+              <label>Activation</label>
+              <input type="text" name="system.activation" value="{{system.activation}}" placeholder="ex: Permanente">
+            </div>
+            <div class="form-group">
+              <label>Type de rune</label>
+              <input type="text" name="system.typeRune" value="{{system.typeRune}}" placeholder="ex: Offensive">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description permanente</label>
+            <textarea name="system.descriptionPermanente" rows="3">{{system.descriptionPermanente}}</textarea>
+          </div>
+          <div class="form-group">
+            <label>Description temporaire</label>
+            <textarea name="system.descriptionTemporaire" rows="3">{{system.descriptionTemporaire}}</textarea>
+          </div>
+        </details>
+      </section>
+    {{else if isTalent}}
       <section>
         <h2>Talent Details</h2>
         <p>Define specific fields for talents here.</p>
