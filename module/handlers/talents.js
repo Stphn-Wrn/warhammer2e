@@ -1,13 +1,15 @@
 export function wireTalentHandlers(sheet, html) {
   // ── Talents ────────────────────────────────────────────────────────────────
 
-  html.find('.talent-add').on('click', async ev => {
-    ev.preventDefault();
-    try {
-      await sheet._addTalent();
-      ui.notifications.info('Nouveau talent ajouté');
-    } catch (err) { console.error(err); ui.notifications.error("Erreur lors de l'ajout du talent."); }
-  });
+  html.find('.talent-add')
+    .on('mousedown', ev => ev.preventDefault())
+    .on('click', async ev => {
+      ev.preventDefault();
+      try {
+        await sheet._addTalent();
+        ui.notifications.info('Nouveau talent ajouté');
+      } catch (err) { console.error(err); ui.notifications.error("Erreur lors de l'ajout du talent."); }
+    });
 
   html.find('.talent-delete').on('click', ev => {
     ev.preventDefault();
@@ -37,13 +39,15 @@ export function wireTalentHandlers(sheet, html) {
 
   // ── Règles spéciales ───────────────────────────────────────────────────────
 
-  html.find('.regles-spe-add').on('click', async ev => {
-    ev.preventDefault();
-    try {
-      await sheet._addRegle();
-      ui.notifications.info('Nouvelle ligne ajoutée');
-    } catch (err) { console.error(err); ui.notifications.error("Erreur lors de l'ajout de la règle."); }
-  });
+  html.find('.regles-spe-add')
+    .on('mousedown', ev => ev.preventDefault())
+    .on('click', async ev => {
+      ev.preventDefault();
+      try {
+        await sheet._addRegle();
+        ui.notifications.info('Nouvelle ligne ajoutée');
+      } catch (err) { console.error(err); ui.notifications.error("Erreur lors de l'ajout de la règle."); }
+    });
 
   html.find('.regle-delete').on('click', ev => {
     ev.preventDefault();
